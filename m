@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795622240;
-	b=XDc7cI62F1TttwTXS15Vv1KiEe2EjG3WS+SYLYfE+AI2a08gyNUqwdvx7QVZQ8QMbcty
-	 cXaLLvBoi8wiH+jzRh6+GIlW6blEYPkF4AfbfPqZY18NmcnJyTT3NV5kos8U4IOzQVk/X
-	 pr+waaxLjjGuBTNvsI7/7FYk9Apb4JdlmKeA8mCPD+jPs/x9kq0o25I/2UPwZggA6Ien/
-	 zNCQv6A0DoVo1d5s/S9CTuaftry5PK1DQQK8R884bESOKMoGAQ+SdllddH5SQKxZMNagM
-	 rpGIZWNXaV8vR3ywR8De9wzyRzsDCuWY+E90fD98dpA89Txb9yx2KKFBn6OYDN6nz5w==
+	t=1795622243;
+	b=I4C1+bA22uhFrVW/ZFmdRlHSYL2O+jEyP04UuTB5WPHPTFtrnBfVp0ZMd478GITr9HF4
+	 KYQEi8tijtkNhTNB4j2I2hGUnAP0HOTYJpx4p27WBE0Hybho1AB8XlZlIhLN7SOMLwMaW
+	 NLY1TVv9LQVK7eIjET8ZX2fvhJ2KzQHNPqx3Uv9G/MTTJS4uDstKUkyuiG3TBxmq9A2+/
+	 o6y+6EQA+RxtTx2khXS+KSH2yRAHJVJPRL0CW+8D3rpn75cZMxeRWEANYE6BkBdD5qOWX
+	 eNWhEzsoDsQgJRhmPXdoUVr1U3sQ9aBPSWHiYQPeFY1jejrPxAjwTNU28jMafNOTLrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795622240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795622243;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I3e0RWBm0PgmKp5LuCgiXkiFcS9Tu0ilXAk51hfWA4g=;
-	b=qu5cLZ880P72P5ZcK+SJlADoyXcr2rVKFpZcZGI+NG0Zh8Uft20/xEAyZzAWFORS+vXn
-	 e5ph+/4EzMXnVDzWkmvSlUl3bj7uH3MGOJRqGjhQBBkNw1C4omUzyB4+m+TG019xvC8Nw
-	 JIeqTMD9H28Ehh5YyZ5IgGa/VhuO4rn6eZNlDML0DJED5Wh7Sa7Ynu0pXzoV6eON9LqNA
-	 GmoqfoDlhnUUKUz7/Yay8ne/heh25NGsNaCOXYC1UG52cPNLLYJ+RpN/OFeNcRzkRsTNR
-	 XtowtLcPT311StUMby0wIwHrIWKrT+MgsgIfM5lVSATytc07+ze+dB/7L69xjZPhkgQ==
+	bh=t5NLhD58Yp+LFTDHwcr/I3cV/VMooN+IWwa8vHhS/sM=;
+	b=2VStLSAwPo8pnEgVIFu4JA1eI1GF91MSclpT1yurJTN1mAjh9I6+njGtr+XeWG4yLP7l
+	 CRM07DdTRYXsOW1vhJnjlZN3Iw53yVtFc0MouA+MOj5in0QlsSxlvR7Yi4g4Ra7aTV7a7
+	 ii2KF0T1+ynv7M2qGhBYZcvIXo4az4Fe1fCqPxPml14dtS/OUqrZ/9OfGLx03bMSEQBqT
+	 JlWfDOzmVVPzzly4WpRcD1N5rjjWBAz3aiSVnTiG5M5vJn+Jy9IC5r4BoaLD/0wkql1Zt
+	 Rum5OWTLnWWOKOg269RXs1aSFd2iat0CnlYP19imNbcKNcc6xiy6uUQ9lk6c+eHVcKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePKybZ7T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWEATpg3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E664606A323;
-	Wed, 25 Nov 2026 15:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76BC606A31E;
+	Wed, 25 Nov 2026 15:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePKybZ7T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AD51F000CF;
-	Wed, 25 Nov 2026 15:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWEATpg3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7079C1F000CF;
+	Wed, 25 Nov 2026 15:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795622239;
-	bh=I3e0RWBm0PgmKp5LuCgiXkiFcS9Tu0ilXAk51hfWA4g=;
+	s=korg; t=1795622243;
+	bh=t5NLhD58Yp+LFTDHwcr/I3cV/VMooN+IWwa8vHhS/sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ePKybZ7TzCQIMTRbjpClc1n5W4oI4DMr9Du2xbSWriZEY3wwBvowSEzrvFGf9/G09
-	 uIBf13masc14HQFyPDXcIkL0xUPhbMKq4RTkTFXlJUWTcpDVRQLxk8Y/HIP5bPMp4/
-	 BG8s9fJkhiKi2hDhHAVRJbDV/IwusuYTzN9RAGz8=
+	b=zWEATpg3UoCbn6ezB2HzcUfqEaPZfABH0r2apklx5xxBCM/M4ALFNM1RS8gZ5mTrs
+	 QVWXb0yzj5tpILVuvFoGZlfxtgnoXg5WlYYhEMtxNNXGdpCFuf1gf1H4os6/aus0Ss
+	 oqM7rrKY6TZolz4mv5iam4yXx/3af+JbAxeAtBuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Iustin Stolniceanu <iustin.stolniceanu@analog.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 474/990] net/mlx5e: IPsec, dont match upper proto selectors in crypto offload TX
-Date: Wed, 25 Nov 2026 15:30:41 +0100
-Message-ID: <20261125143833.198945653@linuxfoundation.org>
+Subject: [PATCH 6.18 475/990] net: phy: c45: select BASE-T1 type for the forced speed
+Date: Wed, 25 Nov 2026 15:30:42 +0100
+Message-ID: <20261125143833.221971171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,63 +69,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
 
-[ Upstream commit 5ed47bd79cebee8429d06c6640aac7ac7c4805ca ]
+[ Upstream commit df501db9b18fae4d3edd534b992675f4673a938e ]
 
-The mentioned commit introduced support for upper protocol selectors
-(protocol & ports) to mlx5 IPsec offload. In crypto offload mode this
-causes offloaded TX SAs to stop matching traffic.
+Commit 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced
+setup") made genphy_c45_pma_setup_forced() write the type selection
+field (bits 3:0) of the BASE-T1 PMA/PMD control register (1.2100) on
+every forced setup: 1000BASE-T1 for SPEED_1000, and 0 for everything
+else. 0 selects 100BASE-T1, so forcing a 10BASE-T1L PHY to 10 Mbit/s
+now also switches its PMA to 100BASE-T1, a mode it does not implement.
 
-In tx_add_rule(), setup_fte_upper_proto_match() is called for all
-offload types and programs a match on the upper protocol (TCP/UDP) and
-ports. For crypto offload, setup_fte_esp() is then called and sets
-ip_protocol to ESP. The resulting rule requires both ESP as the IP
-protocol and TCP/UDP ports, which no packet can satisfy, so TX crypto
-offload silently stops working for such SAs.
+Seen on an ADIN1110 (internal ADIN1100 PHY): after
 
-In crypto offload mode the stack builds the ESP packet and the HW only
-encrypts it, so the SA rule should only match on the SPI. Move the
-setup_fte_upper_proto_match() call under the XFRM_DEV_OFFLOAD_PACKET
-case, where the rule matches the plaintext packet and upper protocol
-selectors apply.
+  ethtool -s ethX autoneg off speed 10 master-slave forced-master
 
-The other three callers are unaffected: rx_add_rule_sa_selector() is
-already only invoked for packet offload, and tx_add_policy() /
-rx_add_policy() are only reachable in packet offload mode, since xfrm
-policy offload is exclusively of type XFRM_DEV_OFFLOAD_PACKET.
+1.2100 reads 0xc000 instead of the 0xc002. Since the field is not
+restored by re-enabling autoneg, the PHY keeps the wrong type until
+the next forced setup or reset.
 
-Fixes: a7385187a386 ("net/mlx5e: IPsec, support upper protocol selector field offload")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261111081337.3129580-1-tariqt@nvidia.com
+Add a helper that returns the type selection value for the forced speed
+and the supported link modes: 100BASE-T1, 1000BASE-T1, and 10BASE-T1L or
+10BASE-T1S for SPEED_10 depending on the supported 10 Mbit/s modes. Fail
+with -EINVAL when no type matches instead of writing 100BASE-T1. This
+also applies to forced 2.5G, 5G and 10G on BASE-T1 capable PHYs, for
+which there are no link modes yet.
+
+The field is called "type selection" in IEEE 802.3-2022 (45.2.1.214,
+Table 45-178). Keep the old STRAP names as aliases.
+
+Tested on EVAL-ADIN1110EBZ: with this change, forcing 10 Mbit/s writes
+1.2100 = 0xc002 (10BASE-T1L) instead of the invalid 0xc000.
+
+Fixes: 25108a834e14 ("net: phy: c45: add support for 1000BASE-T1 forced setup")
+Signed-off-by: Iustin Stolniceanu <iustin.stolniceanu@analog.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20261111100053.345196-1-iustin.stolniceanu@analog.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/phy-c45.c | 46 ++++++++++++++++++++++++++++++++++-----
+ include/uapi/linux/mdio.h | 13 +++++++++--
+ 2 files changed, 52 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-index 5c5b33b01bebf..1046627d4080b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -2187,7 +2187,6 @@ static int tx_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
+diff --git a/drivers/net/phy/phy-c45.c b/drivers/net/phy/phy-c45.c
+index d2e36e460cc7f..db1ae54c62738 100644
+--- a/drivers/net/phy/phy-c45.c
++++ b/drivers/net/phy/phy-c45.c
+@@ -103,6 +103,36 @@ int genphy_c45_pma_baset1_setup_master_slave(struct phy_device *phydev)
+ }
+ EXPORT_SYMBOL_GPL(genphy_c45_pma_baset1_setup_master_slave);
+ 
++/* Type selection value for the BASE-T1 PMA/PMD control register (1.2100,
++ * 802.3-2022 Table 45-178) matching the forced speed. 10 Mbit/s is ambiguous
++ * between 10BASE-T1L and 10BASE-T1S, so the supported link modes decide.
++ * 2.5G, 5G and 10GBASE-T1 are not handled as there are no link modes for them
++ * yet.
++ */
++static int genphy_c45_baset1_type_sel(struct phy_device *phydev)
++{
++	switch (phydev->speed) {
++	case SPEED_10:
++		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1L_Full_BIT,
++				      phydev->supported))
++			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L;
++		if (linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Full_BIT,
++				      phydev->supported) ||
++		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_Half_BIT,
++				      phydev->supported) ||
++		    linkmode_test_bit(ETHTOOL_LINK_MODE_10baseT1S_P2MP_Half_BIT,
++				      phydev->supported))
++			return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S;
++		return -EINVAL;
++	case SPEED_100:
++		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1;
++	case SPEED_1000:
++		return MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1;
++	default:
++		return -EINVAL;
++	}
++}
++
+ /**
+  * genphy_c45_pma_setup_forced - configures a forced speed
+  * @phydev: target phy_device struct
+@@ -165,6 +195,16 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
+ 		return -EINVAL;
  	}
  
- 	setup_fte_no_frags(spec);
--	setup_fte_upper_proto_match(spec, &attrs->upspec);
++	/* Resolve the type before the first write, so a speed without a
++	 * matching type leaves the PHY untouched.
++	 */
++	bt1_ctrl = 0;
++	if (genphy_c45_baset1_able(phydev)) {
++		bt1_ctrl = genphy_c45_baset1_type_sel(phydev);
++		if (bt1_ctrl < 0)
++			return bt1_ctrl;
++	}
++
+ 	ret = phy_write_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_CTRL1, ctrl1);
+ 	if (ret < 0)
+ 		return ret;
+@@ -178,12 +218,8 @@ int genphy_c45_pma_setup_forced(struct phy_device *phydev)
+ 		if (ret < 0)
+ 			return ret;
  
- 	switch (attrs->type) {
- 	case XFRM_DEV_OFFLOAD_CRYPTO:
-@@ -2200,6 +2199,7 @@ static int tx_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
- 		setup_fte_reg_a(spec);
- 		break;
- 	case XFRM_DEV_OFFLOAD_PACKET:
-+		setup_fte_upper_proto_match(spec, &attrs->upspec);
- 		setup_fte_reg_c4(spec, attrs->reqid);
- 		err = setup_pkt_reformat(ipsec, attrs, &flow_act);
- 		if (err)
+-		bt1_ctrl = 0;
+-		if (phydev->speed == SPEED_1000)
+-			bt1_ctrl = MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000;
+-
+ 		ret = phy_modify_mmd(phydev, MDIO_MMD_PMAPMD, MDIO_PMA_PMD_BT1_CTRL,
+-				     MDIO_PMA_PMD_BT1_CTRL_STRAP, bt1_ctrl);
++				     MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL, bt1_ctrl);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+diff --git a/include/uapi/linux/mdio.h b/include/uapi/linux/mdio.h
+index 6975f182b22c6..d194b8182a251 100644
+--- a/include/uapi/linux/mdio.h
++++ b/include/uapi/linux/mdio.h
+@@ -383,8 +383,17 @@
+ #define MDIO_AN_10BT1_AN_STAT_LPA_EEE_T1L	0x4000 /* 10BASE-T1L LP EEE ability advertisement */
+ 
+ /* BASE-T1 PMA/PMD control register */
+-#define MDIO_PMA_PMD_BT1_CTRL_STRAP		0x000F /* Type selection (Strap) */
+-#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	0x0001 /* Select 1000BASE-T1 */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL		0x000F /* Type selection */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_100BT1	0x0000 /* Select 100BASE-T1 */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1	0x0001 /* Select 1000BASE-T1 */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1L	0x0002 /* Select 10BASE-T1L */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10BT1S	0x0003 /* Select 10BASE-T1S */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_2P5GBT1	0x0004 /* Select 2.5GBASE-T1 */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_5GBT1	0x0005 /* Select 5GBASE-T1 */
++#define MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_10GBT1	0x0006 /* Select 10GBASE-T1 */
++/* Legacy names, kept for userspace */
++#define MDIO_PMA_PMD_BT1_CTRL_STRAP		MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL
++#define MDIO_PMA_PMD_BT1_CTRL_STRAP_B1000	MDIO_PMA_PMD_BT1_CTRL_TYPE_SEL_1000BT1
+ #define MDIO_PMA_PMD_BT1_CTRL_CFG_MST		0x4000 /* MASTER-SLAVE config value */
+ 
+ /* 1000BASE-T1 PCS control register */
 -- 
 2.53.0
 
