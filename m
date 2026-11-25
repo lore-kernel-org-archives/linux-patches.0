@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625604;
-	b=bQ8n257X+kR4b57EBKlXFFcLD563zTdAzj09uer8BnCeHVpw08DbD/O8Xj8N6eH1j0Rw
-	 OQQBxQyP3H0Atq9ct9YyF3drOBNLwhwDHYUCtbkdle2nQbNuPnXMQsYXkeuuomKv7aW7X
-	 egElvE/qNMY72tlbnUshpy/woG6V59ddT5Z78HLaTnUZ6tlYdU7zLfawM8pe9KxBfLxgZ
-	 YCR2aBn4Hw9jR/VPPqB9ftEBBkHtx7MW4n8uUDOE9uMDzv24sk2nxnsQ0+ddkJEfboQm9
-	 nqn6Fm41wtv2ko9CaQVtTl1XarVEp/jXw8SkrA8kkTsSWHyU1ePb9h7XbBIBfpyLcBQ==
+	t=1795625606;
+	b=iMoUsJhBQVUY7q575N81OK24n/H7l8fBnasAioyB3CuPyI5bEeShYPnxqlNuB7Zcr12m
+	 zl2zAfuI0BNa9gxjHAue9y9pv1rXmwzOgE+FgvYxUpPb7caysW+6P+/biJ3LjeKTFW+Kk
+	 hw14Tz1/Y28R0Op7ZxqdbnExLU1/5nJrkxuWQDfHV6Q0+QTZSB6dN/8vtaFsxzIDmzdvd
+	 vknABWeNr33/N596fPas47QKAqg9gin07dotMZ/uxR5na4BvEcLMCwWwebRhy1FhJ3U+N
+	 6IOsHLI20eX+7ztzDbGUd42jXAKYZ8MSp1J1//77k/Bd8B5XVMuDhx0Hsd7HUdJSOGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yQ4CacT1FTjG1vadrJPextBS+QAADZjVSLeziYvGz7E=;
-	b=s1YC+AJHmGvgiTxOgmNxfIadE3mEPibZYSgOOVNxzTHIqizhy8IatBYf+OGD5MYJtUSJ
-	 QYim1Vh4xYSeqRvWX4tkjzxj4CbNFNh2Uwgu+8lBFe0lzMrUmfwuccHMRfouJOg2aFPHL
-	 xwjzwrKwkaJMDynxDn8AB7emHr+H++ZWegOnOEG1BbfZ5ARo/IY/Mus8xFx8amqO2hqaE
-	 NMDHlR100uxzcBKYKyzDISPHMH2N0p/0IAnhTH/vzlG6YW2AYyXBoOGXHl5tcZ6fZgiFl
-	 GrXCswy2fBsEbqPrnjnU/0l/d4w6C7yRWIrqVjHvcmbyLTYj0wIa/NjF8Tcpep3DfIg==
+	bh=VAftaFRvxg/dz7VLRtRIp8drCre5+mTpDL2AywZzoas=;
+	b=x+Rgf4MTBEuUj3rp4PbQATVj3iSihvDtofPej0ARqFAHNGq6eFhfza6csLAOeLzKqUq3
+	 MbRMRD8OJ7jsIHNLUcR5vZWdkHQ5SrOLgU5tWsNWiAdRP25gWRKy1i3jdoZdzJjDypbT2
+	 k1987+ajfzT1AN8W4XPrWI7rquEKf0sG5U/3ftuGp8N6a5nydnaSu4gdRFCaajonHNp4t
+	 6po8hePzSI/gy1ERlEkrZn+PHdy9GN6evbk/p9GohV40Rc9vOj0HCxR+650mpRN9u0+aL
+	 eRWbmpVVPZyypYdNAVqoFiz6oo0jh8qJcmtwBEe/J8A9/lLEMl0vz3R9BqGUKklfXwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AyVxiQHU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALHcBtHq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2112606A32A;
-	Wed, 25 Nov 2026 16:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7140606A33B;
+	Wed, 25 Nov 2026 16:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AyVxiQHU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE851F000C4;
-	Wed, 25 Nov 2026 16:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALHcBtHq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1687A1F000D8;
+	Wed, 25 Nov 2026 16:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625603;
-	bh=yQ4CacT1FTjG1vadrJPextBS+QAADZjVSLeziYvGz7E=;
+	s=korg; t=1795625606;
+	bh=VAftaFRvxg/dz7VLRtRIp8drCre5+mTpDL2AywZzoas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AyVxiQHUhHRcwW1AHCQXOY0OHSPVu9g5Tsc2SlsWUzlpjKpf9/oFDQKup/jXxOwVP
-	 9YHOhYS/YhLjbapo5DlFnCgMbyj2drmWVei2LEmbQlHTJkSGJ4h7dH0NUNEs5il78C
-	 eACAVhDeJ5UBbFgQ5NeDoNGuZFoL8pEjN4Mn/hjI=
+	b=ALHcBtHq/JgOgznxQgSRB1v+rZz7pTlpz1wttRYsbSeH1uZ9Qaf3AePyODwgqXKMS
+	 pLpktPtB1qPtzKDcH/1BHpQjVGqFFoZqFHn7LqqYJSFTQRo1oWRwjJBAbVjoWGczC3
+	 nFmwPLMwpKk76TfzzMo0KXF1rNWpe9lPuD79jv0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>
-Subject: [PATCH 6.12 572/816] mm/page_alloc: detect zonelist rebuilds from memory hot-add
-Date: Wed, 25 Nov 2026 15:35:20 +0100
-Message-ID: <20261125143902.421333188@linuxfoundation.org>
+	Hungyu Lin <dennylin0707@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 573/816] coda: honor the append state of each write
+Date: Wed, 25 Nov 2026 15:35:21 +0100
+Message-ID: <20261125143902.444156913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,62 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit e5db040c3d09c5d85dda70f736d4d1a6714b741e upstream.
+commit 87ea037a9166a5842356ce68e3585fc6e756603b upstream.
 
-The zonelist_update_seq retry was limited to CONFIG_MEMORY_HOTREMOVE,
-presumably because only hot-remove takes zones out of a zonelist.
+coda_open() adds O_APPEND to the container file's f_flags after it has
+been opened, without updating its cached f_iocb_flags. An O_APPEND write
+can therefore overwrite existing data instead of appending. For example,
+writing "Z" to a file containing "abc" produces "Zbc" rather than "abcZ".
 
-However, build_zonerefs_node() rewrites the zonelists in place, so
-onlining the first block of a zone shifts the entries that follow it
-in every zonelist containing that zone.  This can cause a spurious
-allocation failure for a __GFP_THISNODE caller.
+Pass RWF_APPEND or RWF_NOAPPEND to vfs_iter_write() according to the
+incoming IOCB_APPEND state. This also honors changes made with F_SETFL
+and per-write append overrides instead of relying on the container's
+open-time flags.
 
-For a node with only ZONE_NORMAL, onlining its first ZONE_MOVABLE block
-rewrites the node's ZONELIST_NOFALLBACK list as:
-
-  [NORMAL, NULL] -> [MOVABLE, NULL] -> [MOVABLE, NORMAL, NULL]
-
-A concurrent GFP_KERNEL | __GFP_THISNODE allocation can observe the
-intermediate list, skip ZONE_MOVABLE, and find no eligible zone. With
-CONFIG_MEMORY_HOTREMOVE=n, check_retry_zonelist() returns 0 and the
-allocation fails even though the node has free ZONE_NORMAL memory.
-
-Gate the sequence checks on CONFIG_MEMORY_HOTPLUG, which covers every
-configuration that rebuilds zonelists after boot.
-
-Fixes: 3d36424b3b58 ("mm/page_alloc: fix race condition between build_all_zonelists and page allocation")
-Cc: stable@vger.kernel.org
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261101021340.2251928-5-gourry@gourry.net
-Acked-by: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Fixes: 164f4064ca81 ("keep iocb_flags() result cached in struct file")
+Cc: stable@vger.kernel.org # 6.9+
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261105051406.52442-1-dennylin0707@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/coda/file.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -3982,7 +3982,7 @@ static DEFINE_SEQLOCK(zonelist_update_se
+--- a/fs/coda/file.c
++++ b/fs/coda/file.c
+@@ -71,6 +71,7 @@ coda_file_write_iter(struct kiocb *iocb,
+ 	struct file *host_file = cfi->cfi_container;
+ 	loff_t ki_pos = iocb->ki_pos;
+ 	size_t count = iov_iter_count(to);
++	rwf_t flags = (iocb->ki_flags & IOCB_APPEND) ? RWF_APPEND : RWF_NOAPPEND;
+ 	ssize_t ret;
  
- static unsigned int zonelist_iter_begin(void)
- {
--	if (IS_ENABLED(CONFIG_MEMORY_HOTREMOVE))
-+	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
- 		return read_seqbegin(&zonelist_update_seq);
+ 	ret = venus_access_intent(coda_inode->i_sb, coda_i2f(coda_inode),
+@@ -80,7 +81,7 @@ coda_file_write_iter(struct kiocb *iocb,
+ 		goto finish_write;
  
- 	return 0;
-@@ -3990,7 +3990,7 @@ static unsigned int zonelist_iter_begin(
- 
- static unsigned int check_retry_zonelist(unsigned int seq)
- {
--	if (IS_ENABLED(CONFIG_MEMORY_HOTREMOVE))
-+	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
- 		return read_seqretry(&zonelist_update_seq, seq);
- 
- 	return seq;
+ 	inode_lock(coda_inode);
+-	ret = vfs_iter_write(cfi->cfi_container, to, &iocb->ki_pos, 0);
++	ret = vfs_iter_write(cfi->cfi_container, to, &iocb->ki_pos, flags);
+ 	coda_inode->i_size = file_inode(host_file)->i_size;
+ 	coda_inode->i_blocks = (coda_inode->i_size + 511) >> 9;
+ 	inode_set_mtime_to_ts(coda_inode, inode_set_ctime_current(coda_inode));
 
 
