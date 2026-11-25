@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623273;
-	b=ufby6mpws9yXfMMrqbI/e08GTVFDDsXFPcvVJv2XMUFetB8BgwxG44CQ29VeFDkhl0sV
-	 EgKVTtIJgk049Nin68cFwzctlC4zQ9+epjcVefNV4BzUkslvULVKvulxuGlpJrNK19fYQ
-	 /ho4stJKmpFDcZsoIuhopKC5HHKiC6YEQNlG1NRPhhMaAPpnfUmnTb3/KXbUTkZ888AEB
-	 SaZZbiZ7+xiIhEZS8HRKO2SQNvmQE/2tyLZN67tSFNUVMb7AlgcFzHat2SqVUN8xC/WZV
-	 J+au8ixCPTKL81XH/MOExiYlkJMjI1BSOARBWF7T+W/MDxjst0bjMz4Fh7vFhewdS8w==
+	t=1795623276;
+	b=gs9V+YBXxJjM9gxF5tXcDmQFE3PmuoCHdn/NGUsRSRPtazuMgk801vmouD+CFKDdRrNl
+	 IgvTqV7sbsZbzu8c/h9+bKmCHy1opZ51M/XK5fAgVJ9yAfctn4LsNil0hC0omzNsthMy5
+	 3GktnICqsowOHZuoV70qDqjb0o7NEe3IaHVDx7NeRE1g4T4Vr7EHRni098X89tA/XcXW8
+	 J0lvR78NPBIQR/WvL8kijEYVCYFOSX4u6mOr+4G24rMRHUEb656W93LNMc3bplyydbe0b
+	 kcbgxqUws4j5e1SNXUH+FOve4x7tOgxM0nuIl1yk/Lwe25TP3gdQZeGWU6SagU9ivIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8p2rI5lfrmeDNqPauDXrlT5Vd2rJCyMVw4eQq9pPAVw=;
-	b=J7GSjUz14UVdSQpXRzeBb+BQRqtOx+0r3e6HS4dgUElGC4Lf8QkPlnDO7tEXK9iMWG8l
-	 oPljRvTSZHnsCtiyRK9nBdHyfD8mN83co389Px5gzMT8jWILbMa7crAcKIb5AqAmD298K
-	 NmFknFHWo2uETQ+0780svoqbddbY7GarGb58UqNaXQqG8ICxprNJVHDeGXMi73pbLiAAM
-	 lkQyE5v3Ftur0h9N1Rhk2CnquP4fLX1FexeXn2NHaPG6dbh9vS6/bE0DaQuJAb8VFgVQl
-	 h1MHePyH7E5IMoGBwzEDhgue7ct4V3sRmeTzqKc/+JWh3aCUMaHIIExF9VzFR6f4I5Q==
+	bh=KMNdL3EEcNdtM59+KY3/k+eNGxAgaL8rCh2ue4hpnNs=;
+	b=BS5REQ1r//2MEs+lSDms0gJK4CWdELFTiET0q0PaNmYsGG/utFzASS70usfJVR61jgZO
+	 JdjeHSBvPbtV09qLVF3MZUm50n031OVuNQxWS4GOYtbCNMEYPiOQdDPLqjHUddkbs6xa5
+	 0ddwRRA4G9Iy9/PebKxTmfeaXZywkKCvwcUXAEYwumyHHLD3JkEyDpH5JDb44mWBEeGYW
+	 7WBsnObqDH54qj3mSJm9UWUbg63nrsYGMhTdQhmzlBFkdkt3D6F/LlxayQInBNAFHZL7i
+	 m/eFjn7akQrI09P0Yn/oKV9fzaRegVmW8JlKfKUa18tVPG8b6CIIvJi2jgHK8q1cTgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=luDtbKlp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdP+MGY3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8239606A326;
-	Wed, 25 Nov 2026 16:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D884606A31E;
+	Wed, 25 Nov 2026 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=luDtbKlp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805DF1F000D3;
-	Wed, 25 Nov 2026 16:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdP+MGY3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7961F000C6;
+	Wed, 25 Nov 2026 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623272;
-	bh=8p2rI5lfrmeDNqPauDXrlT5Vd2rJCyMVw4eQq9pPAVw=;
+	s=korg; t=1795623275;
+	bh=KMNdL3EEcNdtM59+KY3/k+eNGxAgaL8rCh2ue4hpnNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=luDtbKlpAzfmxp43HeDCOehqTW5X8e6tZAz7to5quWsbJVXwd8qW+WVfRK+NboF1i
-	 YqmgZIXoBFguxol5gwtvzKZtM1IFFCC59x+Fqq22sohI5as3KuptVIVvocYbvChOPp
-	 g66GHjg6KirNwhhite0UuQFB66GIGSyV9qx/uypM=
+	b=hdP+MGY3fXT2KUElgvtv+bI2ecXhVQhXJH1+9ap5X5IDhOKWRtvqlKo38OgDCbwjB
+	 wS+PhSQPfcChaFKLpvvmEuuhr8Yqy2V37azs18A+V1rQFLTB8F0QKukpwAjCoCBpkS
+	 9g3D3wqlGgy6qR4jk+qy2shI+0qHNB/OE0HC6+2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 805/990] tracing/probes: Enable newly appended probe when target event is enabled
-Date: Wed, 25 Nov 2026 15:36:12 +0100
-Message-ID: <20261125143840.901437754@linuxfoundation.org>
+Subject: [PATCH 6.18 806/990] tracing/probes: Fix missing BTF kind checks in char pointer/array helpers
+Date: Wed, 25 Nov 2026 15:36:13 +0100
+Message-ID: <20261125143840.924263022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,144 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 72d3a5cb0cd7335553549aaffecc683e3ecc0c43 upstream.
+commit c1e2c63e65421068566db3dde44dfd4fe7adb46d upstream.
 
-Unlike kprobe events, fprobe and uprobe events only register their
-underlying probes when the trace event is enabled. When a new probe is
-appended to an existing multiprobe fprobe or uprobe event that is
-already enabled, the appended probe is linked into the event's probe
-list without being registered.
+In struct btf_type, the type ID and byte size share a union, and only
+BTF_KIND_INT types are followed by a 32-bit integer encoding word.
+Because btf_type_is_char_ptr() and btf_type_is_char_array() do not
+verify that the outer type is BTF_KIND_PTR or that the resolved element
+type is a non-NULL BTF_KIND_INT before inspecting it, non-pointer BTF
+types can have their byte size misinterpreted as a BTF type ID, and
+arrays of non-integer types read out-of-bounds or misinterpret trailing
+BTF metadata as BTF_INT_* encoding bits.
 
-As a result, the newly appended probe never fires until the event is
-disabled and re-enabled. Moreover, disabling an fprobe event calls
-unregister_fprobe() on the unregistered fprobe, and opening or closing a
-perf event on an enabled uprobe event dereferences a NULL tu->uprobe in
-uprobe_apply().
+Validate the BTF type kinds and NULL pointers before reading inner type
+metadata in both helpers.
 
-Register and enable the newly appended fprobe or uprobe immediately when
-the target event is already enabled.
+Link: https://lore.kernel.org/all/179455851632.403392.258264246782960594.stgit@devnote2/
 
-Link: https://lore.kernel.org/all/179455849798.403392.135678786198324285.stgit@devnote2/
-
-Fixes: 41af3cf587f4 ("tracing/uprobe: Add multi-probe per uprobe event support")
-Fixes: 2db832ec9090 ("tracing: fprobe-events: Register fprobe-events only when it is enabled")
+Fixes: 27973e5c64b9 ("tracing/probes: Add string type check with BTF")
 Cc: stable@vger.kernel.org
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_fprobe.c |   14 ++++-------
- kernel/trace/trace_uprobe.c |   56 +++++++++++++++++++++++++++++---------------
- 2 files changed, 43 insertions(+), 27 deletions(-)
+ kernel/trace/trace_probe.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/kernel/trace/trace_fprobe.c
-+++ b/kernel/trace/trace_fprobe.c
-@@ -937,7 +937,10 @@ static int append_trace_fprobe_event(str
- 	if (ret)
- 		return ret;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -356,6 +356,9 @@ static bool btf_type_is_char_ptr(struct
+ 	const struct btf_type *real_type;
+ 	u32 intdata;
  
--	ret = trace_fprobe_verify_target(tf);
-+	if (trace_probe_is_enabled(&tf->tp))
-+		ret = __register_trace_fprobe(tf);
-+	else
-+		ret = trace_fprobe_verify_target(tf);
- 	if (ret)
- 		trace_probe_unlink(&tf->tp);
- 	else
-@@ -1522,13 +1525,8 @@ static int disable_trace_fprobe(struct t
- 		trace_probe_clear_flag(tp, TP_FLAG_PROFILE);
- 
- 	if (!trace_probe_is_enabled(tp)) {
--		list_for_each_entry(tf, trace_probe_probe_list(tp), tp.list) {
--			unregister_fprobe(&tf->fp);
--			if (tf->tuser) {
--				tracepoint_user_put(tf->tuser);
--				tf->tuser = NULL;
--			}
--		}
-+		list_for_each_entry(tf, trace_probe_probe_list(tp), tp.list)
-+			__unregister_trace_fprobe(tf);
- 	}
- 
-  out:
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -447,6 +447,28 @@ static bool trace_uprobe_has_same_uprobe
- 	return false;
- }
- 
-+typedef bool (*filter_func_t)(struct uprobe_consumer *self, struct mm_struct *mm);
++	if (BTF_INFO_KIND(type->info) != BTF_KIND_PTR)
++		return false;
 +
-+#ifdef CONFIG_PERF_EVENTS
-+static bool uprobe_perf_filter(struct uprobe_consumer *uc, struct mm_struct *mm);
-+#else
-+#define uprobe_perf_filter NULL
-+#endif
-+
-+static int trace_uprobe_enable(struct trace_uprobe *tu, filter_func_t filter)
-+{
-+	struct inode *inode = d_real_inode(tu->path.dentry);
-+	struct uprobe *uprobe;
-+
-+	tu->consumer.filter = filter;
-+	uprobe = uprobe_register(inode, tu->offset, tu->ref_ctr_offset, &tu->consumer);
-+	if (IS_ERR(uprobe))
-+		return PTR_ERR(uprobe);
-+
-+	tu->uprobe = uprobe;
-+	return 0;
-+}
-+
- static int append_trace_uprobe(struct trace_uprobe *tu, struct trace_uprobe *to)
- {
- 	int ret;
-@@ -466,10 +488,22 @@ static int append_trace_uprobe(struct tr
+ 	real_type = btf_type_skip_modifiers(btf, type->type, NULL);
+ 	if (!real_type)
+ 		return false;
+@@ -380,6 +383,11 @@ static bool btf_type_is_char_array(struc
+ 	array = (const struct btf_array *)(type + 1);
  
- 	/* Append to existing event */
- 	ret = trace_probe_append(&tu->tp, &to->tp);
--	if (!ret)
--		dyn_event_add(&tu->devent, trace_probe_event_call(&tu->tp));
-+	if (ret)
-+		return ret;
- 
--	return ret;
-+	if (trace_probe_is_enabled(&tu->tp)) {
-+		ret = trace_uprobe_enable(tu,
-+			trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE) ?
-+			uprobe_perf_filter : NULL);
-+		if (ret) {
-+			trace_probe_unlink(&tu->tp);
-+			return ret;
-+		}
-+	}
+ 	real_type = btf_type_skip_modifiers(btf, array->type, NULL);
++	if (!real_type)
++		return false;
 +
-+	dyn_event_add(&tu->devent, trace_probe_event_call(&tu->tp));
-+
-+	return 0;
- }
++	if (BTF_INFO_KIND(real_type->info) != BTF_KIND_INT)
++		return false;
  
- /*
-@@ -1118,22 +1152,6 @@ print_uprobe_event(struct trace_iterator
- 	return trace_handle_return(s);
- }
- 
--typedef bool (*filter_func_t)(struct uprobe_consumer *self, struct mm_struct *mm);
--
--static int trace_uprobe_enable(struct trace_uprobe *tu, filter_func_t filter)
--{
--	struct inode *inode = d_real_inode(tu->path.dentry);
--	struct uprobe *uprobe;
--
--	tu->consumer.filter = filter;
--	uprobe = uprobe_register(inode, tu->offset, tu->ref_ctr_offset, &tu->consumer);
--	if (IS_ERR(uprobe))
--		return PTR_ERR(uprobe);
--
--	tu->uprobe = uprobe;
--	return 0;
--}
--
- static void __probe_event_disable(struct trace_probe *tp)
- {
- 	struct trace_uprobe *tu;
+ 	intdata = btf_type_int(real_type);
+ 	return !(BTF_INT_ENCODING(intdata) & BTF_INT_SIGNED)
 
 
