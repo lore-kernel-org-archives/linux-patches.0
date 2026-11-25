@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618322;
-	b=sr5U+dPQm96iepcpn0l798eXfZklJRjciCqw6ZBL9/MGrj1onv1l+8RhllToZkHpO7JD
-	 IQ/nl5K/D625r4sQQx630cb8721yCwhv9l5EqDoGG/zGEXubTpRO016pUaNgVR2LBMbi5
-	 yvVmu3VHhwGd6VBXywarHcW8xSho+X3U7qCrHPlDE6PoyAtS5nsZRNiWOLRXHeZKkH135
-	 IY8rY733XLI2QYBBAHhwNYmIJMNZlDgs4EvFqddT4QDubYP0PfKiS7gQhBaMVl7AmXrpA
-	 adRdWZMw6wjvh4We/qVI6Iom9kRIWXmSpd3E4T1gd10qe2HznTiW7V1O73LC0EHcCxw==
+	t=1795618325;
+	b=1xAkE4yKf6VrVBWwI1sbqoQXzb01VaBOb+ZrIl8lPuGY3gYvsQWDDopVl24yUDTdur3T
+	 yCAZi834XVm87YWX8tpt0P4cs7UFXqGnSCRDoPwqkFXILJEBAzoacm1tq9tGnOw/T4UY/
+	 10pptPLqDV1qOcuieIUshHplNE6yyh/gJpKVcznZVQtZIRCbvpJ7tnJq7zJQBVFg2c+id
+	 N/0pRoj9BjGGY27Itxp2xft0NTzkrgrLSrte837ixXQiH1/kB3k3YO/7fDlpvY81G6RK6
+	 /HYBwP2tc+jQu9ReP9d63qwcEflhott7zdFDsYrPKNXMiJHDaWZB1YBflUhFDb0XQOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d4tf1YZ9hl7+kpdGOH5TvJA3Rnpp0xRGa3E3k1Uvdqw=;
-	b=cR9LrUXItXE7Z04II255KRZG7Si2G2CVQuza7+7jJz8pV76QKzt9T+mogCd3EwB32XPo
-	 B312Mn+h+o4lXMSsfFeeAUCE4rgXl7q/X1GM1wcX2jKMCcO6wKtmpAmsp8iLwIofGitjl
-	 i6jVtdBzbrVnT11Qw33frp8RoBmXe3PxCCEFmXM9IVECjXVsch6OvaJ/uWxcjfGvLB7y0
-	 6ExJb4+2DjTJECrpQ6Qc/Ay8v2cZW1Fa2wjdS+FyWJVAEoxH84olmqxFXzvkrhyw6IOHF
-	 4FanyTse6P96KyuLIbgzSFjbbksw456xuYsPZhQLKlsdjwHPnYfOTeElCbUF0o4oxsQ==
+	bh=lYqZxte2WqzdVixTp6S06K9oX9Wrkb3GF1/8ddcIrHc=;
+	b=pA5ADGn0BQNZK2GY8P36qcCQKZTRbpWFqNG7qnfuCw03trAWVhrP+Z1WGUPxnhGGH69A
+	 +bzjUQUhLs9/xi3RHM09iF19ejrC1xYORargmDsgIfTVAXxpHLQ0KhPZzBU2IP5vV8OpB
+	 sxzreZwuYNeOJlt9apG/JpNyx8iAVVoHDfWTzxWbDXD/MS0i6oH4wSo5cYzPlyTHfDGhh
+	 wrDiql8pa2GssWn3EyFvZ8t3nDNGiXyNSkAD7AgCxc6Gtpd2CkLigdximN9nCrPnihSbw
+	 hfz9o91tqIPR/OZizuO9izfmMFAaddXyRAQOK2wwLVh+XrkMkomP5iy/bmu9Lj99peg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dM76hEAs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ecul3e+x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B557606A323;
-	Wed, 25 Nov 2026 14:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4D1606A321;
+	Wed, 25 Nov 2026 14:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dM76hEAs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BB91F000C0;
-	Wed, 25 Nov 2026 14:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ecul3e+x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6451F000CA;
+	Wed, 25 Nov 2026 14:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618322;
-	bh=d4tf1YZ9hl7+kpdGOH5TvJA3Rnpp0xRGa3E3k1Uvdqw=;
+	s=korg; t=1795618325;
+	bh=lYqZxte2WqzdVixTp6S06K9oX9Wrkb3GF1/8ddcIrHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dM76hEAsACzuNseYdvmuufxgDCaCHxk1sa7Nhd/1GSA5vPLJXL9isNgIcjtItGPp2
-	 ohCf07ZZJgZ0trJxWJP/x82Q2S3HAP06SdbxRfUT035eH4cSQdV55At49f7l52+zzT
-	 b2o0iiHdo6xOotUi5XVkPjFGid97eqV8Fen9XjUM=
+	b=Ecul3e+xwFRorETogqP4W18fzhIkLNO4vKNJyL286MDqnro6cNkuqJvsUfBrCL0YS
+	 Zk8Nl0y/ebOIXZoebQxi4Bh97IKSE9F/LdaI78V8HwgfqpnyYGpkkLPrRyoesdX6bk
+	 /dabAHev+deA6OmPur6fD0dILUctZzIeoPvxj2rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0216/1005] bpf: Emit timed may_goto for JITed progs only
-Date: Wed, 25 Nov 2026 15:25:54 +0100
-Message-ID: <20261125143826.801319878@linuxfoundation.org>
+Subject: [PATCH 7.3 0243/1005] zloop: reject mismatched conventional zone files on restore
+Date: Wed, 25 Nov 2026 15:26:21 +0100
+Message-ID: <20261125143827.429440162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,97 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Shao Mingyin <shao.mingyin@zte.com.cn>
 
-[ Upstream commit 1ddffb57b36239e84b8224b12e34b87f6031b29c ]
+[ Upstream commit 09c2e203e0ea8b68e7c9500401fa0ab60baf1a9d ]
 
-The timed form of may_goto calls arch_bpf_timed_may_goto(). This function
-takes its argument and returns its result in BPF_REG_AX, in a register of
-the cpu. Only JITed code can call it.
+When restoring a zloop device, zloop_init_zone() checks that the size of
+each conventional zone file matches the configured zone size.  The check
+prints an error and then jumps to out_fput, which releases the zone file
+and returns the value left in "ret" by the preceding vfs_getattr() call,
+that is, zero.  zloop_ctl_add() therefore treats the zone as initialized
+and continues with a zone->file pointer that was already released; any
+I/O to that zone then dereferences it.
 
-The verifier emits the timed form when the arch has a JIT that supports it.
-It does not look at the prog. With CONFIG_BPF_JIT_ALWAYS_ON=n the
-interpreter can run such a prog: the JIT is off, or it fails. The
-interpreter calls the function like a helper. The function takes what the C
-code left in that register for a pointer, and bpf_check_timed_may_goto()
-reads and writes through it.
+Return -EINVAL, like the sequential zone path does for the same kind of
+inconsistency.
 
-Emit the timed form only when the prog asks for a JIT, and make the JIT
-mandatory for such a prog. All other progs get the form that counts down
-from BPF_MAX_LOOPS.
+While at it, print the zone size that is actually compared instead of the
+zone capacity, which may be smaller and only made the message confusing.
 
-One test of verifier_may_goto_1 shows the insns of the timed form. Load it
-only when progs are JITed.
-
-Fixes: e723608bf428 ("bpf: Add verifier support for timed may_goto")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261031215543.682284-2-alexei.starovoitov@gmail.com
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20261031221610676B5VoVcwMgkoDNVZH2bVDO@zte.com.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/fixups.c                                     | 9 ++++++---
- tools/testing/selftests/bpf/progs/verifier_may_goto_1.c | 1 +
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/block/zloop.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
-index 5a5f7ec21f2dc..524e6d3de0776 100644
---- a/kernel/bpf/fixups.c
-+++ b/kernel/bpf/fixups.c
-@@ -1621,6 +1621,8 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
- 	struct bpf_subprog_info *subprogs = env->subprog_info;
- 	u16 stack_depth = subprogs[cur_subprog].stack_depth;
- 	u16 stack_depth_extra = 0;
-+	/* arch_bpf_timed_may_goto() takes and returns AX in a cpu register: for JITs only */
-+	bool timed_may_goto = prog->jit_requested && bpf_jit_supports_timed_may_goto();
+diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+index 8884fa63c23a4..5e3eb2c7004f4 100644
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -1151,7 +1151,8 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
  
- 	if (env->seen_exception && !env->exception_callback_subprog) {
- 		struct bpf_insn *patch = insn_buf;
-@@ -1876,7 +1878,7 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
- 			goto next_insn;
+ 		if (restore && file_sectors != zlo->zone_size) {
+ 			pr_err("Invalid conventional zone %u file size (%llu sectors != %llu)\n",
+-			       zone_no, file_sectors, zlo->zone_capacity);
++			       zone_no, file_sectors, zlo->zone_size);
++			ret = -EINVAL;
+ 			goto out_fput;
  		}
  
--		if (bpf_is_may_goto_insn(insn) && bpf_jit_supports_timed_may_goto()) {
-+		if (bpf_is_may_goto_insn(insn) && timed_may_goto) {
- 			int stack_off_cnt = -stack_depth - 16;
- 			/*
- 			 * AX is used as an argument to pass in stack_off_cnt
-@@ -1906,6 +1908,7 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
- 			 * after subtraction, rinse and repeat.
- 			 */
- 			stack_depth_extra = 16;
-+			prog->jit_required = 1;
- 			cnt = may_goto_expand(insn_buf, insn->off, stack_off_cnt,
- 					      tail, ARRAY_SIZE(tail));
- 
-@@ -2527,7 +2530,7 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
- 
- 	env->prog->aux->stack_depth = subprogs[0].stack_depth;
- 	for (i = 0; i < env->subprog_cnt; i++) {
--		int delta = bpf_jit_supports_timed_may_goto() ? 2 : 1;
-+		int delta = timed_may_goto ? 2 : 1;
- 		int subprog_start = subprogs[i].start;
- 		int stack_slots = subprogs[i].stack_extra / 8;
- 		int slots = delta, cnt = 0;
-@@ -2541,7 +2544,7 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
- 		}
- 
- 		stack_depth = subprogs[i].stack_depth;
--		if (bpf_jit_supports_timed_may_goto()) {
-+		if (timed_may_goto) {
- 			insn_buf[cnt++] = BPF_ST_MEM(BPF_DW, BPF_REG_FP, -stack_depth,
- 						     BPF_MAX_TIMED_LOOPS);
- 			insn_buf[cnt++] = BPF_ST_MEM(BPF_DW, BPF_REG_FP, -stack_depth + 8, 0);
-diff --git a/tools/testing/selftests/bpf/progs/verifier_may_goto_1.c b/tools/testing/selftests/bpf/progs/verifier_may_goto_1.c
-index db7e30da234f1..a95735d98c7cf 100644
---- a/tools/testing/selftests/bpf/progs/verifier_may_goto_1.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_may_goto_1.c
-@@ -82,6 +82,7 @@ __naked void may_goto_batch_1(void)
- 
- SEC("raw_tp")
- __description("may_goto batch with offsets 2/0")
-+__load_if_JITed()
- __arch_x86_64
- __arch_s390x
- __arch_arm64
 -- 
 2.53.0
 
