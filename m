@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623534;
-	b=0KDGCtWH56mW4ApUvkKjPo/+0f3eYRMU+hnReEqusgLvt3FBURPGGRnjXlpNfq4eXdfm
-	 adQ3ajGEvzAo8BLQ4SR5vj/soTi790zib7hc4oaM6w5qs3iZgb6Gdr4E90g5yERxihJsE
-	 tmKnDIZB9bHgk0i5aIWVkUqXn/wQzDzFrraUR7olZJSfWELnbYBMqF1WilBfY+DgGJp1d
-	 BK8FF46OVLGOhUonTi7GxpNMAG4BDzUe8JEze3FL47b7SF1ywwWTPLvpnpLSP3qhJXg5S
-	 Znu54jlFTB+caSJ9b9hQwlnkSF9Y4cdguOkLk5VA8/IYWi6eZnKlzlX1taJ3P0Jftvg==
+	t=1795623537;
+	b=G25pO0Yeg7wNWrvB2qgh+ddYh8x6b9OeLoD6rh+It2xNZANfLXFYmH3eFDMTy8+M3aJj
+	 Pk/oCON+neeDOblNxHwj3/ox/IVxuSXXy3VE/VcYF3U5yjf0yBcHMuycnn4ME3B/ukBNp
+	 zoIxTypMuDOPnIHQLv/T4Dlxz95gQ45wJVLHMpaDZwDoL6OjJ70sI1pHTrh9R9XsgeKqE
+	 +ahK9plQNnmN+9bPSaym5KnZWEDgN2kjZxxF6Qf60AjlwV6mKQZ5vb5dfmYboREDsC+rN
+	 HQawH0RyPH5Ed6YyiehNpcjs5NNudfyhZByTzRWbVh8SiT5gBmbjdrAU7xIMZZgmhmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EhY7F4iNTrk222ygMng5qQku7j0N5LdaPn4cxQK98Bs=;
-	b=gXOHqdxjrfdGQbqknusTTNxzK2iXAGb91pXfeJmqPq1cW8xU5SL93EcKS30mXW0s8p/0
-	 +TNEZoKkPzCO2mt/yR/7tavBINwkfHIpZdwn65O4PPXis0+uqECRKa0PmAk+03VG74BB0
-	 ef0Gpg3JEXvU2I8503/lgqjaFyqqqFTXQQx0ZiapXcQsc5v8jU+Oy1xZKFgteHax667je
-	 0xFb6jA8Mr8derKF5FGgtTrix4A/G1P4OxM/EUS1Fknuk0ekG61dAnTuVJUoTZvuw/H62
-	 HKlVN12sEGWGsNN/Qtj9GCKX3ragpaMKXy0yDWGaJbYCmwfapjr9OZZZr8DmGRU8c5A==
+	bh=B/IUsZ7u2mslkO9YLHJtYFJZVck7mpAXQjVy+OGcpqk=;
+	b=JpATiMhEx6XzY0idy8Ecnchtsk8h7ZSgeRhmEw2JP0w6KjxPGIn7UGpRYkHExr9vARkw
+	 RN032v1nOeFPDxMzoBOQSSPo5c2hp64nfDoGl5Ah2I8/0xZf1HB/6POJMlWaxNwoTeHS+
+	 3zdAlcoPWWlM/+ECu37jll38n0gaeosS1BcwlG+dwF45I5ox4w6rL1ea7u4c33FIavOyq
+	 ooe+rt+bXJdDoVH3VZGjSs6+5ck/e6zhj35h60v7OOWzDxSeyRNZfkVGDZ2u5YWfUHYPO
+	 +XoUqig5L6uRANO3B3osOYwGzvz+cjbvuXhSXWnWejND8UnhazaoQV68VFluuXIFOiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kd8z9r/H";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UEM5ocsF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF72606A32C;
-	Wed, 25 Nov 2026 16:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D4B606A329;
+	Wed, 25 Nov 2026 16:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kd8z9r/H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716231F000CF;
-	Wed, 25 Nov 2026 16:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UEM5ocsF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A5F1F000D3;
+	Wed, 25 Nov 2026 16:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623534;
-	bh=EhY7F4iNTrk222ygMng5qQku7j0N5LdaPn4cxQK98Bs=;
+	s=korg; t=1795623537;
+	bh=B/IUsZ7u2mslkO9YLHJtYFJZVck7mpAXQjVy+OGcpqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kd8z9r/HGePYz7jqusHUedwhKuOIZWfzaintV4qTgnRY+dU+MEGVmVPzlPfQ3w27t
-	 /BclvN2hyhuZrZ7ShctogroCX2kdimuJM4ssa22jgG3jni/B1TL8BMeRBZzlMrc6K2
-	 tdIikrQRxqTKC2dZv2aZV7vR/qKDHtNIFH7z3HNU=
+	b=UEM5ocsFx0e5CY1skaNTZmDCfDj54wAdjqQALRnsXvbPFPo9ePqALT5VwECt4pI5H
+	 165BNciIrO+nge0mYpxq2zhx2zHi8GqvV9YaHwSw0Igl5OaG+rN1hmWLAW7kYl++WF
+	 GzqchfpVq5OlcjJQ94wFXbgOIO/UcH+X2zYCqBEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jiale Yao <yaojiale02@163.com>
-Subject: [PATCH 6.18 892/990] misc: ibmvmc: initialize HMC state before device registration
-Date: Wed, 25 Nov 2026 15:37:39 +0100
-Message-ID: <20261125143842.906031875@linuxfoundation.org>
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.18 893/990] misc: vmw_vmci: wait for callbacks in event unsubscribe
+Date: Wed, 25 Nov 2026 15:37:40 +0100
+Message-ID: <20261125143842.929191063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -67,58 +71,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 2022f170e5655c40b93ed98629f7d0adb98cea49 upstream.
+commit 824a27d391cf934d3232e8e2dabee221fc4e18ae upstream.
 
-misc_register() exposes the IBM VMC device before the HMC state and
-spinlocks are initialized. A userspace operation racing module
-initialization can therefore access an HMC through an uninitialized
-spinlock.
+event_deliver() calls the callbacks of the subscribers inside an RCU read
+side critical section. vmci_event_unsubscribe() used to call
+synchronize_rcu() before it freed the subscription. This did more than
+to protect the struct vmci_subscription: when the function returned, no
+callback was running any more, and its callers rely on that.
 
-Initialize all HMC state before registering the misc device.
+vmci_transport_free_resources() unsubscribes from
+VMCI_EVENT_QP_PEER_DETACH and frees the struct vmci_transport, which is
+the callback data, a few lines later:
 
-Fixes: 0eca353e7ae7 ("misc: IBM Virtual Management Channel Driver (VMC)")
+  CPU0                                CPU1
+  event_deliver()
+    rcu_read_lock()
+    vmci_transport_peer_detach_cb()
+                                      vmci_event_unsubscribe()
+                                        list_del_rcu(&s->node)
+                                        kvfree_rcu_mightsleep(s)
+                                      kfree(transport)
+      spin_lock_bh(&trans->lock)
+
+The event is sent when the peer of the queue pair detaches, so the other
+end of a vsock connection chooses the time. vmci_transport_exit() and
+vmci_guest_remove_device() unsubscribe callbacks which are gone with
+their module.
+
+kvfree_rcu_mightsleep() only waits for a grace period if it cannot
+allocate memory. Bring the synchronize_rcu() back. The cleanup work of
+the vmci transport now waits for one grace period per socket again.
+
+Fixes: 6da3f33770e0 ("misc: vmw_vmci: Switch to kvfree_rcu() API")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20261028044828.96177-5-yaojiale02@163.com
+Cc: Bryan Tan <bryan-bt.tan@broadcom.com>
+Cc: Vishnu Dasa <vishnu.dasa@broadcom.com>
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/2026102715-escapable-quaintly-8530@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmvmc.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/misc/vmw_vmci/vmci_event.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/ibmvmc.c
-+++ b/drivers/misc/ibmvmc.c
-@@ -2365,14 +2365,6 @@ static int __init ibmvmc_module_init(voi
- 	ibmvmc.state = ibmvmc_state_initial;
- 	pr_info("ibmvmc: version %s\n", IBMVMC_DRIVER_VERSION);
+--- a/drivers/misc/vmw_vmci/vmci_event.c
++++ b/drivers/misc/vmw_vmci/vmci_event.c
+@@ -213,7 +213,12 @@ int vmci_event_unsubscribe(u32 sub_id)
+ 	if (!s)
+ 		return VMCI_ERROR_NOT_FOUND;
  
--	rc = misc_register(&ibmvmc_miscdev);
--	if (rc) {
--		pr_err("ibmvmc: misc registration failed\n");
--		goto misc_register_failed;
--	}
--	pr_info("ibmvmc: node %d:%d\n", MISC_MAJOR,
--		ibmvmc_miscdev.minor);
--
- 	/* Initialize data structures */
- 	memset(hmcs, 0, sizeof(struct ibmvmc_hmc) * MAX_HMCS);
- 	for (i = 0; i < MAX_HMCS; i++) {
-@@ -2382,6 +2374,14 @@ static int __init ibmvmc_module_init(voi
- 			hmcs[i].queue_outbound_msgs[j] = VMC_INVALID_BUFFER_ID;
- 	}
+-	kvfree_rcu_mightsleep(s);
++	/*
++	 * Wait for event_deliver(): the caller is going to free what the
++	 * callback works on.
++	 */
++	synchronize_rcu();
++	kfree(s);
  
-+	rc = misc_register(&ibmvmc_miscdev);
-+	if (rc) {
-+		pr_err("ibmvmc: misc registration failed\n");
-+		goto misc_register_failed;
-+	}
-+	pr_info("ibmvmc: node %d:%d\n", MISC_MAJOR,
-+		ibmvmc_miscdev.minor);
-+
- 	/* Sanity check module parms */
- 	ibmvmc_scrub_module_parms();
- 
+ 	return VMCI_SUCCESS;
+ }
 
 
