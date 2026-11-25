@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618540;
-	b=zQysJpeuC7Ma6zI1zaAx90pWR/BSJe4ckjKImbMM0Jx8+iKi3/bYA3dPHHK4HlIFs2EQ
-	 OtaNUYIYd6NCbPb+92jH9bGnziieA6LjcQs2Byx1A7vumJortIyRm/GgcmWU6eye5AGuz
-	 feeY8b3GsORXl4X8pAo662ciYLS6bDqozKQyBastd0UVNUwfK/iM8/zaFVWo3IZmHnyNz
-	 JuV/xikuSx2yl/R4D7UdEGK4MSJ520sZC3rlA3KEV5Lm+2tdPtgI5aZf/MAILIckdinZv
-	 GaC2oZZJ8pLVXcXToCro63CH09hOBdTNzohnEIv3940ZwRzlkPmpKW5Z26iiVwEuHXA==
+	t=1795618544;
+	b=5lQOnuEre3JGMD2JLBv8TnN/5Z8MgPoPCpxwflYW+5sJz9f7gQjqC2X7kZ9bagRxti4M
+	 LbsmrzmS0WeIveLWXo/GzC4Z6YptSjYvpcNPyLsOakC4RNXlVv/vjBkAhJztgVSUtWgnt
+	 93En7apGKP+Z94yiYn93zZN7RNcxnzR/Ko3h4F8YCf8uWLne26wGrKjbINLsc00xOYmHl
+	 FWnaDPT8mJkHUEtAU5EqRHHCXCXpVzjVfpROJPd9Ban7IRPA8zGaoNMKV+nP/g1ElK/Ba
+	 /xeJhw9/KMO6Pwp3P7cyKkgiIBv8PeLntxqcSNI30OuKz/k2l6tOkNI2uP/OGz8GNqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795618544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P6tZJvAUl1CEfSvP0fLCbLgqoEFhbVleO2oGdhc8K40=;
-	b=LSIj0lR8SYn+YDUw2oIW6DCPKQbopXUW0Mt3f+bLXDdLFQ3J5fAMzC1FVMRzrgowgF7l
-	 s91eTK6/vA95A9/ZsFHKJ1e/JmiWvDd1PFHHtnbb2GBX5JEnB8acfIXrDQy2BkmpXYx3b
-	 ilTMYsv1W4zm9JJXsZ48ChD4aNcZOO3GKHvg85x0M7/deqdNdAu22OwV/6ygca/gtQjDe
-	 m5YbeK5oX12kS5G0kmXZ1Y4r0EF/z2/dy18dednmU3STdw5L2CYsiIhHvkOQ0c/lxgZxw
-	 f989fhezXSPwYtn0eNPGpVB/zfJfA/l1AiSRgH8R07eWSFEOU7mtEuGRdfSyfH7xD4w==
+	bh=66zieaoJp/dJUPMMC3t9gClaozobUABB+8cqd10M5X8=;
+	b=vNqELe+dzN6J1w+Evyuyis9ao8y7d+LqdiLqhSiT8wKrHrMHYpOsHbDKypIDvu+pNfIK
+	 ZnNaJv+mFxw9E55Ib3iw0aZ/8q6d4dd46+FA9IsosFhw6pAI63EmF9M4XmSOH8GqaXO+y
+	 fsugRo0+FESrBU22VTOYnuYXVJbhbR/m+YvGghjsY95QVAtB8bpbIHWmQJ4qmNCUO9sJO
+	 TiEo5+V5antNAXzUnl5eTUdvwhvY7zna5JXA6to09i272E6+i4WJzhSxD5t4bWLUMiKLP
+	 ru/ddkN1u16mDkryShCrHplUZJV0qj71VUh22KrNdvOSVGJ1JzRm/8eBQwRGXqwVyZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQAp1aRE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Co0qX8UV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5827D606A335;
-	Wed, 25 Nov 2026 14:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53827606A323;
+	Wed, 25 Nov 2026 14:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQAp1aRE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6841F000CF;
-	Wed, 25 Nov 2026 14:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Co0qX8UV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770A71F000CF;
+	Wed, 25 Nov 2026 14:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795618539;
-	bh=P6tZJvAUl1CEfSvP0fLCbLgqoEFhbVleO2oGdhc8K40=;
+	s=korg; t=1795618543;
+	bh=66zieaoJp/dJUPMMC3t9gClaozobUABB+8cqd10M5X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AQAp1aRE8ChR0ZDXI/Xx2ZUAkDEO6cgflSnt06mQmmJeD53a3HRYqmY5K2zp2q7Fh
-	 +efP0/vkLCcD6zJUQw+hE6A/XmDdFlcWTQFcBo9APLtj7i0mST8S376TiXDxlV8700
-	 txTX2B694t8MFvoOKLQblFTH976gtyxv/SzfXDuQ=
+	b=Co0qX8UV/JkQI/GLEvzoC7jqcaOgORmS94PZnQFn/i6QlqccOQ2onDzSZzy9dIg33
+	 HxFrVXx6nWANEfGdcQKoiHqS45rlyJApYdOhT7MdtJD/fTSqVtPS13r5hvSpFegEdB
+	 38Pz67+Li6Il79Ov+qYrfEsPMdriqIP7+/FaTCO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jude Gyimah <jude.gyimah87@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	James Clark <jjc@jclark.com>,
+	Jacob Keller <Jacob.e.keller@intel.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0267/1005] ASoC: rockchip_spdif: select REGMAP_MMIO
-Date: Wed, 25 Nov 2026 15:26:45 +0100
-Message-ID: <20261125143827.994111404@linuxfoundation.org>
+Subject: [PATCH 7.3 0268/1005] net: ethernet: ti: am65-cpts: adjust perout genf following ptp changes
+Date: Wed, 25 Nov 2026 15:26:46 +0100
+Message-ID: <20261125143828.017139276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,50 +69,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jude Gyimah <jude.gyimah87@gmail.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit 67a7e2073909e948c3cbd86c28d17e86c2958dd6 ]
+[ Upstream commit 3f1054a0cb09552dd54db024694f74747f9f1d49 ]
 
-rockchip_spdif calls __devm_regmap_init_mmio_clk, which
-drivers/base/regmap/regmap-mmio.c provides under REGMAP_MMIO.
+A periodic output requested by PTP_PEROUT_REQUEST2 drifts away from
+the PHC as soon as the PHC frequency is adjusted, for example by ptp4l
+or ts2phc: at +10 ppm each edge is 10 us later than the one before.
 
-  rockchip_spdif.c:(.text+0xf67): undefined reference to
-    `__devm_regmap_init_mmio_clk'
+The GenF that generates the output counts its period in ref_clk
+cycles, which the PPM correction of the CPTS clock does not reach;
+each GenF has its own PPM registers. am65_cpts_ptp_adjfine() programs
+them only for the GenF used for PPS, and am65_cpts_perout_enable_hw()
+starts every GenF with them cleared, so a GenF used for a periodic
+output is never corrected.
 
-The driver can be built into vmlinux while REGMAP_MMIO is a module, in
-which case the symbol is not there at link time.
+Commit eb9233ce6751 ("net: ethernet: ti: am65-cpts: adjust pps following
+ptp changes") added the correction for the PPS GenF, and
+commit 7849c42da2ca ("net: ethernet: ti: am65-cpts: adjust estf following
+ptp changes") passed the same values to the ESTFs.
 
-Select rather than depend on: REGMAP_MMIO has no prompt of its own and is
-only ever enabled by a select, so a depends on would leave
-SND_SOC_ROCKCHIP_SPDIF unselectable.
+In am65_cpts_ptp_adjfine(), update every enabled GenF the way the PPS
+GenF was updated: read its control register, set or clear the PPM
+direction bit and write it back with the PPM value. The PPS GenF and the
+ESTFs get exactly the values they got before. In
+am65_cpts_perout_enable_hw(), start a GenF with the current correction
+instead of none; this applies to the PPS GenF too.
 
-Reproduced on v7.3, x86_64, with CONFIG_SND_SOC_ROCKCHIP_SPDIF=y and
-CONFIG_REGMAP_MMIO=m.
+Tested on a BeagleY-AI (J722S) with the GENF0 output looped back to
+the HW1_TS_PUSH input (EXTTS 0). With the PHC frequency adjusted by
++10 ppm before the periodic output is started, the edges drift 10 us
+per second against the PHC without this patch (290 us after 29 s);
+with it, they stay 20 to 23 ns after the PHC second. This also works
+if the frequency is adjusted after the periodic output has started.
 
-Found with kreach, a static check that compares what Kconfig allows
-against the symbols the compiled objects actually reference.
-
-Fixes: f874b80e1571 ("ASoC: rockchip: Add rockchip SPDIF transceiver driver")
-Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
-Link: https://patch.msgid.link/20261103132537.3717496-6-jude.gyimah87@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f6bd59526ca5 ("net: ethernet: ti: introduce am654 common platform time sync driver")
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Jacob Keller <Jacob.e.keller@intel.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/ti/am65-cpts.c | 67 +++++++++++++++++++----------
+ 1 file changed, 45 insertions(+), 22 deletions(-)
 
-diff --git a/sound/soc/rockchip/Kconfig b/sound/soc/rockchip/Kconfig
-index aba9a518d3b26..0e5110125c140 100644
---- a/sound/soc/rockchip/Kconfig
-+++ b/sound/soc/rockchip/Kconfig
-@@ -45,6 +45,7 @@ config SND_SOC_ROCKCHIP_SAI
+diff --git a/drivers/net/ethernet/ti/am65-cpts.c b/drivers/net/ethernet/ti/am65-cpts.c
+index df5659ead72f6..0d71147f3c291 100644
+--- a/drivers/net/ethernet/ti/am65-cpts.c
++++ b/drivers/net/ethernet/ti/am65-cpts.c
+@@ -176,6 +176,9 @@ struct am65_cpts {
+ 	struct mutex ptp_clk_lock; /* PHC access sync */
+ 	u64 timestamp;
+ 	u32 genf_enable;
++	bool genf_neg_adj;
++	u32 genf_ppm_hi;
++	u32 genf_ppm_low;
+ 	u32 hw_ts_enable;
+ 	u32 estf_enable;
+ 	struct sk_buff_head txq;
+@@ -436,9 +439,11 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ {
+ 	struct am65_cpts *cpts = container_of(ptp, struct am65_cpts, ptp_info);
+ 	u32 estf_ctrl_val = 0, estf_ppm_hi = 0, estf_ppm_low = 0;
++	u32 genf_ctrl_val[AM65_CPTS_GENF_MAX_NUM];
++	u32 genf_ppm_hi, genf_ppm_low;
+ 	s32 ppb = scaled_ppm_to_ppb(scaled_ppm);
+ 	int pps_index = cpts->pps_genf_idx;
+-	u64 adj_period, pps_adj_period;
++	u64 adj_period, genf_adj_period;
+ 	u32 ctrl_val, ppm_hi, ppm_low;
+ 	unsigned long flags;
+ 	int neg_adj = 0, i;
+@@ -470,20 +475,33 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ 	ppm_hi = upper_32_bits(adj_period) & 0x3FF;
+ 	ppm_low = lower_32_bits(adj_period);
  
- config SND_SOC_ROCKCHIP_SPDIF
- 	tristate "Rockchip SPDIF Device Driver"
-+	select REGMAP_MMIO
- 	select SND_PCM_IEC958
- 	select SND_SOC_GENERIC_DMAENGINE_PCM
- 	help
++	/* GenF PPM will do correction using cpts refclk tick which is
++	 * (cpts->ts_add_val + 1) ns, so GenF length PPM adj period
++	 * need to be corrected.
++	 */
++	genf_adj_period = adj_period * (cpts->ts_add_val + 1);
++	genf_ppm_hi = upper_32_bits(genf_adj_period) & 0x3FF;
++	genf_ppm_low = lower_32_bits(genf_adj_period);
++	cpts->genf_neg_adj = neg_adj;
++	cpts->genf_ppm_hi = genf_ppm_hi;
++	cpts->genf_ppm_low = genf_ppm_low;
++
++	for (i = 0; i < AM65_CPTS_GENF_MAX_NUM; i++) {
++		if (cpts->genf_enable & BIT(i)) {
++			genf_ctrl_val[i] = am65_cpts_read32(cpts,
++							    genf[i].control);
++			if (neg_adj)
++				genf_ctrl_val[i] &= ~BIT(1);
++			else
++				genf_ctrl_val[i] |= BIT(1);
++		}
++	}
++
+ 	if (cpts->pps_enabled) {
+-		estf_ctrl_val = am65_cpts_read32(cpts, genf[pps_index].control);
+-		if (neg_adj)
+-			estf_ctrl_val &= ~BIT(1);
+-		else
+-			estf_ctrl_val |= BIT(1);
+-
+-		/* GenF PPM will do correction using cpts refclk tick which is
+-		 * (cpts->ts_add_val + 1) ns, so GenF length PPM adj period
+-		 * need to be corrected.
+-		 */
+-		pps_adj_period = adj_period * (cpts->ts_add_val + 1);
+-		estf_ppm_hi = upper_32_bits(pps_adj_period) & 0x3FF;
+-		estf_ppm_low = lower_32_bits(pps_adj_period);
++		/* am65_cpts_perout_enable_hw() sets pps_index in genf_enable */
++		estf_ctrl_val = genf_ctrl_val[pps_index];
++		estf_ppm_hi = genf_ppm_hi;
++		estf_ppm_low = genf_ppm_low;
+ 	}
+ 
+ 	spin_lock_irqsave(&cpts->lock, flags);
+@@ -500,10 +518,13 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ 	am65_cpts_write32(cpts, ppm_hi, ts_ppm_hi);
+ 	am65_cpts_write32(cpts, ppm_low, ts_ppm_low);
+ 
+-	if (cpts->pps_enabled) {
+-		am65_cpts_write32(cpts, estf_ctrl_val, genf[pps_index].control);
+-		am65_cpts_write32(cpts, estf_ppm_hi, genf[pps_index].ppm_hi);
+-		am65_cpts_write32(cpts, estf_ppm_low, genf[pps_index].ppm_low);
++	for (i = 0; i < AM65_CPTS_GENF_MAX_NUM; i++) {
++		if (cpts->genf_enable & BIT(i)) {
++			am65_cpts_write32(cpts, genf_ctrl_val[i],
++					  genf[i].control);
++			am65_cpts_write32(cpts, genf_ppm_hi, genf[i].ppm_hi);
++			am65_cpts_write32(cpts, genf_ppm_low, genf[i].ppm_low);
++		}
+ 	}
+ 
+ 	for (i = 0; i < AM65_CPTS_ESTF_MAX_NUM; i++) {
+@@ -513,7 +534,6 @@ static int am65_cpts_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+ 			am65_cpts_write32(cpts, estf_ppm_low, estf[i].ppm_low);
+ 		}
+ 	}
+-	/* All GenF/EstF can be updated here the same way */
+ 	spin_unlock_irqrestore(&cpts->lock, flags);
+ 
+ 	mutex_unlock(&cpts->ptp_clk_lock);
+@@ -679,9 +699,12 @@ static void am65_cpts_perout_enable_hw(struct am65_cpts *cpts,
+ 		val = lower_32_bits(cycles);
+ 		am65_cpts_write32(cpts, val, genf[req->index].length);
+ 
+-		am65_cpts_write32(cpts, 0, genf[req->index].control);
+-		am65_cpts_write32(cpts, 0, genf[req->index].ppm_hi);
+-		am65_cpts_write32(cpts, 0, genf[req->index].ppm_low);
++		am65_cpts_write32(cpts, cpts->genf_neg_adj ? 0 : BIT(1),
++				  genf[req->index].control);
++		am65_cpts_write32(cpts, cpts->genf_ppm_hi,
++				  genf[req->index].ppm_hi);
++		am65_cpts_write32(cpts, cpts->genf_ppm_low,
++				  genf[req->index].ppm_low);
+ 
+ 		cpts->genf_enable |= BIT(req->index);
+ 	} else {
 -- 
 2.53.0
 
