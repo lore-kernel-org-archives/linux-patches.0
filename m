@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795626261;
-	b=xQD8o9MXg3MPQTXiMIpO1/eiM8w10PseNrXZIQ2QHX1LHNWZdFaPpVCzl/uGVOy2CF9m
-	 Sbv4WVSMQnBfjK0oQ/ZJy+iXMkchEjxlMpcLf++gzoHuW+yHPmWeWg84ohN4JCqOpzvH/
-	 R0GGQoNz8bdOAL1vE51FiHVSHu2mJuQmnSAg8VrIK1kH3PX4kcG7lUsQthRgy+9KIoKFK
-	 oDvEE4g3PA7MVUcvIDKbVSrrjGtY+uOW2KXe0dE2gHnhAyNv+oXPrpyFQxIBZlvoPJxF6
-	 +66qZaLFbK8kIbZl0LumUHqjnsdeQ8yQlh19EM2rxtNqJm/LpybGvefbyi9ZMtAU/eg==
+	t=1795626264;
+	b=dDEsuMnTlWvGizc7iNYpgyFTEZWWeEMkAR+KQQJJcaLI6lt3GqHpO+YPVsx7OTSLc+W9
+	 PcfUeGUmPgUS4mOPcjWgqlUnvcm2KWBSqAxy9km7rCnANRma5wgV0xhLLN3TPTayWYyL+
+	 KszmZfKjI+JbSyM8ldOPfe0mZVH+3OWjm+8vYCjIUvfV/XZIJ5b09f+JER9X08aCLZmds
+	 WMuK+iZjjRCSjZZW1iYvXbbFU97Xc07kvZAZzuf9fZTepbS6Yh41QjAJH+ZXPzx1YNK9a
+	 4fUJRJwGBrcsCn/Iwyhrq2WRAxbB8AdwAQ8BpN81xAupiynQ9Wb8r8pMTpetusE4CGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795626261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795626264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W/TY/o5L6FL82HbkR1QG0Xw9yZZ2k6m7Wi2hS4YR928=;
-	b=qhm3D27IlR8s8y8GwxS4/KZovno7UPYMV+oDBlQxWJs5m2wQqoxJhNl9SgvHiYzvX+eD
-	 k4Fvq0Se/SwLYqgqL6v+T9B5ezaPKWF4tPuu4mztlRGV7SLRcNSqFt8KiIHJ/NWwoVzcL
-	 euWUtra0peWpuzN1H64qgY/aKBk5FTFOqg9X7ndHl3IPWdbm9nyU3lTKOL2Fj1J8/a+7y
-	 R1dFU/eU4cssE3d/nOR6WBIcQ6tRYlPZGVtbXpkOBIWnswNFDcJfL1SS4Mpckq0pkGdPy
-	 PCfTW4lDZKVHdJSyup6EZjDF2AqjmaPAphNTZwgCJEHtM5uhL8KsS/Ap3nr8OQRNuig==
+	bh=XiI8BYz5vEVhkC0a+KDW4XXXlc9Ng3EhAWRnWD2IFa0=;
+	b=TmcbtK92AEksCoXlSbI2DcjyZAtHV9MazekgkbySlnJkPVM2x48RdGBbyFn179ewWCe7
+	 9g6WeIEcP7fygQIYFhu4JDM54RSEWNj24dBBnQg9+caYj9nI1vGacyKgxpERdnY2VcLtX
+	 jLup6Ny2rMl2KLtLNF3O2pWi54fGTlmTKFNONHa+8G0z3T5EN9DsRG7wQf0kLlJl346JV
+	 UUQH4LdypT63g2HbwLYnGeMhN4f2+78q6KdC4qLBdXDXUQI+CB/1Ixayf+CNRrLnx7r0K
+	 uXG5ja1mruXD7+3BQB4MwL2zpPDYbD8sEZrqJX6J7DhNMIE9OYYhUPLvrWgmoF1SzRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WOlH1Vk/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7SnqPu6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB18606A31E;
-	Wed, 25 Nov 2026 17:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE84606A321;
+	Wed, 25 Nov 2026 17:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOlH1Vk/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050421F000C6;
-	Wed, 25 Nov 2026 17:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7SnqPu6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAE71F000D0;
+	Wed, 25 Nov 2026 17:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795626260;
-	bh=W/TY/o5L6FL82HbkR1QG0Xw9yZZ2k6m7Wi2hS4YR928=;
+	s=korg; t=1795626263;
+	bh=XiI8BYz5vEVhkC0a+KDW4XXXlc9Ng3EhAWRnWD2IFa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOlH1Vk/orA3I4XlfRvEDB2ZKRIJANqK6YDQXnREtJWfltKIFI5TuflfIp90pk3OK
-	 2k6LcC7ckcXAPUyajCVFIoZvozpu1JagCe6RWTtBRDSXGNWWnSIQxY1LKm6xSxFwls
-	 +EDGZa2oxQlSrrv45HU10rUmyeXzaX+B8S2Ecxoc=
+	b=g7SnqPu6mocgyo6LLWR/m7tehdUF6w0ht492ebMLmwSYouto/JkM4FsIcZUtrVk2i
+	 ZOQXU8tK996DLRnrqd8k6b6ziK+z9dUGrdfl0nTKxmdSusYpkkN8wNMAZbMRMiY+bP
+	 CMCupRX0fKwmRG9pFlKqLYnYlOawNX787tjjrwbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Gautam <nikhilgtr@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Matt Ranostay <matt@ranostay.sg>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 784/816] iio: atlas-ezo: Fix humidity channel read support
-Date: Wed, 25 Nov 2026 15:38:52 +0100
-Message-ID: <20261125143907.320776769@linuxfoundation.org>
+Subject: [PATCH 6.12 785/816] iio: dac: mcp4725: Update the cached DAC value only on success
+Date: Wed, 25 Nov 2026 15:38:53 +0100
+Message-ID: <20261125143907.344017439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -69,39 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Gautam <nikhilgtr@gmail.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-commit 0cb3fc8987038a26ac0f581bfa26b16daf6ca6a7 upstream.
+commit 098a4c37dc8815ea941866179220394e4d182c67 upstream.
 
-The atlas_ezo_read_raw() function rejects channels that are not of
-type IIO_CONCENTRATION, preventing the relative humidity channel
-from reading raw and scale values.
+mcp4725_write_raw() updates dac_value even if mcp4725_set_value() rejects
+the requested value or reports an I2C transfer error. After writing 1000,
+a rejected write of 4096 returns -EINVAL without an I2C transfer, but
+out_voltage0_raw reports 4096. A later powerdown exit sends 00 00 instead
+of the 03 e8 frame for the last successful value. The EEPROM store path
+uses the same cache.
 
-Remove the early channel type check to allow both concentration
-and relative humidity channels to reach the mask-specific handling.
+Return the setter error before updating dac_value. This keeps the last
+successful software value for readback, powerdown exit and EEPROM writes.
 
-Fixes: dc3ebfcaa51f ("iio: chemical: atlas-ezo-sensor: add humidity sensor support")
-Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Reviewed-by: Matt Ranostay <matt@ranostay.sg>
+Fixes: cf35ad61aca2 ("iio: add mcp4725 I2C DAC driver")
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/atlas-ezo-sensor.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/iio/dac/mcp4725.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/chemical/atlas-ezo-sensor.c
-+++ b/drivers/iio/chemical/atlas-ezo-sensor.c
-@@ -117,9 +117,6 @@ static int atlas_ezo_read_raw(struct iio
- 	struct atlas_ezo_data *data = iio_priv(indio_dev);
- 	struct i2c_client *client = data->client;
- 
--	if (chan->type != IIO_CONCENTRATION)
--		return -EINVAL;
--
+--- a/drivers/iio/dac/mcp4725.c
++++ b/drivers/iio/dac/mcp4725.c
+@@ -359,6 +359,8 @@ static int mcp4725_write_raw(struct iio_
  	switch (mask) {
- 	case IIO_CHAN_INFO_RAW: {
- 		int ret;
+ 	case IIO_CHAN_INFO_RAW:
+ 		ret = mcp4725_set_value(indio_dev, val);
++		if (ret)
++			return ret;
+ 		data->dac_value = val;
+ 		break;
+ 	default:
 
 
