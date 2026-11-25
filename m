@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621280;
-	b=c8PXTsZJUwm7wWcLJpXZqh5x8nLeCLz/Z4mmRppW94C3b/0LJLqm3DmTBmtTIciMgmmO
-	 6xjWgUe4zl90ansSmoVE+u6ckNIStI2agjYVe1DyL7QKuOOH34n0L3aVQ/vHnaasOvsqU
-	 dtF3OvbOfizNn8swAr0uSvcMCC7YXkQBCQNmMIxYF1U7r085UFEYHqEIraB1gFkepJoR5
-	 AzeKxEc4FhJ/Sr8iOHjwHgLTZ3PVtK+AIJJDRL5uIZR87JPmSf94vwpCsu/ZuKsPcONer
-	 8w9BPw1BDm9b1y4WNFk6SJ42C2iTTd4afvFf5MzTzhA0+0I4eil6wjRj2dfWMZrJMyg==
+	t=1795621284;
+	b=PGM5cn+oIqidZJYJ7W9eFtYb4BMYgm2VTyF0zx3hJ9s3kDVk4oE1YNKUtm38I6bsMP7e
+	 /SvQT9FBJm2N00Q/y1IKS4f8CPOQ0kmbVNdW4tELKhEQ9ZsAFT+al4IelFJbIHTpjEk6s
+	 dfIa+6xcC7027YXs8FqvbeUrslvNaUGfCk1oAJ2Thi9FV3aQCip3xSztvJVPaKJuiM2IP
+	 6eq98BJHiKt7rJXL5AhKYceDpsg9uV9Wm3p3VaumK232scYtHxVZDTYwZPRamvQ9cbmKB
+	 G2aYZS2sfFJ2raTQOBDeaHmP7yDzMoy0PF75zysV5MrzAjRSoM6S4fX5s99BSzcct5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AFe0Hfux850qY1WS/p9Mvz+qh6I0nPj7oPQM2RtYaDg=;
-	b=qvrmy1OQSjIZ581ZCXo8FetNVbvjMj/nOgjYbzqibVhhGlgulgWYI4kNuzpynRyHN/nw
-	 +YfH2nNO6QnMMlxqWRN3mI5sbj39Iyqf4+D8+HAQCuQFv3+z6D8oPFzhJc+hm5AMeLWUn
-	 eRwuMeoS9FjaVbEA/myHC3KvO351TDo4DG7vet8tbAieNI1fDkY1WsNeJRYqCaF4qsIlk
-	 qcdrYdzEt5StYD8oWl2GIoM+/rnl8ngPZZ5cN6GKVZF9iqP5CpilV30/GxVyPIDZoJQWg
-	 XCm/KQD7M2Qkpn5YqxDHx7muRgM2DKYwQgxUKn7BAxz3ukhVER947ZRIeQV8yjAwlWw==
+	bh=4LZ1A1Xkdsaw2p2a1h+SCv37QZ6AGG6VKBza8uVQIZY=;
+	b=1mFJIJtToX5P9TidYiRVTDkPfi9rc0lZxiAuMgNtFDw4hhY46eGDgJJXnGIU9Lm+pd7B
+	 KFfUbo6bgFCqCS/jkaCqxiOFOhE/pEVCJe/VMx1esI0YwX0ZyPm2YXJUXZyzduqYXqqHn
+	 ySTNpSu7oxV5APVWw/E0wYAt/B8evEEP1/vJwVWFKzXP5g4XZLRncodJbvTSh6vtVhDL0
+	 pJt5L+te7d18z8dRrjevwrlrU5zCr6QON4bY0bQlSPM/ZPqImSS1EvtE3AjnZb0SUwSRt
+	 XzEzTumH9ikaXY1XOU58XIRKfpeSz9KGyycZQ7sh6bL6anr+t+NASYVVT+d1tJofnGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfUmDGGt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owEJrsYd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF3F606BF7A;
-	Wed, 25 Nov 2026 15:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5B6606A33F;
+	Wed, 25 Nov 2026 15:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfUmDGGt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC911F000EF;
-	Wed, 25 Nov 2026 15:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owEJrsYd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157BA1F000C4;
+	Wed, 25 Nov 2026 15:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621280;
-	bh=AFe0Hfux850qY1WS/p9Mvz+qh6I0nPj7oPQM2RtYaDg=;
+	s=korg; t=1795621283;
+	bh=4LZ1A1Xkdsaw2p2a1h+SCv37QZ6AGG6VKBza8uVQIZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfUmDGGtRiG7aJQP9zi4pBz7l5fuDgVZdHn1+Ri7QtBXfpTWDE/foOoReUQzzUFkY
-	 kHbxoX/P9vR1f8YXW4c/whI7d+QSA5iKk9zhx0Uc5cQp1nMVJypAWl+YvUZRUxufTX
-	 vINpX+KxIUBhgSAsL/Yk9NPxqMPCSQklzBjgQfrY=
+	b=owEJrsYdnTiBcpwYWHBy18hS3S+LNLvvsKV0apKtN0vRm37+IlIwVKw3O6jt7ERLT
+	 WWbsAx7jAHrxd164V03hfN211WTOvGn2BIlfYhuNUcbLB3CjWuDFXqT/NqkawJLdhy
+	 TFAPozwieNKJgZpw1aQVxqky5CXTnirOWTn+qV/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stjepan Poljak <stjepan.poljak@gmail.com>,
-	Sergii Ushakov <sergiiushakov@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Hao Qin <hao.qin@mediatek.com>,
+	Wenlong Tian <ot_wenlong.tian@mediatek.com>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 160/990] virtio-blk: clamp max_segments to virtqueue ring size
-Date: Wed, 25 Nov 2026 15:25:27 +0100
-Message-ID: <20261125143825.841680783@linuxfoundation.org>
+Subject: [PATCH 6.18 178/990] Bluetooth: btmtk: drop zero-length ISO packets from endpoint padding
+Date: Wed, 25 Nov 2026 15:25:45 +0100
+Message-ID: <20261125143826.261463807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,118 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergii Ushakov <sergiiushakov@google.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 434d2bc41bd0c0ac576d4d259bd9f2ab49071174 ]
+[ Upstream commit 8524c3588fbb9d5c1b876e6f908c42926845650d ]
 
-In virtblk_add_req(), each request consumes 2 extra descriptors (out_hdr
-and in_hdr) in addition to the data scatter-gather segments.
+The ISO interrupt IN endpoint delivers a fixed-size transfer that holds
+one HCI ISO packet and zero-fills the remainder. That padding belongs to
+the transfer rather than to the stream, so it has to be dropped instead of
+reported to the host.
 
-When a hypervisor (e.g. QNX Hypervisor) advertises VIRTIO_BLK_F_SEG_MAX
-with seg_max = 1024 alongside a 1024-entry split ring (vring.num = 1024)
-and VIRTIO_RING_F_INDIRECT_DESC disabled, lim->max_segments is set to
-1024. When the block layer submits requests with 1023 or 1024 data
-segments, total_sg reaches 1025 or 1026. This exceeds vring.num (1024),
-causing virtqueue_add_split() to return -ENOSPC and permanently wedge
-the blk-mq queue.
+btmtk_recv_isopkt() keeps parsing it: the zero bytes read as an ISO header
+with handle 0 and a Data_Total_Length of zero, and each one is passed to
+hci_recv_frame() as a complete frame. A single transfer yields a long run
+of them, which is what fills the HCI log with malformed ISO packets, and
+iso_recv() drops the SDU it is reassembling whenever handle 0 belongs to a
+live CIS/BIS.
 
-Furthermore, the Virtio specification (2.7.5.3.1) requires that a
-descriptor chain never exceed the Queue Size, and virtqueue_add_split()
-falls back to direct descriptors if indirect table allocation fails.
+A zero Data_Total_Length carries no ISO Data Load, so such a packet is
+never part of the stream. Check for the zero-filled remainder before
+starting to parse the next frame, rather than after assembling a 4-byte
+header: a remainder shorter than HCI_ISO_HDR_SIZE would otherwise be held
+across calls as a partial header, corrupting the next transfer's framing.
+This also means a fully zero-filled remainder no longer costs an skb
+allocation that gets immediately freed. Reaching a zero Data_Total_Length
+any other way is then a genuine error, not padding.
 
-Fix this by:
-1. Rejecting queues with ring_size < 3 at probe, or
-   ring_size < (queue_max_segments + 2) during resume/reset recovery in
-   init_vq().
-2. Unconditionally clamping sg_elems to (ring_size - 2) across all
-   virtqueues in virtblk_read_limits().
+This was observed on MT7925, but btmtk_recv_isopkt() is shared by every
+MediaTek USB controller that supports ISO data.
 
-Reported-by: Stjepan Poljak <stjepan.poljak@gmail.com>
-Fixes: 0864b79a1533 ("virtio: block: dynamic maximum segments")
-Signed-off-by: Sergii Ushakov <sergiiushakov@google.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260918135120.1261150-1-sergiiushakov@google.com>
+Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
+Co-developed-by: Hao Qin <hao.qin@mediatek.com>
+Signed-off-by: Hao Qin <hao.qin@mediatek.com>
+Co-developed-by: Wenlong Tian <ot_wenlong.tian@mediatek.com>
+Signed-off-by: Wenlong Tian <ot_wenlong.tian@mediatek.com>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 44 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btmtk.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index feb4dab8eac7b..6cfad73bf47df 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1020,6 +1020,30 @@ static int init_vq(struct virtio_blk *vblk)
- 		goto out;
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 961a47a9c8c43..51b55eceba5f1 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -7,6 +7,7 @@
+ #include <linux/usb.h>
+ #include <linux/iopoll.h>
+ #include <linux/overflow.h>
++#include <linux/string.h>
+ #include <linux/unaligned.h>
  
- 	for (i = 0; i < num_vqs; i++) {
-+		unsigned int ring_size = virtqueue_get_vring_size(vqs[i]);
-+		/*
-+		 * Each request consumes 2 extra descriptors (out_hdr and
-+		 * in_hdr) in addition to the data segments.
-+		 *
-+		 * At initial probe (!vblk->disk), each virtqueue must fit at
-+		 * least 1 data segment + 2 header descriptors (3).
-+		 * On resume/recovery (vblk->disk), each virtqueue must fit the
-+		 * existing queue_max_segments() + 2 header descriptors.
-+		 */
-+		unsigned int min_ring_size = 3;
+ #include <net/bluetooth/bluetooth.h>
+@@ -1176,6 +1177,14 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 		int len;
+ 
+ 		if (!skb) {
++			/* Drop the endpoint's zero-filled padding before
++			 * allocating an skb for it; a zero Data_Total_Length
++			 * check below would miss a padding remainder
++			 * shorter than an ISO header.
++			 */
++			if (mem_is_zero(buffer, count))
++				break;
 +
-+		if (vblk->disk)
-+			min_ring_size = queue_max_segments(vblk->disk->queue) + 2;
+ 			skb = bt_skb_alloc(HCI_MAX_ISO_SIZE, GFP_ATOMIC);
+ 			if (!skb) {
+ 				err = -ENOMEM;
+@@ -1199,6 +1208,17 @@ static int btmtk_recv_isopkt(struct hci_dev *hdev, void *buffer, int count)
+ 			/* Complete ISO header */
+ 			hci_skb_expect(skb) = __le16_to_cpu(dlen);
+ 
++			if (!hci_skb_expect(skb)) {
++				/* Zero padding was ruled out above, so a
++				 * zero Data_Total_Length here is invalid.
++				 */
++				kfree_skb(skb);
++				skb = NULL;
 +
-+		if (ring_size < min_ring_size) {
-+			dev_err(&vdev->dev,
-+				"virtqueue %u ring size %u is smaller than minimum %u\n",
-+				i, ring_size, min_ring_size);
-+			vdev->config->del_vqs(vdev);
-+			err = -EINVAL;
-+			goto out;
-+		}
++				err = -EILSEQ;
++				break;
++			}
 +
- 		spin_lock_init(&vblk->vqs[i].lock);
- 		vblk->vqs[i].vq = vqs[i];
- 	}
-@@ -1247,7 +1271,7 @@ static int virtblk_read_limits(struct virtio_blk *vblk,
- 	u16 min_io_size;
- 	u8 physical_block_exp, alignment_offset;
- 	size_t max_dma_size;
--	int err;
-+	int err, i;
- 
- 	/* We need to know how many segments before we allocate. */
- 	err = virtio_cread_feature(vdev, VIRTIO_BLK_F_SEG_MAX,
-@@ -1261,6 +1285,23 @@ static int virtblk_read_limits(struct virtio_blk *vblk,
- 	/* Prevent integer overflows and honor max vq size */
- 	sg_elems = min_t(u32, sg_elems, VIRTIO_BLK_MAX_SG_ELEMS - 2);
- 
-+	/*
-+	 * virtblk_add_req() uses separate outgoing and incoming header
-+	 * descriptors (out_hdr and in_hdr), consuming 2 extra descriptors
-+	 * per request in addition to the data segments.
-+	 *
-+	 * Per virtio specification (2.7.5.3.1), a driver MUST NOT create a
-+	 * descriptor chain longer than the Queue Size of the device.
-+	 *
-+	 * Clamp max_segments to (ring_size - 2) across all virtqueues so
-+	 * that a request never exceeds the ring size of any queue.
-+	 */
-+	for (i = 0; i < vblk->num_vqs; i++) {
-+		u32 ring_size = virtqueue_get_vring_size(vblk->vqs[i].vq);
-+
-+		sg_elems = min_t(u32, sg_elems, ring_size - 2);
-+	}
-+
- 	/* We can handle whatever the host told us to handle. */
- 	lim->max_segments = sg_elems;
- 
-@@ -1460,6 +1501,7 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	mutex_init(&vblk->vdev_mutex);
- 
- 	vblk->vdev = vdev;
-+	vblk->disk = NULL;
- 
- 	INIT_WORK(&vblk->config_work, virtblk_config_changed_work);
- 
+ 			if (skb_tailroom(skb) < hci_skb_expect(skb)) {
+ 				kfree_skb(skb);
+ 				skb = NULL;
 -- 
 2.53.0
 
