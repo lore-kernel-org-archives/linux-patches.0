@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621363;
-	b=uvJfEGkMzRO4/s0C0MCDcaT5oes3dhJ4D+wmUzgmFidgvQ8avTsoNyUYhDRZi6bzKrYp
-	 k7pd4ZYWjNe+K7VSp8XTY9rQAGQwJnmw3+IwgkFOSgaQXYlQ7V3PEKPgAy8HCK4Jo0TFf
-	 u/y6wBw3IvwOmh8VjPbbOFi8YrdVU9r7foMIQZ/6ehDrWhbnU3xFRmldiGBUxYib8HylQ
-	 lO9kYYciBZsmN7dRImADbZE0UWvvW0de9YCLcsDTFnXHNObHqmREffJMPQa7HIshqhTEl
-	 Lk4cubQuq7xsdZcacoi9HelyoSBTW3Z5wEhPf5rQJw1lHlYynQ9l3IXWbtlIhLJRVpg==
+	t=1795621367;
+	b=5hZ+XUMTZxNp1yY8TiUoV13/6RikrPNZz2B+auwFED06f9ow6GLZOnKMjB3Rv4dJM3em
+	 0+NGBe59RByBGp86LO8VCcLmAPoc72IK71au04N2UQZHB8PLThnqlfOlaHX43RDCU9zOM
+	 jAUCpg+A3AIggVKhlwpSIVldhF4J8uEs9NfvjJVSMD5xHoFGwiIB2Va+VDCv5sHLlCHKm
+	 OB8g3lAoLwnxabXsatM0nYOu5tLVwbCeEnCd793bUrt923J6q6w8JVcyhiX26NpxCRX3t
+	 etIpMTpkr+/8Zx/ZJ5P+vPzERecDAlzXM6CVMyMp3iumZ6TlAo/hOiJSOXxFO/x0oWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621367;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rjGtR+ZzVlUp1+RvU/qOD26ngoBr2BM4cI51x42SnLg=;
-	b=TuL5mwo/Zl/+/YXZKFexDza9f13hObGCe39oUmX82bL0lcTAaPMHqlE44vwS1Cx6aQqn
-	 8jl+I+BEmeipPkckuikN3acOY9tOlgIiho7F2iW+FM/cyvi/ELZ4zHIpHwQkQJCjboMR3
-	 tO8SmhUrPqLUf3k2pbjM39oCsLkkevxBzUnkBeLf/H+voqohEbxVP//8l1XhMr4yXHCVX
-	 cizechZKzZAzKR7GuEWMt3uHIzXJeuDjZjQKYNNt4bElzJzb+BiwDHqKMfaqjrzZoAnUm
-	 3iRuuttpd4sXTDHOn0z2Q1yCBv4JFxOgycrwNpB6CBK1/NWVcURITGsDFCErNhQA8Vg==
+	bh=zGlUvnHPG93tv3t2R2lS8p7/Tm0Id3Ejsqj/F5dNw4o=;
+	b=ZTSD9nuM/Ey2R1rK6LWTJo1zjm4UB0HwOXSqwxr9Cdp1WZmSdzrVDiZPeYSstthsC+kQ
+	 a+1W8ecAYsfbtFcEw8DwnU+ZqqLr9eZ/VzmXljCK553JuyAyLrBrc29QZ5Q/tqSkc3NE4
+	 2pjVlE5kJkBnnIFEc3FrzUfsjCHbXJlW3U43pZEfSCVzOchNAt8AKETSrHuXydcY23/17
+	 +irSFPLIOeD1kWx86HCFO3JDWOuQTs+UG1rmmmi33hl+fN1eBaN/r6boDq7SJPPjbAcDc
+	 4ZbJQgeL2CJG06wiwsOyuUcgfw2NuxCYp3zcTe3kCE6leHsNWOtp5V4j0TnubdcOWcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nEM2AHw+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTI1q2J4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F38606BF4C;
-	Wed, 25 Nov 2026 15:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346EB606A33B;
+	Wed, 25 Nov 2026 15:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nEM2AHw+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23271F000D1;
-	Wed, 25 Nov 2026 15:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTI1q2J4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC241F000D2;
+	Wed, 25 Nov 2026 15:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621363;
-	bh=rjGtR+ZzVlUp1+RvU/qOD26ngoBr2BM4cI51x42SnLg=;
+	s=korg; t=1795621366;
+	bh=zGlUvnHPG93tv3t2R2lS8p7/Tm0Id3Ejsqj/F5dNw4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nEM2AHw++Pjm/wyTkuX6m+9LJVFNf3Lbb0LXwbupcEgtaFWUGlgdbJw91tk9+jBGX
-	 u8ypobyWeMrWSos7CJIokon8EBBAYmB32S9g0lOCj2E3kUb+7LJyyNRkHC5Y4Wtd8M
-	 xrqsngU8LsAZ0wv/yQzlrWwjKes3BK62JBH/wu7c=
+	b=dTI1q2J45O3H9I9J4i/vW6IZORp9unay90+w0DvAvQljpQ9Mn2H8y49EJWcuTEzC1
+	 MqT9vWOMkcV9obIGnBwSYKtfFK+07iG/wevsC2ZF8sTKONcJe5Xg1+wnF6iSfMMUGm
+	 sD+BOjiz3KJRUy2wr1Sb5BvEVsq3VpqroSfDBy5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Jiang <cheng.jiang@oss.qualcomm.com>,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 200/990] power: sequencing: qcom-wcn: increase WCN7850 power-up delay
-Date: Wed, 25 Nov 2026 15:26:07 +0100
-Message-ID: <20261125143826.779707730@linuxfoundation.org>
+Subject: [PATCH 6.18 201/990] vhost-scsi: validate event queue descriptor direction
+Date: Wed, 25 Nov 2026 15:26:08 +0100
+Message-ID: <20261125143826.803204805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,56 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit bd60a639b621453fe37b780df4b6d3a13f981f13 ]
+[ Upstream commit 3d8c5b714c186d08c8fe8c8cfd1f9b89525ab067 ]
 
-When the WCN7850 is powered up from the Bluetooth side first, i.e.
-BT_EN is asserted while WLAN_EN is still low, the chip starts from a
-cold state and is not ready to accept the first HCI command 50 ms after
-BT_EN goes high. The first command (0xfc00, read QCA version) is lost,
-hci_qca does not resend it and fails after the 2 s command timeout:
+vhost_get_vq_desc() returns the number of device readable (output) and
+device writable (input) iovec segments. A guest can submit an eventq
+descriptor chain that fills vq->iov with output segments, setting out
+to ARRAY_SIZE(vq->iov) and in to zero.
 
-  Bluetooth: hci0: Reading QCA version information failed (-110)
+When the host later queues a vhost-scsi event, vhost_scsi_do_evt_work()
+uses out as the index of the first input segment. This accesses one element
+beyond vq->iov and triggers an array-index-out-of-bounds report. With
+panic_on_warn enabled, the report panics the host.
 
-When WLAN is powered first, 50 ms is sufficient, so the failure only
-shows up in the BT-first ordering. Measured on the affected board by
-which enable pin rose first:
+The event queue accepts device writable buffers only. Reject chains that
+contain output segments or lack an input segment before using out as an
+index. The input check prevents the out-of-bounds access, while the output
+check validates the eventq descriptor direction.
 
-  pwup_delay_ms   BT-first boots   with -110
-  50              9                9
-  75              23               0
-  100             21               0
-  300             20               0
+I found the descriptor direction issue myself, though the patch was
+written with AI assistance.  The out-of-bounds read with an
+output-only chain was separately reported by Jia Jia.
 
-Raise the power-up delay of WCN7850 to 100 ms. The delay is shared by
-the Bluetooth and WLAN targets, so WLAN power-up also waits 50 ms
-longer.
-
-Fixes: 2f1630f437df ("power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets")
-Signed-off-by: Cheng Jiang <cheng.jiang@oss.qualcomm.com>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261102094800.3225454-1-shuai.zhang@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: a6c9af87363c ("tcm_vhost: Add hotplug/hotunplug support")
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Message-ID: <20261009-fix-arrary-index-out-of-bounds-in-vhost_scsi_complete_events-v2-1-1f7689a54735@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/sequencing/pwrseq-qcom-wcn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vhost/scsi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/power/sequencing/pwrseq-qcom-wcn.c b/drivers/power/sequencing/pwrseq-qcom-wcn.c
-index 663d9a5370653..4720cf0ffb664 100644
---- a/drivers/power/sequencing/pwrseq-qcom-wcn.c
-+++ b/drivers/power/sequencing/pwrseq-qcom-wcn.c
-@@ -324,7 +324,7 @@ static const char *const pwrseq_wcn7850_vregs[] = {
- static const struct pwrseq_qcom_wcn_pdata pwrseq_wcn7850_of_data = {
- 	.vregs = pwrseq_wcn7850_vregs,
- 	.num_vregs = ARRAY_SIZE(pwrseq_wcn7850_vregs),
--	.pwup_delay_ms = 50,
-+	.pwup_delay_ms = 100,
- 	.targets = pwrseq_qcom_wcn_targets,
- };
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 4c2964dcb78c8..ba5e454ef2667 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -607,6 +607,16 @@ vhost_scsi_do_evt_work(struct vhost_scsi *vs, struct vhost_scsi_evt *evt)
+ 		return;
+ 	}
  
++	/*
++	 * Eventq buffers are device-writable only. A nonzero in count
++	 * guarantees that out is within the bounds of vq->iov.
++	 */
++	if (unlikely(out || !in)) {
++		vq_err(vq, "Invalid event buffer: out %u, in %u\n", out, in);
++		vs->vs_events_missed = true;
++		return;
++	}
++
+ 	if ((vq->iov[out].iov_len != sizeof(struct virtio_scsi_event))) {
+ 		vq_err(vq, "Expecting virtio_scsi_event, got %zu bytes\n",
+ 				vq->iov[out].iov_len);
 -- 
 2.53.0
 
