@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625631;
-	b=l3r+6xUZO4z5R7uQthc3agdlZaEVMy5M62+WtEKlRl9crLOTe5C0g1Nhwc+0g/5knIVC
-	 5Mg1SYVCNCXCsLPDV0XzrCMMUVwoGuK05iQIqxc3QCc/DsSX4zNDAvszk9lHd0cwT4jJ7
-	 hmljmxkENNwW6qyzVAP0hap1mstyOzjre+0PAh7RqBO2ipNoSg+rxkPy+d01wsfEKzwhi
-	 oGvZ5kH23XxyZ16zZtgWG5DotICyJ5nvkPGQohM1NCRj8x3LpmUjluyB0I2TfjLvv+b6U
-	 fEBIOdiAoQvZXW5m24m28Cf73j/A5zNWOQ8LYaCWHY4Ty5XjUIYGOo+e8p+xUer6X6g==
+	t=1795625634;
+	b=0O/HHrDBt1h1S1ITz37U5u+4+JSo8/cSL5sv5jHTTkID+OJJOy6yVXmsAT8JfjkiSfbf
+	 +KVS7A9vCdRAQJwu5amjGxPWaKbnG4eLaVDASIYatjld7RRjy7v9JyI2rZQi49EV6GOMQ
+	 mvSWw+JNOwSLOIZTehCsN6m5JvHeZsSy//WhLXO4+OzCeCAu1Y+CgzBTaHs3RB8uSsofE
+	 E6SgdGsO7fyh4GaQxFba5dSqKRustIbNmL9vZOuJBab7C7mLVGv2p++GmoGVLWRmXpppz
+	 BNS6UjO346X7geZT3CjsjAQu3X0g6pIz5JFJKzCtDLBRASdYdWPuOEq+JaQCKcE+4yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Trou5+PekrFvfQ/MqEy0VYmXCoAFk5+qGMR78v7mVPU=;
-	b=HV8WpGTSjLwew6XtHrSZZLh2HLKkRkcaBJevJUlnvZ71vnpTa43dczHRWDrnOuQeog+r
-	 oeH6QD3QaoxR8pMlSyr6w4GlKbyYeIvVk1dsfTQD9JZblwNMwrFzmI/nD2oHZJ5EUV99j
-	 tppJpr/l7iR+N4J+47Je7XUbDF/UBWy7yQfQOTi1z7pGsyZY2tjhC/H1r1YHz2joJfzSd
-	 E8EzFc33SSpFR+Mdyq+SDjPYFF3ywOy1hGKSjWB2FY5X+MDhwyy4fdYNafFxfsRyZpacb
-	 Flb3yh1yTA0xjfr49tgQn0mT904az1RMQzlWZKpT3E/I+ZmkQEiKzSJybsxoieE6phg==
+	bh=Qy+xbyM8nFM5LAP/zEJeFsr+ph8capYYNsk0FD4NHzI=;
+	b=LlKddAu5dWEVhmWizivmamdgOVjaqI7XC96K11zn8VAyHHOVMH8c5CTiT+dS5m6If+4a
+	 MNJKgw0OZN1dfVDGgFAP7gCchY/kYmh1KldZ/D33Y7VgFYqmauBBmfTp40TpCpmweBXuA
+	 qrFTuksJIW/1T/aueuayLMc2Fc/ijswEcEmAaq75nuVbLtVIf3t2JjPbhcYzM+mOkB27b
+	 VTz8ob3W6O9Q6rjPkRjb2G8ehWM0pGcWhsn0gmoiPPjhDFSvnjkQVI9FQQMMJVW7I6Y2k
+	 08HExTbmHwO5Ue03DUg2wlRwGbOsFaCGPb7RcfUxagVWzgYG4h13bc8YLYrNf4d28jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P9/7ELyT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOAUH8Ho;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB712606A326;
-	Wed, 25 Nov 2026 16:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB69606A323;
+	Wed, 25 Nov 2026 16:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9/7ELyT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209CA1F000D2;
-	Wed, 25 Nov 2026 16:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOAUH8Ho
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE851F000C0;
+	Wed, 25 Nov 2026 16:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625630;
-	bh=Trou5+PekrFvfQ/MqEy0VYmXCoAFk5+qGMR78v7mVPU=;
+	s=korg; t=1795625633;
+	bh=Qy+xbyM8nFM5LAP/zEJeFsr+ph8capYYNsk0FD4NHzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9/7ELyTBr8lF3tLX4CJO5AehOEFmwIl36fKht58RSgykUwSuMC3meE13m6xiEp2W
-	 ZF7ROVVJCwhv8BXl5MYmGtlGpPaKlfFCYt4LL/mGR67l7Ene20JreF9h2z/7U8yqYB
-	 fMAL9bbr+jV4ILabG1u6mmjF0lX/XJiglohWt7jc=
+	b=eOAUH8HoJZsExXMQKkcURAt0hJzNaVQX1JzQ7yZ5Hc+e6MuX9AeW0Wv3Yf5Y241LB
+	 QJgFFhzz17939zLSecK75Yn5x1jlMGdeZKwLMardrooShnGv826b8BICmw2ciFcxH2
+	 9wTO1nm5H3xWOMeRPrArp48WJfhFSOKhVtUblk4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 580/816] net: bridge: use one headroom snapshot for ND replies
-Date: Wed, 25 Nov 2026 15:35:28 +0100
-Message-ID: <20261125143902.605758552@linuxfoundation.org>
+	Tapio Reijonen <tapio.reijonen@vaisala.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 581/816] net: dsa: microchip: initialize the IRQ access mutex
+Date: Wed, 25 Nov 2026 15:35:29 +0100
+Message-ID: <20261125143902.628145572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -71,60 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-commit e573df093ef849bb7c763aed591cb6556b110671 upstream.
+commit ba1dc196502f3435f4ae53ed6745caacf066f83e upstream.
 
-br_nd_send() calls LL_RESERVED_SPACE(dev) once to size the reply skb and
-again to reserve its headroom. When a port requiring more headroom is
-added to the bridge, br_add_if() can increase dev->needed_headroom
-between the two calls. The reserved headroom can then exceed the space
-accounted for by alloc_skb().
+ksz_switch_register() initializes dev_mutex, regmap_mutex, alu_mutex and
+vlan_mutex but not lock_irq, which the IRQ chip takes in its bus lock
+callbacks on every mask and unmask of a switch interrupt, and the PTP
+code takes the same way. The zeroed mutex happens to work on the
+uncontended fast path, but with CONFIG_DEBUG_MUTEXES the first lock,
+from the IRQ domain mapping during probe, warns:
 
-Take one headroom snapshot and use it for both the allocation size and
-skb_reserve().
+  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+  WARNING: kernel/locking/mutex.c:625 at __mutex_lock
+  ...
+  ksz_irq_domain_map
+  irq_domain_associate_locked
+  irq_create_mapping_affinity
+  ksz_irq_common_setup
+  ksz9477_setup
+  dsa_register_switch
+  ksz_spi_probe
 
-Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261103075439.43644-1-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+and turns lock debugging off for the rest of the boot.
+
+Initialize it with the other mutexes.
+
+Triggered at every boot of a KSZ9897S over SPI on an i.MX6 SoloX board
+with CONFIG_DEBUG_MUTEXES, on v7.4-rc1 and earlier. With this patch the
+same board boots with lock debugging enabled and it stays enabled
+(debug_locks 1) through two hours of unrelated stress tests.
+
+Fixes: c9cd961c0d43 ("net: dsa: microchip: lan937x: add interrupt support for port phy link")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261104-ksz-irq-mutex-init-v1-1-e3bb7d9dbd80@vaisala.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_arp_nd_proxy.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -259,6 +259,7 @@ static void br_nd_send(struct net_bridge
- 	struct sk_buff *reply;
- 	struct ipv6hdr *pip6;
- 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
-+	int headroom;
- 	int ns_olen;
- 	int i, len;
- 	u8 *daddr;
-@@ -268,7 +269,8 @@ static void br_nd_send(struct net_bridge
- 	if (!dev || skb_linearize(request))
- 		return;
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -4806,6 +4806,7 @@ int ksz_switch_register(struct ksz_devic
+ 	mutex_init(&dev->regmap_mutex);
+ 	mutex_init(&dev->alu_mutex);
+ 	mutex_init(&dev->vlan_mutex);
++	mutex_init(&dev->lock_irq);
  
--	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
-+	headroom = LL_RESERVED_SPACE(dev);
-+	len = headroom + sizeof(struct ipv6hdr) +
- 		sizeof(*na) + na_olen + dev->needed_tailroom;
- 
- 	reply = alloc_skb(len, GFP_ATOMIC);
-@@ -277,7 +279,7 @@ static void br_nd_send(struct net_bridge
- 
- 	reply->protocol = htons(ETH_P_IPV6);
- 	reply->dev = dev;
--	skb_reserve(reply, LL_RESERVED_SPACE(dev));
-+	skb_reserve(reply, headroom);
- 	skb_push(reply, sizeof(struct ethhdr));
- 	skb_set_mac_header(reply, 0);
- 
+ 	ret = ksz_switch_detect(dev);
+ 	if (ret)
 
 
