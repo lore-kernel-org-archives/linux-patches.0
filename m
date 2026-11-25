@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623679;
-	b=nY/2Xq0lAe8FqGQqyqwvcUff7wT6H39Lh/id+Dmv6lkynu2kHO7BnEhP9d9cLH748jUX
-	 UQ0X+Qa6I2fvz4VKM5Q+JJSgFFycYP4fE+CGdKEVPNBVmG4KWJpHMrQjs2gyz55AiW0UU
-	 pgAdbkBmqckrFtSshqtnK7aKTT2J2eoI0L+L/mGFD8UCB1Dz6plM18aOZuuAl5lrzr0oG
-	 cX0wjQjRWbhIQRq9sBMFAH6pIRbopu1+Yb8/Nfk4pLTUDBDNGJLNLPCwCk1NGQISdfFPr
-	 Jsicx9q7tRC9SL9kCFBKCOdfb7kTyg3lGo7oxpCKDR0B7vreDs4WWnb8K3jb4AJ8ppw==
+	t=1795623682;
+	b=cX8eEbDPk693WV08MIN9EMmenLPnl9Z5+lZm7HtDC3j9Jm5jzb1N59ALGjCG8qSoNPI0
+	 5fHbFM4dmiu+eBl2ykue5+9lk9tDIPQlEMzpxzq/rd968AhsCZOvwXpfJKrmkWRMh3w+h
+	 PYnFmAONswcA79nkUcK1dtkU63GErwjgTzdB+8EI9UM7Wc93mD9CPVhs8bYlSXpoaCr8Z
+	 4Yu4fqVBzrDBfz8RbDmBwbWXRan9N9gvmrK4cGAv9xrfKz+/gfYhpBjoE2sUgXBi4+Tdm
+	 7Udrlf0VNMUNY1cQn1JIQAFzbLUkfDZKaI6uiyKSOge5C+oZNKwA74qiE/f7Nvq6srg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623679;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623682;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H4emsa4a0m0+MChQtZHWWISc9JPNUd3Qpn3xDHDVBgA=;
-	b=SGGFtKRS3ucC9t5lYznijeXGEF31P2BCDbDDpmB3H9cxe9Ce4+6Xx3C6TjVu+1Xfs74a
-	 8hhHSv55PaFYTAjKE6jrSPiMOQQweMcW/mw4YDFEqt+xTx38ucusql+31sxwde9wylemY
-	 v8NZXecOlLThBEWsVXv+nEN0G+NLCs0/X2gmQhggs1SFawQqn65LHWcs/vom3NXZ7QlGF
-	 DN9USPPbemq9DoHI8l+Kz0fbKUrIhEk+5UnO2hHQJSmuV3ZMO6xvHdSPTgeEpYAskwgrA
-	 b1iroxdjrrinY7VcEzPr9dqR/16RlEtJDmvoGDeUHS1A/ockzl7lxgqfNHxn+GQcE8w==
+	bh=673k1/OsoKZnIByP1RKa9BjgAZu5ZKnuXMR5lCrjljY=;
+	b=cLXBmcAbrGiXa51/LQq5mlxLiQ4j3yjDfAw8Ok+/fd/X0zjHRuedNVcJ01K3ZZefwfon
+	 HS7XpD5ivjrIIaMQ8qG/COuy9VCcAa3ZAtafcekgk1a+5UQPZgLgV5VRnhlrZleh5g2yt
+	 E1FV+ff1rbC6xv4xt7oNrjL9dedWw8zsWoH6+tfGY3jGOmeiTgKP+lVEY2y6hctHfL63V
+	 aW9gMrz7ZBnjeb9bNLxVSIMjoyj0lHeVPUmMIWFEkh6w3hW6FHPZbFVMWMo1UM04K+m3+
+	 mjb3598IRfUWcRqB1inE3Oy6Usi2oAQu3ZSBolXtMg9n9R4uMArvV/l8y/SphJiaWug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqFxumQ7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eg8arwr7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C130606A332;
-	Wed, 25 Nov 2026 16:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742C3606A339;
+	Wed, 25 Nov 2026 16:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqFxumQ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AB31F000C6;
-	Wed, 25 Nov 2026 16:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eg8arwr7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161121F000CA;
+	Wed, 25 Nov 2026 16:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623678;
-	bh=H4emsa4a0m0+MChQtZHWWISc9JPNUd3Qpn3xDHDVBgA=;
+	s=korg; t=1795623681;
+	bh=673k1/OsoKZnIByP1RKa9BjgAZu5ZKnuXMR5lCrjljY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iqFxumQ7qo03draTMmIJy4tgpEfli4AfDIzbyXHZUlShv4BcX+dWjuR3yZ1IvS7Mp
-	 wIvmYYEZUoJgwbBiAcYDMd1paKQl1GmtXrnw/EwZnyIiafzuOaxHYbytY9d7OZG48O
-	 t/Lewh6hcq5exIJrl64Q/pYZGUgoN4IZrcjO/fLU=
+	b=Eg8arwr7dznxRutEAqk/pkPnzr6VLoQYBL8OTwgaqvFyr+8kuyUNpHxqwKGaIUgx8
+	 cy8Zqk1WPQHIOCYBP3k7SFCYpR82wy1OdIy5SuHxMwWUcNAJV/q0ianQli+807W1xf
+	 H90CrcftrephUo4CqnHvPu4JJdhSX3TTZdCN8AGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 937/990] USB: serial: io_edgeport: fix potential close() use-after-free
-Date: Wed, 25 Nov 2026 15:38:24 +0100
-Message-ID: <20261125143843.940187552@linuxfoundation.org>
+Subject: [PATCH 6.18 938/990] USB: serial: io_edgeport: fix potential NULL-deref at open
+Date: Wed, 25 Nov 2026 15:38:25 +0100
+Message-ID: <20261125143843.963913720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,48 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 839ff5fa30995c40cd5fba15fd976ad63416738a upstream.
+commit a0403880a0a638f189e5187068244d9fd5bc8d4d upstream.
 
-Add the missing open check on write() and locking when updating the port
-status during close() to prevent a racing interrupt completion handler
-from trying to submit more data for the port while its write URB and
-FIFO are being deallocated.
+Do not mark the port as open until after the write FIFO has been
+allocated and initialised to prevent a racing interrupt completion from
+attempting to send stale data and dereference the FIFO buffer pointer.
 
-This issue was flagged by Sashiko when reviewing a related fix.
+Note that the open flag defaults to false and is cleared on close() so
+there is no need to reinitialise it on every open().
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://sashiko.dev/#/patchset/20260714101316.823942-1-shpark061104%40gmail.com?part=1
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/serial/io_edgeport.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 --- a/drivers/usb/serial/io_edgeport.c
 +++ b/drivers/usb/serial/io_edgeport.c
-@@ -1085,7 +1085,9 @@ static void edge_close(struct usb_serial
+@@ -885,9 +885,7 @@ static int edge_open(struct tty_struct *
  
- 	/* port->close = true; */
- 	edge_port->closePending = false;
+ 	/* send a open port command */
+ 	edge_port->openPending = true;
+-	edge_port->open        = false;
+ 	response = send_iosp_ext_cmd(edge_port, IOSP_CMD_OPEN_PORT, 0);
+-
+ 	if (response < 0) {
+ 		dev_err(dev, "%s - error sending open port command\n", __func__);
+ 		edge_port->openPending = false;
+@@ -897,8 +895,7 @@ static int edge_open(struct tty_struct *
+ 	/* now wait for the port to be completely opened */
+ 	wait_event_timeout(edge_port->wait_open, !edge_port->openPending,
+ 								OPEN_TIMEOUT);
+-
+-	if (!edge_port->open) {
++	if (edge_port->openPending) {
+ 		/* open timed out */
+ 		dev_dbg(dev, "%s - open timeout\n", __func__);
+ 		edge_port->openPending = false;
+@@ -926,6 +923,10 @@ static int edge_open(struct tty_struct *
+ 		return -ENOMEM;
+ 	}
+ 
 +	spin_lock_irq(&edge_port->ep_lock);
- 	edge_port->open = false;
++	edge_port->open = true;
 +	spin_unlock_irq(&edge_port->ep_lock);
- 	edge_port->openPending = false;
- 
- 	usb_kill_urb(edge_port->write_urb);
-@@ -1127,6 +1129,12 @@ static int edge_write(struct tty_struct
- 
- 	spin_lock_irqsave(&edge_port->ep_lock, flags);
- 
-+	/* avoid accessing freed fifo if tty_wakeup() races with close() */
-+	if (!edge_port->open) {
-+		spin_unlock_irqrestore(&edge_port->ep_lock, flags);
-+		return 0;
-+	}
 +
- 	/* calculate number of bytes to put in fifo */
- 	copySize = min_t(unsigned int, count,
- 				(edge_port->txCredits - fifo->count));
+ 	dev_dbg(dev, "%s - Initialize TX fifo to %d bytes\n",
+ 		__func__, edge_port->maxTxCredits);
+ 
+@@ -1818,7 +1819,6 @@ static void process_rcvd_status(struct e
+ 
+ 		/* we have completed the open */
+ 		edge_port->openPending = false;
+-		edge_port->open = true;
+ 		wake_up(&edge_port->wait_open);
+ 		return;
+ 	}
 
 
