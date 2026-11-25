@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625643;
-	b=ScXhx1joX66O0YoxynP29twoCQQJNKWdDbjtxsAf4PmsL4Fk99EPBbOZJhVSogHA5p1o
-	 JxE4IZXaW+kzoMXsPvcP3SXtZP0RVOuOgiI+o696ma4GvfZ3HVYts/mzYIEfDBrCC1kVp
-	 0wjlfCRR57RkbEEcOzN5QuT4PO0+6lHHkuSCXjTBkYkHCTI1hhaS42f8aeWXdUA3e3MSU
-	 NkPGg4tR4d2OKw5HMub+iWOqiXozuRCeT6gDSAqyXxkpno+2GMS/JfIvGJOXMspu4ojFR
-	 KAvzCtVn9cuv5Q+rWE//eCFxmUxJNXyVa8vQ2EZqDfd04Nlqi2+JzM8UcmHjXQrjNxw==
+	t=1795625646;
+	b=GS1aRXDCegHUJJIzfE1M3UYQdWKue5/vbUN/aUlynf1cDKMnPW7CxutgDNv7TAcsjEIb
+	 hroLWVCEOTrSc/mBX9sH5NWyLjA/fUd70TUwTJH6JS+1QeCKv/zK86N0US50amb2576Yg
+	 xBXoQQseTRjccT+Mi/ZVnEYwtEkIDHGEEAFxhjbmLQbPbQ0k8FJh70wbdRDVMVXvzipuT
+	 uYg0jUX3S/z7OEu0op0T9OwL3BdrAwcssmQ4eRwE4G90S4d05UDJM7PvedaCS0YK8zhvv
+	 6AK8/JFD93JOqi6uhqY4autTbq72zMxBIc91ScN/aIJEz/KwGR77qngJ5CJazruDJMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7cvXgg24xsT7beYIlqqfb/toKOS9yr11SYmhIcVULy8=;
-	b=ndEYeAZLxLVSjItgoWuDPzNjsBdhADh9KTnP24pbsO9kLiK10K9YS0tj3+sU8hqbcT8Z
-	 WvlEcTo84W5NVoOMvcj4Nu9Qq7iNxOMZvCLuBnQBksh20cea5pRis+F5PtxLBUpoDSXr3
-	 u2O7PvzwRAyruXK+gNueUigru/GILGS/RmSvKNkaG5Aq0qm7y9FLzqbVOVbCoQ8v8Jlzk
-	 UAD1/b1MCKZkXAZ59OOg+NGu7Hrj62YkdvQvgYerb5/+8ys7tyRXlQxpokaC97H8g89od
-	 YpYWGIOA92mnAGxNnkOXLgItJGuXK+Wt67N1m0/Cb6DysdCfq01S9ezsAikn8OXstnw==
+	bh=yyZAtjeum6NBn4h/vPBEX4sy8ews3CXj6Ae8uFIAwac=;
+	b=sFCDdc2UeRGNs51cNGyO5LryQD6DbHmZvy9OSNhie5y7Lh/Hsi5GK3b1VfymKg8kBR3q
+	 kbG80vSDtr4Me9JyJbp5dG/OGe+j7vQgzLW9awvC+WNTc4vN9UZ/NYFwLre71HKD/TnRx
+	 UIdZNLCYLIqOyJBFHRfHqz6d31EH26jfKxsR8k71oxeAp1ODH9a7eDwidd1OHY9WbAzy3
+	 FToHu7FQTk+hufyjX5zZKoeP5e7TsDBjyGYmxJAOzCQXPl/wGV/Y8v6G0wUEAi93dCwba
+	 I/nmd95BzMD7XMnzO2EUWY9HXN2tD4/NbRt3jCwvJJE/XApozVy2RFpd1raY6tJS04A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yq7M7fU8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iycuASVx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74ABF606A321;
-	Wed, 25 Nov 2026 16:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409A5606A31E;
+	Wed, 25 Nov 2026 16:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yq7M7fU8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB911F000C4;
-	Wed, 25 Nov 2026 16:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iycuASVx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915581F000C4;
+	Wed, 25 Nov 2026 16:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625643;
-	bh=7cvXgg24xsT7beYIlqqfb/toKOS9yr11SYmhIcVULy8=;
+	s=korg; t=1795625646;
+	bh=yyZAtjeum6NBn4h/vPBEX4sy8ews3CXj6Ae8uFIAwac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yq7M7fU8IsefjMl8XjEhDr2yjsgEn3dlf7vt5yxHIFwJYIveH/hxRnF3W83V1uVbM
-	 kMfZVro4Cj7il8n6M2Cjj2t3q6j2W11BiBBNlXMNY2VXoHMaziTMSvIKNwPdkIrde+
-	 oGJxExcyKXs56E2p8uMHWWO80oTY53bwNeyNbfvY=
+	b=iycuASVx1KVfeGlP4UZwsYyQZUMDGiLiK3b9EHa+Ya8NI4DRPQmPx3kzup2NpoJIA
+	 cUvwHFPqLFqkEySBcQo4mFiquYi/5VnbfRBMo7Qsay6FEaAP/QTo+NyRZ8w8aGm6jh
+	 K98mmK7gdObshFLPr+IHNELbXSHIsTN24Ra5Mj/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Mohm <jrmmhm.kernel@eldare.de>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 584/816] vsock/virtio: clear vqs[] to avoid a UAF on a failed PM restore
-Date: Wed, 25 Nov 2026 15:35:32 +0100
-Message-ID: <20261125143902.696301023@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>
+Subject: [PATCH 6.12 585/816] tsacct: Keep task begin times stable across suspend
+Date: Wed, 25 Nov 2026 15:35:33 +0100
+Message-ID: <20261125143902.719081684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,93 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Mohm <jrmmhm.kernel@eldare.de>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit 2a24ba1694f14299fbde3fa107e5d56629f2f8b6 upstream.
+commit c49b3c20a2d0b22700e2100a527e68e829ece7f0 upstream.
 
-virtio_vsock_vqs_del() frees the virtqueues but leaves vsock->vqs[]
-pointing at them. If virtio_vsock_restore() then fails, the driver
-stays bound with a dangling vqs[], and the next freeze or unbind
-passes a freed virtqueue to virtqueue_detach_unused_buf():
+bacct_add_tsk() derives ac_btime and ac_btime64 by subtracting a
+CLOCK_MONOTONIC elapsed duration from CLOCK_REALTIME. MONOTONIC stops
+during suspend while REALTIME continues, so querying an existing task
+after resume moves its reported begin time forward by the time spent
+suspended.
 
-  BUG: KASAN: slab-use-after-free in virtqueue_detach_unused_buf
-   virtio_vsock_vqs_del (net/vmw_vsock/virtio_transport.c:785)
-   virtio_vsock_remove
-  Freed by task ...:
-   vp_del_vqs
-   virtio_vsock_freeze
+Calculate the begin time from the wall-clock boot timestamp and the
+task's CLOCK_BOOTTIME start timestamp instead. This accounts for suspend
+and adds the nanoseconds before truncating to seconds. Keep ac_etime and
+ac_tgetime on CLOCK_MONOTONIC and retain the existing rebasing when the
+wall clock is adjusted.
 
-Clear vqs[] after del_vqs() and when virtio_find_vqs() fails. Return
-early from virtio_vsock_vqs_del() when vqs[] is empty: the detach
-loops would pass NULL to virtqueue_detach_unused_buf(), and a second
-del_vqs() would free virtio-mmio's IRQ again, which only WARNs in
-free_irq() ("Trying to free already-free IRQ").
+The new begin time can be negative: setting CLOCK_REALTIME is bounded
+by CLOCK_MONOTONIC, which excludes suspend, rather than CLOCK_BOOTTIME.
+A permitted backward clock adjustment after suspend can therefore put
+the task's begin time before the epoch. Clamp ac_btime64 at zero too,
+instead of wrapping in the unsigned field, and retain its positive range.
 
-Found with the help of Anthropic's Claude and reproduced on virtio-pci
-and virtio-mmio by failing the restore with failslab, without other
-kernel changes; the virtio-mmio WARN was found by the netdev Sashiko
-review and reproduced with v1 of this patch. With this patch neither
-report appears on virtio-pci or virtio-mmio guests, and the vsock
-vmtest.sh single-VM tests pass. A find_vqs() failure after some
-virtqueues were set up was not exercised.
-
-Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
+Fixes: f3cef7a99469 ("[PATCH] csa: basic accounting over taskstats")
+Reported-by: Oleg Nesterov <oleg@redhat.com>
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jerome Mohm <jrmmhm.kernel@eldare.de>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20261109-vsock-restore-uaf-send-v4-1-1df8dfb5d5de@eldare.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20130611200600.GA15168@redhat.com
+Link: https://lore.kernel.org/r/alpine.DEB.2.21.1911071335320.4256@nanos.tec.linutronix.de
+Link: https://patch.msgid.link/20261030054227.35453-3-dennylin0707@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ kernel/tsacct.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -690,8 +690,10 @@ static int virtio_vsock_vqs_init(struct
- 	atomic_set(&vsock->queued_replies, 0);
+--- a/kernel/tsacct.c
++++ b/kernel/tsacct.c
+@@ -24,7 +24,7 @@ void bacct_add_tsk(struct user_namespace
+ 	const struct cred *tcred;
+ 	u64 utime, stime, utimescaled, stimescaled;
+ 	u64 now_ns, delta;
+-	time64_t btime;
++	struct timespec64 btime;
  
- 	ret = virtio_find_vqs(vdev, VSOCK_VQ_MAX, vsock->vqs, vqs_info, NULL);
--	if (ret < 0)
-+	if (ret < 0) {
-+		memset(vsock->vqs, 0, sizeof(vsock->vqs));
- 		return ret;
-+	}
+ 	BUILD_BUG_ON(TS_COMM_LEN < TASK_COMM_LEN);
  
- 	virtio_vsock_update_guest_cid(vsock);
+@@ -39,9 +39,11 @@ void bacct_add_tsk(struct user_namespace
+ 	do_div(delta, NSEC_PER_USEC);
+ 	stats->ac_etime = delta;
+ 	/* Convert to seconds for btime (note y2106 limit) */
+-	btime = ktime_get_real_seconds() - div_u64(delta, USEC_PER_SEC);
+-	stats->ac_btime = clamp_t(time64_t, btime, 0, U32_MAX);
+-	stats->ac_btime64 = btime;
++	getboottime64(&btime);
++	btime = timespec64_add(btime, ns_to_timespec64(tsk->start_boottime));
++	stats->ac_btime = clamp_t(time64_t, btime.tv_sec, 0, U32_MAX);
++	/* Setting the clock back after suspend can make btime negative. */
++	stats->ac_btime64 = max_t(time64_t, btime.tv_sec, 0);
  
-@@ -752,11 +754,19 @@ static void virtio_vsock_vqs_del(struct
- 	vsock->event_run = false;
- 	mutex_unlock(&vsock->event_lock);
- 
-+	virtio_vsock_skb_queue_purge(&vsock->send_pkt_queue);
-+
- 	/* Flush all device writes and interrupts, device will not use any
- 	 * more buffers.
- 	 */
- 	virtio_reset_device(vdev);
- 
-+	/* After a failed restore no virtqueues are live, and a second
-+	 * del_vqs() would free virtio-mmio's IRQ again (a WARN in free_irq()).
-+	 */
-+	if (!vsock->vqs[VSOCK_VQ_RX])
-+		return;
-+
- 	mutex_lock(&vsock->rx_lock);
- 	while ((skb = virtqueue_detach_unused_buf(vsock->vqs[VSOCK_VQ_RX])))
- 		kfree_skb(skb);
-@@ -767,10 +777,10 @@ static void virtio_vsock_vqs_del(struct
- 		kfree_skb(skb);
- 	mutex_unlock(&vsock->tx_lock);
- 
--	virtio_vsock_skb_queue_purge(&vsock->send_pkt_queue);
--
- 	/* Delete virtqueues and flush outstanding callbacks if any */
- 	vdev->config->del_vqs(vdev);
-+
-+	memset(vsock->vqs, 0, sizeof(vsock->vqs));
- }
- 
- static int virtio_vsock_probe(struct virtio_device *vdev)
+ 	if (tsk->flags & PF_EXITING)
+ 		stats->ac_exitcode = tsk->exit_code;
 
 
