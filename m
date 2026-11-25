@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621919;
-	b=DmVf2s0fDiWB6V5BbIDuRn4Hga3jvooMrL0bjZDt8AQA2Fpemhgy7OScoE7vTw/utnpg
-	 y63uVGR83+/Mf0HbT6W6zR4G/V2pDtt4hlBC7Jw/QJtMs2n2URD9X7zISwvEb83ZtbEAT
-	 WffDQn+3Vd2Q/UBkfbwvMuE1MqWQyeOL+8Rh6PMjv0vGqa5aFJLP3Px8jdF3r0X9d8rKj
-	 5Oy4wPneS2hHodvbFs7AUYDQZcvWrEUz24AbPxCxwpvmGn60Cin3wi/4jgSxjPeoV4osi
-	 yM8MaAqk8aKkIxd7jhkTc9/kTETjsRBGk3lWq0oGSwVteM53mqQl0kYYzFnyCGy2+xA==
+	t=1795621922;
+	b=uYI2o1SvOFbe2YmWy+JZYgREmgNVqwJ6rJJ55CR+Q2BxW88D+T3g5olwnz1qzJJpuxvz
+	 I7iTaE0NR6w3bA1/SlKa0csStOrXdeR4Tw20AVlHRFKMdZ/crOJSP0xKvYvU2LXPJ971L
+	 HjItSm2kBMia7VrMik+ZaioCqgILlkhmxop2k2YcQgeT4o34sGRazTjQVpAEki3FxGIJx
+	 oF9OpuKMzFmBnpF4HOaO8FCVJkXloy0iaXDoPJwVx+o6v6/9nm/0rbVJGnUhSbY5JlXzu
+	 Q5zDQ2oIqpslQqhefkqnMzyXPAPWlzk96Pwrf4p0joKn2xy+0iHHUEo8NWKUgSavq/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zeuqv+xv3B2DVdRRqya6SrndWLkTAEN52yYkZN3wroo=;
-	b=1iHyCv6EyUtfF81EKTDdLZn/vWYnqw0RK/zKGPDNNWAchyf0v2GPUPKgHW5/lrzjgx7W
-	 JsnsWszBqnW8syCKDe7x2y+lvuLMcMI78bccVh9+OWrgj41Dv79MmQIlgRZ+U9YgtzNuC
-	 w3dKdDkqCd0yoH8v4c3y2w+nf9GkReuExsoJZ5KpXmjPJvE6SG83URiEqckeRy3yVCLk/
-	 QaQ6vVGp7pu8K4qV+PRbbzWeRiYvW53cw2miZT5Bxj3i2+Qv32Px4n4ek3KyuXkI0CEyX
-	 un/08Tnu+6Yu4evTINEHRLO68WcRgq7tsHhWzZRVyhKrQRi8OURuROA2S8ly2CcgI1Q==
+	bh=eK20mZWwPyLRD+P3fXgsrYoCSNkPxnUmXBjqmFgjMvk=;
+	b=d0p646PxtBn3wPG2CM5hu8+vnxWnTzNXD6uQq1u3sfWDzBjWD64cfkzh30I+MhAV3UIS
+	 /Fiwp/FCGI58josKI4r2Bw11OJA06vjXtdcBdick+ZFGr9SqqxOWGOJmS62GCyHm4VrRa
+	 ezRR8M8Li6/CdQQr1HgqRP5IMg8YP89C6xV1xOTcBXSah3Jsh5QSQeZwpuusJz+toZCl1
+	 mM5fTcBwCtzbSRouRWWLJKgD3dMnDixKiuP41MAllTykuNv9TNSXTE5y2YLvlB29zxxAB
+	 Nw8QBfpPboYg9RJfZNtIxNtMd7yG9jt4O9Qcovc8WPqonkPs60eBssMP6CJnB38dODA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gAqrQra6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSEPADne;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E658A606A32C;
-	Wed, 25 Nov 2026 15:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F4D606A326;
+	Wed, 25 Nov 2026 15:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gAqrQra6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3F51F000F4;
-	Wed, 25 Nov 2026 15:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSEPADne
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2AB1F000EB;
+	Wed, 25 Nov 2026 15:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621918;
-	bh=Zeuqv+xv3B2DVdRRqya6SrndWLkTAEN52yYkZN3wroo=;
+	s=korg; t=1795621921;
+	bh=eK20mZWwPyLRD+P3fXgsrYoCSNkPxnUmXBjqmFgjMvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gAqrQra6IyTXcJBqRBbGi7wlc27xwMjk636/P0aTdZN+DQ6bQTycBDDRhYlBZfnha
-	 FIh7muV1kogc0JmpV1szdYWXHIZV9419F8kmfC1uP59nK2XCZpDfDe886KRHUdynPS
-	 2a92pNMhx6BUCKcgDNWymtAw/b4/50gjMkB3l42I=
+	b=wSEPADnerJuNYLpVuBDozpzM36YIiWkqNPNlC+2hGEZESyH83gFy64sC8fnbjBMyG
+	 p0fdis8FxhVPjOEOuzd4qqeXx8cMo2ZQ6m+JnDoKPCiXre1Ru1zEgmYhJU7UpCPoYA
+	 w4KeKNm4X0Vr/3VOam1PMCU7lLZYJP3wD4T4rtGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 374/990] tcp: move tp->segs_in and tp->segs_out to tcp_sock_write_txrx group
-Date: Wed, 25 Nov 2026 15:29:01 +0100
-Message-ID: <20261125143830.853141797@linuxfoundation.org>
+Subject: [PATCH 6.18 375/990] tcp: move tp->first_tx_mstamp and tp->delivered_mstamp to tcp_sock_write_tx
+Date: Wed, 25 Nov 2026 15:29:02 +0100
+Message-ID: <20261125143830.878519152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -70,117 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2b28dd212a8ad67b100137626a3d008b1e40a740 ]
+[ Upstream commit 07db42c4b3eb60a21645ad88211b69933eab0a03 ]
 
-segs_in is changed for each incoming packet, including ACK packets.
-segs_out is changed for each outgoing packet, including ACK packets.
-
-They belong to tcp_sock_write_txrx group.
+These fields are touched in when payload is sent.
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260430100021.211139-3-edumazet@google.com
+Link: https://patch.msgid.link/20260430100021.211139-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: c2213d9b61c1 ("tcp: rate limit receive queue collapsing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../networking/net_cachelines/tcp_sock.rst     |  4 ++--
- include/linux/tcp.h                            | 18 +++++++++---------
- net/ipv4/tcp.c                                 |  4 ++--
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ include/linux/tcp.h | 4 ++--
+ net/ipv4/tcp.c      | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/networking/net_cachelines/tcp_sock.rst b/Documentation/networking/net_cachelines/tcp_sock.rst
-index 3e1851e5e6e77..f03ee3c804a23 100644
---- a/Documentation/networking/net_cachelines/tcp_sock.rst
-+++ b/Documentation/networking/net_cachelines/tcp_sock.rst
-@@ -13,13 +13,13 @@ u16                           tcp_header_len          read_mostly         read_m
- u16                           gso_segs                read_mostly                             tcp_xmit_size_goal
- __be32                        pred_flags              read_write          read_mostly         tcp_select_window(tx);tcp_rcv_established(rx)
- u64                           bytes_received                              read_write          tcp_rcv_nxt_update(rx)
--u32                           segs_in                                     read_write          tcp_v6_rcv(rx)
-+u32                           segs_in                 read_write          read_write          tcp_segs_in(),tcp_v6_rcv(rx),tcp_v4_rcv()
- u32                           data_segs_in                                read_write          tcp_v6_rcv(rx)
- u32                           rcv_nxt                 read_mostly         read_write          tcp_cleanup_rbuf,tcp_send_ack,tcp_inq_hint,tcp_transmit_skb,tcp_receive_window(tx);tcp_v6_do_rcv,tcp_rcv_established,tcp_data_queue,tcp_receive_window,tcp_rcv_nxt_update(write)(rx)
- u32                           copied_seq                                  read_mostly         tcp_cleanup_rbuf,tcp_rcv_space_adjust,tcp_inq_hint
- u32                           rcv_wup                                     read_write          __tcp_cleanup_rbuf,tcp_receive_window,tcp_receive_established
- u32                           snd_nxt                 read_write          read_mostly         tcp_rate_check_app_limited,__tcp_transmit_skb,tcp_event_new_data_sent(write)(tx);tcp_rcv_established,tcp_ack,tcp_clean_rtx_queue(rx)
--u32                           segs_out                read_write                              __tcp_transmit_skb
-+u32                           segs_out                read_write          read_write          __tcp_transmit_skb
- u32                           data_segs_out           read_write                              __tcp_transmit_skb,tcp_update_skb_after_send
- u64                           bytes_sent              read_write                              __tcp_transmit_skb
- u64                           bytes_acked                                 read_write          tcp_snd_una_update/tcp_ack
 diff --git a/include/linux/tcp.h b/include/linux/tcp.h
-index 64f5a09f4c47b..492b9bfe6b1d2 100644
+index 492b9bfe6b1d2..37511ef31888e 100644
 --- a/include/linux/tcp.h
 +++ b/include/linux/tcp.h
-@@ -259,17 +259,14 @@ struct tcp_sock {
- 
- 	/* TX read-write hotpath cache lines */
- 	__cacheline_group_begin(tcp_sock_write_tx) ____cacheline_aligned;
--	u32	segs_out;	/* RFC4898 tcpEStatsPerfSegsOut
--				 * The total number of segments sent.
--				 */
--	u32	data_segs_out;	/* RFC4898 tcpEStatsPerfDataSegsOut
--				 * total number of data segments sent.
--				 */
- 	u32	delivered;	/* Total data packets delivered incl. rexmits */
- 	u32	delivered_ce;	/* Like the above but only ECE marked packets */
+@@ -264,6 +264,8 @@ struct tcp_sock {
  	u64	bytes_sent;	/* RFC4898 tcpEStatsPerfHCDataOctetsOut
  				 * total number of data bytes sent.
  				 */
-+	u32	data_segs_out;	/* RFC4898 tcpEStatsPerfDataSegsOut
-+				 * total number of data segments sent.
-+				 */
- 	u32	snd_sml;	/* Last byte of the most recently transmitted small packet */
- 	u8	chrono_type;	/* current chronograph type */
- 	u32	chrono_start;	/* Start time in jiffies of a TCP chrono */
-@@ -326,6 +323,12 @@ struct tcp_sock {
-  *      Options received (usually on last packet, some only on SYN packets).
-  */
- 	struct tcp_options_received rx_opt;
-+	u32	segs_in;	/* RFC4898 tcpEStatsPerfSegsIn
-+				 * total number of segments in.
-+				 */
-+	u32	segs_out;	/* RFC4898 tcpEStatsPerfSegsOut
-+				 * The total number of segments sent.
-+				 */
- 	__cacheline_group_end(tcp_sock_write_txrx);
- 
- 	/* RX read-write hotpath cache lines */
-@@ -335,9 +338,6 @@ struct tcp_sock {
- 				 * sum(delta(rcv_nxt)), or how many bytes
++	u64	first_tx_mstamp;  /* start of window send phase */
++	u64	delivered_mstamp; /* time we reached "delivered" */
+ 	u32	data_segs_out;	/* RFC4898 tcpEStatsPerfDataSegsOut
+ 				 * total number of data segments sent.
+ 				 */
+@@ -349,8 +351,6 @@ struct tcp_sock {
+ 	u32	rcv_rtt_last_tsecr;
+ 	u32	delivered_ecn_bytes[3];
+ 	u16	pkts_acked_ewma;/* Pkts acked EWMA for AccECN cep heuristic */
+-	u64	first_tx_mstamp;  /* start of window send phase */
+-	u64	delivered_mstamp; /* time we reached "delivered" */
+ 	u64	bytes_acked;	/* RFC4898 tcpEStatsAppHCThruOctetsAcked
+ 				 * sum(delta(snd_una)), or how many bytes
  				 * were acked.
- 				 */
--	u32	segs_in;	/* RFC4898 tcpEStatsPerfSegsIn
--				 * total number of segments in.
--				 */
- 	u32	data_segs_in;	/* RFC4898 tcpEStatsPerfDataSegsIn
- 				 * total number of data segments in.
- 				 */
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index a130fc5e033c9..bb918059224e4 100644
+index bb918059224e4..6cd8670d5e96c 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -5196,7 +5196,6 @@ static void __init tcp_struct_check(void)
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_read_rx, snd_ssthresh);
- 
- 	/* TX read-write hotpath cache lines */
--	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, segs_out);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, data_segs_out);
+@@ -5200,6 +5200,8 @@ static void __init tcp_struct_check(void)
  	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, delivered);
  	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, delivered_ce);
-@@ -5232,10 +5231,11 @@ static void __init tcp_struct_check(void)
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_txrx, rcv_wnd);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_txrx, rcv_tstamp);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_txrx, rx_opt);
-+	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_txrx, segs_in);
-+	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_txrx, segs_out);
- 
- 	/* RX read-write hotpath cache lines */
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, bytes_received);
--	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, segs_in);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, data_segs_in);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, rcv_wup);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, max_packets_out);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, bytes_sent);
++	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, first_tx_mstamp);
++	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, delivered_mstamp);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, snd_sml);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, chrono_start);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_tx, chrono_stat);
+@@ -5245,8 +5247,6 @@ static void __init tcp_struct_check(void)
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, rcv_rtt_last_tsecr);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, delivered_ecn_bytes);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, pkts_acked_ewma);
+-	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, first_tx_mstamp);
+-	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, delivered_mstamp);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, bytes_acked);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, rcv_rtt_est);
+ 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, rcvq_space);
 -- 
 2.53.0
 
