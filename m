@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623934;
-	b=4cPWOaFvW9a5tAZsu5MeNtOB8bsB83UrnFaQdTrNaO1tW/36+BZ7BVa83J53zwr1Ys5a
-	 jpeyNPOr78fywV8M78XVLInus1GYkTVKMnZectezEcumNkmnYpRtmu1+ZIVELvjqA7TU7
-	 NeK5y5jXZLi6vqjmJvpgz3T9J5whTN35SR0X4b8IW19eR2vKSVyyV1E6JkdLmlJnVdN+q
-	 zX05N1TwEvoooNs5keN3OoMfpJzCoFVmr+nzWk91NyhDFMYkoSr1lQ9FKE/ATqxIEZ+ox
-	 AZ3v+4JSwi6rKLNMW9Otx880lDfLnnWuIpFlpQ1qRkIYMaLtt8opf64UOMXgpqc8j+g==
+	t=1795623937;
+	b=ZW+Nf8dD9DnSze6UehwA1qQ4mBDBdFqVxHXtBtqTza2J3tX24DHI3CNYW7/Wrk2LQuJB
+	 sNWMuC50T0y2Ubp7DRSgX7wFoGa9O+TQUA6DAb+mUKCybwttCF8hVFE8so2+HSlZnYFnq
+	 mzxPVUllco/EA0b6/DCEE0U7rJOwiodxYZ/xF0akDw4m7nxeN30KbsFXmVy0551Lg8FmZ
+	 6E9+VYTSy6x9wRuoIaxP0dI5w/ZdBl37N0FHe3FglQB3gCxrxNKOMsEFhcb+NMGVx/q6f
+	 aG9i6Yc7jwDH/QLTEXedW6BD1CS+Nl8gvnlA4/yJipt4Vhey2rTBDEigelIPCjAZJzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623934;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ePUCYYctiKbKwzkPsW7DOnlLqiw65LeJeEzO4XtvpEo=;
-	b=hsTGAKOOmn9KEqtFirLSZ/PcNTaeudC31M6glfdfVUkqlVPQubuYMiPMT+J8mvk1wz7u
-	 1L0v/jofqF3d73h8lim53+2EaCw++YtzLOp+4Iqc4oQJcTwL0WmZ1/dtvqojQVv3YMbMB
-	 MldIsy7q8ij+cnO/8FL6drwQq2zi8V5G7YhwgKCnVywu8nv/9N+Iki6JXRmp3DYexfJOj
-	 AKSBy4EbC9urdpH+/jkoZPuKayRWrOlA1m6hprWCfav5Jm4mGwLw97nuGIERONuI3clBQ
-	 9RKpIKHPFwKzFs/qMpxgzQXemRLIlicoRiek48JEiM0QnFA3MtxoeiqwcxogLWvOQ5g==
+	bh=KL2CiuggNKOcBnAhg3sJTnHDXEPnWbnziVsWNp6EHLw=;
+	b=D0yTvrylMg+aTVPBKW9ZvFX32aUi/rFQVrxK2wvISRa/u8sZy/reTa85T6+z6uuu84SK
+	 mjjQ17jz6W/r8GCg9WlZb0S4VCwMGKr5/lhWRTPtAgft/pjluO/yceWGFcsI/GvDde0bM
+	 lk7SJuvLIUjZBPHctFSaua552M2GJ1dKn38YyGs4iwOIJ0KS4M2RhfERnFf6j4OOKfOrz
+	 YM//O7kmHYQNya8Z1JNY4MWWZXq33Oq7vVs09Vj1NmVol+1JGvzcVIZXvAeXsvz3q9AjY
+	 8nxMmvVhn1yJV/9nGvxItz5/6eMqSAvsF+nTtYjHk4q0/AVjd0+z2pmP28szs3q/mgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cju4LuOh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1osJewOF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C26B606A321;
-	Wed, 25 Nov 2026 16:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72415606A321;
+	Wed, 25 Nov 2026 16:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cju4LuOh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60461F000D8;
-	Wed, 25 Nov 2026 16:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1osJewOF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2E41F000C0;
+	Wed, 25 Nov 2026 16:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623934;
-	bh=ePUCYYctiKbKwzkPsW7DOnlLqiw65LeJeEzO4XtvpEo=;
+	s=korg; t=1795623937;
+	bh=KL2CiuggNKOcBnAhg3sJTnHDXEPnWbnziVsWNp6EHLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cju4LuOh9yklkTCQvRz3Xxp/U7bd0TmFOgOIFMrasOnnxRna+aEwL3AY8e0GgjW68
-	 E2vY4U5VpArYJC/A5cCWmq23P68IwPNijcI4OsCKmw0Id+UU/KGd1PfAmE6tZiVbg9
-	 BBsa3eUH7J7cG21DmywX/PwMMwWcX/fOFEo+RyF8=
+	b=1osJewOFAD3qQ3QHPWAzD2dJvSaj5+5UjUOwbJiN2BDPizrp/uVU4OW8CeEwV20cr
+	 rGexY06n5uq5J5UO7NXGFkdoxtRnZctW7EU1Bl+5z+tRk/Xd+B0WoSvSJC+ggtdClK
+	 Am1oooCVk+NMWsy7VG0+xFz3+pdj36Xb1+XIuSDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zesen Liu <ftyg@live.com>,
-	Peili Gao <gplhust955@gmail.com>,
-	Haoran Ni <haoran.ni.cs@gmail.com>,
-	Shuran Liu <electronlsr@gmail.com>,
-	Matt Bobrowski <mattbobrowski@google.com>,
+	Jerome Marchand <jmarchan@redhat.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/816] bpf: Fix verifier assumptions of bpf_d_paths output buffer
-Date: Wed, 25 Nov 2026 15:25:56 +0100
-Message-ID: <20261125143849.408810056@linuxfoundation.org>
+Subject: [PATCH 6.12 009/816] bpf: Specify access type of bpf_sysctl_get_name args
+Date: Wed, 25 Nov 2026 15:25:57 +0100
+Message-ID: <20261125143849.432749414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -72,57 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuran Liu <electronlsr@gmail.com>
+From: Jerome Marchand <jmarchan@redhat.com>
 
-[ Upstream commit ac44dcc788b950606793e8f9690c30925f59df02 ]
+[ Upstream commit 2eb7648558a7911f2208e8940cd22ca40e93cc76 ]
 
-Commit 37cce22dbd51 ("bpf: verifier: Refactor helper access type
-tracking") started distinguishing read vs write accesses performed by
-helpers.
+The second argument of bpf_sysctl_get_name() helper is a pointer to a
+buffer that is being written to. However that isn't specify in the
+prototype.
 
-The second argument of bpf_d_path() is a pointer to a buffer that the
-helper fills with the resulting path. However, its prototype currently
-uses ARG_PTR_TO_MEM without MEM_WRITE.
+Until commit 37cce22dbd51a ("bpf: verifier: Refactor helper access
+type tracking"), all helper accesses were considered as a possible
+write access by the verifier, so no big harm was done. However, since
+then, the verifier might make wrong asssumption about the content of
+that address which might lead it to make faulty optimizations (such as
+removing code that was wrongly labeled dead). This is what happens in
+test_sysctl selftest to the tests related to sysctl_get_name.
 
-Before 37cce22dbd51, helper accesses were conservatively treated as
-potential writes, so this mismatch did not cause issues. Since that
-commit, the verifier may incorrectly assume that the buffer contents
-are unchanged across the helper call and base its optimizations on this
-wrong assumption. This can lead to misbehaviour in BPF programs that
-read back the buffer, such as prefix comparisons on the returned path.
+Add MEM_WRITE flag the second argument of bpf_sysctl_get_name().
 
-Fix this by marking the second argument of bpf_d_path() as
-ARG_PTR_TO_MEM | MEM_WRITE so that the verifier correctly models the
-write to the caller-provided buffer.
-
-Fixes: 37cce22dbd51 ("bpf: verifier: Refactor helper access type tracking")
-Co-developed-by: Zesen Liu <ftyg@live.com>
-Signed-off-by: Zesen Liu <ftyg@live.com>
-Co-developed-by: Peili Gao <gplhust955@gmail.com>
-Signed-off-by: Peili Gao <gplhust955@gmail.com>
-Co-developed-by: Haoran Ni <haoran.ni.cs@gmail.com>
-Signed-off-by: Haoran Ni <haoran.ni.cs@gmail.com>
-Signed-off-by: Shuran Liu <electronlsr@gmail.com>
-Reviewed-by: Matt Bobrowski <mattbobrowski@google.com>
-Link: https://lore.kernel.org/r/20251206141210.3148-2-electronlsr@gmail.com
+Signed-off-by: Jerome Marchand <jmarchan@redhat.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20250619140603.148942-2-jmarchan@redhat.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
+ kernel/bpf/cgroup.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 2fe05b3d84000..1d6709e261b8c 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -973,7 +973,7 @@ static const struct bpf_func_proto bpf_d_path_proto = {
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index 0674785e86767..bd47c4cb19910 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -2284,7 +2284,7 @@ static const struct bpf_func_proto bpf_sysctl_get_name_proto = {
+ 	.gpl_only	= false,
  	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_BTF_ID,
- 	.arg1_btf_id	= &bpf_d_path_btf_ids[0],
+ 	.arg1_type	= ARG_PTR_TO_CTX,
 -	.arg2_type	= ARG_PTR_TO_MEM,
 +	.arg2_type	= ARG_PTR_TO_MEM | MEM_WRITE,
- 	.arg3_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.allowed	= bpf_d_path_allowed,
+ 	.arg3_type	= ARG_CONST_SIZE,
+ 	.arg4_type	= ARG_ANYTHING,
  };
 -- 
 2.53.0
