@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624897;
-	b=Cfnh0siF8M+Nj8RpRDvZKnfEoOupvdgpNMqD1Kks261tLB2bPJ40oBBWwNfpNsev6JfX
-	 ho4eBjLcXMLp+wcUAA2XfeDghzGadjBmsF0mkl01PvBySkQD6UTBjPaT0BErxZtdgp3M/
-	 bmTHehD/31qWT7yawgi6EmN4ZnWbWN1cOwjWbk/uVj/jZFlengTxze3u9Yl3UhR9TBgUw
-	 2svpvDVhLkLazb4D2gK8iMCvfTgVuj7tO7ftsGsTT3hwxMzkLp8G/rZs07Oyl/Tnv8Ugd
-	 mP1HwdujWTPbuuyYnJGbAWs160Ew8YBLLpxN/fWPdaUAxNibGL/uri07TK+SDvxk7Sg==
+	t=1795624900;
+	b=5SDfrf7Tyqgf9AEV/eqhioFp4fwyR1l8faC70Tl+hqVW/DDcBhCRqcfr4pnyvpIzJYHF
+	 oweq6gTmDl2iJ8AofbjfRPl00qPB8GLtW6c58udI8iwv5S77Vyei9QpzWxldlzruzlswi
+	 tC5L+tOzgCCDXozWOa2QaRipigqOfJkS5VJlXdBUMz3dx8gGmv57QRlJki9WfPAZMtm7s
+	 rqNp7Kewmfc9Zt1Y8QhLfcGb5yU5urLSwp8wyGaftb88a6WOyraBtIXGttea1GHAfHKXz
+	 m0pZ+2ozhl0ECCHaJbNBx+/S4phoVwrCObIxcFI5ZTMfTMpuRvvdnd0nAhHWnv7SKpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624897;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WIh4F6ZeBXTs1GB0T9zaRe0YulI+HlGWn0/HK6yHqt8=;
-	b=JkyicGM/lZMg/DUHbO5tVOHtO1TSdWRlAtlvjR1wBztSzQGnengxDDMkDIv/qiXdqRY9
-	 XzLXtN+pv+kSp2E0eI3aC3HQ3XcMKrEI0y9Qg4Y2AS02lN1GczbQHIxXZUBgeJbEhLHef
-	 w+3+yUW1GuAYaMaaxSQb7pHDQpnvW0QebIbE6K/+2+7SQQ/0wF0FDnWOGn3Ydx4DxW8qp
-	 p9H/5QOoaH2XYPs4cvlnea3MOouusYnJYBsBA3ger3mlJ4ciXl6DYXy+AdvL5+vmyN8dl
-	 Tz1WSNaa2VvIbb3FDwHN4GSfwi+MA9n9IJ82GdpUdb4/yVb1v/86+VnitFfHu3h3+2Q==
+	bh=laoF04DDOJBmkPgJoAoXhJuvDtU2IacuEY7z+gtEm8Q=;
+	b=dGGIfhonk86R7bBwUrryoL9MC59bTbbfVOJc5ZuDjZpLWRpj97r5XvFIVA6AgxDZcwRq
+	 BGjbcVLODOS78l2LQbBPDdwviYgDX5O7X5qx+CeJBda1FhIlCvEKUkyz/YCu582ANuJZO
+	 Zcebs143+QqMUT1VqRv9KZX1UfCMCSLCNUDccWhkT+FQByGHMGQVSz5CE+F2LDsNufGzW
+	 HjKsbp+GFhyCy1ngM2vheYfEeaNLPtWiaZIeMCqkeFeFwdJxHyj1hbVr0Ba7f4iKw4l85
+	 56ImngxjF4wiYlX0/GRmZwMeUbfO+4tCqj04KO1EXRdr1I9f0PJP6Qf7fk4xTdxWTIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dfal6hLQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzDFa2Rg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F6C606A31E;
-	Wed, 25 Nov 2026 16:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9997606A323;
+	Wed, 25 Nov 2026 16:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dfal6hLQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7D41F000C0;
-	Wed, 25 Nov 2026 16:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzDFa2Rg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28991F000C0;
+	Wed, 25 Nov 2026 16:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624897;
-	bh=WIh4F6ZeBXTs1GB0T9zaRe0YulI+HlGWn0/HK6yHqt8=;
+	s=korg; t=1795624900;
+	bh=laoF04DDOJBmkPgJoAoXhJuvDtU2IacuEY7z+gtEm8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dfal6hLQopV79P2LF4ocl/IZMAfAXzzjuSOubHJwJzbFv9ZlI5EEsdVyl3hv7Krk/
-	 F6MvhiqjeZpYGlfc4rUFKRhX7IxoW6vi/neJBzcKTM1PU8xmgYLSsjinI37+kCYeHB
-	 iwt+U0obijOkYNpyhkfp14FYCcGN5rDX7isRvhEo=
+	b=dzDFa2RgWJg+4dBh6XFODKup+mdFFJydW4++7PnbETauUANF+3D9vBz7F4svACBqa
+	 qtERD/Qokn86UCKD+Jn05O9cPiVa5S/dkV/YQbQrfYt4ifoHj20Tz4BaQL/IfzL0nY
+	 3NlhdAuydk3s7KSY6FTCqdNQ3vwV9EH9xVljrwy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Kavitha Daula <kavi@edera.dev>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 341/816] drm/bridge: sii902x: validate I2S data lane values
-Date: Wed, 25 Nov 2026 15:31:29 +0100
-Message-ID: <20261125143857.090454326@linuxfoundation.org>
+Subject: [PATCH 6.12 342/816] xen/grant-table: annotate on-stack work in gnttab_unmap_refs_sync()
+Date: Wed, 25 Nov 2026 15:31:30 +0100
+Message-ID: <20261125143857.113249268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,52 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Kavitha Daula <kavi@edera.dev>
 
-[ Upstream commit 444b7116e7ef1fdb5f7db3bc1f74b20098d062d4 ]
+[ Upstream commit 704f812cdab8bbf30987653c1c76c0d2c1e135e7 ]
 
-The sil,i2s-data-lanes property reader bounds the number of entries, but
-does not bound each entry's value. Those values index the four-entry
-i2s_lane_id table when the audio FIFO sequence is built.
+Both callers of gnttab_unmap_refs_sync(), free_persistent_gnts() and
+xen_blkbk_unmap_purged_grants() in blkback, keep their struct
+gntab_unmap_queue_data on the stack. gnttab_unmap_refs_async() sets up
+the delayed work inside it with INIT_DELAYED_WORK(), so with
+CONFIG_DEBUG_OBJECTS_WORK and CONFIG_DEBUG_OBJECTS_TIMERS every
+persistent grant teardown warns twice, once for the work and once for
+its timer:
 
-Reject unsupported lane values before indexing that table. Report the
-property name and invalid value with dev_err_probe() so the diagnostic
-identifies the faulty configuration.
+  [  104.366085] ODEBUG: object ffffc9004020fad8 is on stack ffffc9004020c000, but NOT annotated.
+  [  104.371551] WARNING: CPU: 1 PID: 48 at lib/debugobjects.c:672 lookup_object_or_alloc.part.0+0x12b/0x1f0
+  Call Trace:
+   <TASK>
+   __debug_object_init+0xfe/0x1a0
+   debug_object_init+0x38/0x50
+   __init_work+0x28/0x30
+   gnttab_unmap_refs_async+0x18/0xa0
+   gnttab_unmap_refs_sync+0x61/0x90
+   free_persistent_gnts+0x179/0x280
+   xen_blkbk_free_caches+0x16/0x30
+   xen_blkif_disconnect+0xfa/0x2d0
+   frontend_changed+0x90/0x680
+   xenbus_otherend_changed+0x80/0xb0
+   frontend_changed+0x14/0x20
+   xenwatch_thread+0x96/0x1a0
+   kthread+0x11d/0x250
+   ret_from_fork+0x29f/0x2d0
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
 
-The issue was found by our static-analysis tool.
+gnttab_unmap_refs_sync() waits for the unmap to complete before it
+returns, so the work never outlives the caller's frame. Initialise it
+with INIT_DELAYED_WORK_ONSTACK() when the item is on the stack and
+destroy it before returning. The function is exported, so an item that
+is not on the stack keeps INIT_DELAYED_WORK().
 
-Fixes: ff5781634c41 ("drm/bridge: sii902x: Implement HDMI audio support")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260920034833.18874-1-hppiscas@163.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: b44166cd46e2 ("xen/grant: introduce func gnttab_unmap_refs_sync()")
+Signed-off-by: Kavitha Daula <kavi@edera.dev>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261105000137.82224-1-kavithadaula@Kavithas-MacBook-Pro.local>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/sii902x.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/xen/grant-table.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
-index 7f91b0db161ed..eaa35134c4f2e 100644
---- a/drivers/gpu/drm/bridge/sii902x.c
-+++ b/drivers/gpu/drm/bridge/sii902x.c
-@@ -875,9 +875,15 @@ static int sii902x_audio_codec_init(struct sii902x *sii902x,
- 	}
- 	codec_data.max_i2s_channels = 2 * num_lanes;
+diff --git a/drivers/xen/grant-table.c b/drivers/xen/grant-table.c
+index 04a6b470b15df..51df0772f989d 100644
+--- a/drivers/xen/grant-table.c
++++ b/drivers/xen/grant-table.c
+@@ -38,6 +38,7 @@
+ #include <linux/sched.h>
+ #include <linux/mm.h>
+ #include <linux/slab.h>
++#include <linux/sched/task_stack.h>
+ #include <linux/vmalloc.h>
+ #include <linux/uaccess.h>
+ #include <linux/io.h>
+@@ -1360,12 +1361,21 @@ static void unmap_refs_callback(int result,
+ int gnttab_unmap_refs_sync(struct gntab_unmap_queue_data *item)
+ {
+ 	struct unmap_refs_callback_data data;
++	bool on_stack = object_is_on_stack(item);
  
--	for (i = 0; i < num_lanes; i++)
-+	for (i = 0; i < num_lanes; i++) {
-+		if (lanes[i] >= ARRAY_SIZE(i2s_lane_id))
-+			return dev_err_probe(dev, -EINVAL,
-+					     "invalid sil,i2s-data-lanes value %u\n",
-+					     lanes[i]);
-+
- 		sii902x->audio.i2s_fifo_sequence[i] |= audio_fifo_id[i] |
- 			i2s_lane_id[lanes[i]] |	SII902X_TPI_I2S_FIFO_ENABLE;
-+	}
+ 	init_completion(&data.completion);
+ 	item->data = &data;
+ 	item->done = &unmap_refs_callback;
+-	gnttab_unmap_refs_async(item);
++	/* blkback keeps @item, and so its retry work, on the stack. */
++	if (on_stack)
++		INIT_DELAYED_WORK_ONSTACK(&item->gnttab_work, gnttab_unmap_work);
++	else
++		INIT_DELAYED_WORK(&item->gnttab_work, gnttab_unmap_work);
++	item->age = 0;
++	__gnttab_unmap_refs_async(item);
+ 	wait_for_completion(&data.completion);
++	if (on_stack)
++		destroy_delayed_work_on_stack(&item->gnttab_work);
  
- 	sii902x->audio.mclk = devm_clk_get_optional(dev, "mclk");
- 	if (IS_ERR(sii902x->audio.mclk)) {
+ 	return data.result;
+ }
 -- 
 2.53.0
 
