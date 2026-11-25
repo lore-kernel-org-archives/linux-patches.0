@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795621304;
-	b=tQynxAQhGRA5TluPAto9e1IMIj1NjCanga14D1ub7Mjw+6KZOdt7rwQjSZESyX9w5IC6
-	 A9mrfVbBCUGH/eSdyywRRAatb55iBz7QNVW9Qf0Bxm4159rNCI2rMLSxKdf07aqK64GmE
-	 j3RAVUat0YNAUlHYnsScwoVTUG/pp1RHLVqPTUe+e33jx/71XcjWMb6nl25F9GiN+soa1
-	 H9gvmBgr09j8rWYtwYtN3U/898rtwiO5qf6U1eP13wk1FZS8QHwiZqdRlLui231txUwXO
-	 3Nzu3R0RFrL22EtvyDTpX82hr3TPh2LnsfUQhhqSDw8p2kRvQ0gLNmUjm+D6emDMyrg==
+	t=1795621307;
+	b=Rn9vOHFBqddNtqyszq1xxe/B53QjWLe8K6uS7IXNiaGC3nfVYIbli6uqDvn1BWYGcQXb
+	 ACI0KJbhQNJWPVtepoYNAEYnex0H7nijkuYxowkpFA3Eh3y1QOqhOQiBr3oqiLVoUBItx
+	 56qOGsCkugLQy8pGvB2ZkGW2AmCuzMetHUKbfZfqYdFXYDOg+mKZce3Y1K67tqrajQorK
+	 cXFKrlO7Reh2VYiOAVEulLxa9+egSnZ2drO0gx5DMXatDntBvGw5q7bgB5e3uCopQrxqn
+	 v6v+YvqJZaYkQs0TUAj1Cv+w64dqTfDql77wiLfLeMbjlZwW5tRVde3aPK3nQasDxog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795621304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795621307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=38OZvLOs1Le+g2cLSFRGseT8LMDFeMF4e6Um+3ALkno=;
-	b=GqASDXw0z7z7rG+IKqw5Bv0/1i/gLMA0+gNm1i6tOMQ70FvKJTLpY2Uk+3Y5hnrwTZ7Y
-	 yn9GiWJ1S0b2JpQxh4eaOPpH93x1MFeeyk/9zPHMuZZECNBDOVb+bpZuy7RMlddNs9u7o
-	 oUJyZxgAGrEPm3DnI4xJW80K7aYtU7cnqkzSAIqkLcPYc5NweimRh/bwZ+pzmPYIFyQzN
-	 GJNzLajAb7MqV+xi3uknlTZRp5kZ4P158tNNWoiF8IpYjt/FshEXrY3gWlzzHBri5wvrq
-	 qDb2DadJtiH+Han2m23Oj8M3H40GjXBLHY1TyHS6Y0x8su9wDbT5rLt4PJoSVD6ddLg==
+	bh=0SFvvt2Y1zPiS1P5pJZcVJeOJBPrG0Bu3223nDuR8do=;
+	b=YfQbDck9+XncOHEhet/kPHyMSNNeWSJgcYbZUuONjOrU4LsI0PuHRvbq34IKQoN0HZNK
+	 X+PDExJwaYB9NhQacf7T/ky5f20o5CENsJHLSxzBwP1zQPUbk68ip13ASjoNBwmPQ4MvO
+	 PGgclIXu17tJCtvfhPTePnJj3FBtBgUMCWRgMazuLwk9NuWg9T3dKcPrMbn3Qg9nSzIuL
+	 2ZOdvxbvtRat/ZbLcFEky91NYFfrT71glmvJuNx1M/jHamhN4EjuBaSKH2bxQSQ07v2ct
+	 FQ1Q/svy2D8ULxivLYZqvPf7t/TOmVP3VivBknGMjKVM+sd/VTe9MuaZnU+OGdYbwOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z8jcs9m4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHwclpwH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD69607DE9F;
-	Wed, 25 Nov 2026 15:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB21607DE8D;
+	Wed, 25 Nov 2026 15:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z8jcs9m4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFB21F0089F;
-	Wed, 25 Nov 2026 15:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHwclpwH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AEF1F000F4;
+	Wed, 25 Nov 2026 15:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795621303;
-	bh=38OZvLOs1Le+g2cLSFRGseT8LMDFeMF4e6Um+3ALkno=;
+	s=korg; t=1795621307;
+	bh=0SFvvt2Y1zPiS1P5pJZcVJeOJBPrG0Bu3223nDuR8do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8jcs9m4rlexMaDcPGbRLD3BSSG+jKDk9ireqAmvEGq3LMuZCE8uTu0ioi5k5SBLk
-	 LC0HKarkYo5gph0veXTYnSX5Z18XL/ORk7mQ1r68sVuzlAcuueK0TQ56/i8lp+wN52
-	 Sf4nOXejV/KWospfsPsbkkHmbv9f+5tt+eglc3xs=
+	b=KHwclpwHBalIZqYfBQMwU0iMCkSJoW8orWdrwgJglygz7qmS6kb9leb3qSm7NCvYh
+	 42Qzq1uvBnXXGuI23BlnBh2N+CCsAYwH/g6txc25uPg+G7q9dT6mkjN0Nzrf0wmf9w
+	 Gkf8tsb070e67G+ajs8SrBSqG/NeR/gkCBZUukmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Wilken <tooangel@tooangel.de>,
+	Ismail Tarim <ismailtarim7@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 184/990] Bluetooth: MGMT: Return RFKILLED for Set Powered on a blocked controller
-Date: Wed, 25 Nov 2026 15:25:51 +0100
-Message-ID: <20261125143826.403766167@linuxfoundation.org>
+Subject: [PATCH 6.18 185/990] Bluetooth: btmtk: fix error handling in btmtk_usb_isointf_init()
+Date: Wed, 25 Nov 2026 15:25:52 +0100
+Message-ID: <20261125143826.426807979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,53 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Wilken <tooangel@tooangel.de>
+From: Ismail Tarim <ismailtarim7@gmail.com>
 
-[ Upstream commit 7eac80614300563470cffabf4df2b63616787ee7 ]
+[ Upstream commit 3b70dd827b27bfadd89e7b1a2d422b04da38797c ]
 
-Since MGMT_OP_SET_POWERED runs through hci_cmd_sync, powering on a
-controller that is blocked by rfkill fails with -ERFKILL from
-hci_dev_open_sync(), and mgmt_set_powered_complete() reports it with
-mgmt_status(err). mgmt_errno_status() has no case for -ERFKILL, so
-userspace gets MGMT_STATUS_FAILED instead of MGMT_STATUS_RFKILLED.
+btmtk_usb_isointf_init() submits the ISO interrupt IN URB and then
+sends the vendor command 0xfd98. If that command fails, the function
+returns an error without killing the URB it has just submitted. The
+caller then leaves BTMTK_ISOPKT_RUNNING clear, so the driver treats the
+ISO path as inactive while its RX URB is still in flight, and
+btmtk_usb_suspend() skips killing it. Kill the anchored URBs on this
+path, as the URB submission failure path already does.
 
-Before that conversion, power on went through hci_power_on(), whose
-error path mgmt_set_powered_failed() still maps -ERFKILL to
-MGMT_STATUS_RFKILLED. bluetoothd relies on that status: for
-RFKILLED it sets the adapter PowerState to "off-blocked" and returns
-org.bluez.Error.Blocked for the Powered property, for any other status
-it returns org.bluez.Error.Failed.
+The return value of __set_mtk_intr_interface() is also ignored: a
+failure to select the ISO alternate setting or to find its endpoints
+is logged, but the function goes on to submit the URB. Return the
+error instead.
 
-With the controller soft blocked, "bluetoothctl power on" printed
-"Failed to set power on: org.bluez.Error.Failed" and btmon showed
-"Set Powered (0x0005) Status: Failed (0x03)". With this change it
-prints org.bluez.Error.Blocked and btmon shows "Status: RFKilled
-(0x12)".
-
-Map -ERFKILL to MGMT_STATUS_RFKILLED in mgmt_errno_status().
-
-Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
-Assisted-by: LLM
-Signed-off-by: Tobias Wilken <tooangel@tooangel.de>
+Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
+Signed-off-by: Ismail Tarim <ismailtarim7@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btmtk.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 6e49f77c363f8..484243146f10e 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -306,6 +306,8 @@ static u8 mgmt_errno_status(int err)
- 		return MGMT_STATUS_DISCONNECTED;
- 	case -ECANCELED:
- 		return MGMT_STATUS_CANCELLED;
-+	case -ERFKILL:
-+		return MGMT_STATUS_RFKILLED;
- 	}
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 5863b63f5d3f0..50e0ff30e8db2 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1358,7 +1358,9 @@ static int btmtk_usb_isointf_init(struct hci_dev *hdev)
  
- 	return MGMT_STATUS_FAILED;
+ 	spin_lock_init(&btmtk_data->isorxlock);
+ 
+-	__set_mtk_intr_interface(hdev);
++	err = __set_mtk_intr_interface(hdev);
++	if (err < 0)
++		return err;
+ 
+ 	err = btmtk_submit_intr_urb(hdev, GFP_KERNEL);
+ 	if (err < 0) {
+@@ -1370,6 +1372,7 @@ static int btmtk_usb_isointf_init(struct hci_dev *hdev)
+ 	skb = __hci_cmd_sync(hdev, 0xfd98, sizeof(iso_param), &iso_param,
+ 			     HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
++		usb_kill_anchored_urbs(&btmtk_data->isopkt_anchor);
+ 		bt_dev_err(hdev, "Failed to apply iso setting (%ld)", PTR_ERR(skb));
+ 		return PTR_ERR(skb);
+ 	}
 -- 
 2.53.0
 
