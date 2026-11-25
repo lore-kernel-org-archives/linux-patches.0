@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617605;
-	b=KNhd8Bhs/ounROPdnCPZido1SHVA9fhHyirhjrpK6hG82KU2bZ/e3ehLgJn6keCKa/PQ
-	 0RZp/PyF4HMaKzEv6S48wkQpgrwKe1kfCmQMy0urnPuZb8/GgWIzVLJsRYcfGIEKwTlRh
-	 G/5waPCotXa2RrfFhNT4xxWN/4F82RdeWDgLNe7qGfsaPSOlx1og+wNApFhKbJctuHkCm
-	 c3b+bcL12J/KI5i1qb0R2p9CnME+mbkPTpMmaY+nxVUW0/jZ7Jh15q4uvDBGFBVxkREoO
-	 f0fqDCPS3IcdFiOh7GRoCXxpYff85wgHtPiuO24/rQTVP+wlcdMt3McwpB9eIMd7NlA==
+	t=1795617608;
+	b=lvYsLALD3Audp9+B4368F6vYG/GwF0tJx1zYApYAUP5x24N84sK1398kIYevhcvEpe1p
+	 ALwEdisgdM7/rQHF46XJ2RWedU10oaMjRHtBpYrgr7rHiOQRrzXkATLbgTMBOkQjxa4vj
+	 hvXu/m2CqvsAPu3rsDq3plPxx8VpI0exPATGjdx/j3Qo1M1tIEpDCtPiR/UPm1lQRJVuf
+	 TTgSGi9gB3anBUjY2vgOsRZJw4IQzP8w0k4fJ2XhSMDjusRhlAmRK7F5wjuHW9cQdNtyJ
+	 efFWp78okjrXFIYAsG+26RFTfbra62raaHQJ0nMAi5rT3hOeKUtmimIkNBQNYkRocJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bL4mHLSeM/G6/n0X5K/IW2eQDts75FcC/o4HYwiLJC4=;
-	b=ZWaBNcGORZO3A0pNzcvemVmvwcuEgJxMBBQFXPwsKoyfj1kUH4ziFkkcoNDyUVvZiIWd
-	 7jfqvt4pMgSH7CO5TVFwgA/O8t/nSGEHK9JLcuhTJpxwTFL1nxecQHg7vYPtUAYSrvezs
-	 p9Dtc1SbDBJLuYd11KZzbbkea9tkZCTZ3vLruDvyVz8hxb6GlfklNMjT/S7aOHWD4Brv8
-	 EQj6oM87sedm0NUH+q7j67QGJVH2Om7PhuJrYs7NvaaL2Sz/nIF/P+SElXDTjqDihJkUG
-	 FuiPxf3RI73CMCNObHgNuoNf0J9VwWK4LOOVeq6e1+4KWl2XkIW25PN12yEf3iHoZfw==
+	bh=h3PTCbULqPbmuxHisMQ9KwtGKsXJOxLVl+jDsCssu14=;
+	b=YPi5bk7rDbOHEVYVZqOIOt3FfaUej6lqawGcZoNkgJr364VZkKxpV2KznAlwz0pBfg3L
+	 vQQzPVnRho5G/y0o5DNvWQKMgMoETrYvm17d7VOHqNh89gZZCg3Hlxbencp2a+yXKugri
+	 f1GcW3wE4SzFVIBdmMqweM8sj3zQf+hylWyRTYJS7Z1Qd71u22406IFWwfvtOkqOyzckK
+	 u1ooLYwDdYL2B4m2RTzprITEa+ywL0DCLyGrGipWxO1Vv+t98lF6aXabTAGe4bn3aTWAO
+	 ofoSKyliecnGz8l5AxE4BiuJLLzza5Pdz19EIPYqdzN7SaBOs5EtHh5999hLzn/qkqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yG/ugAZh";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyZ8LRns;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9E7606A31E;
-	Wed, 25 Nov 2026 14:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A660606A31E;
+	Wed, 25 Nov 2026 14:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yG/ugAZh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C838F1F000C0;
-	Wed, 25 Nov 2026 14:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyZ8LRns
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6B41F000C6;
+	Wed, 25 Nov 2026 14:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617605;
-	bh=bL4mHLSeM/G6/n0X5K/IW2eQDts75FcC/o4HYwiLJC4=;
+	s=korg; t=1795617608;
+	bh=h3PTCbULqPbmuxHisMQ9KwtGKsXJOxLVl+jDsCssu14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yG/ugAZh7U9uiQ5q/TccTaHnfTcK7fNqriAZSk3sNvDAL+YCvs2fONbCwzLhniI/g
-	 ktQdVVJELJOyveBq+zCRQztZVHyOJ04ULaqBkr8JpJNU/T6F7at3JXH9CszUZxpLrw
-	 1rZyDLH6acwS2erCzQfN8hSDK4joXfOLkNZv7wJQ=
+	b=VyZ8LRnsdj8zMXNtYZyU0eBSSlAzPegiCK0cgFoubPYUbndAcOcys3grC52kHMiNY
+	 2LIpaTkfDPhYAS7VaF2JQSp5RN/J3gthR4y43yJuuVdWRsO5ZTsBf+lCZu0qd5/G6i
+	 snte+3MwSmfOatIaQiQaIm2QCB/hTeLlQIFbFxto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hassan Sultan <hassansultan@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0019/1005] io_uring/timeout: dont rearm a multishot timeout on cancel
-Date: Wed, 25 Nov 2026 15:22:37 +0100
-Message-ID: <20261125143822.187105814@linuxfoundation.org>
+Subject: [PATCH 7.3 0002/1005] net: virtio: validate outer protocol of UDP tunnel GSO packets
+Date: Wed, 25 Nov 2026 15:22:20 +0100
+Message-ID: <20261125143821.794890992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -68,49 +71,333 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-Commit 97d4a585db2b91d855f957be0a9f126068c5be93 upstream.
+[ Upstream commit 73e08d50eb139e7329032c89a4cb105cf43ef278 ]
 
-io_timeout_complete() does not check tw.cancel. When it runs from
-io_cancel_local_task_work(), a multishot timeout that has not reached
-its count still posts an IORING_CQE_F_MORE completion and rearms its
-timer. With a zero interval the timer expires again right away and
-queues new task work, so the drain keeps running it until posting a
-CQE fails.
+virtio_net_hdr_tnl_to_skb() trusts the virtio header to describe a
+UDP tunnel over IPv4 or IPv6, but never checks that the frame actually
+carries such outer headers. Because VIRTIO_NET_HDR_F_NEEDS_CSUM is
+mandatory for tunnel GSO, __virtio_net_hdr_to_skb() skips the flow
+dissector, so virtio_net_hdr_match_proto() is never applied either.
 
-Normally the CQ fills up quickly and the request then completes. But
-if userspace moves the CQ head far ahead of the tail, for example to
-cq.tail + 0x7fffffff, posting keeps succeeding and ring teardown is
-delayed for a long time.
+A guest (or a tap writer) can then inject a frame with an arbitrary
+outer ethertype, for example ETH_P_NSH, with SKB_GSO_UDP_TUNNEL set.
+The GSO stack then runs nsh_gso_segment() on top of the UDP tunnel
+segmentation, which assumes a different header layout. The result is
+segments with skb->data before skb->head, and a host crash in
+skb_under_panic() as soon as a later layer pushes a header:
 
-Don't post another CQE or rearm the timer when tw.cancel is set, so
-the request completes through io_req_task_complete(), like the poll and
-linked timeout task work does when cancelled.
+  skbuff: skb_under_panic: ... put:4 ... dev:gretap1
+  kernel BUG at net/core/skbuff.c:215!
+   skb_push
+   __gre_xmit
+   gre_tap_xmit
+   ...
+   tun_get_user
 
-Fixes: ea97f6c8558e ("io_uring: add support for multishot timeouts")
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/20261116044519.281756-1-teel4res@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Validate the outer headers with the parsing helpers from Michael's
+series "net: resolve uncommon partial checksums at ingress":
+
+- locate the L3 header: Ethernet with optional VLAN tags, or the
+  network header set by the caller. skb->protocol is not trusted when
+  it disagrees with the frame.
+- require the outer L3 protocol to match the declared tunnel type.
+- require the outer UDP header exactly at outer_th_offset, after IPv4
+  options or IPv6 extension headers, and reject fragments.
+
+Unlike the original helpers:
+
+- the callers tell whether the frame starts with an Ethernet header,
+  with a new has_eth argument of virtio_net_hdr_tnl_to_skb(), instead
+  of using the device type. tun frames packets from its IFF_TAP and
+  IFF_TUN flags, and TUNSETLINK can set the device type to any value.
+  virtio_net and tun_xdp_one() always pass true, tun_get_user() passes
+  whether the device is IFF_TAP.
+- ipv6_find_hdr() stops at an AH header, as Willem suggested in the
+  review of that series.
+
+Fixes: a2fb4bc4e2a6 ("net: implement virtio helpers to handle UDP GSO tunneling.")
+Reported-by: Hassan Sultan <hassansultan@google.com>
+Suggested-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/netdev/93d0e37c99711bebdf60c120af03010455c2f2e2.1793276116.git.mst@redhat.com/
+Co-developed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261110213628.3476051-4-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/timeout.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/tun.c          |   9 +-
+ drivers/net/tun_vnet.h     |   5 +-
+ drivers/net/virtio_net.c   |   2 +-
+ include/linux/virtio_net.h | 169 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 180 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/timeout.c b/io_uring/timeout.c
-index 8e7a4bd7e5141..b46a50b395177 100644
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -115,7 +115,8 @@ static void io_timeout_complete(struct io_tw_req tw_req, io_tw_token_t tw)
- 	struct io_ring_ctx *ctx = req->ctx;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 8a5ffd6904891..dfdc4b5bd27f8 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1949,7 +1949,8 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 		break;
+ 	}
  
- 	if (!io_timeout_finish(timeout, data)) {
--		if (io_req_post_cqe(req, -ETIME, IORING_CQE_F_MORE)) {
-+		if (!tw.cancel &&
-+		    io_req_post_cqe(req, -ETIME, IORING_CQE_F_MORE)) {
- 			/* re-arm timer */
- 			raw_spin_lock_irq(&ctx->timeout_lock);
- 			list_add(&timeout->list, ctx->timeout_list.prev);
+-	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr)) {
++	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, &hdr,
++				    (tun->flags & TUN_TYPE_MASK) == IFF_TAP)) {
+ 		atomic_long_inc(&tun->rx_frame_errors);
+ 		err = -EINVAL;
+ 		goto free_skb;
+@@ -2625,7 +2626,11 @@ static int tun_xdp_one(struct tun_struct *tun,
+ 	tnl_hdr = (struct virtio_net_hdr_v1_hash_tunnel *)gso;
+ 	skb->dev = tun->dev;
+ 	skb_set_network_header(skb, ETH_HLEN);
+-	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, tnl_hdr)) {
++	/* Frames always start with an Ethernet header here, as the
++	 * eth_type_trans() call below expects.
++	 */
++	if (tun_vnet_hdr_tnl_to_skb(tun->flags, features, skb, tnl_hdr,
++				    true)) {
+ 		atomic_long_inc(&tun->rx_frame_errors);
+ 		kfree_skb(skb);
+ 		ret = -EINVAL;
+diff --git a/drivers/net/tun_vnet.h b/drivers/net/tun_vnet.h
+index f4c652b1fa44d..3364e08dd6e08 100644
+--- a/drivers/net/tun_vnet.h
++++ b/drivers/net/tun_vnet.h
+@@ -197,9 +197,10 @@ static inline netdev_features_t tun_vnet_hdr_guest_features(int vnet_hdr_sz)
+ static inline int
+ tun_vnet_hdr_tnl_to_skb(unsigned int flags, netdev_features_t features,
+ 			struct sk_buff *skb,
+-			const struct virtio_net_hdr_v1_hash_tunnel *hdr)
++			const struct virtio_net_hdr_v1_hash_tunnel *hdr,
++			bool has_eth)
+ {
+-	return virtio_net_hdr_tnl_to_skb(skb, hdr,
++	return virtio_net_hdr_tnl_to_skb(skb, hdr, has_eth,
+ 				features & NETIF_F_GSO_UDP_TUNNEL,
+ 				features & NETIF_F_GSO_UDP_TUNNEL_CSUM,
+ 				tun_vnet_is_little_endian(flags));
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 584bc05c577c7..9d92d318e2fae 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2520,7 +2520,7 @@ static void virtnet_receive_done(struct virtnet_info *vi, struct receive_queue *
+ 
+ 	skb->dev = dev;
+ 	skb_set_network_header(skb, ETH_HLEN);
+-	if (virtio_net_hdr_tnl_to_skb(skb, &hdr->tnl_hdr, vi->rx_tnl,
++	if (virtio_net_hdr_tnl_to_skb(skb, &hdr->tnl_hdr, true, vi->rx_tnl,
+ 				      vi->rx_tnl_csum,
+ 				      virtio_is_little_endian(vi->vdev))) {
+ 		net_warn_ratelimited("%s: bad gso: type: %x, size: %u, flags %x tunnel %d tnl csum %d\n",
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index d6466f96cdd00..b7b6b542f4763 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -5,7 +5,10 @@
+ #include <linux/if_vlan.h>
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
++#include <linux/netdevice.h>
+ #include <linux/udp.h>
++#include <net/ip.h>
++#include <net/ipv6.h>
+ #include <net/tcp.h>
+ #include <uapi/linux/tcp.h>
+ #include <uapi/linux/virtio_net.h>
+@@ -48,6 +51,145 @@ static inline int virtio_net_hdr_set_proto(struct sk_buff *skb,
+ 	return 0;
+ }
+ 
++/* TODO: nothing virtio specific here, move to ip.h */
++
++/*
++ * Pull and minimally validate the IPv4 header at @nhoff.
++ * Returns the header and stores the transport header offset in
++ * @thoff, or NULL if truncated or malformed.  The whole header,
++ * options included, is guaranteed linear on return.
++ */
++static inline struct iphdr *virtio_net_ip4_parse(struct sk_buff *skb,
++						  unsigned int nhoff,
++						  unsigned int *thoff)
++{
++	unsigned int ihl;
++	struct iphdr *iph;
++
++	if (!pskb_may_pull(skb, nhoff + sizeof(struct iphdr)))
++		return NULL;
++
++	iph = (struct iphdr *)(skb->data + nhoff);
++	if (iph->version != 4 ||
++	    iph->ihl < sizeof(struct iphdr) / sizeof(u32))
++		return NULL;
++
++	ihl = iph->ihl * sizeof(u32);
++	*thoff = nhoff + ihl;
++	/* Pull the options as well: the transport header offset
++	 * returned above must be within the linear data.  iph goes
++	 * stale across the pull.
++	 */
++	if (!pskb_may_pull(skb, nhoff + ihl))
++		return NULL;
++
++	return (struct iphdr *)(skb->data + nhoff);
++}
++
++/* Where does the L3 header start, and what protocol is it?
++ * With @has_eth, the frame starts with an Ethernet header, possibly
++ * followed by VLAN tags. Otherwise the L3 header starts at the network
++ * header offset the caller set up.
++ *
++ * The caller knows how the frame will be parsed later: the device
++ * type does not tell, as tun can change it with TUNSETLINK.
++ */
++static inline bool
++virtio_net_l3_start(struct sk_buff *skb, bool has_eth, int *nhoff,
++		    __be16 *proto)
++{
++	if (has_eth) {
++		__be16 h_proto;
++
++		if (!pskb_may_pull(skb, ETH_HLEN))
++			return false;
++		h_proto = eth_hdr(skb)->h_proto;
++		/* skb->protocol is a sender claim, and parts of the
++		 * stack parse the packet per it: when it disagrees with
++		 * the frame we do not know which view the packet will
++		 * be parsed as, so do not validate.
++		 */
++		if (skb->protocol && skb->protocol != h_proto)
++			return false;
++		*nhoff = ETH_HLEN;
++		*proto = h_proto;
++		if (eth_type_vlan(*proto)) {
++			*proto = __vlan_get_protocol(skb, *proto, nhoff);
++			if (!*proto)
++				return false;
++		}
++	} else {
++		const struct iphdr *iph;
++
++		*nhoff = skb_network_offset(skb);
++		/* An unset network header shows up as an offset
++		 * outside of the packet.
++		 */
++		if (*nhoff < 0 || (unsigned int)*nhoff >= skb->len)
++			return false;
++		/* No L2 header to cross-check with: take the protocol
++		 * from the IP version at the network header.
++		 */
++		if (!pskb_may_pull(skb, *nhoff + 1))
++			return false;
++		iph = (const struct iphdr *)(skb->data + *nhoff);
++		if (iph->version == 4)
++			*proto = htons(ETH_P_IP);
++		else if (iph->version == 6)
++			*proto = htons(ETH_P_IPV6);
++		else
++			return false;
++		if (skb->protocol && skb->protocol != *proto)
++			return false;
++	}
++	return true;
++}
++
++/* Walk the L3 header at @nhoff: where does its transport header
++ * start, and which protocol is it?  Returns false if the header
++ * is truncated, malformed or fragmented.
++ */
++static inline bool
++virtio_net_l4_start(struct sk_buff *skb, unsigned int nhoff, __be16 proto,
++		    unsigned int *thoff, int *ip_proto)
++{
++	if (proto == htons(ETH_P_IP)) {
++		const struct iphdr *iph = virtio_net_ip4_parse(skb, nhoff, thoff);
++
++		if (!iph || ip_is_fragment(iph))
++			return false;
++		*ip_proto = iph->protocol;
++		return true;
++	}
++
++	if (proto == htons(ETH_P_IPV6)) {
++		const struct ipv6hdr *iph;
++		int flags = IP6_FH_F_AUTH;
++
++		if (!pskb_may_pull(skb, nhoff + sizeof(*iph)))
++			return false;
++		iph = (const void *)(skb->data + nhoff);
++		if (iph->version != 6)
++			return false;
++		*thoff = nhoff + sizeof(*iph);
++		*ip_proto = iph->nexthdr;
++		if (*ip_proto != IPPROTO_TCP && *ip_proto != IPPROTO_UDP) {
++			*thoff = nhoff;
++			/* Find the transport header behind any
++			 * extension headers. IP6_FH_F_AUTH stops
++			 * the walk at AH, so frames with AH are rejected.
++			 */
++			*ip_proto = ipv6_find_hdr(skb, thoff, -1, NULL,
++						  &flags);
++			if (*ip_proto < 0 || flags & IP6_FH_F_FRAG)
++				return false;
++		}
++		return true;
++	}
++
++	return false;
++}
++
+ static inline int __virtio_net_hdr_to_skb(struct sk_buff *skb,
+ 					  const struct virtio_net_hdr *hdr,
+ 					  bool little_endian, u8 hdr_gso_type)
+@@ -282,9 +424,33 @@ static inline unsigned int virtio_l3min(bool is_ipv6)
+ 	return is_ipv6 ? sizeof(struct ipv6hdr) : sizeof(struct iphdr);
+ }
+ 
++/* Do the tunnel offsets match the outer headers in the frame?
++ * The L3 header the tunnel claims must be the one the frame
++ * carries, with UDP following it at @outer_th.
++ */
++static inline bool
++virtio_net_tnl_offsets_ok(struct sk_buff *skb, bool has_eth, bool outer_isv6,
++			  unsigned int outer_th)
++{
++	int nhoff;
++	__be16 proto;
++	unsigned int thoff;
++	int ip_proto;
++
++	if (!virtio_net_l3_start(skb, has_eth, &nhoff, &proto))
++		return false;
++	if (outer_isv6 != (proto == htons(ETH_P_IPV6)))
++		return false;
++	if (!virtio_net_l4_start(skb, nhoff, proto, &thoff, &ip_proto))
++		return false;
++
++	return ip_proto == IPPROTO_UDP && outer_th == thoff;
++}
++
+ static inline int
+ virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
+ 			  const struct virtio_net_hdr_v1_hash_tunnel *vhdr,
++			  bool has_eth,
+ 			  bool tnl_hdr_negotiated,
+ 			  bool tnl_csum_negotiated,
+ 			  bool little_endian)
+@@ -338,6 +504,9 @@ virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
+ 	if (ret)
+ 		return ret;
+ 
++	if (!virtio_net_tnl_offsets_ok(skb, has_eth, outer_isv6, outer_th))
++		return -EINVAL;
++
+ 	/* In case of USO, the inner protocol is still unknown and
+ 	 * `inner_isv6` is just a guess, additional parsing is needed.
+ 	 * The previous validation ensures that accessing an ipv4 inner
 -- 
 2.53.0
 
