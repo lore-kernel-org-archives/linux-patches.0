@@ -1,53 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795617581;
-	b=C+GDhMe7TzMCf9On1+JOKU6vBFBNYZxgmHrJ1j9pZbAJD9ATqUOjJqBM4IMPbISwS+kF
-	 5TTYeD2SVtdfjqP/5dNKVkkOAnspUE6MraCtkW7f9K3no/PcpvCDZW8qX5hWlfrzDKLuK
-	 vLn+GFGahbOiHc9BLfhnMbYgPnNhTSvW5v/sM6wD/RyGDst9frGCnIGnj246FsSdtx8yu
-	 93zDs4MpP0uhGhqSBS0fSRbhtdU427fKujnds4qypVwv55rPQVvegiRJDwAKyeAEddxMs
-	 0Kl1th0dlEc1RalvFuTIfO9Qfn2dsJlix42uVs4QzEtG/ZUZtwW17PcBpSuUNJB9+eA==
+	t=1795617584;
+	b=Ret6FjfdZ1aExvy0zPyQtKcoqRbKZ562Hh0gfntWS8GAchUKzXNHJzhS4Yw1moC787OP
+	 rRpgBMy5beuG7N8vaY5r8ZrFXvUaFAGfzI4XiGtlTqrUzKsET13NzL3pHSQ3hPzKBFBhj
+	 UuOrjpvQDeblQniQ2PFbOkUFnQ6uyYjvIpTjEs0gCO2amij9m9imPQa9Io/vzF3k8jwg2
+	 +9YdsRTE4IlUXGt5QbxAsMrZKzGvJhlUxTcgOc7wgnCODbaBJsmoGFeoBYLQoKQd6BRo5
+	 hTC0cxhfjldez3HDQhbwniQbfau1UKcMiLCOnJrCByvvOanOIHKb1amJknZV2jFuqlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795617581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795617584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F1spZR8S/C8w63ep+aHZrjLrJXgZ5jwKUahNERU2z7w=;
-	b=dYoLLlBr8kfnVPW3mJa+8WCDH6Q0TS1OtjRRIPnk0m37YeeLdJH/rif6QQH5V/bkiXeY
-	 A9pkWpWsSwVTF78NaDgR23OZbUS1iSIlY4gpCPaEBNin7cAvyFleK2KhAutq2/ePE6Krr
-	 60U+PilQCIWoUnie7IsfxL7vFlLmlmPr7+wZpc6gOq2iyiL1zgFjM4S7MxABvnEinwPhQ
-	 2cqrUIwPp2j1hn7eYe7RzdnerdtcO66o0JA1DAYPKm0G+yuErcx0F8YOIpwuJNtb/3M7j
-	 rHf0qxuUXwi6CpwpXNS9Jr5Zko94T7v74CKAKnNjXzQrAcvh6GjbB/xN5rDUxS4bc5w==
+	bh=3c1HPq3zjBNrW3Q8UB5ce5Mb0qts/IG2leLrTZ8gP5U=;
+	b=A3oMKUOmWWCwPhegSZsi980zWNl8Osy1YbrkPWat8wDz9ANBglYNaBplM0g+l/PaLLHo
+	 bXGK3LC/k43cC2wkeuVKsqdiEFamBYWeB4IiCXpUNyHxTMX3y1BaJeTtoxKD/owEEmi9u
+	 gqSNJmilTWRcQpDd55nJ17ATiJ4n7JbBrRklrXeU+qS7cV503pcFc+/kFegIELjxsW9YP
+	 vr+l4MAn2BRxDMjpDNhmqi4kd8bNoeiE+daWmoCAT0zvstSTsxWdzG/Z8QZrO/TkyN0Yy
+	 8FTBT/QjwKGaJaEA8ZSsz2xjeYC3P12V0pF0Ysh0S9fWG9X+GvvictwBihQS0VDx9AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TTWd4GR5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnHiRxcV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3845C606A31E;
-	Wed, 25 Nov 2026 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1943C606A31E;
+	Wed, 25 Nov 2026 14:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TTWd4GR5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035D21F000C0;
-	Wed, 25 Nov 2026 14:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FnHiRxcV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284201F000C6;
+	Wed, 25 Nov 2026 14:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795617580;
-	bh=F1spZR8S/C8w63ep+aHZrjLrJXgZ5jwKUahNERU2z7w=;
+	s=korg; t=1795617583;
+	bh=3c1HPq3zjBNrW3Q8UB5ce5Mb0qts/IG2leLrTZ8gP5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TTWd4GR5fC3fqqKCR6RbzTLz8IuEDdUzl2pWk9txeWJf7kSwFqkTafzr7dUZW7VY0
-	 e58ANtuMrra5B7EcUaKJn20FoDPULr5mSdrC7SL678JAsVB/otbiXnA4JXm3LzoMIp
-	 X5pSUm9oRhxCQ2NTBLjk+V5zrTprsM7vKKhbBc+A=
+	b=FnHiRxcV7psK/m95L4TiHWC8X+CRAgVxW8MHpu92qcBgYCMdfukAIwENXtigUCjyx
+	 hib0JcPW8QYUJR8DxShee++VbA6+Rg/mVbtODUyqAyA1ShrxRvcmZ7PdYU370ZULA7
+	 mzOMPl+bh4T7UQz+0539hAVVRxExUNV8Eltx5gB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolai Kalinin <nikolai@kalinidze.me>,
-	Vladimir Petrzhikovskii <vladimir@dfb.sh>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0011/1005] virtio_net: check RX buffer length before DMA sync
-Date: Wed, 25 Nov 2026 15:22:29 +0100
-Message-ID: <20261125143822.001431217@linuxfoundation.org>
+Subject: [PATCH 7.3 0012/1005] Revert "drm/nouveau/devinit/gf100-: try to avoid double-running vbios scripts"
+Date: Wed, 25 Nov 2026 15:22:30 +0100
+Message-ID: <20261125143822.024868803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -69,199 +66,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Petrzhikovskii <vladimir@dfb.sh>
+This reverts commit 992f7f5f34f803144c9cac31d49ff853d8e861a9.
 
-[ Upstream commit 29dfa436bc488056a84ee423ba82336db453e2a6 ]
-
-An RX queue that uses the DMA API (rq->use_page_pool_dma, for example
-with VIRTIO_F_ACCESS_PLATFORM) syncs each received buffer with
-page_pool_dma_sync_for_cpu() using the length the device wrote to the
-used ring, and checks that length against the posted buffer only after
-the sync.
-
-With SWIOTLB bouncing (swiotlb=force, or a confidential-computing
-guest), the sync copies from the shared bounce buffer into the guest's
-private page, so an oversized length also copies the bytes the device
-wrote past the posted buffer over the neighbouring page pool fragments.
-The later check drops the packet, but the copy has already happened. A
-malicious device, such as a host the confidential guest does not
-trust, can overwrite guest kernel memory next to an RX buffer with
-bytes it chooses, which is enough to take an unprivileged guest
-process to root.
-
-Check the length before the sync in the per-fragment loops.
-receive_buf() has to sync the header before the length check, because
-the mergeable error path reads num_buffers from it, so limit that sync
-to the posted length. A device that reports correct lengths sees no
-change.
-
-The driver has synced with the device's length since
-commit 295525e29a5b ("virtio_net: merge dma operations when filling
-mergeable buffers"), at first in virtnet_rq_unmap(). Commit 24fbd3967f3f
-("virtio_net: add page_pool support for buffer allocation") moved the
-sync to the page_pool call sites that this patch changes, so the patch
-applies to v7.1 and later. Older kernels need a separate backport that
-limits the sync in virtnet_rq_unmap().
-
-Found by an LLM code review agent auditing users of the DMA API; the
-fix and this changelog were also written with an LLM coding assistant
-and reviewed by us. Reproduced in QEMU with swiotlb=force and
-iommu_platform=on, a test-only device change that reports a used length
-64 bytes past the posted buffer and writes a marker there, and a guest
-kprobe module that reads the buffer after the sync: without this patch
-the marker reaches the guest page for small and mergeable buffers; with
-it the packets are dropped and counted in rx_length_errors. The
-virtio_net selftest basic_features.sh passes with and without mergeable
-buffers.
-
-Fixes: 295525e29a5b ("virtio_net: merge dma operations when filling mergeable buffers")
-Cc: stable@vger.kernel.org
-Co-developed-by: Nikolai Kalinin <nikolai@kalinidze.me>
-Signed-off-by: Nikolai Kalinin <nikolai@kalinidze.me>
-Signed-off-by: Vladimir Petrzhikovskii <vladimir@dfb.sh>
-Link: https://patch.msgid.link/20261110-b4-virtionet-rxlen-v2-1-6ec5aa0edf9f@dfb.sh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 63 +++++++++++++++++++++++++++-------------
- 1 file changed, 43 insertions(+), 20 deletions(-)
+ .../drm/nouveau/nvkm/subdev/devinit/gf100.c   | 20 -------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 9d92d318e2fae..3a34a1376752d 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -790,19 +790,32 @@ static unsigned int mergeable_ctx_to_truesize(void *mrg_ctx)
- 	return (unsigned long)mrg_ctx & ((1 << MRG_CTX_HEADER_SHIFT) - 1);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+index 186e09ea0cb10..5368e705e7fd6 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+@@ -27,7 +27,6 @@
+ #include <subdev/bios/init.h>
+ #include <subdev/bios/pll.h>
+ #include <subdev/clk/pll.h>
+-#include <subdev/vga.h>
+ 
+ int
+ gf100_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
+@@ -100,25 +99,6 @@ gf100_devinit_preinit(struct nvkm_devinit *base)
+ 	 * can use it as a reliable way to know whether we should run devinit.
+ 	 */
+ 	base->post = ((nvkm_rd32(device, 0x2240c) & BIT(1)) == 0);
+-
+-	/*
+-	 * However some VBIOS init sequences miss this bit. So fall back to
+-	 * the nv50 method of checking if the bit is not set. Running the
+-	 * VBIOS multiple times may have detrimental effects.
+-	 */
+-	if (base->post) {
+-		u64 disable = nvkm_devinit_disable(base);
+-		/* magic to detect whether or not x86 vbios code has
+-		 * executed the devinit scripts to initialise the
+-		 * board. only works if there's a display engine.
+-		 */
+-		if (!(disable & (1ULL << NVKM_ENGINE_DISP))) {
+-			if (nvkm_rdvgac(device, 0, 0x00) ||
+-			    nvkm_rdvgac(device, 0, 0x1a)) {
+-				base->post = false;
+-			}
+-		}
+-	}
  }
  
--static int check_mergeable_len(struct net_device *dev, void *mrg_ctx,
--			       unsigned int len)
-+/* Length of the mergeable buffer that add_recvbuf_mergeable() posted. */
-+static unsigned int mergeable_ctx_to_buflen(void *mrg_ctx)
- {
--	unsigned int headroom, tailroom, room, truesize;
-+	unsigned int headroom, tailroom, room;
- 
--	truesize = mergeable_ctx_to_truesize(mrg_ctx);
- 	headroom = mergeable_ctx_to_headroom(mrg_ctx);
- 	tailroom = headroom ? sizeof(struct skb_shared_info) : 0;
- 	room = SKB_DATA_ALIGN(headroom + tailroom);
- 
--	if (len > truesize - room) {
--		pr_debug("%s: rx error: len %u exceeds truesize %lu\n",
--			 dev->name, len, (unsigned long)(truesize - room));
-+	return mergeable_ctx_to_truesize(mrg_ctx) - room;
-+}
-+
-+/* Length of the small buffer that add_recvbuf_small() posts. */
-+static unsigned int small_buflen(const struct virtnet_info *vi)
-+{
-+	return vi->hdr_len + GOOD_PACKET_LEN;
-+}
-+
-+static int check_mergeable_len(struct net_device *dev, void *mrg_ctx,
-+			       unsigned int len)
-+{
-+	unsigned int buflen = mergeable_ctx_to_buflen(mrg_ctx);
-+
-+	if (len > buflen) {
-+		pr_debug("%s: rx error: len %u exceeds buffer length %u\n",
-+			 dev->name, len, buflen);
- 		DEV_STATS_INC(dev, rx_length_errors);
- 		return -1;
- 	}
-@@ -1795,15 +1808,15 @@ static struct page *xdp_linearize_page(struct net_device *dev,
- 		p = virt_to_head_page(buf);
- 		off = buf - page_address(p);
- 
--		if (rq->use_page_pool_dma)
--			page_pool_dma_sync_for_cpu(rq->page_pool, p,
--						   off, buflen);
--
- 		if (check_mergeable_len(dev, ctx, buflen)) {
- 			page_pool_put_page(rq->page_pool, p, -1, true);
- 			goto err_buf;
- 		}
- 
-+		if (rq->use_page_pool_dma)
-+			page_pool_dma_sync_for_cpu(rq->page_pool, p,
-+						   off, buflen);
-+
- 		/* guard against a misconfigured or uncooperative backend that
- 		 * is sending packet larger than the MTU.
- 		 */
-@@ -2158,15 +2171,15 @@ static int virtnet_build_xdp_buff_mrg(struct net_device *dev,
- 		page = virt_to_head_page(buf);
- 		offset = buf - page_address(page);
- 
--		if (rq->use_page_pool_dma)
--			page_pool_dma_sync_for_cpu(rq->page_pool, page,
--						   offset, len);
--
- 		if (check_mergeable_len(dev, ctx, len)) {
- 			page_pool_put_page(rq->page_pool, page, -1, true);
- 			goto err;
- 		}
- 
-+		if (rq->use_page_pool_dma)
-+			page_pool_dma_sync_for_cpu(rq->page_pool, page,
-+						   offset, len);
-+
- 		truesize = mergeable_ctx_to_truesize(ctx);
- 		xdp_frags_truesz += truesize;
- 
-@@ -2435,15 +2448,15 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
- 		u64_stats_add(&stats->bytes, len);
- 		page = virt_to_head_page(buf);
- 
-+		if (check_mergeable_len(dev, ctx, len))
-+			goto err_skb;
-+
- 		if (rq->use_page_pool_dma) {
- 			offset = buf - page_address(page);
- 			page_pool_dma_sync_for_cpu(rq->page_pool, page,
- 						   offset, len);
- 		}
- 
--		if (check_mergeable_len(dev, ctx, len))
--			goto err_skb;
--
- 		truesize = mergeable_ctx_to_truesize(ctx);
- 		curr_skb  = virtnet_skb_append_frag(rq, head_skb, curr_skb, page,
- 						    buf, len, truesize);
-@@ -2561,12 +2574,22 @@ static void receive_buf(struct virtnet_info *vi, struct receive_queue *rq,
- 
- 	/* Sync the memory before touching anything through buf,
- 	 * unless virtio core did it already.
-+	 *
-+	 * len comes from the device and is checked against the buffer
-+	 * only later, so never sync past the buffer posted to the device.
-+	 * The sync still covers the header, which receive_buf() and the
-+	 * mergeable drop path read. Big buffers never come from the page
-+	 * pool, so a buffer here is either mergeable or small.
- 	 */
- 	if (rq->use_page_pool_dma) {
- 		struct page *page = virt_to_head_page(buf);
- 		int offset = buf - page_address(page);
-+		unsigned int buflen = vi->mergeable_rx_bufs ?
-+				      mergeable_ctx_to_buflen(ctx) :
-+				      small_buflen(vi);
- 
--		page_pool_dma_sync_for_cpu(rq->page_pool, page, offset, len);
-+		page_pool_dma_sync_for_cpu(rq->page_pool, page, offset,
-+					   min(len, buflen));
- 	}
- 
- 	/* About the flags below:
-@@ -2642,7 +2665,7 @@ static int add_recvbuf_small(struct virtnet_info *vi, struct receive_queue *rq,
- 	buf += VIRTNET_RX_PAD + xdp_headroom;
- 
- 	ctx = mergeable_len_to_ctx(alloc_len, xdp_headroom);
--	err = virtnet_rq_submit(rq, buf, vi->hdr_len + GOOD_PACKET_LEN, ctx, gfp);
-+	err = virtnet_rq_submit(rq, buf, small_buflen(vi), ctx, gfp);
- 
- 	if (err < 0)
- 		page_pool_put_page(rq->page_pool, virt_to_head_page(buf), -1, false);
+ static const struct nvkm_devinit_func
 -- 
 2.53.0
 
