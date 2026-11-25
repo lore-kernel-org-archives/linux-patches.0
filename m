@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795625170;
-	b=ldoyfoOf5D52A1LswF4gqu73QW86zUQZNBGtL7Ss5pKNp6TJ0Jo7YKZeUZsNPigUiyPY
-	 HCybGsxoxo6accm9WqDpcisuq/OwS8sHutsO4gUpHL4Cfq6pZoIjQbhg7iD6U/B5xW/aG
-	 J3M9U59Qa/OxO16uBU0kRHdy09TaDXW+xqTQMNEgbF18Lq2bxxc5TLegFL7EVgmm5icDW
-	 bcqHmmVN+N7d5Xxucw3u+B1zYEUZxFhk7rZaemv7FRjmR4dNwu3YArI7lCSVTfNg8DUKu
-	 G1QWl1/Yj3rA8liSy2cW47xMgl334dhZORDoDN/hKBRxmQ5CtqbWTfD2Naj4854KdpQ==
+	t=1795625173;
+	b=zaF7eR4WEykS8f2KiFGdqN3tYTWDg+mZz3JlrdzOEbHCZ+yxCxYY+BZ/vjUasbn68iNv
+	 4MkZin6ySAWXy/viM6vDjs9T5VclCDqbeKQIYCkxo4iffMr4gP1NAVGXgoZhUjW7ue5hS
+	 KwzpcQV6+m8PoO2UhqaVQ5T91eY9MZSl3f5Mckv20MHMU7YVKMrs6Sy5npg9tgqLSvPpg
+	 L1FsM/N3NRjotlLG/cGk9ZkoxsG1nP86U/qbmJZEjUCx9WKYMB0aOQuVfng8RRvCpheQp
+	 5oi9hNd+9c1RHSq1GjE03relCcIIufHnVtpwYvojLEAKtnZhY/Si1gEqi7C82IaoLHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795625170;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795625173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LaDbQRy2lKsBLz/Y03EPRxR9m0e4uWehmAkNsE3EIog=;
-	b=3Lij+1y7KYIyVIC4btTPM6LqdWI8JvXl4XeV1wiqNNIbdQ0P/BBSvL5oNLVqlXWjeIkR
-	 FQA8PLGY3HXBtkLLD4auuWY9tdNZeiymzZjtoEaq95sNU/0AEOB3vEWeR/4bRjCsLtMX7
-	 SfetKfNhzvbLNqNlRck4R3JS7qM6TI1JFpzkqmLYcKeyZArvpPeo/2Yl4oLa9GJPmZHSe
-	 8zofTZzsgCdijcvNXbWT+o+INiYuy6VfmXQniBQF01GKOkF9F3fBVellNN9us4BA9oTvL
-	 8BpDu8llSzjY/swuwqum/8mYy9slVSICCXTtk16ZdyhCzXdtFK7Hd3mUWtl8OeRu5AQ==
+	bh=n+oTL7ENqzFI/CPFcC6aYA+U7TMSFYi2SzOO0wbkglw=;
+	b=2j8QH4Jfk2UCeDxYWUT/8vXATL82ruSZDdxKHcmT4Ox+Jot6Lu112Xw64I/ckBCSOKQA
+	 7+vBeNl4Q1qLMOZZKa/Q4drykNyr2vd94hr8tn1pRlHNB4VCMrDB1ZoOClnJAsgkdIisX
+	 4UFm8BV7A4PvZjXQjj7SYcxXJvIAv0YdxGsjWL6anuQj9UfC0t2t+4yUO4UXv5bqXeeoc
+	 GWR1hcKEydP8CrnKDw3Vqdqj7PFMwydvBzvxLUbnAHokxVtp1QWJxbmzJ4nfLq0IRIIFe
+	 fmlQI9xIXP3uhO62yrfjReYdAci9gprggxhpFIvMU27DfxXm9LASIu8dMkhrQUOJUhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GGdPsVsD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gCU7vcQ2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DB8606A31E;
-	Wed, 25 Nov 2026 16:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9783606A321;
+	Wed, 25 Nov 2026 16:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GGdPsVsD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB54B1F000D8;
-	Wed, 25 Nov 2026 16:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gCU7vcQ2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEB21F000C0;
+	Wed, 25 Nov 2026 16:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795625170;
-	bh=LaDbQRy2lKsBLz/Y03EPRxR9m0e4uWehmAkNsE3EIog=;
+	s=korg; t=1795625173;
+	bh=n+oTL7ENqzFI/CPFcC6aYA+U7TMSFYi2SzOO0wbkglw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GGdPsVsDG2LUJ54mFIvU7LvPJcwMAMPwSV7XOsReUYQ9j25kTnHkpM+k6Gz8RPvLo
-	 sragN2UTQI3JucNnrFkBO/38xlIi+ySDJ5J/hhR3x2Kx28GXA4S3R5DcUcvgtIT+if
-	 WSPnNevA5lEsm/Dwcs3ecthrkVbew4Yhaii8plz0=
+	b=gCU7vcQ2tro1JwWqTXxF3jcEv6GoHPq/YeKs9JgwEDmbcbT5xiLrMV1MEvpCM+z/N
+	 0gSw/uwaEuU8dd5v9RBZYnXVuCyqUZlcFmXz0MMc8OKKkeBqi7+YFUAz8Wc9K5eqY5
+	 hx34bf8Tn5QB3kI8B39Dk8KPkB6K1f4/8AZH5WP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yibo Tan <lhfff@tju.edu.cn>,
-	Joel Granados <joel.granados@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 430/816] sysctl: unregister tables before freeing bitmap
-Date: Wed, 25 Nov 2026 15:32:58 +0100
-Message-ID: <20261125143859.147185971@linuxfoundation.org>
+Subject: [PATCH 6.12 431/816] arm64: dts: qcom: x1-crd: Mark the EC reset gpio as reserved
+Date: Wed, 25 Nov 2026 15:32:59 +0100
+Message-ID: <20261125143859.169666291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -68,55 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yibo Tan <lhfff@tju.edu.cn>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 238dfe02fb0a9f72d7fd275d74ce80f13923ef31 ]
+[ Upstream commit 099cd579fa73c142fde2f7e3ea473f334792a249 ]
 
-The table registered for bitmap_0001 retains a pointer to
-test_data.bitmap_0001. unregister_sysctl_table() prevents new handlers
-from starting and waits for active handlers to finish.
+GPIO 65 from TLMM is connected to the embedded controller's active-high
+reset line. Asserting it causes the fans to run at full speed during
+reset and leaves the keyboard non-functional afterwards.
 
-test_sysctl_exit() currently frees the bitmap before unregistering the
-table. A concurrent read during module removal can therefore enter
-proc_do_large_bitmap() while the bitmap is freed. KASAN reports a
-slab-use-after-free in _find_next_bit().
+Reserve it to prevent Linux from requesting or reconfiguring it.
 
-Unregister all tables before freeing the bitmap so the unregister rundown
-provides the required lifetime boundary.
-
-The unmodified module reproduced the use-after-free in three KASAN runs.
-With this change, three runs each completed 100 load, read and unload race
-rounds without a kernel diagnostic.
-
-Fixes: 2ea622b887e7 ("tools/testing/selftests/sysctl/sysctl.sh: add proc_do_large_bitmap() test case")
-Assisted-by: LLM
-Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
-Signed-off-by: Joel Granados <joel.granados@kernel.org>
+Fixes: bd50b1f5b6f3 ("arm64: dts: qcom: x1e80100: Add Compute Reference Device")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260922-dts-qcom-hamoa-reserve-ec-reset-gpio-v3-1-fde7f8a53382@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+[ sashal: Applied the one-line gpio-reserved-ranges addition to the CRD board file, since the shared include file the original patch edits doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_sysctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/test_sysctl.c b/lib/test_sysctl.c
-index b6696fa1d4262..a043e27287db1 100644
---- a/lib/test_sysctl.c
-+++ b/lib/test_sysctl.c
-@@ -264,7 +264,6 @@ module_init(test_sysctl_init);
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+index e5d0d7d898c38..e44ea4d686822 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -1000,6 +1000,7 @@ right_tweeter: speaker@0,1 {
+ &tlmm {
+ 	gpio-reserved-ranges = <34 2>, /* Unused */
+ 			       <44 4>, /* SPI (TPM) */
++			       <65 1>, /* EC reset */
+ 			       <238 1>; /* UFS Reset */
  
- static void __exit test_sysctl_exit(void)
- {
--	kfree(test_data.bitmap_0001);
- 	if (sysctl_test_headers.test_h_setup_node)
- 		unregister_sysctl_table(sysctl_test_headers.test_h_setup_node);
- 	if (sysctl_test_headers.test_h_mnt)
-@@ -275,6 +274,7 @@ static void __exit test_sysctl_exit(void)
- 		unregister_sysctl_table(sysctl_test_headers.empty);
- 	if (sysctl_test_headers.empty_add)
- 		unregister_sysctl_table(sysctl_test_headers.empty_add);
-+	kfree(test_data.bitmap_0001);
- }
- 
- module_exit(test_sysctl_exit);
+ 	edp_reg_en: edp-reg-en-state {
 -- 
 2.53.0
 
