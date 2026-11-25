@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623063;
-	b=ie57JakTjkaFaYI5XnfgWoUiaygCMrlVDae7tBinpWzxOtHlg9BALmcJpUf+xTF4ZLmR
-	 pLb3Nmhh8qaJ4PFvUJteEQv6zO78WqEFSyfTgKbldenbqAl40nza/IZV9HKEB+aVrXw+h
-	 gKufrmVIYZPDnq1bY0jnpBnbBeGtfia2fIiQ2xq575dH4Vn2Lxu/k/3y/mAAUQ/H0UE3V
-	 GVHlh8qAznAcF25apxacLy1ceKU1KaeTptxrm60LfQRFmVo2ZnjGpmPNleZ78NPDeB556
-	 R5wX9P7t9EuXD9EE6TVoxr43Oe3NSvkXQVX0fPbhidV7kD3yJja7vPMNXsZGJSjLiLg==
+	t=1795623065;
+	b=AAsu7oxGV4YdGX/0prbuKPe+SsGjcSOE/01lsl+EBno/SvM9+xkKFZjKpxA99DNHruIC
+	 LxUDmUWW4kKnXbVgP2CnBt+p76rxc31LANE4zJxYlCZAkCMLPSVlNgKwPfjdFsF275vTH
+	 hFIrczCYTKhHhaVOJGIeYrPCOIiNreejM6Xb8li4Tt6uxDOQBGTvcl6l4rlVC2ToUkWnW
+	 tP+KN6Inc9D0JQO5aSZiSexuWMx50FyVLi9NMez63uqQXyrYA6aSj4Vo1wY+6wpsCYwyo
+	 o/M3F5Fi/jiDAJ2fPTs0RE7pwfW0JaaXPiiMUUvluipfCy4PQuMKPGejCiH+sV9Q4+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623065;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZBLv5spX3K0+4sN8n7f1pomGqOzdv0ZXYW8euRnmbPg=;
-	b=R/R+Kgoy4WKemg5qwyW9cIZ+7pUxm/pY9K1Yt8/Kjb4yh1t/gWOKMgv4XuLFLoehERWo
-	 MNcIeWWwUmY7baePMCF7h4Gxctt1i54Pqpw0rxF1+UJ8lyZrLqBV8zrPjcmSaRTBM2EAH
-	 2/KFzmL2+6r7dY95ZVjqws0dOqe/MXCtKU+B+HCpHUW9uoFiwEbmMWZQLcITZzDSqxir1
-	 8NGhEz8oMIbs2P1FPdoptiqS0a8iyCX5J9FCZsa1yXTjYOQzrYDyNXKbP39h5/i1qePDS
-	 ih0vSnwwSzt+umNcJKsbwit8PAxqz+GaJHxHLSDbHAACDVhp1TsEogMqm5Tl1ywC71g==
+	bh=MBVn1X7n+lr4FEjpIhpMsCJjiOGBhpUWYTYpKqi7uCk=;
+	b=w4YXzWfox1tHJJvcBFQzVglG9x06uPsIen/JitXfm1zpBoJVwgBrJnQ7VTDmF5dIWe/E
+	 Nx3teLX4AfxCH2JFhsO+9hEX7c4JSuNR0sJWwer3LIAn++1ksbo4UUX0JfgxPhCcFXuAR
+	 7cUb4MQfaupDt7TnWXXpivbjSnRHdSF/f8As7iR6EwaoGKE4B6xzsgoZrNtvTTL7zwGvV
+	 UfXFuC8vAyH7XOy2HKhfrDCSpxwj0uWZ+InKE92d9P7qA2vffhpLJRpYjXhDnLoY9BbmC
+	 +ldrma7h71LplJNGZFn7UBIoK4Cr8RzGsDVXpIdJ7KJk6zdXxhTG8p+W7AM2NW2Hrqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z9Cew1eu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THWmAG7X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0B0606A31E;
-	Wed, 25 Nov 2026 16:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B38606A321;
+	Wed, 25 Nov 2026 16:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z9Cew1eu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B86A1F000C4;
-	Wed, 25 Nov 2026 16:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THWmAG7X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF111F000C6;
+	Wed, 25 Nov 2026 16:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623062;
-	bh=ZBLv5spX3K0+4sN8n7f1pomGqOzdv0ZXYW8euRnmbPg=;
+	s=korg; t=1795623065;
+	bh=MBVn1X7n+lr4FEjpIhpMsCJjiOGBhpUWYTYpKqi7uCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z9Cew1euU5yZnq8Fio58zgSskmn8RFtVp66PrVvZ3DoPewPn1YPsmaSpucY9n+0hP
-	 HOWQhPdAdC8NfnGRHHdjxxtGk+Lz3REX5497ILeShfmMEP25QP6+7ZgrQjJYZRb+x+
-	 /KNmVMfOnAJQ774uDi3ZXERZlGP6nwv54xpEA/yg=
+	b=THWmAG7XwvyXPpGhbOBdBu+ExeqJ4GM8KAYwDWxl86H7bWcfLaxdzZtjpVa6uH8uh
+	 AHh0tXxFjuRtndyVVtcbWgK1JPov6P5rFE+9tXko0A0b0YNRBK1v1yP0fqIwaiSVa/
+	 5Ux+WYZq4lS3BPHLhwHIY/D+JDlc5e3T23F9J83w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jiabin Deng <dengjiabin2023@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 693/990] net/mlx5e: SHAMPO, Disable end padding when relaxed ordering is supported
-Date: Wed, 25 Nov 2026 15:34:20 +0100
-Message-ID: <20261125143838.321372643@linuxfoundation.org>
+	stable@kernel.org,
+	Kyle Zeng <kylebot@openai.com>,
+	Allison Henderson <achender@kernel.org>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Subject: [PATCH 6.18 694/990] net/rds: Do not unpin a page after a failed atomic pin
+Date: Wed, 25 Nov 2026 15:34:21 +0100
+Message-ID: <20261125143838.343991400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,56 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiabin Deng <dengjiabin2023@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 68c183619f24982a635930697bf8e148f2d78f71 upstream.
+commit 8d5ce4751fad9499ea408163af7f410f18a85782 upstream.
 
-When SHAMPO and relaxed ordering writes are enabled, aligned RQ end
-padding can corrupt received TCP data. Due to reordering, alignment
-padding written at the end of one packet can overwrite data from the
-next packet.
+rds_cmsg_atomic() assumes that a non-NULL output from rds_pin_pages()
+represents a pin that it owns. However, pin_user_pages_fast() can roll
+back a fast-GUP pin after racing fork() and then fail in the slow path,
+for example after a concurrent mprotect(PROT_NONE). The output slot can
+still contain the already-unpinned page.
 
-The current RQ end padding selection avoids alignment padding for LRO,
-but not for SHAMPO. Extend the condition to SHAMPO to prevent this
-corruption.
+The common error path calls unpin_user_page() on that stale pointer.
+This can consume another subsystem's pin and allow the page to be freed
+while it is still in use. A local unprivileged reproducer triggers a
+KASAN use-after-free write through an io_uring registered buffer.
 
-The issue was observed in a two-host test using a BlueField-3 NIC and
-an NVIDIA H20 GPU. In the original test with MTU 1500, 354 of 400
-transfers contained corrupted data before the fix. After applying this
-change, all 400 transfers across eight message sizes from 32 KiB to
-4 MiB, with 50 transfers per size, completed successfully, with no
-incorrect bytes or corrupted intervals.
+Clear page when rds_pin_pages() does not return one. The error path
+continues to release the page on errors after a successful pin, and
+successful requests retain their existing ownership and behavior. All
+four RDS atomic ancillary operations share this path.
 
-Fixes: e5ca8fb08ab2 ("net/mlx5e: Add control path for SHAMPO feature")
-Closes: https://lore.kernel.org/r/CAFxp=AY2cVRQrZvB9WNnigbsobuw11NMG-cagHx0_V+ur2ToFw@mail.gmail.com
-Link: https://lore.kernel.org/r/atZKOtjrb9HKSNHF@dtatulea-c5.nvidia.com
-Suggested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiabin Deng <dengjiabin2023@gmail.com>
-Link: https://patch.msgid.link/20261110035723.26587-1-dengjiabin2023@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The issue was found by an LLM.
+
+Fixes: 15133f6e67d8 ("RDS: Implement atomic operations")
+Cc: stable@kernel.org
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/params.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/rds/rdma.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -873,10 +873,11 @@ static void mlx5e_build_rx_cq_param(stru
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -960,8 +960,11 @@ int rds_cmsg_atomic(struct rds_sock *rs,
+ 	}
  
- static u8 rq_end_pad_mode(struct mlx5_core_dev *mdev, struct mlx5e_params *params)
- {
--	bool lro_en = params->packet_merge.type == MLX5E_PACKET_MERGE_LRO;
-+	bool no_pad = params->packet_merge.type == MLX5E_PACKET_MERGE_LRO ||
-+		      params->packet_merge.type == MLX5E_PACKET_MERGE_SHAMPO;
- 	bool ro = MLX5_CAP_GEN(mdev, relaxed_ordering_write);
+ 	ret = rds_pin_pages(args->local_addr, 1, &page, 1);
+-	if (ret != 1)
++	if (ret != 1) {
++		/* A failed pin can leave a stale page pointer. */
++		page = NULL;
+ 		goto err;
++	}
+ 	ret = 0;
  
--	return ro && lro_en ?
-+	return ro && no_pad ?
- 		MLX5_WQ_END_PAD_MODE_NONE : MLX5_WQ_END_PAD_MODE_ALIGN;
- }
- 
+ 	sg_set_page(rm->atomic.op_sg, page, 8, offset_in_page(args->local_addr));
 
 
