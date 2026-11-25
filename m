@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620460;
-	b=tnW3alUdSj6fzlSgIyA0+RFlbAzDEd4pikDl2jH5Zd67Ou9slm6RefiPvwxns8HxttMh
-	 kH7d4aTYKxXo2QTUCRVheXfq3oM4pNBBGIlYsJvtFUz0zCB1g14cF5pI5RbGxwsdCMipJ
-	 rx7chp2+MFyZ8naOdg6YpPljMzz+H8mYHhpTYQcqdYhEJptGaHuLXo5u5t+64ft0LVeTR
-	 p7Q+BA5IMpinXbNzef0dCbFT6R6saZB+8X5OCJwvjk7EA4vJpHPECRRS+zyPxdQnObkEm
-	 L8FVaeodt2hy2yIA7n12/d9jjO7vQizyzWsXqVqWGQ59PqxEj/8kiroqnO2njNVH3og==
+	t=1795620463;
+	b=0WFcq+eBmpYNCiPFdYO6+CFSSscFJinhQuRuReRQAg/zQ5ixMegJJYllB+zUk/fS6x6Q
+	 QVqRN7+KEEiUCWjJ15lr9y32qGKcJN3ljCdsKIKwwOuj2NqHrsN29PtWE3Ktc/yx1ClOm
+	 +nWETzIW+BB2wFzv/h+0+odSnOr1Nk6XJ76EX5JTSXPqojoUHaghMzzeCp+rlDja6O583
+	 fJgjYpowsfst51YrXW+PXwSPDCFdHjda7QWj3qEmwWTpCoySTmh/0E7+dCxw8hEOxQbDU
+	 nt5wuadEGa2kMWx5So2Tdi8454CtQ/35xpXemO6fpwHkUMo+P8antQY8WPcf7+17M6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h4O6Hz+UvCVxfBmtT4BoJo2hQBlLg8XbQ8S27PJtRvI=;
-	b=h2VXRVtHiaOIHm83GbsZiow8IFW19qqqsJwUzaqAdn9LOu3TP3qR+5YGLbywj9zafiMH
-	 pdqTKbty4LJgvwzAPYTcKK8UVYiZVmujZ+Zor+rLL8K96vHyS31f88dRG4OVZFDq1uiIO
-	 S4oUONmlhTEdXCGLM5I6Zrr3I5Tk5/8uULK56VgHM/s7XaZ54iR56Ix/X27mGC/dWTzRN
-	 dGHMbyaH8maBDipggGxCHY8tUfmrkQuLxidHQS8wcJt+pdFecbY7uwlBZ7+m+D21tdVGT
-	 FrFvPkZedYNKeUhqSSq/yeV2YYXZEIO5XfNlqLFAPjW6gwsW0SvUsW78pKJWppHTiDw==
+	bh=6pO2AKoyIj9FDdIQOnVzafFFlFk/f/411+yZda80Rfg=;
+	b=i6/hJuLAmYgWzXr3UVNRhQNn1JKGroxwVz49hvFNQkfSTGAENUnP1TYulSZEr9nZYa7Z
+	 TbFQm6VAk1b9f4fV+mwzirIDYzZ/n1U2NxP1znVKtjaab7LNUgkGafFP0fwsK3T9mryl0
+	 /WB3lEAi1j3aAsAw7bD8QiEQrtjuZVpax240Jr3O7UoKXWdMTti0CvbAtlYhFeKWe5mSy
+	 vWzHHtGErP9AtZCUFmcr0IQgmEDdMnGSbN6wu5z2fqX/Ik2HUl6cMdyScWLJBjJR0AFF9
+	 THRJgHbEwbcTlF6T3D4gZ+YdXDgytb4oQ5gPKsRHu/4xu1LhzbAIMTOsZ/9yayuhhrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0RJQIeM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThXtxwun;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB4D606A323;
-	Wed, 25 Nov 2026 15:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABB2606A327;
+	Wed, 25 Nov 2026 15:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0RJQIeM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9773F1F000C0;
-	Wed, 25 Nov 2026 15:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ThXtxwun
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798A91F000C4;
+	Wed, 25 Nov 2026 15:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795620460;
-	bh=h4O6Hz+UvCVxfBmtT4BoJo2hQBlLg8XbQ8S27PJtRvI=;
+	s=korg; t=1795620463;
+	bh=6pO2AKoyIj9FDdIQOnVzafFFlFk/f/411+yZda80Rfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n0RJQIeMJ1jYfHfnWr15RLavLlpUoT+mvBkj7sWNOiUKIo8/FmdiTlMJZk/cOS9Ek
-	 +BYDezz9CDdg8U0k+iBwFFq5ICKQfS66wcdR7eTichScB1U/6GEosIPbz7hkwF5CfZ
-	 ++U2gJU4Vznp9sRM1YDj6N8OubnxPXkBN5heplsM=
+	b=ThXtxwunioxDDziz1divlKeoPed85laxCGpQRCjZGhJeuA46yWOxa+zC81Ghp3VSq
+	 oKq6cgBQgYJioG4G1EmAMHURTrppIRF0xeq3I/efUp6Ql0I0VBwzQS40wjwIW37LzQ
+	 DDOIYeXio/yYbN4jEXYYmcuhK/m8Rq9K+bifWdWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 7.3 0888/1005] comedi: fix endless recursion in comedi_event()
-Date: Wed, 25 Nov 2026 15:37:06 +0100
-Message-ID: <20261125143842.499838996@linuxfoundation.org>
+	Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>,
+	Peter Chen <peter.chen@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogeurs@linuc.intel.com>
+Subject: [PATCH 7.3 0924/1005] usb: typec: ucsi: Set ucsi->connector before enabling notifications
+Date: Wed, 25 Nov 2026 15:37:42 +0100
+Message-ID: <20261125143843.332054918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -67,47 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>
 
-commit d432e5d3dbd98589029905e898bfe7005be69b68 upstream.
+commit 5b4b83c2ffe8740f6f3e54ea4d4962a62c063ef1 upstream.
 
-When comedi_event() was split into a wrapper which takes a reference on
-the running command and _comedi_event(), which does the work, the wrapper
-ended up calling itself:
+In ucsi_init(), ucsi->connector is assigned only after the
+UCSI_SET_NOTIFICATION_ENABLE command completes. But once that command
+is sent, the PPM is free to raise a connector change notification at
+any time, which is handled through:
 
-	if (comedi_get_is_subdevice_running(s)) {
-		comedi_event(dev, s);
-		comedi_put_is_subdevice_running(s);
-	}
+    ucsi_notify_common() -> ucsi_connector_change()
 
-As long as the command is running every level takes another reference
-and recurses, until the stack is used up.
+ucsi_connector_change() indexes into ucsi->connector to get the
+connector and schedule its work item. If this notification arrives
+before ucsi_init() reaches the "ucsi->connector = connector;" line,
+ucsi->connector is still NULL and the driver crashes dereferencing it.
 
-Most drivers go through comedi_handle_events(), which calls
-_comedi_event(). usbdux, usbduxfast and usbduxsigma cannot use that and
-call comedi_event() from their URB completion handlers, i.e. for every
-completed URB of a running acquisition.
+Fix this by setting ucsi->connector right after the connectors are
+registered, before notifications are enabled, so it is always valid
+by the time a connector change event can be delivered. Also clear
+ucsi->connector in the err_unregister path so it isn't left pointing
+at freed memory if a later step in ucsi_init() fails.
 
-Fixes: 51495254fda4 ("comedi: Use reference count for asynchronous command functions")
+Fixes: 0482c34ec6f8 ("usb: ucsi: Fix ucsi->connector race")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-1-1899771ee15b@linuxfoundation.org
+Signed-off-by: Uttkarsh Aggarwal <uttkarsh.aggarwal@oss.qualcomm.com>
+Reviewed-by: Peter Chen <peter.chen@oss.qualcomm.com>
+Reviewed-by: Heikki Krogerus <heikki.krogeurs@linuc.intel.com>
+Link: https://patch.msgid.link/20260929092939.1806907-1-uttkarsh.aggarwal@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -3494,7 +3494,7 @@ void _comedi_event(struct comedi_device
- void comedi_event(struct comedi_device *dev, struct comedi_subdevice *s)
- {
- 	if (comedi_get_is_subdevice_running(s)) {
--		comedi_event(dev, s);
-+		_comedi_event(dev, s);
- 		comedi_put_is_subdevice_running(s);
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -2134,6 +2134,14 @@ static int ucsi_init(struct ucsi *ucsi)
+ 			goto err_unregister;
  	}
- }
+ 
++	/*
++	 * Set ucsi->connector before enabling notifications. A connector
++	 * change event can be handled as soon as the notifications are
++	 * enabled below, and ucsi_connector_change() indexes into
++	 * ucsi->connector, so it must not be NULL at that point.
++	 */
++	ucsi->connector = connector;
++
+ 	/* Enable all supported notifications */
+ 	ntfy = ucsi_get_supported_notifications(ucsi);
+ 	command = UCSI_SET_NOTIFICATION_ENABLE | ntfy;
+@@ -2141,7 +2149,6 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	if (ret < 0)
+ 		goto err_unregister;
+ 
+-	ucsi->connector = connector;
+ 	ucsi->ntfy = ntfy;
+ 
+ 	mutex_lock(&ucsi->ppm_lock);
+@@ -2155,6 +2162,7 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	return 0;
+ 
+ err_unregister:
++	ucsi->connector = NULL;
+ 	for (con = connector; con->port; con++)
+ 		ucsi_unregister_port(con);
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++)
 
 
