@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623236;
-	b=j6HbpNWfs9vLmfCVgeo2Cj05ygrCPcjJNDwnTSHuC4zn2Qclk7FtndLdRH0nGSrnfH3H
-	 4u+ZafPOnOI0hkZIodmjbHjbmBwJOZDAj7zzJWqSy2QepB0eIfhjhxQmUgfRN2hZBO2BO
-	 7QDVkf/s3L9ABWZCO3xRNKnHc/aZzs9MzPZkjkMFDRfxHjBbBNmgVCAB/MoP9zgRlzRtb
-	 Q9KzejNVjebnxhWaCsyoix6wdVq6zknfBXQM55QRcHoFj42zfUmU+DpLFJ7oOQMfyegbf
-	 2zsuyD/JCgJrjfrLfI5aehJPxFk0N3WzQWrtOGnrwVOU/X2K0SUghYDUFWTxAqtbbcA==
+	t=1795623239;
+	b=n+iky+rx2fn3GbeV+zeemhNBU6FXpJbxAgaA24t4PS13kNOKOC4+Jlx2YxB8Zh24nCNX
+	 9u4DwY+eOA5cOiHgxz8MdQZNsa0+Opb0Z4xjPIZSoxdZppSOhViRdfj53oLyLNKhtrvsB
+	 2/plPtBt6EOhPoP8aJwr+dOTPuhJx96zmZGPnZP9qu8u4Qfg0qlAtEx6wzg4wyiLmUGHm
+	 DmV/6UufsuQL2cexMEPSdPD3ejRciozPc2dzxba/klWG1cIoHov+6RYtT2j2OLBVL2RDT
+	 qHvQVeKebcYu9asb6dtNZp53Z8748sh1YgiexR52bVtkMLF8+HXXTU4+7dTkVgl2PwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Afymv0xQiTTNAwHfrWP75QE8sWbmp8bWUAPTnI9OQQQ=;
-	b=rsK9edDMO/ZQ+997vRQfhIiEqJ38Rxlf9g+N2Fh5NGzOigNnzl+Dk7vinJ6ALPVWbg2q
-	 HJw6DUxidk/z86GRF0MIN36Eg0LduFdGqKMzaXYq1an6XdbFtwOQGun3mCBh6EnNl3ggF
-	 3lCoe81nnHgB9y7+a7JA6QZAnAv93C5NPr4tkylee23TXapl15LsLtHZRNRxjScyqVUbH
-	 +HfJoRa/SSwpwPB272JW85Z8UoHjJ7lmHMQWWwwWaYoDmohdvX8BHO4dL3AfOwOWOCQH+
-	 UZwtPNUOlCt56SDGBiC9D5meUYujdtZEcWCyxA/In9diRJVJU70YtkDw+7V3X7EXh2A==
+	bh=/lAPxKhj0ABK3AiU035+JiGamOm+4gUqztW38gAeFIA=;
+	b=2zwmSSJspWYu+XL6z5D/Bj4rcF16EQUwuU8/W0WAvh/vvGCYVfxYUyephQ6TlO3Zw4vM
+	 b7Hq6DAgKKXr6gFr3AHUW0KvoTDibRlPbU+4kTvftLRHLcprPFGyqmqFF1MFSZ+EYB1we
+	 RfICv1stnm/sOnBwOwyMtFScTEUnPE2kmkzfp3AOZlBhnbKKYtJUJ3yQQykKmaNWgVMyx
+	 hbtY47kN9AeHU6Tn4foJRGbecGi9WMkiIYN4yXiSVX/Qnq9Ns8sasPScpl84Gsoz3wZiz
+	 DrbYv3Ww2k0OViLbIS4xP8AjRyhT64RRqpP2rz1Hmmv3ai7ekyGYK7ezDzvgsH5bwtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E0mJfLIh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAKl+9r4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7894606A332;
-	Wed, 25 Nov 2026 16:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA85606A323;
+	Wed, 25 Nov 2026 16:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E0mJfLIh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E741F000CF;
-	Wed, 25 Nov 2026 16:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAKl+9r4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007601F000CF;
+	Wed, 25 Nov 2026 16:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623236;
-	bh=Afymv0xQiTTNAwHfrWP75QE8sWbmp8bWUAPTnI9OQQQ=;
+	s=korg; t=1795623239;
+	bh=/lAPxKhj0ABK3AiU035+JiGamOm+4gUqztW38gAeFIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E0mJfLIhUpFOBPJx+s/89JDdW1RIcybiGRd9m2+8yUZUAaJEZv+4mgNPnEGMMEBkE
-	 btzxJKnGTytyx0Sl576mJVbeg3wpsqIERUv8YkEAWRytLfBQWtHOWwZv6KfaLbfvpt
-	 I9MMGY5zWVALZnCtFW8++DnFAEg6Edf913JRUymw=
+	b=RAKl+9r4Gm9OpCa2054CLGS8ZAPv5wYf4pNbjpL2Ug/fdCUWsUKaYmT8T/5Qn0vrK
+	 T0Vf/4c0LpfInDbdowtQ8Y8bDn1MAOHsEQszmKUNK6ckP2ACGi4WDu1gjFpGTnRchb
+	 JQevVtTxPeLRFSJL/VFHodbAe4LlcBgALtYenCuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 795/990] LoongArch: kexec_file: Fix a modified cmdline leak
-Date: Wed, 25 Nov 2026 15:36:02 +0100
-Message-ID: <20261125143840.667771501@linuxfoundation.org>
+Subject: [PATCH 6.18 796/990] LoongArch: kexec_file: Fix elf_headers memory leak in retry loop
+Date: Wed, 25 Nov 2026 15:36:03 +0100
+Message-ID: <20261125143840.691241235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -69,42 +69,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit b7000844b374a1ab75f0cc561f1d4d321cd6eeb0 upstream.
+commit 065dd1636abef6b9962fd5af82accac69850bbe8 upstream.
 
-machine_kexec_prepare() copies it to KEXEC_CMDLINE_ADDR and overwrites
-the pointer. Free the heap buffer after the copy here.
+A retry allocates new elf headers and overwrites image->elf_headers,
+leaking the previous buffer. Free it before assigning here.
 
 Cc: stable@vger.kernel.org
-Fixes: d162feec6b6e ("LoongArch: Add preparatory infrastructure for kexec_file")
+Fixes: 55d990f0084c ("LoongArch: Add EFI binary support for kexec_file")
+Link: https://sashiko.dev/#/patchset/20260729031235.2840255-1-ruanjinjie%40huawei.com
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/machine_kexec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/kernel/machine_kexec_file.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/loongarch/kernel/machine_kexec.c b/arch/loongarch/kernel/machine_kexec.c
-index 1883cae93bc3..19ccc91b6f2a 100644
---- a/arch/loongarch/kernel/machine_kexec.c
-+++ b/arch/loongarch/kernel/machine_kexec.c
-@@ -14,6 +14,7 @@
- #include <linux/mm.h>
- #include <linux/of_fdt.h>
- #include <linux/reboot.h>
-+#include <linux/slab.h>
- #include <linux/sched.h>
- #include <linux/sched/task_stack.h>
- 
-@@ -56,6 +57,7 @@ int machine_kexec_prepare(struct kimage *kimage)
- 		 */
- 		memcpy((void *)KEXEC_CMDLINE_ADDR, (void *)kimage->arch.cmdline_ptr,
- 					strlen((char *)kimage->arch.cmdline_ptr) + 1);
-+		kfree((void *)kimage->arch.cmdline_ptr);
- 		kimage->arch.cmdline_ptr = (unsigned long)KEXEC_CMDLINE_ADDR;
- 	} else {
- 		/* Find the command line */
--- 
-2.56.1
-
+--- a/arch/loongarch/kernel/machine_kexec_file.c
++++ b/arch/loongarch/kernel/machine_kexec_file.c
+@@ -182,6 +182,10 @@ int load_other_segments(struct kimage *i
+ 			vfree(headers);
+ 			goto out_err;
+ 		}
++
++		if (unlikely(image->elf_headers))
++			vfree(image->elf_headers);
++
+ 		image->elf_headers = headers;
+ 		image->elf_load_addr = kbuf.mem;
+ 		image->elf_headers_sz = headers_sz;
 
 
