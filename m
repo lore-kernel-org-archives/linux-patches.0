@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795624140;
-	b=UrE164WIbILyx7j5ZftzrtspJynsoVINQRDl+YYzTclsA4lpxL3Lv985fKqMpvTkPIZv
-	 Zi1k1tUmiLg7U92Ol//CGDxK436PiiJ1rMjwesEUEnmZHL7VlT/VgFs/6dQLhvpsdN6pE
-	 OQQV0U+K4y003slOT+MqAkJAE23BB34N3CfUgAmXqJlj1VJFX5ULDTnHT8P4oG+TUKz/u
-	 Ww6e0hwMa7dKJ4UvW5yyjd5JSkbIcFpcSBACKOWoSlaLHFhRquOQkT/d3H3icatX9/XwW
-	 EjpPdNiIsX6pGt1L4M7RNqE2Fy+FEgj/EnSw7ejw6zQMm5w/QBY/paBoe7a5PXZkRCw==
+	t=1795624143;
+	b=DDhy9Pjj6AtDhz8ku3nYk8uDXgFr6/HHVoGLybOTnmN11oYOpZZ/81ssyJY4PA9Sumhv
+	 QoLCVXjGT9b6m6KKZVhq6sVpcDxhLXdP/xMX5o1kaSgZklojeno2yA1hBDCK/2tr9G8Iy
+	 SS75qCP/ab2aSBeGkBzJ1D90QzlktdxSeuG5Af0iQpOstSx0TYv/wQwwefEEASE2nlISn
+	 8XJ5/YAEJy7pnItFS+SCjqGR0S22QTKZdx4CLYh8C1mmZn4w+h8SI17n25Q+WX4GIvduU
+	 pPeDNj2EKkVrlH0vjYCaVSuH2E0c6QxYHrlaaDQMm03QxGvxY6Kdqj+1PJAM7CFWiUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795624140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795624143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xaxI8pnpEqW+y4/el4/2QawfbLYrRypOBJXAAE+4k74=;
-	b=wCPa7W9//ri0U3QxdDcZWI1dLrmwf7r4Z53F0/cLsEfA5pTnYlYKKNRNtJgtp3sRWAmE
-	 F4AN7NFhOpzOapowIgzqkrmkDZvqSzpFu9D6uvEeLxYo95ZdALCQxf5Urp1vWbsHAskdk
-	 Iu3WCE/hrlarzz7tMX8jUzfKMIprQOzqP3z5244i0NE/ekPL9YuMAFuUxqf0aYm5T9Jf9
-	 Ze+bVIDCT/scDfZWRNvkRSMCBDq0125dhlCpoRnByK0JTpfxAyhDH9uMEeJkWNne2+mv+
-	 8+INM/4VDTaTAAVg3x9XsqTd7cHpf9sd+mUilO1qMmvSziLIoP96DzPASdPRfLBtecw==
+	bh=QlMkydF5A7pB1mkMZh+A41C6lme5/nPb+TEWBir0PwQ=;
+	b=omnnmqvH6Z35eE6JWkNtnM/ju/zB2CSF7lJutWF6gbIsl7hzneDL99SuN/zECWpffOCH
+	 RjRmEPu8+Fy2/j9hjtgE0A8stSEhxPIb819ywJCPVNeP/BNzY+Jb3Q+K4W+2bo67R/xXQ
+	 eByMQnuHFIxDyh09TENoFuIT5skDlsYyON0pLg1NXMcd/vWuXpHuvmTH0XbfzISsTs+HI
+	 Q0QK4lwBOokNgk4QhmDb9i+vZ1Kt9VAuddsu42nUq2eqZxJmaswtqp15SNNHUsy2INWoC
+	 Wm4s9LDnZ3I8aZhgGBZ1QUTorrREKB/wTaQrh2hoYxdtYmOJ4HlMPT1gSJjRzqSjnWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a2OpYPlB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1gBKxKn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A1A606A337;
-	Wed, 25 Nov 2026 16:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F29606A339;
+	Wed, 25 Nov 2026 16:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a2OpYPlB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF411F01812;
-	Wed, 25 Nov 2026 16:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1gBKxKn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A161F00A3C;
+	Wed, 25 Nov 2026 16:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795624139;
-	bh=xaxI8pnpEqW+y4/el4/2QawfbLYrRypOBJXAAE+4k74=;
+	s=korg; t=1795624143;
+	bh=QlMkydF5A7pB1mkMZh+A41C6lme5/nPb+TEWBir0PwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a2OpYPlBfqKWBsXGE2wSmpq4iuTU2ynqQqC8vffjaXaUbus/dM+C/sMCkQ3IICPqy
-	 eIUItWe+yW2nbwIoJxNDyxFEnwkwyYW4/UVs3q0A2jBO3gi9sEIKWn0qTY2KEVDU1O
-	 ihVkSiueyQUDHz99sfpLsDVdJdhtG0Yd5eVbgUDA=
+	b=v1gBKxKntTf+bXxNiEZWBFKroG0PRiksb7byXKNesudB/PbHEy0sDPqtXQrSJiQmW
+	 GaySd0iGUR28wUwnntnTQ1eAwpl7DQf+9i/D6CL3E6m52gpGLVTN8tNwvbFEpfvaRg
+	 l16H8WOdg4muJ3zITK3DtecIGv0aozIRD74aNA+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/816] bpf: Remove the WARN from arena_get_unmapped_area()
-Date: Wed, 25 Nov 2026 15:27:26 +0100
-Message-ID: <20261125143851.486907008@linuxfoundation.org>
+Subject: [PATCH 6.12 099/816] bpf: Require prog fd or capability for cgroup detach
+Date: Wed, 25 Nov 2026 15:27:27 +0100
+Message-ID: <20261125143851.509090012@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -67,43 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 15dedd4b259289bffb8a5485b81722fdaebac71a ]
+[ Upstream commit 2962329f7c86fc51c177d4049c0f15a95ebd270c ]
 
-The user range of an arena must not cross a 4 GiB boundary. Thus
-arena_get_unmapped_area() asks the mm for 2 * len bytes and rounds the
-result up if necessary. If user_vm_start is not 0, addr must be equal to
-it. A WARN_ON_ONCE() assumes that the mm returns addr. But addr is only a
-hint without MAP_FIXED, and the mm can return a different range that
-crosses a boundary. This is not a kernel bug.
+Since the commit below a cgroup prog detach does not require CAP_NET_ADMIN.
+The fd of the attached prog gives the permission instead. But the detach
+requires this fd only with BPF_F_ALLOW_MULTI. Without this flag a cgroup
+has only one prog per attach type. Then find_detach_entry() returns this
+prog and does not compare it with the prog of the caller. Thus the kernel
+detaches this prog for a caller with neither the fd nor a capability.
 
-Remove the WARN_ON_ONCE() and its -EFAULT. arena_map_mmap() already
-compares vm_start with user_vm_start under arena->lock. If the rounded
-result is user_vm_start, mmap() succeeds. If not, it returns -EBUSY.
+Compare the two progs. If they are different, require CAP_NET_ADMIN or
+CAP_SYS_ADMIN in the initial user namespace. The error is -EPERM. A detach
+from tcx or netkit without a prog fd already requires these capabilities.
+With BPF_F_ALLOW_MULTI nothing changes.
 
-Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
+Without these capabilities, a caller of bpf_prog_detach() of libbpf must
+now use bpf_prog_detach2() with the fd of the attached prog.
+
+Fixes: 2c78ee898d8f ("bpf: Implement CAP_BPF")
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-7-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-14-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 3 ---
- 1 file changed, 3 deletions(-)
+ kernel/bpf/cgroup.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 345c77f7cd2b5..5daffb7167925 100644
---- a/kernel/bpf/arena.c
-+++ b/kernel/bpf/arena.c
-@@ -346,9 +346,6 @@ static unsigned long arena_get_unmapped_area(struct file *filp, unsigned long ad
- 		return -EINVAL;
- 	if ((ret >> 32) == ((ret + len - 1) >> 32))
- 		return ret;
--	if (WARN_ON_ONCE(arena->user_vm_start))
--		/* checks at map creation time should prevent this */
--		return -EFAULT;
- 	return round_up(ret, SZ_4G);
- }
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index bd47c4cb19910..f075f3a8cda30 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -1071,9 +1071,14 @@ static struct bpf_prog_list *find_detach_entry(struct hlist_head *progs,
+ 			return ERR_PTR(-ENOENT);
  
+ 		/* to maintain backward compatibility NONE and OVERRIDE cgroups
+-		 * allow detaching with invalid FD (prog==NULL) in legacy mode
++		 * allow detaching with invalid FD (prog==NULL) in legacy mode.
++		 * Without the FD of the attached program the caller needs
++		 * CAP_NET_ADMIN or CAP_SYS_ADMIN in the initial user namespace.
+ 		 */
+-		return hlist_entry(progs->first, typeof(*pl), node);
++		pl = hlist_entry(progs->first, typeof(*pl), node);
++		if (pl->prog != prog && !bpf_net_capable())
++			return ERR_PTR(-EPERM);
++		return pl;
+ 	}
+ 
+ 	if (!prog && !link)
 -- 
 2.53.0
 
