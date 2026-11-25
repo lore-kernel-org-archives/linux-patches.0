@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795619276;
-	b=egH9HmePayEMZicKBprBBnE9hVp3AdI4Q3snRZIWWajIzqsDYP0VZwFTYLo2KxvcCTwG
-	 u7EdnzJ8oI8jNR2ACnMLkg2EXAJ0Uymx3lgq7cweQPJO6uL6mAEhB1ak1nnNgM3EtVhM7
-	 QDXlKAISZaUjEx+wqQz6fkGfsdHRAvTafTduoxwGK2/42ARL/L3TsNxr6gwQrsRjNSPt1
-	 Qwlhz1veeyKsXeWFftWuzFHVYe86DIt1c+qv1yr/iXCD+49LQU6a8OJXzAXHS1V90VoG3
-	 yX5wcvz1cn9kYSxV4B1+qdgOZp9kbT4XIfm8+5gygjzScaJP0V6bPEMjN1bFntGEXZQ==
+	t=1795619279;
+	b=RsTYXIuWwwVsgXgUbBcoJuPwdujLhmrZYzLbRUENqwECN/UBchXygxb1UoYivnT1Zv+8
+	 5W5Qo3tuMmo31rG+LHASrQco4QhevH5souhDNN8lWVOmEiIziU3DcNbU6DrvleBOoQq28
+	 55w1WodoPcfbiqYiy1hJrN5jzQ1JueyZwnlLW8fdgrfmCvl4NwQPjmObqacc1eRMJ6D63
+	 7I4ZT1/uE20zmfmghd+jgW5pwyLDZkO64d4riP5nF3lUzT+ZuFKYJQd3r0l76t9sKnp+i
+	 hHmg15mPgw82D0yzNuosudfPxBxN1APrFntcI0z/3dTSqhocmRO/e1dtichlrxAb9lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795619276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795619279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TNK46Xz48WQK4yf4Hmjw+POLl4TCrb57VuW6CUjaV9s=;
-	b=WP1gT49PSjMYz+WHWuF+5FhODk3NWxbUBStteAoFyGxaaTDvl8etT3xETjz903jC0BNd
-	 9EIFYA1AO1E5+N+xRz2IT4mfKnUrcHZsSdsCAohDEvFimk5TAO+h/V71LQRWJjXSqDNZA
-	 dYxgIUivS2Y+YOcGIWntFtXeSKRx2g0kt1HxRSbO/8B2n5uF1bE7i5FUMmWvIcGCgoQwC
-	 J8m07hI3TPxkR6cFnVDaxsmXdDvL95WxnpvT+EVGsyIvCxbeoILUPCmTNn8fp+jmOxsUU
-	 WnYM+HzJvgu7idHUN1nHU1r8O6ISfRna6v8PeUvlINo1j88z8W232aiKJHgK7Ho5jIw==
+	bh=mBpWW61Z98BVoREUCTkR9dBKNartXnsZ9Njv4DshKxM=;
+	b=noqajuho9262dVo7ln/NqxWlP2wkQkm/3Vd+Npe6DGOyqmcM1mQvJyg5fwVXbp1hJxqZ
+	 4BrCwCNXuRxiNMnqrJ7TCRz2Jlt7ikHTRSQJs7A5YPE+T+be4fNsagqUW2ULA9LnODPWe
+	 yDnCpq9CWZC4hcVcCaDsbd87fLf1k8IaFE3haEBM7A0akBqXMVZdLauDNUDRvM+wXucwd
+	 wAhKs8Fq9r4vnvngmihDzXlDkBdd7HAsuqG0NfGY5lXR68RDNxonDEbrrKc+t40K45XDm
+	 cKTB9DD3KhrdAiDpStXyGU6vZ5neiD04wI4EZv3p+w0zbfHqst30nZBZdJMSoUR5xIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ZSqsceP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HP9KbaGa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DF2606A329;
-	Wed, 25 Nov 2026 15:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2672E606A337;
+	Wed, 25 Nov 2026 15:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2ZSqsceP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0301F000C6;
-	Wed, 25 Nov 2026 15:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HP9KbaGa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A3B1F000D0;
+	Wed, 25 Nov 2026 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795619275;
-	bh=TNK46Xz48WQK4yf4Hmjw+POLl4TCrb57VuW6CUjaV9s=;
+	s=korg; t=1795619278;
+	bh=mBpWW61Z98BVoREUCTkR9dBKNartXnsZ9Njv4DshKxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ZSqscePdHX+WAxilf4dYfsEHCnVPP+ahln+NVhZ9P9CGrKICowJfIxZ7S1VQqOW1
-	 FLCKYZm5165hdZW9vEVTrU5m8CCLQP9Cpa3g+seYj7oCZE98cjGLTE3xJBu1fdg7h4
-	 nxFR2vh/frhgTSOom73Zfu/lC3CPS5FfYB+AXCKg=
+	b=HP9KbaGa4JGIw6oX65O0KS+tXrsSd8GSHM0JyS48DVHdVMT4WPWwA+D0doJEJ6i/A
+	 lbmM5pa8EWe7DKDPzR6IFdNz+ZVcHdVrVnDi4/sYQu3YOZSb5OoD5mr11ZKxKjTw7S
+	 c3SC8+airrva4Oqe2Wz/ewn+NEu+jQ3Q8wYnvGHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wenbo Sun <sunwenbo@cmss.chinamobile.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0543/1005] af_unix: Inherit SO_INQ in unix_stream_connect()
-Date: Wed, 25 Nov 2026 15:31:21 +0100
-Message-ID: <20261125143834.464911419@linuxfoundation.org>
+Subject: [PATCH 7.3 0544/1005] amt: use ipv6_hdr() in amt_mldv1_leave_handler()
+Date: Wed, 25 Nov 2026 15:31:22 +0100
+Message-ID: <20261125143834.487826211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143821.729802100@linuxfoundation.org>
 References: <20261125143821.729802100@linuxfoundation.org>
@@ -71,54 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
 
-[ Upstream commit 0359338fd8cf1a2dc001d0cd69c331c17decee88 ]
+[ Upstream commit 6730fe495c35f174a424ab58cf5fdf99ce4746e9 ]
 
-When SO_INQ is enabled on a listening AF_UNIX SOCK_STREAM socket,
-accepted sockets created by unix_stream_connect() do not inherit
-u->recvmsg_inq from the listener, unlike TCP_INQ, AF_VSOCK SO_INQ,
-and AF_UNIX SO_RIGHTS_NOTRUNC. As a result, recvmsg() on the
-accepted socket never puts an SCM_INQ control message unless SO_INQ
-is set again after accept().
+In amt_mldv1_leave_handler(), which handles IPv6 MLDv1 Done
+(ICMPV6_MGM_REDUCTION) messages, the source address is mistakenly
+extracted via ip_hdr(skb)->saddr into host.ip4 instead of copying the
+IPv6 source address from ipv6_hdr(skb)->saddr into host.ip6 as
+amt_mldv1_report_handler() does.
 
-Copy otheru->recvmsg_inq to newu->recvmsg_inq in
-unix_stream_connect() using READ_ONCE() to pair with the lockless
-WRITE_ONCE() in unix_setsockopt().
+Because amt_lookup_group() compares the full union amt_addr for v6
+groups, looking up the group with a 32-bit IPv4 header slice fails to
+match the group entry created by amt_mldv1_report_handler(). As a
+result, amt_del_group() is not called when an MLDv1 listener leaves,
+and the AMT relay continues forwarding multicast traffic until the
+group timer expires.
 
-Found during LLM-assisted code review of unix_stream_connect() while
-comparing option inheritance between SO_INQ and SO_RIGHTS_NOTRUNC.
+Use ipv6_hdr(skb) and copy ip6h->saddr into host.ip6 so that MLDv1
+Done messages properly match and delete the corresponding IPv6 group.
 
-Confirmed on UML (x86_64) by enabling SO_INQ on a listening AF_UNIX
-SOCK_STREAM socket before listen() and accept(), sending data from a
-connected client, and observing that recvmsg() on the accepted socket
-returned no SCM_INQ control message.
+This issue was found via LLM-assisted code review, confirmed by
+reproducing the stale group forwarding in a User-Mode Linux (ARCH=um)
+environment, and verified in UML by testing that AMT relay multicast
+forwarding stops immediately after receiving an MLDv1 Done message.
 
-Tested on UML (x86_64) against the reproducer, verifying that
-recvmsg() on the accepted socket now returns the expected SCM_INQ
-control message, and ran the tools/testing/selftests/net/af_unix/scm_inq
-selftest (all 6 test cases passed).
-
-Fixes: df30285b3670 ("af_unix: Introduce SO_INQ.")
+Fixes: b75f7095d4d4 ("amt: add mld report message handler")
 Signed-off-by: Wenbo Sun <sunwenbo@cmss.chinamobile.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261111023222.77227-1-sunwenbo@cmss.chinamobile.com
+Link: https://patch.msgid.link/20261111031147.105834-1-sunwenbo@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/amt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 42cffeafc8c14..6be50ef557d69 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1752,6 +1752,7 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr_unsized *uad
- 	newu = unix_sk(newsk);
- 	otheru = unix_sk(other);
- 	newu->listener = other;
-+	newu->recvmsg_inq = READ_ONCE(otheru->recvmsg_inq);
- 	newu->scm_rights_notrunc = READ_ONCE(otheru->scm_rights_notrunc);
- 	RCU_INIT_POINTER(newsk->sk_wq, &newu->peer_wq);
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 1b6759dc846d7..4e51269de3ca6 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -2137,13 +2137,12 @@ static void amt_mldv1_leave_handler(struct amt_dev *amt, struct sk_buff *skb,
+ 				    struct amt_tunnel_list *tunnel)
+ {
+ 	struct mld_msg *mld = (struct mld_msg *)icmp6_hdr(skb);
+-	struct iphdr *iph = ip_hdr(skb);
++	struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct amt_group_node *gnode;
+ 	union amt_addr group, host;
  
+ 	memcpy(&group.ip6, &mld->mld_mca, sizeof(struct in6_addr));
+-	memset(&host, 0, sizeof(union amt_addr));
+-	host.ip4 = iph->saddr;
++	memcpy(&host.ip6, &ip6h->saddr, sizeof(struct in6_addr));
+ 
+ 	gnode = amt_lookup_group(tunnel, &group, &host, true);
+ 	if (gnode) {
 -- 
 2.53.0
 
