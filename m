@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623571;
-	b=DuDkHh3JYi3H0smfQQRujJxzZrU+oLJm7vpjN4cYQRteHmzu+tCq81I5ucvZ38bhcyHD
-	 cg4hspNgRW6v/XZgoZov0D8Ba7zAdyyTPwaNU/m4uNJOSmvJDpKD0m8vsk5m3q498auzC
-	 E8X5/HWQfQKGV619UXTTva1Ll20HiGYDnSV6/WKlemowDDmiksBrXFm1JyDwTY4H17Vp4
-	 qS8ChkoQRyqT/sFLo8pFwHNH3tz5ayD6+q3B7qtxlq28OINA9/r0Db5h/hWPFZvfaElEi
-	 6Qzr0dTYsFaBLOB+pYSEkGLWpEWCk308vXJ/w3DRAIHvdgWZK/cUOzSoY1GUiXQkuMw==
+	t=1795623575;
+	b=wekUWEcneZJye15pvKKG4otqlxvVZUNthrjyvQ+ZR51jEaecUTeb7nWBjjPgqH1+E/En
+	 1X62+kj3KPySEkMBpOM5l2ANMOLzRYoQoeRzVbSDqJcqBiRzZRSC/b2KrjpH4ShnB2ajv
+	 SXcAI+TGRMEGq07cd/vYaKFHAwq8IeM1UnLYnVx5qFPPKoBh1R9jnIaSP5ZoB1sUmqYHL
+	 Pr4PLSP7GDgxbl+caDqqwf9aAmBw3utyMsMhMjKRQmML8wzojVt0UyslxThIQe1f9xlMa
+	 BG4o/hODB+L/zgN+d9hd73A41D59W2nuZv+c9RNiB8YsFjUdk1zRZJKSCkNGPZsHUAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CLQP/jOeLmwxD5i6pHaOiINjVqnliwPFv2VwmXRnQrY=;
-	b=eB8W2B4UqhCOVycGx6cRIhXky+ifWzqei5BkEF3s/EdR9RNLSOjpNbufvKK6XI2Ic5CA
-	 naxmQzCqaKbiOX6ZfPIglCkxo+IccyXYTaaOUG6dWiQ3T3ef5yVzgLYJ+4kQ3hnze1gOs
-	 Enq172w56gaZfo13y7vVCP0UEEPidkO5Zy0N8JdzrmFhNt4TGydS2Zh8SalHhlsAkFz0t
-	 fzELvE5uQ2vbxTmrOPJtyp4KmDLq6rZbcFw0r4orjKANDAvXn+symGTvIl1w1h1kjw0tr
-	 vwb6qIDLEvf5UFedTjtfFirnY4exYeoQb2rF+LLSsLxdyCv0QsAbTS85b0hu5X8NtLQ==
+	bh=BGk6iLLckczejv90qG6Fqj8L9Dj9r4/6Kw5l5HIDLiA=;
+	b=ifPPP05er2PKOiUm3b1ECJsc9inAlcQ6bjkv720UoazO4IGPMDSZG2SNm4MidWebEOhH
+	 FjM1shhQXUwzlz6q32wk8vBbI6bYn+tPKi/83+4ZXpgTGFEI2+nSnix20h24Igox46vB1
+	 pA/naECiguXcyc9OIMhYXYeVaEEMz8bdItfnG3D2GZcQ/GZ6QggozOh6ueXSqdU5lHncN
+	 hUD1sSsfrSL2LQgM1ecKuXmNAl5KrsHjkn13t2pTWPckeYW55RXj0SZTUZGYbo8M4y+E3
+	 jhGVkivU92kPV69eZSjbndMvrk8FI5KlPnVNCnGpiHnqN4nwn6R5QTlg5i4cbBIj8GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G90343Di;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x8lEIVbs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF30606A31E;
-	Wed, 25 Nov 2026 16:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9DD606A31E;
+	Wed, 25 Nov 2026 16:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G90343Di
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF9E1F000C6;
-	Wed, 25 Nov 2026 16:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x8lEIVbs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F331E1F000CA;
+	Wed, 25 Nov 2026 16:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623571;
-	bh=CLQP/jOeLmwxD5i6pHaOiINjVqnliwPFv2VwmXRnQrY=;
+	s=korg; t=1795623574;
+	bh=BGk6iLLckczejv90qG6Fqj8L9Dj9r4/6Kw5l5HIDLiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G90343DiTMdl57GjrHyRO6p8j4wC0PK4VKkDRjah66yceuXNBW7/9W6RaNccmjkmW
-	 QdWza4RiC9ObkBpE+GwGhs3feIVr8dHcyRV9HXQXbhkNc3q+TIlnzumQTRZbz8yBw5
-	 b9MBs4G/ntJD6IFVXWkh4I8RBn6PXj1ewlEmgrpo=
+	b=x8lEIVbsYE8dku1ZBhUWM7JSr6hd1slFzG8vARClze3hYCeijXEo6HQMc9cmrVyoH
+	 T0Ujs32b1U4R756UPUgd7qMh9+0ruUZonPXRs1RzUmyhVRnDx9l2MvDvnscEGKSD0Q
+	 bCrKABhXCjyarXpC3lMhtEfaLj9eQfA2TdJldiqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 6.18 903/990] USB: serial: oti6858: fix the teardown order in close
-Date: Wed, 25 Nov 2026 15:37:50 +0100
-Message-ID: <20261125143843.160944817@linuxfoundation.org>
+	Joonhoe Kim <26rote@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 904/990] usb: typec: mux: fsa4480: Keep the USB 2.0 switch on in DP-only modes
+Date: Wed, 25 Nov 2026 15:37:51 +0100
+Message-ID: <20261125143843.183971066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 References: <20261125143822.072087159@linuxfoundation.org>
@@ -68,102 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Joonhoe Kim <26rote@gmail.com>
 
-commit f184ae84a5d19554d980a918a9c8baaef87ac301 upstream.
+commit 89aaaa26f6985d55676fc5c90440f279733fa132 upstream.
 
-The driver passes a baton around: the completion handler of the
-interrupt urb either resubmits the urb, submits the read urb or
-schedules one of the two delayed works, and the works and the bulk
-completion handlers submit the interrupt urb again.
+DisplayPort pin assignments C and E give all four SuperSpeed lanes to
+DisplayPort, but the USB 2.0 D+/D- pair is not part of the pin
+assignment and stays available. The FSA4480 sits on that pair, and in
+these modes the driver turns its USB switch off, so a USB 2.0 hub or
+device behind a DisplayPort sink is disconnected as soon as the
+DisplayPort mode is set.
 
-oti6858_close() cancels the works first and kills the urbs afterwards.
-An interrupt urb that completes in between schedules a work again:
+Configure the USB switch the same way in all DisplayPort modes.
 
-	oti6858_close()
-	  cancel_delayed_work_sync(setup)
-	  cancel_delayed_work_sync(write)
-				oti6858_read_int_callback()
-				  schedule_delayed_work(setup)
-	  usb_kill_urb(interrupt_in_urb)	/* not in flight */
-				setup_line()
-				  usb_submit_urb(interrupt_in_urb)
-
-The port is now closed with the baton still going round. The next open
-fails because the interrupt urb is already submitted, and if the device
-is unplugged, oti6858_port_remove() frees the private data while a work
-may be pending or running.
-
-Poison the interrupt urb first: that waits for the handler and makes all
-further submissions fail, so nothing schedules the works any more. Then
-cancel the works, after which only the bulk urbs are left, kill those,
-and make the interrupt urb usable again for the next open. Don't print
-an error for the submissions that fail with -EPERM in this window, as
-oti6858_read_bulk_callback() already does.
-
-Fixes: 49cdee0ed0fc ("USB: oti6858 usb-serial driver (in Nokia CA-42 cable)")
+Fixes: c7054c31c1c9 ("usb: typec: fsa4480: rework mux & switch setup to handle more states")
 Cc: stable <stable@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Joonhoe Kim <26rote@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20261022165143.1327-1-26rote@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/oti6858.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/usb/typec/mux/fsa4480.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/usb/serial/oti6858.c
-+++ b/drivers/usb/serial/oti6858.c
-@@ -251,7 +251,7 @@ static void setup_line(struct work_struc
- 
- 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
- 	result = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
--	if (result != 0) {
-+	if (result != 0 && result != -EPERM) {
- 		dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
- 			__func__, result);
- 	}
-@@ -303,7 +303,7 @@ static void send_data(struct work_struct
- 
- 		dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
- 		result = usb_submit_urb(port->interrupt_in_urb, GFP_NOIO);
--		if (result != 0) {
-+		if (result != 0 && result != -EPERM) {
- 			dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
- 				__func__, result);
- 		}
-@@ -564,6 +564,13 @@ static void oti6858_close(struct usb_ser
- 
- 	dev_dbg(&port->dev, "%s(): after buf_clear()\n", __func__);
- 
-+	/*
-+	 * The interrupt urb schedules the works, and the works and the bulk
-+	 * urbs resubmit the interrupt urb: keep it from being submitted until
-+	 * all of them are gone.
-+	 */
-+	usb_poison_urb(port->interrupt_in_urb);
-+
- 	/* cancel scheduled setup */
- 	cancel_delayed_work_sync(&priv->delayed_setup_work);
- 	cancel_delayed_work_sync(&priv->delayed_write_work);
-@@ -572,7 +579,8 @@ static void oti6858_close(struct usb_ser
- 	dev_dbg(&port->dev, "%s(): shutting down urbs\n", __func__);
- 	usb_kill_urb(port->write_urb);
- 	usb_kill_urb(port->read_urb);
--	usb_kill_urb(port->interrupt_in_urb);
-+
-+	usb_unpoison_urb(port->interrupt_in_urb);
- }
- 
- static int oti6858_tiocmset(struct tty_struct *tty,
-@@ -829,7 +837,7 @@ static void oti6858_write_bulk_callback(
- 	/* schedule the interrupt urb if we are still open */
- 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
- 	result = usb_submit_urb(port->interrupt_in_urb, GFP_ATOMIC);
--	if (result != 0) {
-+	if (result != 0 && result != -EPERM) {
- 		dev_err(&port->dev, "%s(): failed submitting int urb,"
- 					" error %d\n", __func__, result);
- 	}
+--- a/drivers/usb/typec/mux/fsa4480.c
++++ b/drivers/usb/typec/mux/fsa4480.c
+@@ -93,16 +93,9 @@ static int fsa4480_set(struct fsa4480 *f
+ 		sel = FSA4480_SEL_USB;
+ 	} else if (fsa->svid) {
+ 		switch (fsa->mode) {
+-		/* DP Only */
+ 		case TYPEC_DP_STATE_C:
+-		case TYPEC_DP_STATE_E:
+-			enable |= FSA4480_ENABLE_SBU;
+-			if (reverse)
+-				sel = FSA4480_SEL_SBU_REVERSE;
+-			break;
+-
+-		/* DP + USB */
+ 		case TYPEC_DP_STATE_D:
++		case TYPEC_DP_STATE_E:
+ 		case TYPEC_DP_STATE_F:
+ 			enable |= FSA4480_ENABLE_USB | FSA4480_ENABLE_SBU;
+ 			sel = FSA4480_SEL_USB;
 
 
