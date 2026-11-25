@@ -1,57 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795623949;
-	b=DlHiDcccGNc0UEaBVAZodEQSM9jZSUPfgkPlPiorI8SbJE8W11KAf7F9Ft4aGGhtji5u
-	 CpvZyYmxksMh2iQVhxo0gAWyPWvYbPvke8E2sxBAxw/qYQEJaNpKRjSqsdtbHdvsJNrFq
-	 Mbr3CoyDsCy4F2JIdsaRm5BrH/iJ5LNFyCjbHyHVYg//4JEPx2Ly2HZCmLiQcSdbB89/7
-	 8IbXYUVx9Kaouq4t5cWoCdFN6YAZIC/b/AiNlS1zlpzonejjDzIlCdwzkqg2tyU0+/uJP
-	 3z1mVil0BiQg4R/geNCrq1Qm212bk2yJxmOd44uCHLROmXICjWbgfKtGaqgdyhcgH9g==
+	t=1795623953;
+	b=P2a2hYiW4z1c2hGadHUefVJcn5dR6Il4NFG44r8biLjuh+J1CALSSzmK++VRmjh9F01Y
+	 3OpML1OcSe5U2+8ejgx1wQiqOHniQ6l/BXB48o9ebMfzgXPn8m1Ab44zP1rKAajgOX/n0
+	 4KGSYaW/Qywy6Tdu6g49CpyHOAFeX3tHhaR/vvbKBEV3/SMPuGJvGXZRKEVwcEsOKXINc
+	 KSw60LxoBnsAqvevMIVe7VbM1Ae6u3vx7DrHP8j3vCM8v71vDnCZD5KDDTfUITzUWWqYC
+	 k1s1DtbBe1nlKjxW+pC3GK0Jw/0D0aHxpqNxC7eIBrLZX/4eR1D4Wx6meqmPOa2nyEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795623949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tpQb+hU5y0NBWR9nmzywwcgcGXeIDeB6Yy3jJgTMe5c=;
-	b=RmcNmcAbwyDAHYJabdpyDSep6XhmS8vfcp7/9f9JEHZiwU71z2qumHzKMVRRSGjB73uP
-	 1CuXboD7OnPvYdndC36tBpkzw9IMS8LrOdILrAYWWKXaD/nFutVApIaZw0ZknyuJCoB/o
-	 m0AY129FIjzDZoDMORb8EhVPs4Fz6JPjBPIcu6p8Qvf4nF/0oqoh2SbDuCNUVt29VaCp4
-	 JG8Q70ZpL53rONso8CfzYDCacihP8pMVCE82BEY+k7EejKTyDheXwNpneagUYKcRYWaN0
-	 ngoJ9j3/xuDP4SfQpEMU/eCJJatVr22saWAGqr3VpVXid0JmhmaVeHTdI10sk1dM04A==
+	bh=VBJXXDlJ2mVhbri4v5QwvlUHugI21uqlnX0nrxTMa7w=;
+	b=ByNYT5cu3M0IcEfdWKD8tKvmB0VsSN788jNYz5zahaFjAjitPYgfAaT9pY4P/4g7MgPx
+	 K+d6yB8uKF8Pk9C8PkZNnGkSQ+OXZuLSLPt3qhkPtwpE3H1tFI1W398g3+jtoUTsILaDZ
+	 Ji37rxQI93+PplieT3tjSv//WMRkq2HgQf1qPxBV3tYOTUMCdg4pdqEUvHfQRyIRDsT8r
+	 ofkSxM+jB51mGXNawOzH5Nb5l52jUUpnFnpVoXnzLmyhKdKxgfYrCpI2Qd6BUEoLaPNuF
+	 pDIRcCaWmJCieNzXhWKFwsLX1esbmxiPuUU/efBjq4Dt1IKvwy/2Jm4Ny+YFVrJooxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rWjavjen;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2DQGQgd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EE9606A321;
-	Wed, 25 Nov 2026 16:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B7C606A321;
+	Wed, 25 Nov 2026 16:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rWjavjen
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFD11F000C4;
-	Wed, 25 Nov 2026 16:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2DQGQgd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182721F000C6;
+	Wed, 25 Nov 2026 16:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795623949;
-	bh=tpQb+hU5y0NBWR9nmzywwcgcGXeIDeB6Yy3jJgTMe5c=;
+	s=korg; t=1795623952;
+	bh=VBJXXDlJ2mVhbri4v5QwvlUHugI21uqlnX0nrxTMa7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWjavjent79NQRZVpXH83JRwltYJprI/N8XXoKJ2AIvhloDFWZXr9OGRh09qJu2OF
-	 ZicjffSP46W/lKA0IIMa3IRL1qtJxOKoFpGrBBQ0mfOwf/P4YbjNnCvDAT48mSS9ox
-	 G+2yTDG8TAfhq41Ia/K92zMUPPyopNS+uRLHDoq8=
+	b=u2DQGQgd5xgpVeGow/iV2Hk2kH24U08HFwmQ2IQTQwd0IqJpwqAlkIkYTveTCv2Qp
+	 Tf4c+y7gzYUfp95ilvik92FQA8AqEho2wWmEaUIzWXz2Cj/rhKZWRXFM1wBEqysBtF
+	 FiI3vTVEgBWnNFWX9I/7RuxpCcVANZmoOYY7TsL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/816] mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs
-Date: Wed, 25 Nov 2026 15:25:51 +0100
-Message-ID: <20261125143849.295126443@linuxfoundation.org>
+Subject: [PATCH 6.12 031/816] io_uring: enable toggle of iowait usage when waiting on CQEs
+Date: Wed, 25 Nov 2026 15:26:19 +0100
+Message-ID: <20261125143849.938732486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261125143849.205329330@linuxfoundation.org>
 References: <20261125143849.205329330@linuxfoundation.org>
@@ -73,65 +67,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit fe2817e3d5ea347214342c9a5cd8bcbff20c0574 ]
+Commit 07754bfd9aee59063f8549f6e4d455eae636ecc7 upstream.
 
-try_collapse_pte_mapped_thp() clears PTEs without transferring their dirty
-bits to the folio. A shmem read fault can map a clean folio writable, so
-a later store only dirties the PTE. Losing that dirty bit allows reclaim
-to discard modified data.
+By default, io_uring marks a waiting task as being in iowait, if it's
+sleeping waiting on events and there are pending requests. This isn't
+necessarily always useful, and may be confusing on non-storage setups
+where iowait isn't expected. It can also cause extra power usage, by
+preventing the CPU from entering lower sleep states.
 
-The assumption that regular files are read-only is also obsolete since
-commit 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse
-for writable files"). In any case, transferring PTE dirty bits to the folio
-when removing mappings (and while the folio is still mapped) is the right
-thing to do.
+This adds a new enter flag, IORING_ENTER_NO_IOWAIT. If set, then
+io_uring will not account the sleeping task as being in iowait. If the
+kernel supports this feature, then it will be marked by having the
+IORING_FEAT_NO_IOWAIT feature flag set.
 
-Use get_and_clear_ptes() to collect the dirty bits and mark the folio
-dirty before unmapping it. Update the comment.
+As the kernel currently does not support separating the iowait
+accounting and CPU frequency boosting, the IORING_ENTER_NO_IOWAIT
+controls both of these at the same time. In the future, if those do end
+up being split, then it'd be possible to control them separately.
+However, it seems more likely that the kernel will decouple iowait and
+CPU frequency boosting anyway.
 
-This was reproduced with shmem using MADV_COLLAPSE followed by
-MADV_PAGEOUT.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: 27e1f8273113 ("khugepaged: enable collapse pmd for pte-mapped THP")
-Fixes: 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse for writable files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: adjust comment; simplify description; cover file-thp as well ]
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-17-d6437171ecc3@kernel.org
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adapted batched get_and_clear_ptes() handling to the existing single-PTE loop using ptep_get_and_clear(). ]
+[ 6.12: only the NO_IOWAIT flag bits are added, the EXT_ARG_REG and
+  RW_ATTR bits before them don't exist here. io_get_ext_arg() has no
+  ctx argument. ]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/uapi/linux/io_uring.h |  2 ++
+ io_uring/io_uring.c           | 31 +++++++++++++++++++------------
+ 2 files changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 9b8021d440289..ea94f66cd0377 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1636,9 +1636,10 @@ int collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
- 		/*
- 		 * Must clear entry, or a racing truncate may re-remove it.
- 		 * TLB flush can be left until pmdp_collapse_flush() does it.
--		 * PTE dirty? Shmem page is already dirty; file is read-only.
- 		 */
--		ptep_clear(mm, addr, pte);
-+		ptent = ptep_get_and_clear(mm, addr, pte);
-+		if (pte_dirty(ptent))
-+			folio_mark_dirty(folio);
- 		folio_remove_rmap_pte(folio, page, vma);
- 		nr_ptes++;
- 	}
+diff --git a/include/uapi/linux/io_uring.h b/include/uapi/linux/io_uring.h
+index fdd7b931ea1d4..e777e6b128e85 100644
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -518,6 +518,7 @@ struct io_cqring_offsets {
+ #define IORING_ENTER_EXT_ARG		(1U << 3)
+ #define IORING_ENTER_REGISTERED_RING	(1U << 4)
+ #define IORING_ENTER_ABS_TIMER		(1U << 5)
++#define IORING_ENTER_NO_IOWAIT		(1U << 7)
+ 
+ /*
+  * Passed in for io_uring_setup(2). Copied back with updated info on success
+@@ -554,6 +555,7 @@ struct io_uring_params {
+ #define IORING_FEAT_REG_REG_RING	(1U << 13)
+ #define IORING_FEAT_RECVSEND_BUNDLE	(1U << 14)
+ #define IORING_FEAT_MIN_TIMEOUT		(1U << 15)
++#define IORING_FEAT_NO_IOWAIT		(1U << 17)
+ 
+ /*
+  * io_uring_register(2) opcodes and arguments
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 09551e3907f91..630b306a849f0 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2532,8 +2532,17 @@ static int io_cqring_schedule_timeout(struct io_wait_queue *iowq,
+ 	return READ_ONCE(iowq->hit_timeout) ? -ETIME : 0;
+ }
+ 
++struct ext_arg {
++	size_t argsz;
++	struct __kernel_timespec __user *ts;
++	const sigset_t __user *sig;
++	ktime_t min_time;
++	bool iowait;
++};
++
+ static int __io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 				     struct io_wait_queue *iowq,
++				     struct ext_arg *ext_arg,
+ 				     ktime_t start_time)
+ {
+ 	int ret = 0;
+@@ -2543,7 +2552,7 @@ static int __io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 	 * can take into account that the task is waiting for IO - turns out
+ 	 * to be important for low QD IO.
+ 	 */
+-	if (current_pending_io())
++	if (ext_arg->iowait && current_pending_io())
+ 		current->in_iowait = 1;
+ 	if (iowq->timeout != KTIME_MAX || iowq->min_timeout)
+ 		ret = io_cqring_schedule_timeout(iowq, ctx->clockid, start_time);
+@@ -2556,6 +2565,7 @@ static int __io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ /* If this returns > 0, the caller should retry */
+ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 					  struct io_wait_queue *iowq,
++					  struct ext_arg *ext_arg,
+ 					  ktime_t start_time)
+ {
+ 	if (unlikely(READ_ONCE(ctx->check_cq)))
+@@ -2569,16 +2579,9 @@ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
+ 	if (unlikely(io_should_wake(iowq)))
+ 		return 0;
+ 
+-	return __io_cqring_wait_schedule(ctx, iowq, start_time);
++	return __io_cqring_wait_schedule(ctx, iowq, ext_arg, start_time);
+ }
+ 
+-struct ext_arg {
+-	size_t argsz;
+-	struct __kernel_timespec __user *ts;
+-	const sigset_t __user *sig;
+-	ktime_t min_time;
+-};
+-
+ /*
+  * Wait until events become available, if we don't already have some. The
+  * application must reap them itself, as they reside on the shared cq ring.
+@@ -2660,7 +2663,7 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
+ 							TASK_INTERRUPTIBLE);
+ 		}
+ 
+-		ret = io_cqring_wait_schedule(ctx, &iowq, start_time);
++		ret = io_cqring_wait_schedule(ctx, &iowq, ext_arg, start_time);
+ 		__set_current_state(TASK_RUNNING);
+ 		atomic_set(&ctx->cq_wait_nr, IO_CQ_WAKE_INIT);
+ 
+@@ -3363,6 +3366,8 @@ static int io_get_ext_arg(unsigned flags, const void __user *argp,
+ {
+ 	struct io_uring_getevents_arg arg;
+ 
++	ext_arg->iowait = !(flags & IORING_ENTER_NO_IOWAIT);
++
+ 	/*
+ 	 * If EXT_ARG isn't set, then we have no timespec and the argp pointer
+ 	 * is just a pointer to the sigset_t.
+@@ -3399,7 +3404,8 @@ SYSCALL_DEFINE6(io_uring_enter, unsigned int, fd, u32, to_submit,
+ 	if (unlikely(flags & ~(IORING_ENTER_GETEVENTS | IORING_ENTER_SQ_WAKEUP |
+ 			       IORING_ENTER_SQ_WAIT | IORING_ENTER_EXT_ARG |
+ 			       IORING_ENTER_REGISTERED_RING |
+-			       IORING_ENTER_ABS_TIMER)))
++			       IORING_ENTER_ABS_TIMER |
++			       IORING_ENTER_NO_IOWAIT)))
+ 		return -EINVAL;
+ 
+ 	/*
+@@ -3786,7 +3792,8 @@ static __cold int io_uring_create(unsigned entries, struct io_uring_params *p,
+ 			IORING_FEAT_EXT_ARG | IORING_FEAT_NATIVE_WORKERS |
+ 			IORING_FEAT_RSRC_TAGS | IORING_FEAT_CQE_SKIP |
+ 			IORING_FEAT_LINKED_FILE | IORING_FEAT_REG_REG_RING |
+-			IORING_FEAT_RECVSEND_BUNDLE | IORING_FEAT_MIN_TIMEOUT;
++			IORING_FEAT_RECVSEND_BUNDLE | IORING_FEAT_MIN_TIMEOUT |
++			IORING_FEAT_NO_IOWAIT;
+ 
+ 	if (copy_to_user(params, p, sizeof(*p))) {
+ 		ret = -EFAULT;
 -- 
 2.53.0
 
