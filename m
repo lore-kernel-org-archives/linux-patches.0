@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705283;
-	b=HIyGaExWnnBcWQ2gkvkXEfNRkxy0DBEoOX31R1Zyhs9pjr6pcYkmU3vzIuY8BsvAPZVh
-	 LGqz/cWwkoY8diAn314OYZKY8BYs8te1RvSbwwNGMNiDxejawcCVvtq2dPKlHD3q8Ehl1
-	 Ig5ronuRx3PF7supdy2clEh4+Jo/s7eOAiRoDQkrv1bAVyl2RoLGaapl8coeEePSmS6aR
-	 s3DjyqckAcPXIHtfT06MjE9Gd8hL9gl+V1tWKvf5uLqt44S9bypZJZn2Z4qyGOgWxh30Y
-	 fysF6+aWLtnh18HszdSlaSiKdld+ro4sTUFtDgv4ETwi9tRPmqsKIHvQ8mQ8Pwnhh3w==
+	t=1795705286;
+	b=HBdC29mERgBb52CfYbKyB8DjeN8eNOZAPAz5p+joF7YMCocjeC0gSppsW1XsaXqbDD9g
+	 TqjJBbRHx2uHEzNtP3HdbGPRUHPKuCwXjDqHfJwOicAp6Ww98EUOc38pb8rsx3xyiYOCL
+	 UV5ON6DpAZ0yjKeeVaAwh/xY4jBhHf1JRIf6HyuwVnSmAwdqKb0XQaTwAfwDEBc6dFKLw
+	 SueRzJ8If6qCFj/MOGZiBqpbqghhX2aHG0WGHN4dIIHzYaWPOfOlIbzHvMvdV5hwcFMbw
+	 dpc4B1dIzO+8rG1l2FGRDshN7SoTiaHdNiL4v3UZ04yyERDYie0vWQHJJG++yKWl5tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mqhAhHB7vPlwGDwxZqYLFatY/bfJH2IOuH9vDe+kUjI=;
-	b=ZeRWJ4OVUWC3cp5aSRog8Gn+nXy8rxC9w3Ywk0I2T71LRvuGwIGPes77eoIl2tF0jHGz
-	 SnJU/6mmkYNP1G2oOIccRY+8nDVibWYqqgVMnRy+/O9Rom6cledHfEBku/MYPP55SXQfr
-	 cnR681zqsTsdKyBIjILxR9bp6yyMLY4t3TZqVaAI+aAyQ1l6sZfrlowPM6/YHIluP6MZU
-	 6HiSqlmpEwqRc2tYmciRr5kyHH133bhLWHQIrDRznsp+fej/CA+/ZZA081ABfkTH8yvcf
-	 74FbvKe3TliUH6mxqlHDi09pKwul0cMykUoHIUwguzVxvb3wV8x7n9YrEdF8Ka8L8UA==
+	bh=ZnwY/kVK1PyaIKjFzPwpUeOEOPw2dpxLElFZKnJMnpM=;
+	b=YVBzkx5j3cK7CojRGl89k329m8wnt132EDr05lidiLwV91iBj322duvb6jUa5u0KPL6T
+	 tz/03rrzYe5vD0oS4wYtDUDjwH9YLD6madkpQ1JSxw0lAZxTbRIy1JCxjEKu41SmaenEK
+	 6H+1pNBwBCcgdIbIDPVirnvJqzVW/GPoRJaERB4jtE+fIw1DLg5sNksVgWdsdU6Tuu0K1
+	 x8gF8oRBYaxVBEW6/bbA91XApB5lbtuF6MoTt1LEOqTUvZr+cYXpMD9twHxR4OYV0BrAQ
+	 QJ9lD2rygLtP8KlhivhRGGGqGrh4BYFNEerPAxJR3t/RfZLA8AYGL+nwt2MsWzdRZxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xY6Q8jYd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyxqflKc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621F2606A321;
-	Thu, 26 Nov 2026 15:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C34E606A31E;
+	Thu, 26 Nov 2026 15:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xY6Q8jYd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB901F000C0;
-	Thu, 26 Nov 2026 15:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyxqflKc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FE01F000C4;
+	Thu, 26 Nov 2026 15:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705282;
-	bh=mqhAhHB7vPlwGDwxZqYLFatY/bfJH2IOuH9vDe+kUjI=;
+	s=korg; t=1795705285;
+	bh=ZnwY/kVK1PyaIKjFzPwpUeOEOPw2dpxLElFZKnJMnpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xY6Q8jYdCUv1Wlg7ETCICWh0j4PmX6Wy6RUoA15pBKkBTebSV+ZyAb1UzID99Tu8k
-	 ru6vVD85lJO4T0P8wsHANq1OVHlYK392paUOBYtFQRU2Vsi3V5GfLUR5AsORto4fah
-	 i5sgiIZ0IQC9PbfgSqz0GnU8dFDfluEWwUNZk/1E=
+	b=IyxqflKc1FtWqIN6iWpM11K7ISNVKktk6Uz5kDf9FY6v5YhUl2pKazjF34B6ZE52A
+	 P0997+akB5Z2ISqCckELBCWQ/1tzlSa6snGkaD7ecXCmK/wfkB8iSUTufur7FD6H52
+	 Tz5amLMsJENpmINht2VFzZF1OR6EY5Ny+YOria3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/319] net: require a full socket in sock_confirm_neigh()
-Date: Thu, 26 Nov 2026 15:38:34 +0100
-Message-ID: <20261126144010.043474004@linuxfoundation.org>
+Subject: [PATCH 5.15 147/319] bonding: fix slave_cnt leak on XDP enslave failure
+Date: Thu, 26 Nov 2026 15:38:35 +0100
+Message-ID: <20261126144010.065654735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,86 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit c78b47704934e44442f4e48bfdcc99039e3b85a5 ]
+[ Upstream commit a978095699641d4f83a32b499a981c419c94abca ]
 
-An skb can retain dst_pending_confirm after its original output and
-socket owner have changed. For example, a raw MSG_CONFIRM packet can
-cross veth, have a TCP request socket assigned by TPROXY, and be bridged
-into gretap. Neighbor output for the outer packet then calls
-sock_confirm_neigh() with the request socket in skb->sk.
+bond_enslave() increments bond->slave_cnt before setting up XDP on the
+new slave. If that setup fails (slave has no XDP support, already has
+an XDP program, or dev_xdp_propagate() fails), the error path jumps to
+err_sysfs_del, which never decrements slave_cnt.
 
-The helper unconditionally treats a non-NULL skb->sk as a full socket
-when accessing sk_dst_pending_confirm. TCP request and TIME_WAIT sockets
-do not contain that field. This produces an out-of-bounds four-byte read
-and, if the word is nonzero, an out-of-bounds four-byte zero write. A
-KASAN-enabled kernel reports:
+Each failed enslave therefore leaves slave_cnt one too high:
+- SIOCBONDINFOQUERY reports a wrong num_slaves,
+- balance-rr picks slave ids beyond the end of the slave list, so
+  bond_get_slave_by_id() falls back to the first usable slave and
+  transmit is skewed toward it.
 
-  BUG: KASAN: slab-out-of-bounds in ip_finish_output2+0xc9f/0xd60
-  Read of size 4 at addr ffff8880bdc3d880 by task tproxy_dst_conf/1771
+Reproducer:
 
-Require sk_fullsock() before accessing the socket field, moving the
-existing helper earlier in the header to make it available here. Keep
-neigh_confirm() independent of the socket type so the skb's neighbor
-confirmation still works, including for socketless packets. This also
-covers the IPv6, VRF, and BPF neighbor-output callers.
+  ip link add bond0 type bond mode balance-rr
+  ip link set bond0 xdpdrv obj xdp_dummy.bpf.o sec xdp
+  for i in 0 1 2; do
+    ip link add d$i type dummy
+    ip link set d$i master bond0   # fails: Slave does not support XDP
+  done
 
-Fixes: 4ff0620354f2 ("net: add dst_pending_confirm flag to skbuff")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
+num_slaves read via SIOCBONDINFOQUERY is 3 before this patch, 0 after.
+
+Add an err_dec_slave_cnt label ahead of err_sysfs_del and use it from
+the three XDP failure paths, which are the only failures after the
+increment.
+
+Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261104132900.1071940-1-edumazet@kernel.org
+Link: https://patch.msgid.link/20261104092851.688361-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/net/bonding/bond_main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index b178e4b05540a..095a3490c99e4 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2214,6 +2214,14 @@ struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 17f08b7dd5395..13c85464842ab 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2195,7 +2195,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
+ 				     "Slave does not support XDP");
+ 			res = -EOPNOTSUPP;
+-			goto err_sysfs_del;
++			goto err_dec_slave_cnt;
+ 		}
+ 	} else if (bond->xdp_prog) {
+ 		struct netdev_bpf xdp = {
+@@ -2209,14 +2209,14 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
+ 				     "Slave has XDP program loaded, please unload before enslaving");
+ 			res = -EOPNOTSUPP;
+-			goto err_sysfs_del;
++			goto err_dec_slave_cnt;
+ 		}
  
- struct dst_entry *sk_dst_check(struct sock *sk, u32 cookie);
+ 		res = slave_dev->netdev_ops->ndo_bpf(slave_dev, &xdp);
+ 		if (res < 0) {
+ 			/* ndo_bpf() sets extack error message */
+ 			slave_dbg(bond_dev, slave_dev, "Error %d calling ndo_bpf\n", res);
+-			goto err_sysfs_del;
++			goto err_dec_slave_cnt;
+ 		}
+ 		if (bond->xdp_prog)
+ 			bpf_prog_inc(bond->xdp_prog);
+@@ -2231,6 +2231,9 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	return 0;
  
-+/* This helper checks if a socket is a full socket,
-+ * ie _not_ a timewait or request socket.
-+ */
-+static inline bool sk_fullsock(const struct sock *sk)
-+{
-+	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
-+}
+ /* Undo stages on error */
++err_dec_slave_cnt:
++	WRITE_ONCE(bond->slave_cnt, bond->slave_cnt - 1);
 +
- static inline void sk_dst_confirm(struct sock *sk)
- {
- 	if (!READ_ONCE(sk->sk_dst_pending_confirm))
-@@ -2225,7 +2233,8 @@ static inline void sock_confirm_neigh(struct sk_buff *skb, struct neighbour *n)
- 	if (skb_get_dst_pending_confirm(skb)) {
- 		struct sock *sk = skb->sk;
+ err_sysfs_del:
+ 	bond_sysfs_slave_del(new_slave);
  
--		if (sk && READ_ONCE(sk->sk_dst_pending_confirm))
-+		if (sk && sk_fullsock(sk) &&
-+		    READ_ONCE(sk->sk_dst_pending_confirm))
- 			WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
- 		neigh_confirm(n);
- 	}
-@@ -2815,14 +2824,6 @@ skb_sk_is_prefetched(struct sk_buff *skb)
- #endif /* CONFIG_INET */
- }
- 
--/* This helper checks if a socket is a full socket,
-- * ie _not_ a timewait or request socket.
-- */
--static inline bool sk_fullsock(const struct sock *sk)
--{
--	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
--}
--
- static inline bool
- sk_is_refcounted(struct sock *sk)
- {
 -- 
 2.53.0
 
