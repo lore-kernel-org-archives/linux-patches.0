@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704443;
-	b=vZXDtvp1ox/WAv9Djgy4Afbug9+qsQVbf9m3zoAVJ2WSqmOqRknAXvjlFMSX6AkuqoIw
-	 s0Afty8rj4J6OS9KFwpnObfs048jGSRBN+5Vl/8+VyFHeUq1tJPg6oYwXlVGRM8UKc9y5
-	 VC1nmMFWuI/H5lAXS0sRihL5Olem8yWkRcJjLwN7STc9k/PYYgCb7aLdovYf0eGQigrTE
-	 2+kRGyockgxMbfsV6MvHl2FcTK+pu2nug/LHiflLLe/VZ7MIJKBBHpcfuq4f/x3ufaa12
-	 KfwaA4abnsDLcIutDdqE2rKUZt+WtpbcR48O3YGs5UI2MMvljjz5z2Jze3ePIIA5npg==
+	t=1795704445;
+	b=n5aDSRtvLdGkr9y1GkyHUEeMCF3EcopXfpM13f4AzyqnYCqDyl+zUoD5IVAmG8K8Fnlc
+	 qJxxaDwpvttJhA9yux89SL0989IgIXyCmWb/6k/NyA5eZ+axhi8WhlzAr4tupuX1gZI/K
+	 LTg8eCKLP+KJU/YBxeuiYQtE1nYr9JHj44axYf1d7hnUNTcKKyyXFMPn2qjtCNi5xZ6j1
+	 PsprNwkfBclgiQLrIaFOF9u9hWEl9CM3C/bz7ZQhuEUfXuaCS0vt8LKExW04HkynKQkyb
+	 qn2DKESSs90r9RHb6ZyvdiCInorz6X2r3sXGn/Lhg4NsYmtGg+RQQks++jHyq9UKm7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A2sbCrRiA9QhQ/gLTHCuI6/1TCHU8E1eTQrCQq1Vy1U=;
-	b=3kipYQlWMptdauJsbKX5Qp/uYPqsuDcBW95a13ffPq0R6nT+daCMazC7ZQA8Im2b+7RP
-	 8fi6vsdQgcpxJuntOGm91g8Vst6MYUzplMBaBi9kF3ckdQ0ZJAjSbwmJdUozzfSb69U/1
-	 iX9lSAkwoMqqKsnV0or43G3Rmy9T8z/Ry8UBXXehyTDI8qh9RzeRHGdyFcfqFXqcXbk1O
-	 kAjf/12H07a1kUiRyopaypmU4x7fS8xunSXR+5g1y/2jkTZjbwvIreczRyU7ytNL2Ypio
-	 LDm6A1+xm9g8/J+E1nkTmwXaYP1KBIEc2WKKEal5q4psyWqI32H4++JqqrSLWt8yz1A==
+	bh=+hWDrbTAComivep7gFNaQDfbp2/kMjcQIf5nV0FUoj0=;
+	b=v7vDUSsGs6PL9iEThSHYZfuwkBup+LlTdvCYYIk0TLwNAa3MUJ8312JtahvJFaxYgIFj
+	 X7zvE+umgd8qT09XPEyNgBwHqyR8t4qHOj0mKO2s5iVwR/9IIyyKI9w7JGT2AjWvlKjWQ
+	 Txl5KeMxDYMdNSfZIj/hXEIWlN7nDLaxFs4yVbpjaTJN/4onBcwi/znCC4fz7yYbvcPgb
+	 xOzZE2B85BP0gqoj8xwzYA+YxuAaf+Ma7/RUx1hvSX1JsrdL5kwXCtbBz1jywe845dz1z
+	 e+PI5A2Qo9HqIIEO8lR/MxDnGI+uV5xnB8m7xNQfs9kO3qRTbcRSDa0a668u9jcuddw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fxbmra2V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qthc7MGd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27F8606A31E;
-	Thu, 26 Nov 2026 14:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80774606A338;
+	Thu, 26 Nov 2026 14:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fxbmra2V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A121F000C4;
-	Thu, 26 Nov 2026 14:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qthc7MGd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BA41F000EE;
+	Thu, 26 Nov 2026 14:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704442;
-	bh=A2sbCrRiA9QhQ/gLTHCuI6/1TCHU8E1eTQrCQq1Vy1U=;
+	s=korg; t=1795704445;
+	bh=+hWDrbTAComivep7gFNaQDfbp2/kMjcQIf5nV0FUoj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fxbmra2Vl4ldlsOACfX43MVIzIITarNwx4h7+TkkMXFws30lNh1NRhzT0m54v3HW+
-	 98/XD2v7Pa0RJ/ZikhyUJw5rTyimxbvztmZ/+4PFgf6Yb9XlLu9+43Qq1CzZich1AM
-	 V3+xyOv1CAK0DiEvswax6n0bzOopOVv4KrbyZD3U=
+	b=qthc7MGd/1CwaRuqqMZfxuROALhRc7sZ59FuPB60J4hdLyVM3by75AlyG+HgnBbMB
+	 +ZyPG5KECzy5/fyFcGnRGghftPorRPLBzyntn4HLuBLuucSUA4WdL9YU9EsETUKGpx
+	 +93UlGCQQTobjIaKs2YEYGAmzzDb2neWxS4upQsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Chase Hiltz <me@chasehil.tz>,
-	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/265] ipv4: route: dont blackhole in-use routes when retiring fnhe routes
-Date: Thu, 26 Nov 2026 15:37:36 +0100
-Message-ID: <20261126143613.858488984@linuxfoundation.org>
+Subject: [PATCH 5.10 127/265] fou: gue: check IP version of held packets for direct IP encapsulation
+Date: Thu, 26 Nov 2026 15:37:37 +0100
+Message-ID: <20261126143613.916979759@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,101 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chase Hiltz <me@chasehil.tz>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit ae89f2724db1afa96a1f1b661174fc41ae1e88fa ]
+[ Upstream commit c59f004734a2a7c0e427011db13aca524e781498 ]
 
-When a route cached in a nexthop exception (fnhe) is replaced or
-flushed, rt_bind_exception() and fnhe_flush_routes() call
-dst_dev_put() on it. That sets dst->dev to blackhole_netdev and
-dst->input/output to dst_discard*(), but other CPUs can still be
-using the route, e.g. as a noref dst taken from the fnhe under RCU.
-Packets that reach dst_input() or dst_output() after that are dropped.
+For GUE version 0, gue_gro_receive() compares the base GUE header and
+its optional fields with every held packet. For GUE version 1 (direct
+IP encapsulation), it skips this comparison and selects the next GRO
+handler only from the IP version of the incoming packet.
 
-If dst_dev_put() runs after a forwarded packet has entered ip_output(),
-ip_skb_dst_mtu() in __ip_finish_output() can return the MTU of
-blackhole_netdev (68), and ip_fragment() can then drop a DF packet and
-send ICMP_FRAG_NEEDED with mtu 68 to its source.
+A held version 0 GUE packet from the same outer flow therefore stays
+eligible. For example, a GUE/IPv4/UDP packet can be aggregated with a
+direct IPv4/TCP packet, and inet_gro_receive() then parses the held
+packet's GUE header as an IPv4 header.
 
-Commit 5018c59607a5 ("ipv4: fix race condition between route lookup and
-invalidation") fixed the same race in rt_cache_route() by putting the
-old route on the uncached list instead of calling dst_dev_put(). Do the
-same for routes retired from an fnhe. rt_flush_dev() still moves them
-to blackhole_netdev when their device is unregistered.
+Clear same_flow for held packets whose first nibble does not match the
+incoming IP version. A valid version 0 GUE header always has a first
+nibble between 0 and 3, so this also separates the two GUE formats.
+The reverse case is already handled: the version 0 path compares the
+whole base GUE header, including the version bits.
 
-fnhe routes are also retired on fnhe expiry (ip_del_fnhe()) and
-eviction (fnhe_remove_oldest()). Those paths don't bump rt_genid, so
-without the obsolete marking ipv4_dst_check() could still accept the
-route. Keep marking retired routes DST_OBSOLETE_DEAD, as dst_dev_put()
-did, so that users that cached them, such as sockets, look up again.
-
-In a netns reproducer that forwards IPv4 traffic over an ip6tnl device,
-with an fnhe for the destination, while the FIB keeps changing, this
-patch stops the mtu 68 ICMPs and the drops.
-
-Fixes: 95c47f9cf5e0 ("ipv4: call dst_dev_put() properly")
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Chase Hiltz <me@chasehil.tz>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261105182640.2999521-1-me@chasehil.tz
+Fixes: c1e48af7960e ("gue: Implement direction IP encapsulation")
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261106195615.2498766-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ net/ipv4/fou_core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 8ab568e9314ad..a7f05cf709384 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -615,6 +615,17 @@ static void ip_rt_build_flow_key(struct flowi4 *fl4, const struct sock *sk,
- 
- static DEFINE_SPINLOCK(fnhe_lock);
- 
-+/* Other CPUs may still be using @rt, so don't dst_dev_put() it.
-+ * rt_flush_dev() handles it if its device is unregistered.
-+ * Marking it dead makes ipv4_dst_check() fail for users that cached it.
-+ */
-+static void fnhe_retire_route(struct rtable *rt)
-+{
-+	WRITE_ONCE(rt->dst.obsolete, DST_OBSOLETE_DEAD);
-+	rt_add_uncached_list(rt);
-+	dst_release(&rt->dst);
-+}
-+
- static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
- {
- 	struct rtable *rt;
-@@ -622,14 +633,12 @@ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
- 	rt = rcu_dereference(fnhe->fnhe_rth_input);
- 	if (rt) {
- 		RCU_INIT_POINTER(fnhe->fnhe_rth_input, NULL);
--		dst_dev_put(&rt->dst);
--		dst_release(&rt->dst);
-+		fnhe_retire_route(rt);
- 	}
- 	rt = rcu_dereference(fnhe->fnhe_rth_output);
- 	if (rt) {
- 		RCU_INIT_POINTER(fnhe->fnhe_rth_output, NULL);
--		dst_dev_put(&rt->dst);
--		dst_release(&rt->dst);
-+		fnhe_retire_route(rt);
- 	}
- }
- 
-@@ -1537,10 +1546,8 @@ static bool rt_bind_exception(struct rtable *rt, struct fib_nh_exception *fnhe,
- 		if (do_cache) {
- 			dst_hold(&rt->dst);
- 			rcu_assign_pointer(*porig, rt);
--			if (orig) {
--				dst_dev_put(&orig->dst);
--				dst_release(&orig->dst);
--			}
-+			if (orig)
-+				fnhe_retire_route(orig);
- 			ret = true;
+diff --git a/net/ipv4/fou_core.c b/net/ipv4/fou_core.c
+index 556323c687e5b..9636a31e0a63e 100644
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -368,6 +368,18 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
+ 		default:
+ 			goto out;
  		}
- 
++
++		/* Match the encapsulation format and IP version. */
++		list_for_each_entry(p, head, list) {
++			const struct iphdr *iph2;
++
++			if (!NAPI_GRO_CB(p)->same_flow)
++				continue;
++
++			iph2 = (const struct iphdr *)(p->data + off);
++			if (iph2->version != ((struct iphdr *)guehdr)->version)
++				NAPI_GRO_CB(p)->same_flow = 0;
++		}
+ 		goto next_proto;
+ 	default:
+ 		goto out;
 -- 
 2.53.0
 
