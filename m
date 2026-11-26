@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704184;
-	b=xl6MJ5SK7KqPFgGH6SWd5Z1sh+sq2PPidQbRSa1gMHXq5OO4unCrZ5Z7y5OYWEFfnDCj
-	 USwQaBph8A94dd+X3WT9Idx+ctBODr0Mpd7LzYMFzi7EqFLO0tPSRi8nP3ALsKI3shgRw
-	 a8KTtFLHIHeV/WGAIZRjm98KH8E+lST+0VBQerf6lo1ktdZP20pg8AuG9WRlQyP8Mr6tn
-	 6q2Z5G83O3tXFSByFIwf+itYvqr3JNTUMkYp1oYmTrtIJPF6q13XPXkHK4cT0Bbtjl785
-	 nz2qTrmQ3VazJ3vcN3IkWKEx7ZTiYNUFzZR4L0C8JDFiirgV0muPIv8oz8XZtiPXB7Q==
+	t=1795704187;
+	b=q6XG2LnSIYBBOTwWhq0P9P2bZswb4x+lZkmcR4lSZzRCekZU2TKrv+9TCVXE2qR2mwOR
+	 L9COQ4ghjAhWGA2e25pRPGDYJ13xxLMdqlKTbRtNmhdKZK/6YBESalpRTg4WQ9/OJedZW
+	 ML7EornzEIor/yzNMjzzK3tz3e4ZNx+AP6Dgyc63eo4a8zO/pjnsi5Mu33a1EHbHYuHqv
+	 opLgU8GLOWX9Zf/TMhp8HHIHjNa7j5v0ggn0MXERe9cki+XcarNFuap+0ehcqEiB6gHa2
+	 cmCuWyb8eJMO6Jshd375LMqFZ5ZHDaulN49IwWTAqetOCXoolAo6sBO32eiVt+pYszQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704187;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3SiKYEz+Je5PUa1JyTBvuXb2LTQn/CEp+788xbAUHB8=;
-	b=BuyXrMOetbxfR/zPaT904kE/XwiTBrGE+Rtd4k8H1vht1mjpJ8oB7gr3T0gt+x+WCiSZ
-	 Q/dClO9GWVglojG7DulzVtkunzsUJfRnPVsdJ6R40uxTJ3H4Mf/tx5DCKcQbN9ir5nuIT
-	 AEn2XHs1thslBHNpHwBg7y0XzCNYm4U60B1YbXIRfbK3UiCuK+EG6MVS+1Iuw21o/s1b3
-	 77h3kFneWo0CRMmE6+PbNoHX+RaeUiDiVIi34BdAhGlhfHVFNjldU/rF2325hwgf5TQn3
-	 FxqvcSAyqujsDxQ/g2JoAz6/1lJJQfLNzrrBgB2q+xABDpzfmuriSzn67Jf+NECecHw==
+	bh=PIG7zJENGJcnogFsDtLx6rQeFxmqPv434XHCRSxMDSs=;
+	b=mqqWi0yPOuE9VM2B4VRvlbBML7aPSQqb4MeJ3ldqhidItcTwC6f7gMfueWghN5JQbpY8
+	 ZzHYeF2dLnzZXqIJR9o4/Qo+zaMcV6O4hZdmVPW85FA6vhYadmICNg2Eb0nox8yK3M4o3
+	 /ICujG4CvXYL3HRuWj8ICoYcTirD9k5IkRxOf/ls4a072QgQgrRJCH2XTqHTqMT8+Xp2S
+	 KYSJ5Pwq2jUjToG+AkDY2Uh7ArIthg4ou0Kro21NUL3zcxtDneD0F/dLj6zRTkApAv29M
+	 vW0r0iZZIZr4f6U19hmgiTKzt66nXaHQz5FQ82izh+1qmopY1uewsRIB5C2WoPo9yHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uc7pnh8t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ylCOZeYH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F68E606A32A;
-	Thu, 26 Nov 2026 14:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B930606A327;
+	Thu, 26 Nov 2026 14:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uc7pnh8t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C331F000CF;
-	Thu, 26 Nov 2026 14:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ylCOZeYH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D3D1F000CA;
+	Thu, 26 Nov 2026 14:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704184;
-	bh=3SiKYEz+Je5PUa1JyTBvuXb2LTQn/CEp+788xbAUHB8=;
+	s=korg; t=1795704187;
+	bh=PIG7zJENGJcnogFsDtLx6rQeFxmqPv434XHCRSxMDSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uc7pnh8tDAIYomrHA8Z937Bf3Fnj4zMsof/ns9wFHhNCdsu4obsMB98x8Z513dVJA
-	 Sga7pSnuY5skhhuQWtxA2eW5hJkFPXfxMEZyfGh9SZt/QIJFQkkhAM1Q0zx6/9FVjQ
-	 Qjs4wAnP7GS+RowkNAfhQlHg5HbKVGIqN0wTC7Hc=
+	b=ylCOZeYH5BkslSbqaM3C/eDlBZq/QXewe/R4InKHNhLtEb3+vAprP2Num1qKS4ASZ
+	 g7xf489x5Zb85UIrtS0ll8vsDDrJgez9T+yXJw5ObsITCIwgDDpyONLfnCVCj7sp8+
+	 dYsQpLwjcQb47DlQKHgfcScIpgAYaV0boLbv4rtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongjian Dai <daihongjian@kylinsec.com.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/265] spi: pic32-sqi: fail transfer when the BD ring is exhausted
-Date: Thu, 26 Nov 2026 15:36:04 +0100
-Message-ID: <20261126143607.508263027@linuxfoundation.org>
+Subject: [PATCH 5.10 035/265] bpf: Dont let bpf_skb_adjust_room() raise gso_size to GSO_BY_FRAGS
+Date: Thu, 26 Nov 2026 15:36:05 +0100
+Message-ID: <20261126143607.585476566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,54 +67,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongjian Dai <daihongjian@kylinsec.com.cn>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 2066970324a1439e5a2e08c4599098367f8f82cc ]
+[ Upstream commit 6d8118937ba477e03fa2e94e9bd9abac7291a2a2 ]
 
-pic32_sqi_one_transfer() silently stopped programming buffer descriptors
-when ring_desc_get() returned NULL and still returned success. The caller
-then marked the last programmed descriptor as the end of the list and
-started the DMA engine, so the hardware transferred only a prefix of the
-requested data while the message completed with status 0.
+When bpf_skb_adjust_room() shrinks a TCP GSO skb, it adds the number of
+removed bytes to gso_size. gso_size has 16 bits, and nothing checks the
+sum. Thus gso_size can wrap to 0 or to a small size, or it can be
+GSO_BY_FRAGS. GSO_BY_FRAGS is not a size. It tells skb_segment() to read
+the length of each segment from the frag_list. If the TCP GSO skb has no
+frag_list, skb_segment() dereferences a NULL pointer.
 
-The ring holds PESQI_BD_COUNT (256) descriptors of at most
-PESQI_BD_BUF_LEN_MAX (256) bytes each, so messages larger than 64 KiB (or
-with enough SG entries) can exhaust it. Since the driver sets no
-max_message_size/max_transfer_size, the SPI core does not prevent this.
+Return -ENOTSUPP and do not change the skb if the sum is GSO_BY_FRAGS or
+larger. With BPF_F_ADJ_ROOM_FIXED_GSO the helper does not change gso_size,
+so it shrinks the skb as before.
 
-Return -ENOMEM instead, and set msg->status so the failure reaches the
-caller rather than being silently truncated.
-
-Fixes: 3270ac230f66 ("spi: pic32-sqi: add SPI driver for PIC32 SQI controller.")
-Signed-off-by: Hongjian Dai <daihongjian@kylinsec.com.cn>
-Link: https://patch.msgid.link/F5276982A630220B+20261017075545.95854-1-daihongjian@kylinsec.com.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101190535.1454146-16-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-pic32-sqi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/filter.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/spi/spi-pic32-sqi.c b/drivers/spi/spi-pic32-sqi.c
-index 86ad17597f5fd..0b32714633e9a 100644
---- a/drivers/spi/spi-pic32-sqi.c
-+++ b/drivers/spi/spi-pic32-sqi.c
-@@ -297,7 +297,7 @@ static int pic32_sqi_one_transfer(struct pic32_sqi *sqi,
- 		/* get ring descriptor */
- 		rdesc = ring_desc_get(sqi);
- 		if (!rdesc)
--			break;
-+			return -ENOMEM;
- 
- 		bd = rdesc->bd;
- 
-@@ -387,6 +387,7 @@ static int pic32_sqi_one_message(struct spi_master *master,
- 		ret = pic32_sqi_one_transfer(sqi, msg, xfer);
- 		if (ret) {
- 			dev_err(&spi->dev, "xfer %p err\n", xfer);
-+			msg->status = ret;
- 			goto xfer_out;
- 		}
+diff --git a/net/core/filter.c b/net/core/filter.c
+index a7897c1c5e388..da6cf7ef22976 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3648,6 +3648,14 @@ static int bpf_skb_net_shrink(struct sk_buff *skb, u32 off, u32 len_diff,
+ 			return -ENOTSUPP;
  	}
+ 
++	/*
++	 * The MSS is raised by len_diff. It has 16 bits, and GSO_BY_FRAGS is
++	 * not a size.
++	 */
++	if (skb_is_gso(skb) && !(flags & BPF_F_ADJ_ROOM_FIXED_GSO) &&
++	    skb_shinfo(skb)->gso_size + len_diff >= GSO_BY_FRAGS)
++		return -ENOTSUPP;
++
+ 	ret = skb_unclone(skb, GFP_ATOMIC);
+ 	if (unlikely(ret < 0))
+ 		return ret;
 -- 
 2.53.0
 
