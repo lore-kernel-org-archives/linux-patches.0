@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705470;
-	b=KxBzw/r93ZWvSmMKnMzXnwgw+waAKQlXV3Ti5Jk/EyZfIAutnwmCu7G2bN44lCIXxn4/
-	 9x1Ijp0QZQIJPNRCQuOmRYZX6IqeRVp61DdjBBlatV83bY9WFnQx3tdanPJKzgzK2ou49
-	 lfyhwGD+Hah7vIbi7qU4cLo/PFQYmI7NO88afcTqGY4QKnK8RbaqX1/7kemN1Ds+vEw/2
-	 7NFNFaffOZhchFY+G+0p+gi+JkqTUWPluRYC/MdwOQ5nlNSaBtimnZZlL0vKzobmVVu6h
-	 rBL4TZc2xMDomtOoRrKzuEfo1qIfHCoodZzevn6TNmBLuwfWPfVjHut8pNGPeSPFGVA==
+	t=1795705473;
+	b=POb5ACf1jf3+yj2O6GI+zWcr+HclyQ6SRsrWKEO3/OTORGUaSe2sODWC9YEJbYUp1t3f
+	 zg2YB+A0DrgmSlzRyJbyEVn5Zy727Z0XRUH9Vy1dUkO9CJB6+wA99xrCqn8yngbEpESAW
+	 cfGKZ6rNSIE5oWmsmptoEU1c0G2zJLHNdmoI+QmnqX0wuiNTkSnAvmS1xA6Hz9d/aBmpC
+	 eGoaZa2YCjLACl2KjT9CQ/H4yJsbgfbsoc7KtJrj6XP41G8fftLrhxyt19rYzEKvFRmN+
+	 fPBWSA05iCljKOpGNSw1iidWhLFIbXota/BJEJOm9eqFGeIHOEv7Hxe6bm/E/lUi7kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SVW5kxkRmFSgRjbkpYxAtTaPO7Z97qwd+fDs354GKYo=;
-	b=GJdGWZ7bW/rFDFhWO7cCRTObD+DfZFdsnQ43u3l/0XUJzRTYL0UVWf/OXoDb0tNMs5t4
-	 Vb9m15gwxwHHAo6x3+/M7zsNKyTHGQgyZK0pA4od9bPj76AsUlE6TBFEjKAXEx2s1Vo2b
-	 3vkiR1zQHkseu4HIJYCJeX1di65K/JOVvB7kweBKb6F5fC4sQpNgtyYVa5rlx56OszeeS
-	 z9GW6HHHygbU0ZUkSbFPUCI3CxiN0i2oplMY0OIpM0KiYwm/KtYhD572xg3pvrogiCAnN
-	 tFPHAT5PnFhVO0bVd7ZWaFMuTYv8RAnVmfeVVm2y2b1gT7QEcQ/qiz9sOMv+NqTf97g==
+	bh=Ut0jKHCQCsZ4uET39KiJ/+6gY3sFwadgbKxYMwzrlkM=;
+	b=AymZw2KDZgGeQMn0zCSaqraWhDgNHRz4co2rmdQchmMxi1+c1A/85wZzskdSg19q+BeY
+	 E96XE1BZWfeW0rVOFwJ0jmpPg2QUI5fJzGUEBg2R2H/fp7tXuKbHdMua2IeBOmbImcSaa
+	 2/knTmjY6ulpRsJouZRdreEr55Gwbsqu7TOc63zUCQ6TND0xb3p8tMiw/S5GyMRXukWwf
+	 nZOTv9UBR44ca+eU0IKxAUhCUr+qjmYrjclQNwhL3oH70YsyPzzuh2xKSwG6JNz6yOOtU
+	 7WOr/qbYFuPcgr1pRdwZ8uO2y8q0dACa3TuvR6a8w6VyUDUFsVgK9MeZzdTx9KAtesQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DT3ldB8K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdXva6TQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9914606A31C;
-	Thu, 26 Nov 2026 15:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2288606A321;
+	Thu, 26 Nov 2026 15:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DT3ldB8K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D82C1F000C6;
-	Thu, 26 Nov 2026 15:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdXva6TQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BD91F000C6;
+	Thu, 26 Nov 2026 15:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705470;
-	bh=SVW5kxkRmFSgRjbkpYxAtTaPO7Z97qwd+fDs354GKYo=;
+	s=korg; t=1795705472;
+	bh=Ut0jKHCQCsZ4uET39KiJ/+6gY3sFwadgbKxYMwzrlkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DT3ldB8KbxLwdJFz70dTM/YRj9CMQRMdx1PrxLSDikGAuorajwhDP/ybHr1aW94fc
-	 0ErR1aqkhiMjEqML+oNLNDaZr+uJ5DAUDH7rhlEKX0o7JpdS69VKOemXhgg2a+lLpE
-	 zahpkAi+687DwC698DDKyViJPoZwiG4MtHLcXSZ8=
+	b=CdXva6TQzH9AnRkGRY/H9RaA3FvV7ZVG4LBIVwAdwLqV3VsIR0g644NA4MF/jAMG8
+	 5F318NtUls0oPe6tuLonD/TsT/4rHXnU1a6q1DXUqAPomWraqkCr3m1BNQ0Hjv70KF
+	 63FCKYx4P17xZv3wR/Y2SjZQ+9sREqVv6LOZ/xZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
+	Zak Brighton Knight <zakbrightonknight@gmail.com>,
+	Doug Smythies <dsmythies@telus.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 208/319] cpufreq: acpi-cpufreq: fix P-state index mismatch in extract_io()
-Date: Thu, 26 Nov 2026 15:39:36 +0100
-Message-ID: <20261126144011.439319647@linuxfoundation.org>
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 5.15 209/319] cpufreq: intel_pstate: Clear last written P-state value on suspend
+Date: Thu, 26 Nov 2026 15:39:37 +0100
+Message-ID: <20261126144011.462144053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,75 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 6bc092a0fc4d331a4adbbb664078af149c580834 upstream.
+commit 02e77af824d5be3a94fdd885835a352f90d24c5c upstream.
 
-When policy->freq_table is built in acpi_cpufreq_cpu_init(), entries
-that are not lower in frequency than the previous one are skipped.
-For each remaining entry, freq_table[].driver_data stores the
-original ACPI P-state index, so the index space of freq_table no
-longer matches perf->states[].
+Preserving cpu->pstate.current_pstate across system suspend-resume
+cycles, when running in the passive mode with HWP disabled, is a mistake
+because its value from before system suspend may become stale after the
+subsequent system resume and in some cases it prevents MSR_IA32_PERF_CTL
+from being updated properly after system resume [1].
 
-extract_io() currently walks perf->states[] with index i and uses the
-same i to index policy->freq_table[i]. When duplicate frequencies
-exist, this can associate a P-state status with the frequency of a
-different P-state. It can also access an invalid or sentinel entry in
-freq_table when the number of entries in perf->states[] is greater than
-the number of entries remaining in the frequency table.
+Address this by clearing cpu->pstate.current_pstate after the governor
+has been stopped during system suspend.
 
-extract_io() is used on ACPI_ADR_SPACE_SYSTEM_IO platforms by the
-frequency verification path, which is enabled by the
-acpi_pstate_strict module parameter. With the mismatched lookup,
-check_freqs() can fail to match the frequency of the P-state that
-drv_write() has already programmed. It then sleeps through all 100
-iterations - at least ~1 ms of usleep_range() plus 100 cross-CPU
-calls and I/O port reads, all with policy->rwsem held, and
-.target_index() returns -EAGAIN, leaving perf->state at its previous
-value while the hardware is running at the newly requested P-state.
-
-The cpufreq core consequently keeps policy->cur at the old frequency.
-Since __cpufreq_driver_target() returns early when the requested
-frequency equals policy->cur, the driver is not called again for that
-frequency and the control register is not rewritten. The hardware can
-therefore remain at a frequency that differs from the frequency known
-to the cpufreq core.
-
-Fix this by iterating over policy->freq_table and using
-pos->driver_data as the original ACPI P-state index when accessing
-perf->states[], as extract_msr() already does.
-
-Fixes: fe27cb358835 ("[CPUFREQ][2/8] acpi: reorganize code to make MSR support addition easier")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Fixes: 001c76f05b01 ("cpufreq: intel_pstate: Generic governors support")
+Fixes: 4adcf2e5829f ("cpufreq: intel_pstate: Add ->offline and ->online callbacks")
+Link: https://lore.kernel.org/linux-pm/20261027143725.3763827-1-zakbrightonknight@gmail.com/ [1]
+Reported-by: Zak Brighton Knight <zakbrightonknight@gmail.com>
+Reported-by: Doug Smythies <dsmythies@telus.net>
+Cc: All applicable <stable@vger.kernel.org> # 342d3a73c5db cpufreq: Force passing target frequency to driver during resume
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Zak Brighton Knight <zakbrightonknight@gmail.com>
 Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260910111329.2220-2-lirongqing@baidu.com
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Tested-by: Doug Smythies <dsmythies@telus.net>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/14150222.uLZWGnKmhe@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/acpi-cpufreq.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/cpufreq/intel_pstate.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/cpufreq/acpi-cpufreq.c
-+++ b/drivers/cpufreq/acpi-cpufreq.c
-@@ -196,14 +196,13 @@ static unsigned extract_io(struct cpufre
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2898,10 +2898,11 @@ static int intel_cpufreq_cpu_exit(struct
+ 
+ static int intel_cpufreq_suspend(struct cpufreq_policy *policy)
  {
- 	struct acpi_cpufreq_data *data = policy->driver_data;
- 	struct acpi_processor_performance *perf;
--	int i;
-+	struct cpufreq_frequency_table *pos;
++	struct cpudata *cpu = all_cpu_data[policy->cpu];
++
+ 	intel_pstate_suspend(policy);
  
- 	perf = to_perf_data(data);
+ 	if (hwp_active) {
+-		struct cpudata *cpu = all_cpu_data[policy->cpu];
+ 		u64 value = READ_ONCE(cpu->hwp_req_cached);
  
--	for (i = 0; i < perf->state_count; i++) {
--		if (value == perf->states[i].status)
--			return policy->freq_table[i].frequency;
--	}
-+	cpufreq_for_each_entry(pos, policy->freq_table)
-+		if (value == perf->states[pos->driver_data].status)
-+			return pos->frequency;
+ 		/*
+@@ -2912,6 +2913,17 @@ static int intel_cpufreq_suspend(struct
+ 		value &= ~HWP_DESIRED_PERF(~0L);
+ 		wrmsrl_on_cpu(cpu->cpu, MSR_HWP_REQUEST, value);
+ 		WRITE_ONCE(cpu->hwp_req_cached, value);
++	} else {
++		/*
++		 * Invalidate the cached P-state value that may be stale when
++		 * the governor is started again during resume and may prevent
++		 * MSR_IA32_PERF_CTL from being updated.
++		 *
++		 * This does not require synchronization because the core
++		 * prevents frequency updates for suspended policies from
++		 * occurring.
++		 */
++		cpu->pstate.current_pstate = 0;
+ 	}
+ 
  	return 0;
- }
- 
 
 
