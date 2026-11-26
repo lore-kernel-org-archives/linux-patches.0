@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704368;
-	b=oBGHsHSQ9h4Hc/ei7tgH4D6De6+PrlJdlc4k7A5mSvddLz/NfA0r4KJmhvVmrtlsJYCS
-	 pfmtTKxxT/EsuYry287nLTBowrCOBt3bx3iZwtqwphfmfp2lQF/0nlGJLXHPfAZnqFnIJ
-	 uc9nQQaVO0Q+AxY9siIRbtZHASzkYgElXKhk3/jH7IoDkKomAoV9QBlE73HsUvxIZiZ8S
-	 rA+3PqJ/qQDVGG3PvXso4xDV6ucAUYijB9m07ukm0R4Nx4IEkz0kxAuP9bU7QIHSX6xFA
-	 T7B8SAb9yy0xFZh0AARL6w/qDAh98ET8TRhzGpiNujNq02s1zvCxF3FLfEF+xvmRNLg==
+	t=1795704371;
+	b=vGZ0SjXP6O+uPI9jqC3yxzS1499FgJQjkTcpaqna2CDNqcZaNbsZVvlHu66H72nvdLGu
+	 y2akpzOuJ+xBvg5zRmspYbehpwziajKywNGUYkUj9ToVj2csYztDZNQqZlKWNmTzmwIs3
+	 MFjA7jVdEuSRRnOo2RPvxKCaqStX66b9YrVcNs/LEBuvEwpx1kY80jtvjKxy1dJ7dI+mM
+	 IOkVJ4CtUqbbwOps9OvXdGW/DUWcuOlXKw1Qv+x796CuHYxYS4DpD11HpkeG/7BAS1aUe
+	 L2byirAjzZ6t37txudeYHS1JxL/QdzHMlOlNjSyxAij8NdmXIja8eyBZbn/kIxpElVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3VIjRmKj0JNwZYFlMHSXWYZYCpNTX9GK+3v1TSf8m4c=;
-	b=XylHl0g4AcpJie7of7qUf2SwqwFy8GnZhdpLLBnjlUcbD+OOVrP9jwf5ovgNlZ4kPan2
-	 5og3GCKE4v4WWwrdO5Wxu12QK0r9IZad+LuR2Pe3NxuFHl5R2SxjgOIvsTRJ2IeduKDOR
-	 iHkBTuw/zKHvAcmh2FigBIOLN3d2prS48mkmeMiiFiUjUc1008Fwb9LxWDLNZwjXUcWuy
-	 y8QLhPNyYNHjdD7dRBGZE2A1X+DXVX9ehvm0+Fs+r6iNVkHHsO/bGmx4QGd3VP/Xubm9K
-	 Stfv1jppmOn0VTcCQ6wn9Q1mDtZifBjgewjHUCHiVorC8Ab1N/vvYkfNyv88xkOWklA==
+	bh=l5wDpLyz9G65h6/66v23z+VXj9AVH4JUtP5DxhNhleU=;
+	b=D/stPMjpjyLidphNHyG61/MY+6c8F068FYnHUwXdNCBWnecZ8cA5v16Jubtrcbcz4mCA
+	 CNprTt7qr3Q4hCdl8W83oU4luLLVctgq5Ii8gJvFk92Z3SrAX1XNgtV5my8E9ExqXAQnM
+	 4BAeLnco1hO6Xlvm6y0VQpqt813xKZEOypNtMD0rZ6jrJ0jCPJKVDyFne+q1ECfqlNj/8
+	 M8jNMVSl+rhU7C8BsoaKuaRYIOQzQXEC8VnSta9RWNsBzzgO1BoqLcGToK9V47tf0yYIE
+	 8kJjsu5CZ1n1LpatKzJHz28Ce//AAWGazXZ6jFNjxu5SH0MNcO6k+GWJnSoYUZn1lXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lzaf9h2Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cits1wak;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDFD606A31C;
-	Thu, 26 Nov 2026 14:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B5C606A326;
+	Thu, 26 Nov 2026 14:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lzaf9h2Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9398D1F000EF;
-	Thu, 26 Nov 2026 14:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cits1wak
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4301F000C0;
+	Thu, 26 Nov 2026 14:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704368;
-	bh=3VIjRmKj0JNwZYFlMHSXWYZYCpNTX9GK+3v1TSf8m4c=;
+	s=korg; t=1795704371;
+	bh=l5wDpLyz9G65h6/66v23z+VXj9AVH4JUtP5DxhNhleU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lzaf9h2Y5dNbj+5Rhjb94/OKzQVR3gRIHGE4w7AUJuLgfAEitdJU6AVeOHADH7e7g
-	 tfze9HkTr4yuk9YmQJD5gIBullcjw++d21juuW1iVQzzS5WNTkUt3ngtvux76AzPZm
-	 zDOgTkklk1u+GtbexrNDYkPkcTducwE3XcEUip+g=
+	b=cits1wak/cTdtSGP62vckoyScSReEQo1MoxvgYYnFCJ8zK4E3xMKrwoPM1XiCwtGN
+	 IPpoyRqom3ZkMWVc+4mJcvBGcdjDWreyYoLSrRUOyMq2I3p03QZrfaSIDQUW7Ne1RR
+	 lroYu/gBMrtxm4SXO7kvYFhb2ZGqy4+0bqhrCXNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abbott Liu <liuwenliang@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 093/265] initrd: flush deferred fput() before mounting root
-Date: Thu, 26 Nov 2026 15:37:03 +0100
-Message-ID: <20261126143611.496770166@linuxfoundation.org>
+Subject: [PATCH 5.10 102/265] cpufreq: Replace deprecated CPU-hotplug functions
+Date: Thu, 26 Nov 2026 15:37:12 +0100
+Message-ID: <20261126143612.138560866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,82 +68,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abbott Liu <liuwenliang@huawei.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 807c1d7125a2b3ca5705a803aa2e19f9d53d1ea3 ]
+[ Upstream commit 09681a0772f773dddffd3c2d1796c87bd0d903b9 ]
 
-Booting an old-style initrd, i.e. a filesystem image instead of a cpio
-archive, with "root=/dev/ram rootfstype=squashfs" can fail to mount the
-root filesystem:
+The functions get_online_cpus() and put_online_cpus() have been
+deprecated during the CPU hotplug rework. They map directly to
+cpus_read_lock() and cpus_read_unlock().
 
-    RAMDISK: squashfs filesystem found at block 0
-    RAMDISK: Loading 68449KiB [1 disk] into ram disk... done.
-    No filesystem could mount root, tried:
-     squashfs
-    Kernel panic - not syncing: VFS: Unable to mount root fs on
-    "/dev/ram" or unknown-block(1,0)
+Replace deprecated CPU-hotplug functions with the official version.
+The behavior remains unchanged.
 
-rd_load_image() copies the image into /dev/ram with kernel_write() and
-then drops the file with fput(). The data only reaches the ramdisk once
-the final __fput() releases the block device and bdev_release() calls
-sync_blockdev(). But that __fput() is deferred. Since commit
-343f4c49f243 ("kthread: Don't allocate kthread_struct for init and
-umh") init is a user mode task, so the __fput() is queued as task work
-and only runs once init returns to userspace, i.e. long after
-mount_root(). Before that it ran as delayed fput work at least a jiffy
-later, which doesn't help either.
-
-Whether the mount survives this depends on the block size. Squashfs
-calls sb_min_blocksize() first and set_blocksize() syncs and drops the
-page cache when the requested block size differs from the current one.
-That hides the problem for most configurations. With
-CONFIG_SQUASHFS_4K_DEVBLK_SIZE=y and 4K pages both block sizes are 4K
-because set_init_blocksize() gives a page-aligned ramdisk a PAGE_SIZE
-block size on the first open. So set_blocksize() does nothing and
-squashfs reads the superblock with bios that bypass the page cache. brd
-has no page for that range yet and returns zeroes, so the magic check
-fails and the mount returns -EINVAL. With rootfstype= naming a single
-filesystem there is nothing left to retry and mount_root_generic()
-panics.
-
-Fixing this in squashfs would be the wrong end. Most block-backed
-filesystems read their superblock or their file data with bios that
-bypass the block device page cache, so they are exposed to the same
-race, just less loudly.
-
-So flush the deferred fput() in rd_load_image() right after dropping the
-ramdisk file, the same way mount_root_generic() already does before it
-retries with another filesystem type. All deferred closes at this point
-belong to files the boot itself created.
-
-Verified on arm64 QEMU with an openEuler Embedded rootfs image packed as
-squashfs.
-
-Fixes: 93e72b3c612a ("squashfs: migrate from ll_rw_block usage to BIO")
-Signed-off-by: Abbott Liu <liuwenliang@huawei.com>
-Link: https://patch.msgid.link/20260930084632.2965573-1-liuwenliang@huawei.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: a0cde2b601bc ("cpufreq: Preserve global boost state on failed updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/do_mounts_rd.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/cpufreq/acpi-cpufreq.c     | 4 ++--
+ drivers/cpufreq/cpufreq.c          | 6 +++---
+ drivers/cpufreq/cpufreq_ondemand.c | 4 ++--
+ drivers/cpufreq/intel_pstate.c     | 4 ++--
+ drivers/cpufreq/powernow-k8.c      | 6 +++---
+ drivers/cpufreq/powernv-cpufreq.c  | 4 ++--
+ 6 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/init/do_mounts_rd.c b/init/do_mounts_rd.c
-index ac021ae6e6fa7..285afe68dbc76 100644
---- a/init/do_mounts_rd.c
-+++ b/init/do_mounts_rd.c
-@@ -270,6 +270,11 @@ int __init rd_load_image(char *from)
- 	fput(in_file);
- noclose_input:
- 	fput(out_file);
-+	/*
-+	 * The image only reaches the ramdisk when the deferred __fput()
-+	 * syncs the block device. Flush it before mount_root() reads it.
-+	 */
-+	init_flush_fput();
+diff --git a/drivers/cpufreq/acpi-cpufreq.c b/drivers/cpufreq/acpi-cpufreq.c
+index 0f74c5e5ed0f7..ee545f0ce666d 100644
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -163,9 +163,9 @@ static ssize_t store_cpb(struct cpufreq_policy *policy, const char *buf,
+ 	if (ret || val > 1)
+ 		return -EINVAL;
+ 
+-	get_online_cpus();
++	cpus_read_lock();
+ 	set_boost(policy, val);
+-	put_online_cpus();
++	cpus_read_unlock();
+ 
+ 	return count;
+ }
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 47ba1e73e77cf..585ad335f1c31 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -2651,18 +2651,18 @@ int cpufreq_boost_trigger_state(int state)
+ 	cpufreq_driver->boost_enabled = state;
+ 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
+ 
+-	get_online_cpus();
++	cpus_read_lock();
+ 	for_each_active_policy(policy) {
+ 		ret = cpufreq_driver->set_boost(policy, state);
+ 		if (ret)
+ 			goto err_reset_state;
+ 	}
+-	put_online_cpus();
++	cpus_read_unlock();
+ 
+ 	return 0;
+ 
+ err_reset_state:
+-	put_online_cpus();
++	cpus_read_unlock();
+ 
+ 	write_lock_irqsave(&cpufreq_driver_lock, flags);
+ 	cpufreq_driver->boost_enabled = !state;
+diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
+index ac361a8b1d3bb..eb4320b619c9c 100644
+--- a/drivers/cpufreq/cpufreq_ondemand.c
++++ b/drivers/cpufreq/cpufreq_ondemand.c
+@@ -418,7 +418,7 @@ static void od_set_powersave_bias(unsigned int powersave_bias)
+ 	default_powersave_bias = powersave_bias;
+ 	cpumask_clear(&done);
+ 
+-	get_online_cpus();
++	cpus_read_lock();
+ 	for_each_online_cpu(cpu) {
+ 		struct cpufreq_policy *policy;
+ 		struct policy_dbs_info *policy_dbs;
+@@ -442,7 +442,7 @@ static void od_set_powersave_bias(unsigned int powersave_bias)
+ 		od_tuners = dbs_data->tuners;
+ 		od_tuners->powersave_bias = default_powersave_bias;
+ 	}
+-	put_online_cpus();
++	cpus_read_unlock();
+ }
+ 
+ void od_register_powersave_bias_handler(unsigned int (*f)
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 7ae59be19a9ae..546c582787f21 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2744,7 +2744,7 @@ static void intel_pstate_driver_cleanup(void)
+ {
+ 	unsigned int cpu;
+ 
+-	get_online_cpus();
++	cpus_read_lock();
+ 	for_each_online_cpu(cpu) {
+ 		if (all_cpu_data[cpu]) {
+ 			if (intel_pstate_driver == &intel_pstate)
+@@ -2754,7 +2754,7 @@ static void intel_pstate_driver_cleanup(void)
+ 			all_cpu_data[cpu] = NULL;
+ 		}
+ 	}
+-	put_online_cpus();
++	cpus_read_unlock();
+ 
+ 	intel_pstate_driver = NULL;
+ }
+diff --git a/drivers/cpufreq/powernow-k8.c b/drivers/cpufreq/powernow-k8.c
+index 40bb3845d52dc..b4b97264d2c79 100644
+--- a/drivers/cpufreq/powernow-k8.c
++++ b/drivers/cpufreq/powernow-k8.c
+@@ -1182,7 +1182,7 @@ static int powernowk8_init(void)
+ 	if (!x86_match_cpu(powernow_k8_ids))
+ 		return -ENODEV;
+ 
+-	get_online_cpus();
++	cpus_read_lock();
+ 	for_each_online_cpu(i) {
+ 		smp_call_function_single(i, check_supported_cpu, &ret, 1);
+ 		if (!ret)
+@@ -1190,10 +1190,10 @@ static int powernowk8_init(void)
+ 	}
+ 
+ 	if (supported_cpus != num_online_cpus()) {
+-		put_online_cpus();
++		cpus_read_unlock();
+ 		return -ENODEV;
+ 	}
+-	put_online_cpus();
++	cpus_read_unlock();
+ 
+ 	ret = cpufreq_register_driver(&cpufreq_amd64_driver);
+ 	if (ret)
+diff --git a/drivers/cpufreq/powernv-cpufreq.c b/drivers/cpufreq/powernv-cpufreq.c
+index 8977e4de59157..169ad5415ae19 100644
+--- a/drivers/cpufreq/powernv-cpufreq.c
++++ b/drivers/cpufreq/powernv-cpufreq.c
+@@ -911,7 +911,7 @@ static void powernv_cpufreq_work_fn(struct work_struct *work)
+ 	unsigned int cpu;
+ 	cpumask_t mask;
+ 
+-	get_online_cpus();
++	cpus_read_lock();
+ 	cpumask_and(&mask, &chip->mask, cpu_online_mask);
+ 	smp_call_function_any(&mask,
+ 			      powernv_cpufreq_throttle_check, NULL, 0);
+@@ -932,7 +932,7 @@ static void powernv_cpufreq_work_fn(struct work_struct *work)
+ 		cpufreq_cpu_put(policy);
+ 	}
  out:
- 	kfree(buf);
- 	init_unlink("/dev/ram");
+-	put_online_cpus();
++	cpus_read_unlock();
+ }
+ 
+ static int powernv_cpufreq_occ_msg(struct notifier_block *nb,
 -- 
 2.53.0
 
