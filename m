@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705567;
-	b=lys5hZIpNUkRS9aBdSro6Y2vo16PQ61HZcBFp+2WrF9YBzIdsRsiBv0j2AoAPP07ukb2
-	 dVV9QOMr0CGOZjHpz1gHjgxObS1HtowwGap9j7wj+hHjrPATppXfXVi/V7d66Ub8LNdK8
-	 ctHYgexHrV3MqXwiJ7l1X6drHh8sxtnC2AWkc/tTovDdw2Sxue29KYgEuSYC+XnT8+aTO
-	 igMrhcoWexGCTq+bLT2MfC96ojEScUp749asF4qhxJ9lw2Dco6GQyfFZ4YwK6tRNobwgm
-	 7PommQsyqrlrOf46XLNKNhGWVDPU5EumM60q/bPWlUdP00NdHUTNxUbviu790eHyISg==
+	t=1795705570;
+	b=krgPk2R0AH2UEaWG5hLq+3ZiCZ8yKBCSaizHElVW7Fk0STcDTdU92qGVNHnkTyh//qNQ
+	 qMthozF8BPnZTDkIdMjG+NrwVw3XhCDPMAVOh2x3K0D5WWW+5GRnrDrhsHZPBIUa3rwyV
+	 /3Jn6GtJKiNPluKBr2v5WwY6Xa7qd8EsR5r9mmLIBQKOe9+0pG0D1E+JnL8He0OEdmyy5
+	 mP97sjV4UN8vAjNG++nKXlgieyuzvJ3wEavIny2+3sQVCaLz8RvFuKYDC0LKnRrhU9+3n
+	 hx4CM8ZbYn801p6yHXhtFHwwUDIB0YSsrg/eW+iHt0owyUc6ZV9fwzodV9jdXyjhPXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aoPWAm+VIRESDUl6ewzIyOY4iZRW/oJETQ+xvU9kJ/c=;
-	b=KHyeYtMnXTFcF6L1vSXczYkdjshvb0NOsuXCpgLhRjMvLwVcNj+8h9KwzUUN2JITW5PM
-	 Obes3rVbA/aAYJIB0skh+cg4bluMRcZt+PmAeo14r+zJ6iOQ5bMXSQs2b06T9AhGLi/OR
-	 qr+StxUpva9T0+xE4rEsANIbP5hcCTpOYuusmccEVohyoSEHB1nE4Gi77Ejt8F8P5igVI
-	 Pjef5mT2DLRsIv8TW3wL+BwHOz9BNc7+Yko+MYFWsLVeXMlCDCfDW/rFiKUXUZ1FWxZ0n
-	 mvqAm8vwN37N/ZvPaBD1rDH9Wu0iOc/7/O0Vz3PkWa6saaxipp05oSU6wUrBchKmbfQ==
+	bh=Hu+tjbuv0QGO8EHb6eoLn5puKE63QgXJr7Fk9FiP2VU=;
+	b=G5c46C+hd4SxFyVuAPpjoGnq38OKp5sGZB/nE2TtDmXU0/AKacD2VLq7UqF76N3TlOa2
+	 0ri4zFq57RmYl4hGmhi1MFal3gk0O0mdch8878xAUp2RsiBglI2lktHAyGfXRDm2r7qTz
+	 h7tUlA1iQPbH96yd/9b6urQJ7SoPBSXHZrCDJ1U4XVojnixqh+Csmw2H/rNOgK9uNxhAu
+	 zBl55NjMKeIQprGiz7ePH19vqNVw2zCc1Giks4ukj8VbJR9LsWIE8y2KD6d4R7jzgzUNF
+	 3MxeA++Cu7hWLZQXk6ygC2103zuEbgHoYY2FjKuH+A/WJ7uclTx+9AghXIw4z/vVo3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ry6fiW2Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q1m+sC3n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2F8606A31E;
-	Thu, 26 Nov 2026 15:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7082D606A326;
+	Thu, 26 Nov 2026 15:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ry6fiW2Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF8F1F000D3;
-	Thu, 26 Nov 2026 15:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q1m+sC3n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DA61F000C4;
+	Thu, 26 Nov 2026 15:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705566;
-	bh=aoPWAm+VIRESDUl6ewzIyOY4iZRW/oJETQ+xvU9kJ/c=;
+	s=korg; t=1795705569;
+	bh=Hu+tjbuv0QGO8EHb6eoLn5puKE63QgXJr7Fk9FiP2VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ry6fiW2Q9DrzNq3IsxwDjPbCyxZRgBsw7k9Gv0cvcwtH0mOaNVM3r+ooiyDyZjBja
-	 KQgPQks1VZ6dOczip6yRYVIfkL0W7n6CfOji6y30mTZerBkGHRV2yIiJkldef9U3Aw
-	 qSvmGV1pcRqyTQ8JGPxgXP1NW2Wh+DkUyY98uRDI=
+	b=Q1m+sC3nKE+8OWWWaRuuvYPouXug8o45fUpX/P2fPVHGyfVXVuaTSSpCFD0dSbWrk
+	 6/WfipVk8SK2HC21ygSmDboroB9NEM04c48OFtf9U+rc4IaEXoje6sCwxkwbd/W7Wl
+	 t/SaXwkSm1HLklD6NfSWS/6QycC3KvC00pWeS3vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@sina.com>,
+	syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com,
+	Zhao Feng <zhaofeng2@cmss.chinamobile.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 241/319] dm cache: reject kcopyd client destory if it setup failed
-Date: Thu, 26 Nov 2026 15:40:09 +0100
-Message-ID: <20261126144012.184997815@linuxfoundation.org>
+Subject: [PATCH 5.15 242/319] dm crypt: fix use of uninitialized percpu_counter in ctr error path
+Date: Thu, 26 Nov 2026 15:40:10 +0100
+Message-ID: <20261126144012.207487059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,49 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@sina.com>
+From: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
 
-commit 8b97b168eb4d3affcf23d2980a0c3f35ed9262e2 upstream.
+commit 8ba1ade3e6b595b9091040feaa3341d7e45ba95d upstream.
 
-The value of cache->copier is -EINTR when failed to create a rescuer
-kthread for wq kcopyd, in cache_create(), the code jumps directly to
-__destroy(cache), it merely performs a simple check to see whether copier
-is NULL, potentially hitting:
+If percpu_counter_init() fails in crypt_ctr() (e.g. when the
+underlying percpu allocation fails under memory pressure or fault
+injection), the error path jumps to "bad", which calls
+crypt_dtr().  crypt_dtr() then evaluates
+WARN_ON(percpu_counter_sum(&cc->n_allocated_pages) != 0) and calls
+percpu_counter_destroy() on a counter that was never initialized,
+because __percpu_counter_init_many() returns -ENOMEM before
+calling raw_spin_lock_init() on fbc->lock.
 
-BUG: KASAN: null-ptr-deref in dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
-Read of size 4 at addr 0000000000000174 by task syz.2.19/6560
-Call Trace:
- dm_kcopyd_client_destroy+0xae/0x480 drivers/md/dm-kcopyd.c:980
- __destroy+0x172/0x2f0 drivers/md/dm-cache-target.c:1973
- cache_create drivers/md/dm-cache-target.c:2604 [inline]
- cache_ctr+0x1674/0x2bf0 drivers/md/dm-cache-target.c:2649
- dm_table_add_target+0x58d/0xc70 drivers/md/dm-table.c:749
- populate_table drivers/md/dm-ioctl.c:1602 [inline]
- table_load+0x325/0x8a0 drivers/md/dm-ioctl.c:1645
- ctl_ioctl drivers/md/dm-ioctl.c:2221 [inline]
+With lockdep enabled this triggers "INFO: trying to register
+non-static key" in __percpu_counter_sum(), as reported by syzbot.
+The console additionally shows "crypt: Unknown error (-ENOMEM)"
+because this failure path sets no ti->error.
 
-Set copier to NULL to avoid destroying a invalid kcopy client.
+Move percpu_counter_init() to right after the allocation of cc,
+before ti->private is set and before any "goto bad" can happen.
+On failure, set ti->error and free cc directly, so that
+crypt_dtr() is only ever called with an initialized counter.
 
+Reported-by: syzbot+4b232570d625662eaab4@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=4b232570d625662eaab4
+Fixes: 5059353df86e ("dm crypt: limit the number of allocated pages")
 Cc: stable@vger.kernel.org
-Fixes: c6b4fcbad044 ("dm: add cache target")
-Reported-by: syzbot+a2626a25eb2595e3ec3c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a2626a25eb2595e3ec3c
-Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Signed-off-by: Zhao Feng <zhaofeng2@cmss.chinamobile.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-crypt.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2512,6 +2512,7 @@ static int cache_create(struct cache_arg
- 	if (IS_ERR(cache->copier)) {
- 		*error = "could not create kcopyd client";
- 		r = PTR_ERR(cache->copier);
-+		cache->copier = NULL;
- 		goto bad;
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -3157,6 +3157,14 @@ static int crypt_ctr(struct dm_target *t
+ 		ti->error = "Cannot allocate encryption context";
+ 		return -ENOMEM;
  	}
++
++	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
++	if (ret < 0) {
++		ti->error = "Cannot initialize page counter";
++		kfree_sensitive(cc);
++		return ret;
++	}
++
+ 	cc->key_size = key_size;
+ 	cc->sector_size = (1 << SECTOR_SHIFT);
+ 	cc->sector_shift = 0;
+@@ -3168,10 +3176,6 @@ static int crypt_ctr(struct dm_target *t
+ 	crypt_calculate_pages_per_client();
+ 	spin_unlock(&dm_crypt_clients_lock);
  
+-	ret = percpu_counter_init(&cc->n_allocated_pages, 0, GFP_KERNEL);
+-	if (ret < 0)
+-		goto bad;
+-
+ 	/* Optional parameters need to be read before cipher constructor */
+ 	if (argc > 5) {
+ 		ret = crypt_ctr_optional(ti, argc - 5, &argv[5]);
 
 
