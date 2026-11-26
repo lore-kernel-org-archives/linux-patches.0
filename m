@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704178;
-	b=BkVn28dzQHW67Tl3osqBTNRkXw44bbGzOYKijivf5nLao6I9XN/7+itEmX8Ym/Ha7t+P
-	 fPyBL8LbJ6XKg/Zv7mhMGkq+O/v7Tf+GrdJt60t+/rpd9O6pR9xX8Bl2FhJVOm81Lbwir
-	 gMGxXKDsZ12z2G+QhLPbwqminI7Mu0U1w9v6+8YoDe3Dd+mkt8vrQW1S4uxbAqj8yrGAv
-	 TDhRLyApR+xkGLEUMizcoMG1WAmm4z2kzhB9+KDE7LfMx6ypr6YQv1acEqSFH84FfaXgq
-	 UNTpu1oC8JnaBijHtOnaLxhSXc01rXw/I5cTNwLehR+brCA+3q8Os5khmZxzdsXRsiw==
+	t=1795704181;
+	b=FiEKlI15LilyerWGi6VeSnMuUSIbQ/qwM0kLv4pBFbjj82ImEjJuKe4Y+BT8cPIAKzVl
+	 ovSlX+kH51hb8b5+OpSkFk/151QzGPquxgUBKMcjPx3xNWb2+5azRiXwRRqP9P5HZ4vTq
+	 G9liIabG/UcEPcmOlA7Ph3KPpawJoWpesudHegR9TJy1j3dT2hnGbp1XFXzbsdOR28yYq
+	 ixblNimSs3vxPHOsl0VdOG21om1nISWeX7K9W1A3I7IMnPMBycmGhyIrT1sYOR4OR3xlR
+	 jW90+13n+FnBJyTfcEAR+OIGqnuIScU2IQdtxn+Fo9ZQ61pyQzL5+BDAWPzG6+/StIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704181;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=smmSS3a5jQyUfvMvFZsUrdfUGHB4gJJda9opn4avG7A=;
-	b=j7b3zmUN9DUkbZo9yLX/8Sspeos5xoIt4Qlli4tW/DyuAov/TH+CIE+i2HxKgloO2Wn9
-	 IFfhZ+uryGkKdYh3ujEauPIxDrX9tn8wO1tpD4Mrhh8yskgrQAaoo+UykNag1lPPt1eg2
-	 mpsjzupbEbuXU1YvFgLDhzJ5TG/wuIBGE/NwOQ0wt5pnnTsfXGq+qdhNUMuHxJp6q16UC
-	 HQNzOaBvsdZqkc8VDwui/bwd+LywiAdWUCYw57J6faQDWLIB7fqDxRel2bhXfbaTxc3gR
-	 neZH2x+VbpUgZWvRnlXR89PdTQrNitzPCwkixd3vJofK06qOnpZmJIserAs6KW/ZpHQ==
+	bh=Eup4fnElZtV/Sli8vKdD5q7me0YgU+JO7vq4bcGJy8Q=;
+	b=vtmEX/NMrveKtTnAuq807G14gsMMJY+lUpzTev/9pf5K2rNNgQzriTYx2BZnJcisKaFq
+	 s1KhT8F20gUtTTrQRWGm2+QJF2YERtRH4aN+JxxurnuN2i/TzALUsZrqOFkUBkR9yH5n+
+	 9EdvrBNlHxRpg6TLGsRKhBxAwvVTgf3OZh84xyuk+NGuqM7MBYooUrROzil0B2MKa9dBo
+	 RZBOqcpG7hQ/HWbG/CKYpjycSSUCZLbUZZZCj/h0n1StBEzK3DkVS45hRe/xgRTmPcJLM
+	 BvVEY5u6WpL2TnDszuhSNrcbuFor2HBgWEbh2uGHyiq0AK+uEaupd4ff5jGJzWjQ+Sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvoEKnu7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RL3emZtk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450A5606A321;
-	Thu, 26 Nov 2026 14:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B77606A31E;
+	Thu, 26 Nov 2026 14:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvoEKnu7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6D61F000D2;
-	Thu, 26 Nov 2026 14:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RL3emZtk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6CA1F000CA;
+	Thu, 26 Nov 2026 14:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704178;
-	bh=smmSS3a5jQyUfvMvFZsUrdfUGHB4gJJda9opn4avG7A=;
+	s=korg; t=1795704180;
+	bh=Eup4fnElZtV/Sli8vKdD5q7me0YgU+JO7vq4bcGJy8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvoEKnu7nUQygI3yjY9AnFgYcrMaZeaIMzzQSu20XYMzLUj24B5lObldl2u3CVsti
-	 u6yaYUnkYtgEKaFK71lm+FrtEG0AZuuR0ENTHN+dA719s/C24KyKcScKSS5RJKffiz
-	 Fy0mFSawjhcUqIPqDzWRO3c+Jg5543h4h41xkSdg=
+	b=RL3emZtkaVvzeQ28DI3PTI74sLwmRvK/MYKCj82i7eDpPUPtXKS8o3ZhQp4nIiaaJ
+	 vlLuX/O6PlByX/AP9RtYAQrD+DVQgCI/NTv758wKFnbG6Sx6TsKGhUlFl5NdwWdv1B
+	 azAMF2XZLxANtYWS2wPufzephuMRW83ILFjG/77c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Jiakai Xu <xujiakai24@mails.ucas.ac.cn>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/265] scsi: target: Validate REGISTER AND MOVE TransportID length
-Date: Thu, 26 Nov 2026 15:36:02 +0100
-Message-ID: <20261126143607.347381840@linuxfoundation.org>
+Subject: [PATCH 5.10 033/265] tipc: reject attaching bearer of different media to the same occupied device
+Date: Thu, 26 Nov 2026 15:36:03 +0100
+Message-ID: <20261126143607.421638803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,53 +69,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit 5d5913710c81eed6fa275b6a24773059d9dbfdfa ]
+[ Upstream commit 0a0257228be902ff09608bcaf19ae7c6d58b028f ]
 
-REGISTER AND MOVE has a 24-byte parameter-list header followed by a
-TransportID.  A 24-byte parameter list with a zero TransportID length
-passes the existing tid_len + 24 check, then the handler reads buf[24] for
-the TransportID protocol identifier, one byte past the received parameter
-list.
+Currently, two bearers of different media types can be added to the
+same device (e.g., "eth:eth0" and "ib:eth0") via tipc command:
 
-A TransportID is at least 24 bytes.  Reject shorter TransportIDs and
-compare the declared length with the bytes following the header before
-reading buf[24].
+tipc bearer enable media eth dev eth0
+tipc bearer enable media ib dev eth0
 
-A malformed PR OUT sent through vhost-scsi triggered this read on a KASAN
-kernel.  The command is now rejected with INVALID PARAMETER LIST before
-buf[24] is accessed.
+For each command execution, tipc_enable_l2_media() is called:
 
-Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Link: https://patch.msgid.link/20261021094334.198599-1-physicalmtea@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+tipc_enable_l2_media()
+ dev_get_by_name()
+  dev_hold()
+
+As a result, device->dev_refcnt is incremented twice, but the second
+bearer replaces the first one. This causes a leak in device->dev_refcnt.
+
+Fix this by rejecting a bearer with a different media type when the
+device is already occupied.
+
+Fixes: cb30a63384bc ("tipc: refactor function tipc_enable_bearer()")
+Reported-by: Jiakai Xu <xujiakai24@mails.ucas.ac.cn>
+Closes: http://lore.kernel.org/netdev/20260918013509.1853952-1-xujiakai24@mails.ucas.ac.cn/
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20261029030522.8306-1-tung.quang.nguyen@est.tech
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_pr.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/tipc/bearer.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
-index cf8d536fa3e71..ce492125aec39 100644
---- a/drivers/target/target_core_pr.c
-+++ b/drivers/target/target_core_pr.c
-@@ -3216,10 +3216,11 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
- 	transport_kunmap_data_sg(cmd);
- 	buf = NULL;
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index fe56328d4ff43..76fbb3b8f8c65 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -277,17 +277,50 @@ static int tipc_enable_bearer(struct net *net, const char *name,
+ 	bearer_id = MAX_BEARERS;
+ 	i = MAX_BEARERS;
+ 	while (i-- != 0) {
++		struct net_device *dev;
++
+ 		b = rtnl_dereference(tn->bearer_list[i]);
+ 		if (!b) {
+ 			bearer_id = i;
+ 			continue;
+ 		}
+ 		if (!strcmp(name, b->name)) {
++duplicate:
+ 			errstr = "already enabled";
+ 			NL_SET_ERR_MSG(extack, "Already enabled");
+ 			goto rejected;
+ 		}
  
--	if ((tid_len + 24) != cmd->data_length) {
--		pr_err("SPC-3 PR: Illegal tid_len: %u + 24 byte header"
--			" does not equal CDB data_length: %u\n", tid_len,
--			cmd->data_length);
-+	/* TransportID is at least 24 bytes. buf[24] is its first byte. */
-+	if (tid_len < 24 ||
-+	    tid_len != cmd->data_length - 24) {
-+		pr_err("SPC-3 PR: Illegal tid_len: %u for data_length: %u\n",
-+		       tid_len, cmd->data_length);
- 		ret = TCM_INVALID_PARAMETER_LIST;
- 		goto out_put_pr_reg;
- 	}
++		/* udp media can be used together with any media */
++		if (b->media->type_id == TIPC_MEDIA_TYPE_UDP ||
++		    m->type_id == TIPC_MEDIA_TYPE_UDP)
++			goto priority;
++
++		dev = __dev_get_by_name(net, b_names.if_name);
++
++		if (!dev) {
++			res = -ENODEV;
++			errstr = "no device for the media";
++			NL_SET_ERR_MSG(extack, "No device for the media");
++			goto rejected;
++		}
++
++		if (rtnl_dereference(b->media_ptr) == dev) {
++			char *dev_name = strchr((const char *)b->name, ':') + 1;
++
++			/* Not allow altname of occupied device */
++			if (strcmp(dev_name, b_names.if_name) &&
++			    b->media->type_id == m->type_id)
++				goto duplicate;
++
++			/* Not allow eth and ib to attach to the same device */
++			errstr = "same dev for different media";
++			NL_SET_ERR_MSG(extack,
++				       "Same dev for different media");
++			goto rejected;
++		}
++
++priority:
+ 		if (b->priority == prio &&
+ 		    (++with_this_prio > 2)) {
+ 			pr_warn("Bearer <%s>: already 2 bearers with priority %u\n",
 -- 
 2.53.0
 
