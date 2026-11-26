@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704832;
-	b=vUcJUAwhUBzDh5QV2EoohLqyvanQFlk+nu4KcCw2zCixcgrD9YU+QC6p/31gNcRSwAk4
-	 a+ll++vWhAeKcK/TC6erZKJkHEI4IMhgUwwJbO0TvdZXd3ehhwvzNA5OeHFHgFqatnmUQ
-	 jG5AdFs7pmv2pf5rjofHgUqY/jv+WiIEBCKx33eFF++Si4xGmuTDs6E3sOm0ei1a4NWJB
-	 yfcoHmPj159eBGWPxtyP/XiI3z88/JEHkeVdWYhtE2H+4QyOFkL6vG3OnSMKwyKQ3/Mkd
-	 SdyjmXq+RdNbfZU8ikMM5hkkNguJG7taTIz/M2tOc6jHV4r+C3a5fbeRFTEz8hk07kA==
+	t=1795704835;
+	b=RZk7tGpKlk21l/zr4ZECZwuIkLwk6ePYN/yFWV5SU42Cab8L1hXRYbtx/4IF+VmE9SA0
+	 YmWyr5sfbJy30gSKUySYi+gWVj9GP9oNwB62B3PjVMbr4K2NzHMNUAFpf6NerNQmJtebY
+	 ke5ULWK/vBuHc3p3I/mqBhiBSDCGoM/monhbqRtY0oEDS4KArxU0qoQGcdrXBvM78nfWn
+	 tvc1DVJzfchUhGCzTwrgD16t3nag8yFOtyuLxaxZh0vrem+C8B5CrAC2y+plRkJkf1riT
+	 TCC9RvKwRAmSo/D8k1NCWNmphbH26Oq3H91Oh73g8otLdL5f5kYiOmkoZtbNvh4GYLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ajo7bJO/xfnVMZQGETL5QX5JjBjgd5jdoS5kY3X/K7E=;
-	b=1wCVGECxu9uoOYkfTpc9EVZKP5vCWo/VHcV1dCAhN1X3S0/M75uaUKUMfMkFDjtcxF6E
-	 rEAFetk5eHlRizBzpkMy+AnmLeIefMKdTGxkf+c5WIbhDiBMqp3oVRIZ4bl0hWERKjDcT
-	 lKmitkpzqpY4ZoPCds7ZQ/PaKuikoAjVekZM2jyvAwyVRCXjlX+Pjiiu087ZVJDlEkxaI
-	 0dcv7DB9U43AllPw2uZ4y7V2fXlmnw4ttdBo6pUeRRr2iQKU71aUx3l2sbiwEwwzakjur
-	 q5NS9uRppbNYBpopaZnygmf48IA89gqLxZId7Pj75eJUd/pyE6QFVYHoxGh2CCy/pkg==
+	bh=VP3lnA9xfFxUW6bc4hmi4ntuifG1uIkSp6vKKG0tuLU=;
+	b=K3iOEvD6PhcT6/P5yONROZXZl1hJvYyoJRdyE6KErunj64NySO+YiFBEDBTkdheL6LSM
+	 wN8zvi7AHlXcCu92hQf+yt7kWrVrgymClvrgsqBeag3IJntbbDOYuTKLGewegEHqv5Ofo
+	 9lJJHXThKqgomr7DF487g3m0PktFXY4FU0jaztAVgcxsstTjAnnGWZqdZebtdYdcWiTXL
+	 QO/53uR4+Kpf58BEWTmZdEVt7s1jCN5a1IACSgspUzgSHLc1pBbFolxUuwOcmd1QXYQMy
+	 rlcCWEY5ZxpUYmSWYaaDpSfuOCkbSqNJ0Mz2OGGHZzOzOrvnIlpzlyGYacObb5Uv9DA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RlrTR3J5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xYVGax8i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB20606A321;
-	Thu, 26 Nov 2026 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E037606A31C;
+	Thu, 26 Nov 2026 14:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RlrTR3J5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E791F000D3;
-	Thu, 26 Nov 2026 14:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xYVGax8i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73E71F000E0;
+	Thu, 26 Nov 2026 14:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704832;
-	bh=ajo7bJO/xfnVMZQGETL5QX5JjBjgd5jdoS5kY3X/K7E=;
+	s=korg; t=1795704835;
+	bh=VP3lnA9xfFxUW6bc4hmi4ntuifG1uIkSp6vKKG0tuLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RlrTR3J5aKM9Z0h6XugTyoZmUctGnj1uxLU08tX+PKpQw71r+HqmLfm+zjlMNI/9X
-	 lkzRbrNS9P6IAuaAWKOIpSdgwrT/0E+sxZK4Q50nsMZ9GQJXhVTFfO3bFW6ZumT9P8
-	 AwaD2D0BNILM9tdz80yr9AHEpm2QAGSTOxJrxFCU=
+	b=xYVGax8iD5kqzp44gHQqjksDdZ/z0HsUV+v868+0l997SaL5QUcBoNqUnI6KEC2WQ
+	 aogf+rFZGNnyAGCata4cf1NdsTsqTxhy/r1mgteuV2Z5JP3+tBFxGtj7ofvP53AQCX
+	 cSV/bkve+RTHcNG4AFKD8taTUxODrrwH8OR6FO4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 257/265] tcp: fix NULL pointer dereference when restarting a Fast Open listener
-Date: Thu, 26 Nov 2026 15:39:47 +0100
-Message-ID: <20261126143623.227197959@linuxfoundation.org>
+	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
+	Michael Ellerman <mpe@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 5.10 258/265] powerpc/watchdog: disable watchdog when watchdog_thresh=0
+Date: Thu, 26 Nov 2026 15:39:48 +0100
+Message-ID: <20261126143623.296788483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,111 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
 
-commit aa40afa831ebfe45e40a23721711059f2ac584d4 upstream.
+commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
 
-When a valid RST is received for a Fast Open child accepted before the
-three-way handshake completes, reqsk_fastopen_remove() adds the
-request_sock to the listener's RST list if the listener is in TCP_LISTEN.
+On powerpc, trying to disable the hardlockup detector with:
 
-An application can call shutdown(SHUT_RD) on a listener socket.
-inet_csk_listen_stop() checks rskq_rst_head without holding
-fastopenq.lock. If rskq_rst_head is NULL, it does not acquire the lock
-and therefore does not synchronize with an insertion by
-reqsk_fastopen_remove() after that function has passed the TCP_LISTEN
-check.
+ # echo 0 > /proc/sys/kernel/watchdog_thresh
 
-The more likely outcome of this race, even without a subsequent
-listen(), is a leak. If reqsk_fastopen_remove() inserts a request_sock
-after inet_csk_listen_stop() observes an empty list and returns, the
-request_sock is stranded in rskq_rst_head and keeps a reference on the
-listener. The socket is already in TCP_CLOSE, so a subsequent close()
-does not call inet_csk_listen_stop() again.
+causes an immediate and endless hardlockup detection, eventually leading
+to an unusable system (splat example below). This happens because
+watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
+and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
+the timer (with expiry=0) in this code path:
 
-If listen() is called again on the same socket before the delayed list
-insertion, the insertion can overlap the queue initialization in
-reqsk_queue_alloc(). If it occurs after rskq_rst_head is set to NULL but
-before rskq_rst_tail is set to NULL, rskq_rst_head points to the
-request_sock while rskq_rst_tail is NULL.
+proc_watchdog_thresh()
+  proc_watchdog_update()
+    __lockup_detector_reconfigure()
+      watchdog_hardlockup_start()
+        start_watchdog_on_cpu()
+          start_watchdog()
+            hrtimer_start() /* wd_timer_period_ms=0 */
 
-When a valid RST is later received for another accepted Fast Open child,
-rskq_rst_head is not NULL, so reqsk_fastopen_remove() attempts to write
-the request_sock pointer to rskq_rst_tail->dl_next while rskq_rst_tail is
-NULL. KASAN reports:
+However, according to Documentation/admin-guide/sysctl/kernel.rst,
+setting watchdog_thresh=0 should disable both the soft and hard lockup
+detectors.
 
-  BUG: KASAN: null-ptr-deref in reqsk_fastopen_remove+0x147/0x210
-  Write of size 8 at addr 0000000000000088 by task swapper/3/0
-  ...
-  Call Trace:
-   <IRQ>
-   ...
-   reqsk_fastopen_remove+0x147/0x210
-   tcp_check_req+0xa70/0x1060
-   ...
-   tcp_rcv_state_process+0x1cb/0x2ae0
-   ...
-   tcp_v4_do_rcv+0x1fe/0x740
-   tcp_v4_rcv+0x1744/0x2070
-   ...
-   ip_protocol_deliver_rcu+0x5c/0x280
-   ip_local_deliver_finish+0x171/0x330
-   ip_local_deliver+0x107/0x370
-   ...
-   </IRQ>
+This condition is already checked in __lockup_detector_reconfigure() for
+the soft lockup detector and the arch-independent hardlockup detector,
+what's missing is powerpc performing the same check in start_watchdog().
 
-To widen the race window, the issue was reproduced after adding
-mdelay(3000) immediately after reqsk_fastopen_remove() checks that the
-listener is in TCP_LISTEN and immediately after reqsk_queue_alloc() sets
-rskq_rst_head to NULL.
+[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
+[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
+[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
+[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
+[  278.110109] Tainted: [E]=UNSIGNED_MODULE
+[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
+[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
+[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
+[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
+[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
+GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
+GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
+GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
+GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
+GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
+GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
+GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
+[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
+[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
+[  278.110333] Call Trace:
+[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
+[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
+[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
+[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
+[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
+[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
+[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
+[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
+[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
+[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
 
-Make inet_csk_listen_stop() acquire fastopenq.lock regardless of the
-value of rskq_rst_head and detach the list while holding the lock. With
-this synchronization, reqsk_fastopen_remove() either inserts the
-request_sock before inet_csk_listen_stop() acquires the lock, in which
-case inet_csk_listen_stop() reclaims it, or sees that the listener is
-not in TCP_LISTEN and does not insert anything.
-
-Fixes: 0536fcc039a8 ("tcp: prepare fastopen code for upcoming listener changes")
+Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/avMkfJrXhCFXn8M_@v4bel
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+Reviewed-by: Michael Ellerman <mpe@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ arch/powerpc/kernel/watchdog.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1102,17 +1102,15 @@ void inet_csk_listen_stop(struct sock *s
+--- a/arch/powerpc/kernel/watchdog.c
++++ b/arch/powerpc/kernel/watchdog.c
+@@ -376,6 +376,9 @@ static void start_watchdog(void *arg)
+ 	if (!(watchdog_enabled & NMI_WATCHDOG_ENABLED))
+ 		return;
  
- 		cond_resched();
- 	}
--	if (queue->fastopenq.rskq_rst_head) {
--		/* Free all the reqs queued in rskq_rst_head. */
--		spin_lock_bh(&queue->fastopenq.lock);
--		req = queue->fastopenq.rskq_rst_head;
--		queue->fastopenq.rskq_rst_head = NULL;
--		spin_unlock_bh(&queue->fastopenq.lock);
--		while (req != NULL) {
--			next = req->dl_next;
--			reqsk_put(req);
--			req = next;
--		}
-+	/* Free all the reqs queued in rskq_rst_head. */
-+	spin_lock_bh(&queue->fastopenq.lock);
-+	req = queue->fastopenq.rskq_rst_head;
-+	queue->fastopenq.rskq_rst_head = NULL;
-+	spin_unlock_bh(&queue->fastopenq.lock);
-+	while (req != NULL) {
-+		next = req->dl_next;
-+		reqsk_put(req);
-+		req = next;
- 	}
- 	WARN_ON_ONCE(sk->sk_ack_backlog);
- }
++	if (!watchdog_thresh)
++		return;
++
+ 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
+ 		return;
+ 
 
 
