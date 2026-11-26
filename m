@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705181;
-	b=mpU+BIvZmf1fP8okkiNrODAt7NfWWzmRFnfL2uD4YkmHC80EdxE54RXppRZXAnuyPPuq
-	 mgQ29wzXrfPoHdmsbgQAFaT++NMVLabP6Ggo7BOQeoD9Kyp1wQMD7oWPKa3iWrexvLQYT
-	 M6u7r7d/Ebpj9xiMlyiTRR/+HYA7fFhvohd2kARjkh3ZwhazJ3307wwctQF3tcnFTB53i
-	 RFc586Ed6PfUAzBlgFv7KfUC0PHXFmnRDYLk3n7XxrslckN6iLQXfLtn1OpoWshr4qBPe
-	 kGSpkvNiIOTVWDFly26iKplOchpSEVlDtqV8QAHDEvfXRGsasEW6PZvuYQPg+kmxPhA==
+	t=1795705184;
+	b=kwos48OECu+wcSnEH+JBRg4LlzHfxqS1VSLrTskexz2jwQU6+yN1yYNtUlYRkCMNAZDc
+	 /YmoFC5LWO24/xvYQK+a41Dsk5cZsTKrnZhmy2MPB/UJT0hm8gwBaas7vbBy+bcVTjBns
+	 3ogznvH3peTuCwh2zP+pHLozbnRj6csuCwUPlxlSjBOiAtoJRAE/7QPZhUYNi0mq2itrp
+	 yyn59/gGYC25Nq1jIef+HgU3P5Cxy5ujVdmxyb8Tf2WcCmO5m5Uc427u2gc7940dFxluH
+	 O9j0RiZLR/LAG1eN4BM4MmwuApkyjH/Jux0QdXhAc60z4D+8IxAPaHSvBXmUJTvKXDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=orE9dx3kaRGc1zWASG4lYAfn6nwlaJEeawXuwS/Qrdw=;
-	b=Msu4nMy37Qq4Ms2VEPEjrUdDvLUEEYyt2vwSX8cQ6axCw1lkYarDzqwa/yUO5Lq5gcXC
-	 YVmU3HIZCD4UYHZIK0X5vDixd5ldSy17zraZfzEj+A4lFHJ8anuTSoI7AR+z84aNI5lCS
-	 7jibSy9LPl7Mizzla0uTNjN6doW1Jgc9ZqTCxyjTSPTAoM/C6Go6uXDGFFbKvjSVbaTGR
-	 qXpf2Kx+5Jj3VcKXx8nOQG1HpqAjadByxYO5+D9cYsDjepga46viFfV3g90vR4kyh5FZy
-	 PXxGLSWqfEqlvJb6ue+M9ZDThC89Ggddbz6iwsanSSdMmv5XwFrKE6w427RCirs7sYw==
+	bh=LaqRjDX/LlHpbeCLF03EJhNHBvUVGRrz+ymLQNXsmGk=;
+	b=O9fI5p5qFLb+xqZeqw7wokRoZdlaHBbTUUSrhrUUsOFqWiFdoHm/xFDPXgKSOWE6DgdU
+	 9bcUKNSAMPBDjvooBbcDzKFuqZokjJH8jaF/K4CM+7hIg1BOCLnQjV4lgtbPGTirnmKCk
+	 03JCjiPDVGZ+Yy9M7PPnlP3ond3EhjR8uEMEncSn7Cb9Fd4DriMmK9ABRWKX+J88Fgiob
+	 bxFLmiZu2wyg8VIW4sY842sVH9y/44/qYlnYCvVKr0bopvSP0It3yyvEPa4Q1SaVpsg0c
+	 gRwlVVakCM7EzvPP1EIfa3TXBb0gWm1DT1yyay9BusOf+TEsgJ5QMy1ZZIZk4XIiHng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHenSeBY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvZYB42Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F76F606A31C;
-	Thu, 26 Nov 2026 14:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C371606A31E;
+	Thu, 26 Nov 2026 14:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHenSeBY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD501F000C6;
-	Thu, 26 Nov 2026 14:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvZYB42Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FCF1F000C0;
+	Thu, 26 Nov 2026 14:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705180;
-	bh=orE9dx3kaRGc1zWASG4lYAfn6nwlaJEeawXuwS/Qrdw=;
+	s=korg; t=1795705183;
+	bh=LaqRjDX/LlHpbeCLF03EJhNHBvUVGRrz+ymLQNXsmGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UHenSeBYNZGgy3NSEEmhZICVh77uMtzZRHT1mZOv3ogC+tR+Mt+9xAMWLe3wBYO7e
-	 Y0F6AUFXRVw4jxSN4f7BRiALqWvzn7PvK6EkGRctW0Nt27HabDp+2tSJYMes2BEV6Y
-	 HxjOfR6YXaS9g1FDaS8pdeaASqEwds5dpt8sCSFk=
+	b=VvZYB42YRLtqJVEd7i0RAgP4V7O0EyA+qp1VZ1ZS7r/71gTyyipo0NYfsASkrmJtR
+	 A0nye5+WX0HlpFcLTE4io/r87pBBdJqcMVDNQKnht/pwqgMGKGb9mTBvRQspqbzR3g
+	 St0FE4GRr8BoslVzYAuMXJ0pOJFws2TW41sNvnOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/319] MIPS: Avoid dead code/data elimination when using recordmcount
-Date: Thu, 26 Nov 2026 15:37:58 +0100
-Message-ID: <20261126144009.226679473@linuxfoundation.org>
+Subject: [PATCH 5.15 111/319] MIPS: Alchemy: Save the Ethernet address before reusing PROM memory
+Date: Thu, 26 Nov 2026 15:37:59 +0100
+Message-ID: <20261126144009.248712322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,49 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 255d9dbd936f7db8b963e82429f6e57cd9d48999 ]
+[ Upstream commit 792ac17faa0503448f3ef85b49f16456ac54ab84 ]
 
-CONFIG_LD_DEAD_CODE_DATA_ELIMINATION builds with -ffunction-sections,
-placing every function in its own section. recordmcount refuses to use
-weak symbols as section bases, as a strong definition could override
-them, so a weak function alone in its section, such as the generic
-pcibios_fixup_bus() stub, breaks the build:
+Alchemy keeps pointers into the firmware environment and looks up ethaddr
+when initializing the Ethernet devices. By that point, memory allocation
+can have overwritten the environment, causing prom_getenv() to pass an
+invalid pointer to strchr() and panic during boot.
 
-  Cannot find symbol for section 88: .text.pcibios_fixup_bus.
-  drivers/pci/probe.o: failed
+On the MTX-1, the struct page layout change in 9ddb3c14afba reduces struct
+page from 40 to 32 bytes and exposes this unreserved firmware memory.
+Bisection and boot tests confirmed that the parent boots while the change
+reproduces the panic.
 
-MIPS always records mcount locations with recordmcount, so this hits
-any config with the function tracer and dead code elimination enabled,
-e.g. malta_defconfig built with LLVM=1.
+Parse the Ethernet address during prom_init(), before registering RAM
+with memblock, and keep the six bytes in kernel-owned init data. Return
+the saved address during device initialization, preserving the existing
+YAMON formats and command-line fallback without reserving a fixed
+low-memory region.
 
-Only offer dead code elimination when recordmcount is not used, as
-powerpc does since commit f8b2336f15f3 ("powerpc: Avoid dead code/data
-elimination when using recordmcount"). In practice this makes it
-unavailable together with the function tracer on MIPS.
-
-Fixes: c0436b503591 ("MIPS: Enable dead code elimination")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Fixes: b93ddc4f9156 ("mips: Reserve memory for the kernel image resources")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/alchemy/common/prom.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
-index b2869b606fd87..a113a7f505d1a 100644
---- a/arch/mips/Kconfig
-+++ b/arch/mips/Kconfig
-@@ -79,7 +79,7 @@ config MIPS
- 	select HAVE_IRQ_TIME_ACCOUNTING
- 	select HAVE_KPROBES
- 	select HAVE_KRETPROBES
--	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
-+	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION if !FTRACE_MCOUNT_USE_RECORDMCOUNT
- 	select HAVE_MOD_ARCH_SPECIFIC
- 	select HAVE_NMI
- 	select HAVE_PATA_PLATFORM
+diff --git a/arch/mips/alchemy/common/prom.c b/arch/mips/alchemy/common/prom.c
+index b13d8adf3be47..11dc800f75663 100644
+--- a/arch/mips/alchemy/common/prom.c
++++ b/arch/mips/alchemy/common/prom.c
+@@ -45,6 +45,11 @@ int prom_argc;
+ char **prom_argv;
+ char **prom_envp;
+ 
++static char prom_ethaddr[6] __initdata;
++static bool prom_ethaddr_valid __initdata;
++
++static void __init prom_init_ethernet_addr(void);
++
+ void __init prom_init_cmdline(void)
+ {
+ 	int i;
+@@ -94,6 +99,9 @@ void __init prom_init(void)
+ 	if (!memsize_str || kstrtoul(memsize_str, 0, &memsize))
+ 		memsize = SZ_64M; /* minimum memsize is 64MB RAM */
+ 
++	/* Save the MAC before the allocator can reuse the PROM environment. */
++	prom_init_ethernet_addr();
++
+ 	memblock_add(0, memsize);
+ }
+ 
+@@ -124,7 +132,7 @@ static inline void str2eaddr(unsigned char *ea, unsigned char *str)
+ 	}
+ }
+ 
+-int __init prom_get_ethernet_addr(char *ethernet_addr)
++static void __init prom_init_ethernet_addr(void)
+ {
+ 	char *ethaddr_str;
+ 
+@@ -134,12 +142,21 @@ int __init prom_get_ethernet_addr(char *ethernet_addr)
+ 		/* Check command line */
+ 		ethaddr_str = strstr(arcs_cmdline, "ethaddr=");
+ 		if (!ethaddr_str)
+-			return -1;
++			return;
+ 
+ 		ethaddr_str += strlen("ethaddr=");
+ 	}
+ 
+-	str2eaddr(ethernet_addr, ethaddr_str);
++	str2eaddr(prom_ethaddr, ethaddr_str);
++	prom_ethaddr_valid = true;
++}
++
++int __init prom_get_ethernet_addr(char *ethernet_addr)
++{
++	if (!prom_ethaddr_valid)
++		return -1;
++
++	memcpy(ethernet_addr, prom_ethaddr, sizeof(prom_ethaddr));
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
