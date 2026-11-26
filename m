@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704404;
-	b=S/dQs2/r2+Y/ZH7Mb5gmKTEiXImU/zTbRTAuQ25GVLOgyc4qNz9kj2PdShC30x4AqrE5
-	 sYsTpeeroJL/VtAXL0rh6JmjEoCWBiq2H4tQ/lYKgUiFSHyy5TH1rZIYl7NbYMjai/Tbn
-	 YQg+Kwc4A1UncI7OI4/Ndvt9DrEGHdQA5+Nwi5Raj1t1OlFRCu1mXHSDFo2piVTrqAJBw
-	 jON4MB6HvLjGtExKwuH7EI1jIZDs+I85r7TED6CLJkhCaBpa5Wu77k7gzWApcqHtW7Djn
-	 bwBEtUS0IzhB9cqIcUlRIZ59hOnkP4r3uJdGGocBO5EhZtc3p6mk7RNPvhXYezcknMA==
+	t=1795704407;
+	b=vEJKMMQ5SnF4AO9CAEqEJNB524xaphcqubq5xlqy8VikDiDRKdqZUS3IFELjpcum4tH2
+	 BiJyQNl+m8yJibvmYfEnBApSPmwmwnmSKAGrNM5fcDPkjYnQAdDy+hx0Osue+yenWEMiz
+	 pFRKAzXBgak5dKCqw5b0Cty4KhwnZKl3jcUIip887CpwkrcSNoxmLGrgX12iL6FlqiptA
+	 UQ1T52TVZ55kD+1W+wx3lSci7B9qpuGPCc4JpTEU0JaopQj4ZBqvWaHLAtJHi79pE04x5
+	 tCp5tMW0FDI4ZB/1h9J3oEOfRn0aemoVxZhnC86SDLFNZqZIdnri0y15Jldq8eCMdSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QHIv2Q+Q3J3QwoboY8MNwNEl6zBJSRKyIrwYN+N8Gso=;
-	b=kuXMWj81jh2LSJNV+Vy7TrzEDA781uYVFTuH0En36UN7Un9gSo9DMfVoZx1FjI3Ui+hu
-	 46M/yznQNN75abUBsuBra4HWyqSOwbJYxl7GyN79noVXsByn1AlSacrIIcPNO1sX2YtJt
-	 f5V7KIymdRk87NVugQYuSG8H/L+3kLYJIRPkofdx5g2iV540iwomiB0Q56xVYK36C20ur
-	 kri7W904LkAiigpoy8Yr9qdFlK84QU10K/Ol2b4Na4i+NYgNcfE91iiEoBx/a3ICfq+LX
-	 Thu2bjFik+ujXGSZY2bilv3KItMRwxOQvxOSpvhez6eekJ5sEqwlJtIZm4gUIGrmpxQ==
+	bh=nfXmUMEJ1P2g/PdVkckxu4ie6V99oMHIAX6lL4fNkIc=;
+	b=1EgSl/GZkDyNdqE2H8iQMh+NNzIRTeqC49/kYIbGYraMaqJbOSl4+8Gxws1t9Oprqe6s
+	 ZT5oKa5bJgX9kqODHfGe43e8GTy3mrD26TQBudtwcW/MAp9i1Mp9CqEkcV05eem3Xb2NZ
+	 1dCRlm4rxBynLTawuPgTaHbxRulFED6pjkLJ08Q4LYitBFCzhUmv6E33Ywt+zVJHm50T6
+	 3YznKUYFX46Ux63Bmpe7qjNepQUvF3LNZ85cCgO9qVeyeb8KR7YJZJ+U3kQRV0ndD/yVE
+	 9XxNMS7HfrcWscbDMmkDVcrp7g+qGxllwc5zyphvNO269LJcRqbySb0eflXrFCiXnOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L95O4Uz0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c55EfjIN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0E2606A31C;
-	Thu, 26 Nov 2026 14:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61855606A31C;
+	Thu, 26 Nov 2026 14:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L95O4Uz0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308251F000D2;
-	Thu, 26 Nov 2026 14:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c55EfjIN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93211F000C0;
+	Thu, 26 Nov 2026 14:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704404;
-	bh=QHIv2Q+Q3J3QwoboY8MNwNEl6zBJSRKyIrwYN+N8Gso=;
+	s=korg; t=1795704407;
+	bh=nfXmUMEJ1P2g/PdVkckxu4ie6V99oMHIAX6lL4fNkIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L95O4Uz02WjBw7ZNEHsUFwwTV6Me9cXdZWwIZo+vFzb+F04YcMiUjx2Z5IJRJHAlH
-	 Ydy4GAQNeMGgksC6yhKRqwscN35uYMu13uFMApCAyrzInc9QwfYWImPR+u6uWfT74K
-	 qgyigHvTPCbypPxD4zsKlqjAxI3eKjqOJCBw0kjU=
+	b=c55EfjINf8oXOuX/8iEsK8vtUrseMHRYBE+u7tGpFuZNs8jaNxJyRO/tXo2ggsaXF
+	 Nk5hlykfakI7aZp5EoWF8HNAMTZhD0gZiDRkmybIZRIc3r8adQIJlRFDITkXbhJl5U
+	 04+L3P/tTXnQodG0oWCLQSuECbttileMQYjGOVHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/265] ata: libata-scsi: reject MODE SELECT mode pages with a wrong SPF bit
-Date: Thu, 26 Nov 2026 15:37:23 +0100
-Message-ID: <20261126143612.938594296@linuxfoundation.org>
+Subject: [PATCH 5.10 114/265] ata: libata-scsi: fix MODE SELECT field pointer for block descriptor length
+Date: Thu, 26 Nov 2026 15:37:24 +0100
+Message-ID: <20261126143612.996779242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,60 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit a1eb72c477ec1320c540f27ce1e2f717d4518e62 ]
+[ Upstream commit a3e52dcf0fbaa1a103accef3e8861cdc250ee5d6 ]
 
-ata_scsi_mode_select_xlat() accepts the caching and control mode pages
-both in page_0 format and in sub_page format with SUBPAGE CODE 00h.
+ata_scsi_mode_select_xlat() only accepts MODE SELECT parameter lists
+without block descriptors or with a single 8 byte block descriptor. For
+any other BLOCK DESCRIPTOR LENGTH, it terminates the command with
+INVALID FIELD IN PARAMETER LIST, and the FIELD POINTER should point at
+the BLOCK DESCRIPTOR LENGTH field, i.e. at byte 3 of the mode parameter
+header(6) or at byte 6 of the mode parameter header(10), as SPC requires
+the FIELD POINTER of a multiple-byte field to point at its first byte.
 
-However, SAT-2 and later versions of SAT define the SPF bit of the
-Caching mode page and of the Control mode page as not changeable and
-set to zero (see SAT-6, 10.4.9 and 10.4.6), and SPC-7 (6.12, MODE
-SELECT(10) command) requires the device server to terminate a MODE
-SELECT command with INVALID FIELD IN PARAMETER LIST if the application
-client sets any field that is reported as not changeable to a value
-other than its current value.
+However, the mode parameter header length and the BLOCK DESCRIPTOR
+LENGTH are added to the offset of the field, so the FIELD POINTER points
+3 or 6 bytes after the end of the block descriptors instead. For
+example, a MODE SELECT(10) with a BLOCK DESCRIPTOR LENGTH of 16 reports
+byte 30 instead of byte 6.
 
-Reject a mode page with the SPF bit set to one and SUBPAGE CODE 00h,
-with the FIELD POINTER set to the byte containing the SPF bit. The only
-mode page with the SPF bit set to one that remains accepted is the ATA
-Feature Control mode page (control mode page, sub-page f2h), for which
-SAT-6 (12.3.4) requires the SPF bit to be set to one. The opposite case
-does not need a check: a mode page in page_0 format always has subpage
-code 00h, so it can never be the ATA Feature Control mode page.
+Do not add the mode parameter header length and the BLOCK DESCRIPTOR
+LENGTH to the offset of the BLOCK DESCRIPTOR LENGTH field.
 
-This also allows the mode page handlers to rely on the format of their
-mode page, which a later patch will make use of.
-
-Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
-Link: https://lore.kernel.org/r/20261103205448.931471-13-cassel@kernel.org
+Fixes: 7780081c1f04 ("libata-scsi: Set information sense field for invalid parameter")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261103205448.931471-15-cassel@kernel.org
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/ata/libata-scsi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index a310f665c4a54..4112017105d7a 100644
+index 4112017105d7a..aab7b7950b6aa 100644
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -3825,7 +3825,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 		if (len < 4)
- 			goto invalid_param_len;
+@@ -3810,7 +3810,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 		goto invalid_param_len;
+ 	if (bd_len != 0 && bd_len != 8) {
+ 		fp = (six_byte) ? 3 : 6;
+-		fp += bd_len + hdr_len;
+ 		goto invalid_param;
+ 	}
  
-+		/*
-+		 * Mode pages with subpage code 00h use the page_0 format: SAT
-+		 * defines the SPF bit of the Caching and Control mode pages,
-+		 * for subpage code 00h, as not changeable and set to zero.
-+		 */
- 		spg = p[1];
-+		if (!spg) {
-+			fp = hdr_len + bd_len;
-+			goto invalid_param;
-+		}
-+
- 		pg_len = get_unaligned_be16(&p[2]);
- 		p += 4;
- 		len -= 4;
 -- 
 2.53.0
 
