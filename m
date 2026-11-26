@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705003;
-	b=2zWKn5DBBUWKamJpXluK62HZVZArE29AhQznmsc0MMmVu5jMe6ieiUO66TNYrzjrm1Jv
-	 jnVuLLaOcAqtmkfWzzBZu7ya6+FZ+C8QMyr8rFbVH5s8EEHNEE68cpDUSZ15lUq9pC3+8
-	 jJZkUFDEQlGSc5fyhPwWM2ZrQ7W2NUVpwDTTQUKMcgk7BG6TjjbSJxWGMxTJJrZCb/mNc
-	 1mDg4o/xFB4Je5B3vGE/AXGaqROibOunrOEbK/yFeYs97/IId2+GiTjO27Pd/2Y8gfelZ
-	 yu2O7HH3KCH7XaMLJBLoL1F5B1R7+et3UA0+0BagHmKv3zKk+NTLB3YPLf1mzbErfXw==
+	t=1795705005;
+	b=zNfKH1MhWscc059knXYkVqjPyYQaDbso/pgK3M2G30Y8G8UDSKfZQl874Tn/IUdz15Q8
+	 suyDbty8+E56JpItl7hnm2tOhrbSpnRRjT9F/ooJAJhdEYMpfAQn1JX62A9YsvbqMSx8L
+	 sx4GbVGsgHJXKRgnMXIEhNbIL+QpqQ5z/5zLPsgrcUgPB9cPC+kEq1gD8KbDK2USTPhwT
+	 bpMT8IAS5+OsMHtaepvgJkuotmIOiCUpOi7qNfiRQMLsplsirhwqID4/6o+vM3h6nVRb/
+	 gC1ZGnYlCBMB7VMM5FqIZ/Ws9NED9xCSHMsQheyc4AwKKho3kRXZSLSCACZlZEfI6xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gL7kHCp13MUO+SaHUEybwAI1he/NrlIFlQuLrkyQcxU=;
-	b=EhMSmtnYoebDeiOovUIfYJ4Z26nFpLbtJ8tx5HgUJsYrm4OJTv2vntkMjVmTCNjOmR3y
-	 7P1ttwDxROry/sElXEJnh/+EW9T/pFMcsgVMPE1z1qEPt5dmrbiqWNj063s3Uwb3cAi8k
-	 NCoJ3GYEoar5VOqFBZiqwFxChDT8aXHhkmPixYoN4ucKKLvryhyVjWUwCiIGcQWjkeh7p
-	 SlPu2/RlJkFt5iJx9PFoAzN2gED9gUtOZff1cM/S2T0/9k1YlFkOsZqa5qtRcRUHdotfC
-	 2AQXiZFK0tkezTP7jo9kvSoc5Q0XkLJA2K+pzV09EWqizvP3U90ieXASuf+QMlg0o9Q==
+	bh=3x7mhhV0A8C8FXp6c32+GCBfaxzzeaf8iu6jJCp1XoA=;
+	b=Wh4eJOXMQzE711nYbwlk1Q72VwqFV3nc02lvBDsHVCkMVsH7aoFgaH8v2V7Z3yB8Z+el
+	 S3lt0sG46+6i1eGwR3JpVmEQl9AT1f5eQRkitwI5mPOEOp35PJ3CkhtiTiirMZOHwyscg
+	 aeVhBkYLD3OicKx2gYMiEMd1Jw/uum5d9ZhmGwGct1Bfd/McuikTPwT4jnGUazhko7MNF
+	 wO85PuJR3mF8YavhxQl5FFdEpjFubMQXl4EuIv0CeAZVlgzxAgBkTqNsAV92Zx2yElFRM
+	 e+MO6ose7eahZvCSfhKJTCIcf4RSiYOt5r7QTEqnMjcIeE72HGKIpZvRMyXP/7ywHKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdHeWG4M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okzcsvsg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1916D606A337;
-	Thu, 26 Nov 2026 14:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C384606A33C;
+	Thu, 26 Nov 2026 14:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OdHeWG4M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290891F000C0;
-	Thu, 26 Nov 2026 14:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okzcsvsg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99F71F000C0;
+	Thu, 26 Nov 2026 14:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705002;
-	bh=gL7kHCp13MUO+SaHUEybwAI1he/NrlIFlQuLrkyQcxU=;
+	s=korg; t=1795705005;
+	bh=3x7mhhV0A8C8FXp6c32+GCBfaxzzeaf8iu6jJCp1XoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdHeWG4MaviNeOyvS4pBO/f0qKIzIBf7ndWTdcgBHnVcMScNoG5/QW0srIYEBjVeh
-	 BM7W1c9Uj9HlMhGu9DhHx/NVRzFav36IXWPEZ1KOjJDtC+gPaPitFskN9i+8F3O/AN
-	 O9WrMlOUeE0XX+wZEbTcn2IFbX7UYEiPNwYOsE+4=
+	b=okzcsvsgfzvgdZJ23eXpagKdt1QIL51SpotzuGYMdQrs/OHhTkuT19wERGXag3X12
+	 6e+9MQFkdHHFp578jhJRu3z76tQkShXFzWtQXttoK/AdRDhiEz+mZY37FuOuUQHzei
+	 vS5cZioCMAEqsDXZcMQQhPV6Q3dZM2xklfA+Z/Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yuqiang Sun <izaiahsun@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/319] spi: acpi: only look up the IRQ of confirmed SPI devices
-Date: Thu, 26 Nov 2026 15:36:57 +0100
-Message-ID: <20261126144007.842867531@linuxfoundation.org>
+Subject: [PATCH 5.15 050/319] bpf: lwt: Free the skb when bpf_xmit() fails to expand the headroom
+Date: Thu, 26 Nov 2026 15:36:58 +0100
+Message-ID: <20261126144007.865887921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,126 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Yuqiang Sun <izaiahsun@gmail.com>
 
-[ Upstream commit 2d0953ab69d316589624b0517fdce01f8e630bf0 ]
+[ Upstream commit 5e96760b25fdedbbf9312827f1f237d6b18b03e8 ]
 
-When an SPI controller is registered, acpi_register_spi_device() is
-called for every present ACPI device in the namespace and
-acpi_spi_device_alloc() walks each device's _CRS. While doing so,
-acpi_spi_add_resource() converts the first interrupt resource it finds,
-even for devices that have no SpiSerialBus resource at all and are
-discarded right afterwards. Converting an interrupt resource registers
-its GSI, so this maps IRQs for arbitrary unrelated ACPI devices.
+When an LWT xmit program returns BPF_OK, bpf_xmit() makes sure that
+the skb still has room for the link layer header. If
+pskb_expand_head() fails there, bpf_xmit() returns -ENOMEM without
+freeing the skb. Its callers, lwtunnel_xmit() and then
+ip_finish_output2() or ip6_finish_output2(), take any return value
+other than LWTUNNEL_XMIT_CONTINUE to mean that the skb has been
+consumed, so nothing frees it.
 
-On a Dell Precision M4800 (Lynx Point, 24-pin IOAPIC) the DSDT reports
-Haswell-ULT LPSS child devices (\_SB.PCI0.I2C0.ACD0 and
-\_SB.PCI0.SDHC.WI01) as present with interrupts on GSI 37 and 38.
-Registering the intel-spi controller then results in:
+Each such failure leaks the skb, together with what it holds: its dst
+and its charge to the sending socket, so the socket is never freed
+either. The other error paths of bpf_xmit() (BPF_DROP, an illegal
+return code, a changed protocol, a failed reroute) all free the skb.
 
-  ERROR: Unable to locate IOAPIC for GSI 37
-  ERROR: Unable to locate IOAPIC for GSI 38
+Free it here too.
 
-Do what the I2C core does and only parse the interrupt resource once the
-device has been identified as an SPI device on this controller.
+The leak was found with kbound, a static analysis prototype for
+ownership mismatches at kernel interfaces, on v7.2.12; it is present in
+mainline.
 
-Fixes: 4c3c59544f33 ("spi/acpi: enumerate all SPI slaves in the namespace")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20261101200155.15740-1-rosenp@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
+warnings. Run-tested on QEMU (x86_64, KVM) with KASAN: a route through a
+dummy device with an LWT xmit program that pushes one byte with
+bpf_skb_change_head(), so the headroom check has to expand the head, and
+failslab limited to allocations under bpf_xmit(). Each of 10 pings then
+fails with ENOMEM. Without this patch each leaves a raw socket behind
+(RAW slab objects 6 -> 16); with it none does (6 -> 6), and nothing else
+is reported. Without injection both kernels go from 6 to 6.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261101182343.17991-1-izaiahsun@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ net/core/lwt_bpf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 56505af80ba80..a32a1cb4ddcd1 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2275,7 +2275,6 @@ struct acpi_spi_lookup {
- 	acpi_handle		device_handle;
- 	u32			max_speed_hz;
- 	u32			mode;
--	int			irq;
- 	u8			bits_per_word;
- 	u8			chip_select;
- 	int			n;
-@@ -2379,17 +2378,25 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
- 			if (sb->device_polarity == ACPI_SPI_ACTIVE_HIGH)
- 				lookup->mode |= SPI_CS_HIGH;
- 		}
--	} else if (lookup->irq < 0) {
--		struct resource r;
--
--		if (acpi_dev_resource_interrupt(ares, 0, &r))
--			lookup->irq = r.start;
- 	}
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index 548a13052e1fe..efec218bbe157 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -294,8 +294,10 @@ static int bpf_xmit(struct sk_buff *skb)
+ 			 * made before LWT xmit.
+ 			 */
+ 			ret = xmit_check_headroom(skb, hroom);
+-			if (unlikely(ret))
++			if (unlikely(ret)) {
++				kfree_skb(skb);
+ 				return ret;
++			}
  
- 	/* Always tell the ACPI core to skip this resource */
- 	return 1;
- }
- 
-+static int acpi_spi_add_irq_resource(struct acpi_resource *ares, void *data)
-+{
-+	int *irq = data;
-+	struct resource r;
-+
-+	if (*irq < 0 && ares->type != ACPI_RESOURCE_TYPE_SERIAL_BUS &&
-+	    acpi_dev_resource_interrupt(ares, 0, &r))
-+		*irq = r.start;
-+
-+	/* Always tell the ACPI core to skip this resource */
-+	return 1;
-+}
-+
- /**
-  * acpi_spi_device_alloc - Allocate a spi device, and fill it in with ACPI information
-  * @ctlr: controller to which the spi device belongs
-@@ -2414,6 +2421,7 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 	struct list_head resource_list;
- 	struct acpi_spi_lookup lookup = {};
- 	struct spi_device *spi;
-+	int irq = -1;
- 	int ret;
- 
- 	if (!ctlr && index == -1)
-@@ -2421,7 +2429,6 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 
- 	lookup.ctlr		= ctlr;
- 	lookup.device_handle	= acpi_device_handle(adev);
--	lookup.irq		= -1;
- 	lookup.index		= index;
- 	lookup.n		= 0;
- 
-@@ -2444,6 +2451,19 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 	if (!lookup.max_speed_hz)
- 		return ERR_PTR(-ENODEV);
- 
-+	/*
-+	 * Only look up the IRQ once we know this is an SPI device for us.
-+	 * Parsing an interrupt resource maps its GSI, which must not be done
-+	 * for every unrelated ACPI device walked during enumeration.
-+	 */
-+	INIT_LIST_HEAD(&resource_list);
-+	ret = acpi_dev_get_resources(adev, &resource_list,
-+				     acpi_spi_add_irq_resource, &irq);
-+	if (ret < 0)
-+		return ERR_PTR(ret);
-+
-+	acpi_dev_free_resource_list(&resource_list);
-+
- 	spi = spi_alloc_device(lookup.ctlr);
- 	if (!spi) {
- 		dev_err(&lookup.ctlr->dev, "failed to allocate SPI device for %s\n",
-@@ -2454,7 +2474,7 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 	ACPI_COMPANION_SET(&spi->dev, adev);
- 	spi->max_speed_hz	= lookup.max_speed_hz;
- 	spi->mode		|= lookup.mode;
--	spi->irq		= lookup.irq;
-+	spi->irq		= irq;
- 	spi->bits_per_word	= lookup.bits_per_word;
- 	spi->chip_select	= lookup.chip_select;
- 
+ 			return LWTUNNEL_XMIT_CONTINUE;
+ 		case BPF_REDIRECT:
 -- 
 2.53.0
 
