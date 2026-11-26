@@ -1,52 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705620;
-	b=mcfx0nhm77ghA8ez7tLdUwyu+g55h8kzmRV7hvJxgFnLViKo48eCVm3FJmmORUpdbkQJ
-	 mW/n3Ir5U6TF7wy4Tfo39YdL9gMDSnQPzMkKRVE93OXel2rKcrRDL6fjhZ+eZTxwOtU1c
-	 Iih7B/HHjPR5oT+tH8weW2McmUlcP6Q9HOZLKfF8psfRi2ootjPbUlnf49vZxK6dahhHk
-	 4wqhaVwZUdtGzWyalA0YiVzF9YKntQFo3/MYaFRNIGbFtAGKmIc9j7ij5n5W2yj2n34yY
-	 nP5YtOEBH0PD1NKGqe1Or8LUaa1Mm0lz4Y7+U0MCKo2aSzNozI8oU1sOO7MAfHovoGg==
+	t=1795705623;
+	b=VWexKz6LWKn8oDx+X2CB3N7qnZfujLQDrNM4cIA7bKXK5JaS5jDWmhIt42ntEukL++wF
+	 Eah1NTj1QJcjHz4/oyPc3ePCxm8sK2RjTEmF12xEk5EFhfc6P10ze8mmqJASoojkUtMnG
+	 vT5VEX+txq/ADQTFmBgbO9WQt6SCMtpU14aODlCFmi3HZNCg158OZhnCYA2/w7M1SoMi3
+	 VvQtv6GbibfGPo1UfvfpHyShnQAbZ9BdneaHhn6gkkcpuXJnk0KIGGaCa/vrr00UB6AxE
+	 0Tz3qHSSBHuT+sJCZ0QiVx5ffbIvU3tbpusxCl71s4AFSDe6L2IWnDEiUJVpjLoQy6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705623;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LZEm7iQKn9B+DQL/4qPSSa+ZbuTMWTEDra2jz9Vfee8=;
-	b=V06/XNxZ1bFvwq3LyW3GX/xGYkx+OC1487d1DvNynqNDtMk1TBKG0xcI7Ty9DJGWgQ6V
-	 aXPRMaXfFoaUTJj6LTsKu+uE8M1mIQu/+81zgr0MHMP7exlMFp9Y7JUsXJSXuh4vD+Pbl
-	 ZBoVxGAmmS5uiugMLPoTO83brSoYal1CvHgJMRoLSjqNwa9lBzC2pjG49yA1/q7BFZAVm
-	 bEBMT5/V5mOEFUhR7ecEKlEwMni9u1ftChSh9RQcIpQ9quGs6YwBKmwq4aKz4hyq6t1Jz
-	 bikKu7Hm0lgHYi7iPk28MO83ANpl8G0FU5axu9sDS5JvL7mraoPyJ47vLIBBQ0HYkGg==
+	bh=P6DHUe53MG/gTFf9pe1y03bpu5KHwQGEOKK2RUfoo6g=;
+	b=GNPFwaThoxCFLgM1iU8qb+kgufSe14KVeBYlAHNAedWylusIWM2GpdNBJvRzcH+nIBBR
+	 yNB8FekESEShO2Hoy3rp63ayMJNl+CAj2iKrRNBWlzP/3W4/Yc/PeVHgITk8wHEP2xWAv
+	 GKt7vxCxeTjcwwKjeLQTgCZ/7AA4aXQWnAswR+EdPoIt9QHNYtu53t793vUIfs3nC7Bvl
+	 q2gUVmNwWucep14gjohUjrx7qhaKIeKIf6wckCuDeE0tifpiogfQyfCyHunXNLuG1uEJp
+	 cemkBzpP8vBVbeUqhHEXjO//qkDAn8gCZhgc5CoFPpHOedyoUXTbtS9Q7BdStwGAtNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwSLJFJU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9UK6yoV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F30606A31E;
-	Thu, 26 Nov 2026 15:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BA8606A31C;
+	Thu, 26 Nov 2026 15:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwSLJFJU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3931F000CA;
-	Thu, 26 Nov 2026 15:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9UK6yoV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317451F000C0;
+	Thu, 26 Nov 2026 15:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705620;
-	bh=LZEm7iQKn9B+DQL/4qPSSa+ZbuTMWTEDra2jz9Vfee8=;
+	s=korg; t=1795705622;
+	bh=P6DHUe53MG/gTFf9pe1y03bpu5KHwQGEOKK2RUfoo6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwSLJFJUX65K2uibJ3MCqwYQflGAJdv8ZG9JTurWmXyM56QlXHrVPYMUkZhhTmHjA
-	 u0sXaMGj7jO2zuoQQPchfYJjdDw2wmmvgB9guCaVlVc3lAYsLGphpKIDhqbJsWwduu
-	 eNkwvxx1R1hVYPKFBdXZiBXAkKqchycgNAcKyPIo=
+	b=i9UK6yoVONF8BtM2p2SHwIchHCzATLxUntcQ1B5NP5+rIzinOcRHDhp4gUdO6w2QY
+	 1byr+Gy2De1Or9DZkk8GPSfmFy15/Eb7zDXRPdzYrH15+dhs/rQ5Uw7kvCHLxzV1xO
+	 xBfBNGqPjXwEpqQAZ3DygwYGIq5CnqZZTumk0UP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Budding <tim.budding@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 222/319] sctp: abort unordered partial delivery when its message is skipped
-Date: Thu, 26 Nov 2026 15:39:50 +0100
-Message-ID: <20261126144011.760102583@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	Kees Cook <kees+treewide@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>,
+	Chris Mason <mason@kernel.org>,
+	Helge Deller <deller@gmx.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Ronan Pigott <ronan@rjp.ie>,
+	Liav Mordouch <liavmordouch@gmail.com>
+Subject: [PATCH 5.15 258/319] vt: serialise the producers of the flip buffer
+Date: Thu, 26 Nov 2026 15:40:26 +0100
+Message-ID: <20261126144012.570071957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,46 +77,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Budding <tim.budding@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-commit 05852c8b70f2291a50bb3f740a66ce9caf9cb98d upstream.
+commit 5d1d814408c1c8e797031eac8ddd40de1a9e8e93 upstream.
 
-When an I-FORWARD-TSN skips unordered messages on a stream,
-sctp_intl_skip() only aborts the stream's unordered partial delivery if
-the MID being delivered is lower than the skipped MID. If the skipped
-message is the one being partially delivered, partial delivery stays in
-progress: no PARTIAL_DELIVERY_ABORTED is sent, and the next unordered
-message on the stream is delivered as the rest of the abandoned one.
+Typing on a virtual console while the console replies to an escape
+sequence can make the kernel write past the end of a buffer. A user who
+can write to the foreground console can cause this on purpose if they
+can also inject key events, through /dev/uinput or by writing to the
+/dev/input/event* node of a keyboard.
 
-Abort the partial delivery when the MID being delivered is at or below
-the skipped MID, as the ordered case already does.
+Input for a tty goes through the flip buffer of its port. A driver
+inserts the data with tty_insert_flip_*() and then calls
+tty_flip_buffer_push() to pass it on to the line discipline. The insert
+functions take no lock: they check that the current struct tty_buffer
+has room, copy the data to offset ->used, and then advance ->used. So a
+flip buffer supports only one producer at a time, and a driver that has
+several must serialise them.
 
-Reproduced on an unmodified kernel with the uo_pd test of the
-sctp_ifwdtsn.sh selftest added later in this series; its partial
-delivery checks pass with this fix. Reproduction and fix done with AI
-assistance.
+Four functions feed the flip buffer of a virtual console:
 
-Fixes: de60fe910543 ("sctp: implement handle_ftsn for sctp_stream_interleave")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tim Budding <tim.budding@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261105050225.49292-2-tim.budding@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+- put_queue(), puts_queue() and fn_send_intr() insert typed characters
+  and breaks for the keyboard handler. They run under kbd_event_lock.
+- respond_string() inserts the reply when a program writes an escape
+  sequence that requests one, such as a cursor position report. It runs
+  under the console lock.
+
+The keyboard handler gets its events from the input layer and feeds the
+foreground console. Key events that a program writes to /dev/uinput or
+to an event node reach it in the same way as typed keys.
+
+The keyboard handler and respond_string() share no lock, so they can
+interleave:
+
+    keyboard handler                respond_string()
+    ================                ================
+    room check passes
+                                    room check passes
+    memcpy() to offset used
+    used += len
+                                    memcpy() to offset used
+                                    used += len
+                                      /* used > size of the buffer */
+
+The room check subtracts ->used from the size, and both are unsigned.
+Once ->used exceeds the size, the result wraps, so the check always
+passes, and each later insert lands further past the buffer.
+
+Reproduced as root, with keys from a uinput keyboard and cursor position
+reports on the same console: KFENCE reported an out-of-bounds write
+1,024 bytes past the buffer in under 10 s.
+
+Fix this by taking port->lock, with interrupts disabled, around the
+insert and the push in these four functions. kbd_keycode() already takes
+port->lock under kbd_event_lock, so this lock ordering is not new.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable <stable@kernel.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Nicolas Pitre <npitre@baylibre.com>
+Cc: Kees Cook <kees+treewide@kernel.org>
+Cc: Joshua Rogers <linux@joshua.hu>
+Cc: Chris Mason <mason@kernel.org>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Ronan Pigott <ronan@rjp.ie>
+Cc: Liav Mordouch <liavmordouch@gmail.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20261027-tty-llm-v1-1-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream_interleave.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/vt/keyboard.c |    6 ++++++
+ drivers/tty/vt/vt.c       |    2 ++
+ 2 files changed, 8 insertions(+)
 
---- a/net/sctp/stream_interleave.c
-+++ b/net/sctp/stream_interleave.c
-@@ -1263,7 +1263,7 @@ static void sctp_intl_skip(struct sctp_u
- 	struct sctp_stream *stream  = &ulpq->asoc->stream;
+--- a/drivers/tty/vt/keyboard.c
++++ b/drivers/tty/vt/keyboard.c
+@@ -320,15 +320,20 @@ int kbd_rate(struct kbd_repeat *rpt)
  
- 	if (flags & SCTP_FTSN_U_BIT) {
--		if (sin->pd_mode_uo && MID_lt(sin->mid_uo, mid)) {
-+		if (sin->pd_mode_uo && !MID_lt(mid, sin->mid_uo)) {
- 			sin->pd_mode_uo = 0;
- 			sctp_intl_stream_abort_pd(ulpq, sid, mid, 0x1,
- 						  GFP_ATOMIC);
+ /*
+  * Helper Functions.
++ *
++ * A flip buffer allows one producer at a time, and respond_string() in vt.c
++ * feeds the same one under the console lock. So take the lock of the port.
+  */
+ static void put_queue(struct vc_data *vc, int ch)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_char(&vc->port, ch, 0);
+ 	tty_flip_buffer_push(&vc->port);
+ }
+ 
+ static void puts_queue(struct vc_data *vc, const char *cp)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_string(&vc->port, cp, strlen(cp));
+ 	tty_flip_buffer_push(&vc->port);
+ }
+@@ -583,6 +588,7 @@ static void fn_inc_console(struct vc_dat
+ 
+ static void fn_send_intr(struct vc_data *vc)
+ {
++	guard(spinlock_irqsave)(&vc->port.lock);
+ 	tty_insert_flip_char(&vc->port, 0, TTY_BREAK);
+ 	tty_flip_buffer_push(&vc->port);
+ }
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -1834,6 +1834,8 @@ static void csi_m(struct vc_data *vc)
+ 
+ static void respond_string(const char *p, size_t len, struct tty_port *port)
+ {
++	/* The keyboard handler feeds the same flip buffer. */
++	guard(spinlock_irqsave)(&port->lock);
+ 	tty_insert_flip_string(port, p, len);
+ 	tty_flip_buffer_push(port);
+ }
 
 
