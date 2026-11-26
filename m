@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705806;
-	b=hz6wHCbGT9H5sqYyNL0leYTNIgQcDOc0T6ktKp5nU/g+fRiBzzfZQj6hA/ccyxHvD6sD
-	 /W7clhEyKeDOXfmoiBpX+19HZd1PTcOPf9GavO8ZXBjl6Hw9b639FHyNjmd5Brl3P1jBk
-	 PzBUNXN5OT7NHHNO2zAcCfvZfNbDO+pjX+BWYwWMiYOpI/PzragkE0TJhz8XguGwQuI4L
-	 Fg7HKO5JU2mPV1HvDLHDH0ZcczUZuk2UfHTdKGDCzZZxYt36Cq5JNxkhbLhNOtXFmS2gg
-	 lxq4KRbSutNdOGzLtw9VBXEcC/wLhFqBe1KykB2foIEkSlh6Vlj9Gct+441LnUC2kfg==
+	t=1795705809;
+	b=nNwh9WIrZpz9QqFo1YJ2dXku96leUVOsyHw0p6vDzaC40ethDCCDPiYx9FpVyWARaW+H
+	 kqbjt5OR9rzWrfuZ+8aXjSYHUPAK+akhVap9lWq1bZr3NjYegI7mljd1KQZckM9LcbDNu
+	 lfA8MOrkjaLF8AKmVOq2Uo/4N5P2Uu/JPnsfQodHKHieMIly7ocEXswttzEILgpky91y1
+	 8WEaa2/Ci3EuJjF5yuWrSQd0edW7Ee1SFxc1NhOsgbU85x/twEeLv0lCGrktK+t6NYEy7
+	 cQWcF3kEPksC4p/Zmu+QLBrt4GI75+vGvdL9NIx+ysXDa+1uZHGC+Dj+N1+1zBDGAjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705806;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705809;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TDRl/FVCQltpVPvKI1yge1A5x4my44ozJxnTz04EO1Q=;
-	b=K88W14MhLZR50iQeOTnJGTpgbYq/cI9iAU2luVVHteIP0cbD4x5KyDT1ZKOQhfROlBOC
-	 M6uZFL6a6QqhSm0F07PQWsQheqGnyAEmSa2+LasTYLb40J2k1VPLMMk5HMf/1oCiMHyKh
-	 AL09f7XDTSrA6b9lBmzvo5m2/fjT/yNb3jr3Y88XuW+FGIX3ZPSWQyQpIN54TMOh61gmq
-	 CkJUnD7mhm1SnJRGTOJSbM5gI7d/6ssm8Agc5jXkHhWd2LRIrRYKLJRfjOmX8jV4BoafM
-	 qqdDQgqxgSwcTFscUID+h7/IqlehZoUGdbnDJMmkYVZ3h/SO3x4hazphnDKVHBSmb1Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qgM5rMexZr8VKYBNrp4V4cYEtVBDgpwXCNRJ2t440pE=;
+	b=KRULp+S6uxXjmwXPuwEGMSyzcGAk2rvz0pKxIkjzVHZF2m/vjq82FFUYrjQngqCxjxBL
+	 q0h+nYqPxxZxm3pzOOrytAbHcQ2jLWuDPqi/qv9gK3WNIDEdV86SAdyJQYNrbxXPSki1n
+	 uwnengBIAuvHEiUTDjeY2pSpsQNS9JXl84cY9nTbg72KfOdWYvxkvaCSiS+dS43EebA4d
+	 eMjqg93gCxO10D0yucDyH8mz3nk8/F9c2ZONYd3FmIcquvui9ZQh++CUYQ/NtLT0j4rVE
+	 FxG1LVoaP0QgyaD0RB84nCwUASDapDmk0/WS+4vblP6kWUM18Wdua+Oe4uygY7rQq5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XaTAhOyq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo+HjfdN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E93606A31E;
-	Thu, 26 Nov 2026 15:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CA0606A32A;
+	Thu, 26 Nov 2026 15:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XaTAhOyq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C09C1F000C6;
-	Thu, 26 Nov 2026 15:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo+HjfdN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C441F000CA;
+	Thu, 26 Nov 2026 15:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705805;
-	bh=TDRl/FVCQltpVPvKI1yge1A5x4my44ozJxnTz04EO1Q=;
+	s=korg; t=1795705808;
+	bh=qgM5rMexZr8VKYBNrp4V4cYEtVBDgpwXCNRJ2t440pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XaTAhOyqGpCAJ88JgIr3mTQBNDIKCBm21iI0+LIqxIbVsOhlRzI1YnUyldNu5VYGJ
-	 XP32AhA7S75rrPySPPiRbUqbVNw9Q30OGkCIVOOkXGtFv3udT/QFeq4+4/0GZfsRJW
-	 U0LCYxmPBBOGQEpatsQX4HgvVe08xub4yq9KC4Ic=
+	b=Xo+HjfdNGvtHKH3AfKEwzk0AL+kx+7D0rLFgbW058jA0FLB2UcBhENNcNGW9VPsOt
+	 ajhxT8I2S350X7Zl0KvWtIvjsxzkcUhYdi9ueC9+LSRksjsIqmktzyC+CveaTWh7QL
+	 HLZWqRtJWq9IvNoKCVgB0zfzPxQQiNqFV0pCBk7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Peter Hurley <peter@hurleysoftware.com>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 5.15 266/319] serial: 8250_lpss: dont divide by 0 above 6.25 Mbaud
-Date: Thu, 26 Nov 2026 15:40:34 +0100
-Message-ID: <20261126144012.751599173@linuxfoundation.org>
+	Mostafa Saleh <smostafa@google.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>
+Subject: [PATCH 5.15 315/319] vfio/platform: prevent read-only region mappings from becoming writable
+Date: Thu, 26 Nov 2026 15:41:23 +0100
+Message-ID: <20261126144013.871146235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -66,67 +65,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 08daebfd63e9054e097eb2653eff9381de43a422 upstream.
+commit 420bed9131dbbe37abe9d6b32af51219875811e0 upstream.
 
-byt_set_termios() derives the clock of the UART from the baud rate in
-the termios, which nobody has looked at yet:
+vfio_platform_mmap() rejects writable mappings of regions without the
+WRITE flag, but leaves VM_MAYWRITE set.  Userspace can map such a region
+read-only and then upgrade the mapping to writable with mprotect().
 
-	fuart = baud * 16;
-	...
-	fuart *= rounddown_pow_of_two(fref / fuart);
-	...
-	p->uartclk = fuart;
+Clear VM_MAYWRITE for regions without the WRITE flag, as i915 does for
+its read-only objects and as fixed in drm/vc4 (CVE-2026-68445),
+drm/panthor (CVE-2024-53071) and commit a5edadbae57e ("ptp: vmclock:
+prevent read-only mappings from becoming writable").
 
-fref is 100 MHz. For a baud rate above 6250000, which BOTHER allows,
-fref / fuart is 0, and rounddown_pow_of_two(0) shifts 1UL by -1. On x86
-that is 1UL << 63, the product with a multiple of 16 is 0, and so is
-uartclk. serial8250_get_baud_rate() then passes 0 for both limits,
-uart_get_baud_rate() finds no rate which fits, WARNs and returns 0, and
-uart_get_divisor() or dw8250_get_divisor() divide by 16 * 0.
+Note this is defensive hardening: no in-tree platform driver currently
+publishes a region without the WRITE flag.  The guard costs nothing and
+keeps the mmap() interface honest if a read-only region ever appears.
 
-Everybody who may open the tty can oops the kernel with one TCSETS2.
-
-Don't ask for more than fref. The limits are those of a 100 MHz clock
-then, and uart_get_baud_rate() falls back to the old rate as for any
-other rate that the port cannot do. 8250_mid, which has the same
-formula, treats this case separately.
-
-Fixes: 21947ba654a6 ("serial: 8250_pci: replace switch-case by formula")
-Cc: stable <stable@kernel.org>
-Cc: "Ilpo Järvinen" <ilpo.jarvinen@linux.intel.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Peter Hurley <peter@hurleysoftware.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-16-99b0202ae546@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fad4d5b1f042 ("vfio/platform: support MMAP of MMIO regions")
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Link: https://lore.kernel.org/r/20260929094848.7439-2-suruurism@gmail.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_lpss.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/vfio/platform/vfio_platform_common.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_lpss.c
-+++ b/drivers/tty/serial/8250/8250_lpss.c
-@@ -82,6 +82,9 @@ static void byt_set_termios(struct uart_
- 	/* Gracefully handle the B0 case: fall back to B9600 */
- 	fuart = fuart ? fuart : 9600 * 16;
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -603,9 +603,13 @@ static int vfio_platform_mmap(struct vfi
+ 			&& (vma->vm_flags & VM_READ))
+ 		return -EINVAL;
  
-+	/* Fuart <= Fref: leave it to the core to refuse a higher baud rate */
-+	fuart = min(fuart, fref);
+-	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)
+-			&& (vma->vm_flags & VM_WRITE))
+-		return -EINVAL;
++	/* Prevent read-only region mappings from being upgraded with mprotect() */
++	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)) {
++		if (vma->vm_flags & VM_WRITE)
++			return -EINVAL;
 +
- 	/* Get Fuart closer to Fref */
- 	fuart *= rounddown_pow_of_two(fref / fuart);
++		vma->vm_flags &= ~VM_MAYWRITE;
++	}
+ 
+ 	vma->vm_private_data = vdev;
  
 
 
