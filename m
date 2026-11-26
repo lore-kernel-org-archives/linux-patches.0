@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705515;
-	b=OuPhAlq3x0Qfw7Th8clHIcSgesktJVbTQjQy8SbjHmiCO7gqG9ws75DKKdSUa6nNo/Gc
-	 0NUjEJG5bvj7SibgCn4lk2W++amPK4S7UGFGX8QDs/CgIsmwnUTfiyzygARdUoAAmaSon
-	 +fSCB7g3WQHrgGPMT6XyLHVAXwmEzTeuNvWcN4UcnTVq90dKdAZ0vV2nsT8Iv5iRGte1L
-	 fyxAW/aG+jVouweQW90DDP5/uYQWx8u7fLGtMkGY4RlmnpjzylCRUOau5jHt97TYefwUG
-	 yNFlrbap2sE6chaXRxYrqtKQ9PG9zsiWdG/0tSMHeJ/tHY6ejHdrJRkHaEBqkEdHvKg==
+	t=1795705518;
+	b=ZsYw5xwBwVYIjGGGTGLHCDLt2l4U+JOuuWPNXGmF4V378x3mbB0l2aLpQNv3tatFwYts
+	 bAlJlTAVylShtDmTgH59YbRm7ZUZGJbt7dUa5/WTHl/M4MJhZCoUEGWp0sDgD31XTIdXr
+	 UlTqc/omFlXmWoeFgEDaLWfi7VhYnUmJET+qL0fqtTAJ/t0FVSb5pxGuHkbcMcxQT3LzQ
+	 dTkcK8gdAac2Ip0AwynpMDG4E2U6phP95MJQmgvOre7hKnU/9UYdXkkXq4uhxbI0foD1/
+	 Ekj1lz/9VQXXWLKTVwWXVdMUE8TghhdIQFZoTofMuJRUN5mOWYJMRi8ZfvtOQmdQtvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DTSuniK8UTMdInItQ90+eQPX9cJwCqDwyacHYAoandY=;
-	b=ALyvIqzRC+eO1Oddfec1VK+2aTKZk/whr4lAoKH2DAvh9H4W4+R+pv0dm8SSsFI9AgQp
-	 980F8D3ggpLSYSKv6XhxWOnXX8Unb4bMdNrMbzAKHvDANNk+Cz3RD5Y8dFAVXiDaEgudS
-	 ZEQHHiXmrCtnFTlxfkRSPRmPf0xNYHwQbPcZ4tfVG6Ej17u337obM9KKUnI7/MpX6B+kg
-	 SYN6V8lTfRgccSnvj1afJM/C5pl0VBfuX7N8zZjyUZmFZO7FLgumXfl5L/0MBqNLXGk8W
-	 DPhx6LazXsC6MGNRoqLZUACx2OjDZ4xsliWDEpiPSp15Pn360fi1Ssww/NsFX/sVpvA==
+	bh=5vzmVsxZ0p00PWcgiRFsmD4IfLMXh/NhpNTY+nOc9S4=;
+	b=tYz/5QWVE5ltAgSTjEiuXlze1owrCfWw55lEsKB1OzC/BDVwhr/NuGtFk6h/cMLnV9hg
+	 ulGfvEtkj7EFveEBoQ4KQEBz42qnNQsBVJzPJ04dAfIWU3w4tzKpSDuCZd6N1wCyMjjQl
+	 boP3+uI2ueCUcM0A0S2cP4xKKy9vyrdVhwtsigy/wZxe4t8lj4wjpB1VqqLSnwDVV5vEB
+	 cSvAiR6e4fsssJoJUy1qEWicrIVJ8ofmbpVRSaeg48qxA/z2Jkz/Ex49Rp0c+4JAD4ANQ
+	 p05icXtjkEpxCGttzIFDSwD1VO48KuEqoGOlh3og9O+VGCM1+qQ5NvTe1qS8QZySIlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJQLPsgk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zY+hPTSK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01389606A33E;
-	Thu, 26 Nov 2026 15:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4818F606A321;
+	Thu, 26 Nov 2026 15:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJQLPsgk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619161F0180E;
-	Thu, 26 Nov 2026 15:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zY+hPTSK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD941F000C4;
+	Thu, 26 Nov 2026 15:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705514;
-	bh=DTSuniK8UTMdInItQ90+eQPX9cJwCqDwyacHYAoandY=;
+	s=korg; t=1795705518;
+	bh=5vzmVsxZ0p00PWcgiRFsmD4IfLMXh/NhpNTY+nOc9S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJQLPsgkZ5kEHCsEr86NdgSfZItrtEsamEp866wgPY9bWSt8skqSOKeSn5TAd5q4X
-	 0e/aw7P8SeP7XhMtNlf9RSdSvAa+MxUKZEQktnSg0jCK7qFLd0AL2LjyVRS+8GMjvS
-	 UU52UgZBA2pkP9Czu14ig/D55Ypuc9834tyQywJE=
+	b=zY+hPTSKpF2LHdsAiCK/l0nSrCTTl95ExYYkszBVHMc1SnqCzLJdzC8u22TWWm9Fg
+	 IRmHNe8c+DJfxyJdS0rSalQOfwx/mhgVqbOxf/CjTxFmJIfxulehFOfMZsxFboPC2J
+	 LRIBUuL7p8YvNH99ZlR4WFiIqv2+H/V6PobNThok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 5.15 179/319] mm/mmzone: read the zoneref slot once in zonelist_zone()
-Date: Thu, 26 Nov 2026 15:39:07 +0100
-Message-ID: <20261126144010.787250560@linuxfoundation.org>
+	Zhiqi Zhang <zhiqizhangg@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 170/319] bootconfig: Allow keys with the maximum supported depth
+Date: Thu, 26 Nov 2026 15:38:58 +0100
+Message-ID: <20261126144010.584747381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,43 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Zhiqi Zhang <zhiqizhangg@gmail.com>
 
-commit 9c52ebe9c89d41c56fcb5d94efe9e539414175a9 upstream.
+commit cab697164b47eecfa2f146024f5d661f99a1a1e7 upstream.
 
-Memory hotplug rebuilds zonelists in place while allocations walk them,
-so a zoneref slot can change between two loads of it.
+xbc_verify_tree() accepts keys with XBC_DEPTH_MAX (16) components,
+but xbc_node_compose_key_after() returns -ERANGE immediately after
+storing the sixteenth component. It rejects the key before discovering
+that there are no more ancestors to collect.
 
-zonelist_zone() loads the slot with a plain access.  The compiler may
-load it again later instead of keeping the zone it already read, so a
-caller can check one zone and then use another, or the NULL terminator.
+For example, a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p = value can be attached
+to an initrd successfully. However, bootconfig -l stops listing and
+prints "Failed to compose key -34". In the kernel, the same error
+propagates through copy_xbc_key_value_list() during its length probe,
+so proc_boot_config_init() returns before creating /proc/bootconfig.
 
-Use READ_ONCE().  Callers that take a zone from a slot and keep using
-it, such as get_page_from_freelist() with ac->preferred_zoneref, need
-that single load.
+Check the array capacity before storing the next component. This lets
+exactly XBC_DEPTH_MAX components be composed while retaining the check
+before any out-of-bounds store.
 
-Fixes: 11cd8638c37f ("mm, page_alloc: remove stop_machine from build_all_zonelists")
+I found this issue while reviewing bootconfig's depth handling and used
+OpenAI Codex to verify the failure and develop the fix. I reviewed the
+change and wrote and ran the regression tests.
+
+Link: https://lore.kernel.org/all/20261104073742.21202-2-zhiqizhangg@gmail.com/
+
+Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261101021340.2251928-6-gourry@gourry.net
-Acked-by: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Zhiqi Zhang <zhiqizhangg@gmail.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mmzone.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -1127,7 +1127,8 @@ extern struct zone *next_zone(struct zon
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -236,9 +236,9 @@ int __init xbc_node_compose_key_after(st
+ 		node = xbc_node_get_parent(node);
  
- static inline struct zone *zonelist_zone(struct zoneref *zoneref)
- {
--	return zoneref->zone;
-+	/* Memory hotplug rewrites zonelists in place. */
-+	return READ_ONCE(zoneref->zone);
- }
- 
- static inline int zonelist_zone_idx(struct zoneref *zoneref)
+ 	while (node && node != root) {
+-		keys[depth++] = xbc_node_index(node);
+ 		if (depth == XBC_DEPTH_MAX)
+ 			return -ERANGE;
++		keys[depth++] = xbc_node_index(node);
+ 		node = xbc_node_get_parent(node);
+ 	}
+ 	if (!node && root)
 
 
