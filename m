@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704109;
-	b=g1RAjbjwLu7+iBUta7ywJBG6z9tXnKC4zHfIS2B6l0IGxAP63P7byDiNJOItAeH4+Mf/
-	 vQX+NJyGSaG7y1rPWDVIvt61y3CFlOkwVl2SSs3+tSrJtUCalQXUil5x+x8FrFxKMd3fq
-	 sl/TTu/2B55hdjzavbH8VVMzeB6xX6JMz1Fp03ZWUmbIyalKVueq50nynHabSeJAE2hvF
-	 RH1veo/nFWUYdNjAbqir2IzXtowK20gMWg2CooWe9+ZOe3V2apJWVFxaw0JcpAPc4xeTk
-	 VWz0TGN8MeDB2zQ1Pzr9pWX1IQiBtMKJwoO9Qr1+OOSi9RWTd7pfoHNh4ZjwBX4u7WA==
+	t=1795704113;
+	b=u7E45yDSr7r16yr/hz1yYxdjhdtI7WEcxcarg8apBAgKIVrYwhVao+eDXc4V6onByVgU
+	 gUPwrhO17KSqOxopeIHE7CfzsZQZCYxuUFafidv5yvdAvRc6EDCpDhQBH6UgIhO1ZFzog
+	 fcVP50DjOAIwzqfRsq7k5aMRkGNjdwaGXY2rgX594G7zvTLRLVZDcZ29UymFeorqfHJDS
+	 pYBbIsqIrBPTmjcHr0SFMqcpi+ZQCWAJXuo7qQUPMnurDxk0VizHsFOF/hxeSqXW1DNjN
+	 QjCEYKBkU24ANN1ACHnfzuZ3M3OQrhg/u0QlB3mUP3cpu5pVZOvdGL9XKqeWYrc9KwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CiAVki+thDWmxbAHdOBuxFsn7meLfucpGgUkwAIAonE=;
-	b=tA+Qdb/i5StfLMRfxfLnz8HrVPbhhP+FRv4HxNMSbiyT6niELdsyfUCpXz4YW1cT7O0k
-	 ZFtpOC3acoFbn+sCRo9aF8b+sXAYsbPceocLwCrR8+hflqkWJZLb3D+Bd0pn/nwFoII3N
-	 PSUlYnwAB/G7Npc+goxMud5siRwNaRw8oVobmECPQFFIjEMoodrQUYtICx9D2+4QIbZq2
-	 X98C3RmaYKkFtE06m7WEMds92fBnCBFLH5xFAubLrYsk+gemfY25bzGoTh0TkUie8a0Em
-	 xZPejavax+nWVjG1uG1bik5dJPeuVKaLN6dQIOvmwCTdj4lnRrMhZ3niV7c7Zrru3uA==
+	bh=Mdfzs4K+m8MzYlD/6WOjCyaBbDp3r+kVEgt4+9zSvHg=;
+	b=WrfUxaGmRapFQORJ3qt/QZ8XAHL4qITwgBg40o32qAkHqJqK8h3+O46HzDlhub8TXcFP
+	 52A1/eun7xHOtajRpriw8h9bjEd+N0qmkOjoZ8Gs8F8T9pZttyt33HvqSdsK9CGYYehkB
+	 wa94CLEjFkGEm8+IRYS8yp7IwWdseF59gHysKk9SunA7lazje3MRLUXjCntAPCmHbTCq2
+	 uTkRz71EV4NGV/QDKnY3PdxgyAXGH/bGfldGLKWQCI/qVoCK4B6E0wDlV+tlR75OaDina
+	 S8NAx7u8yVhHBIFe/xqV2Tq/hZVxRe0hk2xL+f94ZI6mgw0OzeHeuQg4WalUUkkAJBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLtJ5qUl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gH4qrwBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA23E606A31C;
-	Thu, 26 Nov 2026 14:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E052606A31C;
+	Thu, 26 Nov 2026 14:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLtJ5qUl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21731F000C0;
-	Thu, 26 Nov 2026 14:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gH4qrwBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C081F000C4;
+	Thu, 26 Nov 2026 14:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704109;
-	bh=CiAVki+thDWmxbAHdOBuxFsn7meLfucpGgUkwAIAonE=;
+	s=korg; t=1795704112;
+	bh=Mdfzs4K+m8MzYlD/6WOjCyaBbDp3r+kVEgt4+9zSvHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cLtJ5qUlyqjx+SQPDvahOs6QRgSAV5mAwADkvOR1xCN78TvhQOv7EQJJ0A64scqXj
-	 SdeBiL2yWs9dT41dFOYRMFrN9/hIM6ffptEFyQTU6Ky1e97aW2ux9huHwAuyEZ/wdK
-	 SMhKS2pbA/92jNVE0+Jrq42gVjaw8aMIVjNKji+I=
+	b=gH4qrwBD3TByjVXBXD9fEnOMKQ6JaVCsOuYVzkMnsy6dz3d78mBHYl5E6KfLTLz9Q
+	 X0SuTpX4naCy+9SPvPZPHsFPcSfuc84UFc1cUM7vBVs237sc44i94S0SbZLbZYFGSh
+	 cejCenwvnnjIK1fAhSx4pIxMUvd+1tXNIN5BPrlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tal Zussman <tz2294@columbia.edu>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/265] vhost/vdpa: reject overflowing PA map page counts on 32-bit
-Date: Thu, 26 Nov 2026 15:35:40 +0100
-Message-ID: <20261126143605.786440588@linuxfoundation.org>
+Subject: [PATCH 5.10 011/265] vhost-vdpa: fix pinned page leak in vhost_vdpa_pa_map() error path
+Date: Thu, 26 Nov 2026 15:35:41 +0100
+Message-ID: <20261126143605.858149379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,55 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 0619aaa34c0c2a2dcb07f0e9c8a34e7efb8c4cdf ]
+[ Upstream commit fd1462c96bafe2cb14e88c837b270f8990b717b5 ]
 
-vhost_vdpa_pa_map() adds the IOVA page offset to the user-controlled map
-size before computing the number of pages to pin. On 32-bit systems,
-where unsigned long is narrower than u64, that addition can overflow and
-the code can pin and map fewer pages than the requested IOTLB range.
+When pin_user_pages() or vhost_vdpa_map() fails, vhost_vdpa_pa_map()
+is supposed to unpin the pages pinned after the last successfully
+mapped chunk, i.e. the range [map_pfn, last_pfn]. The unpin is guarded
+by nchunks, but nchunks is reset to 0 every time a chunk is mapped from
+inside the current page list, so a failure after any such boundary
+leaves that pending range pinned forever. With physically scattered
+memory nearly every page list contains a boundary, so the leak happens
+on practically every failed IOTLB update.
 
-Reject sizes that overflow the unsigned long page-count calculation.
+The pending range is non-empty exactly when a page has been pinned,
+which last_pfn already tells us, so drop nchunks and test last_pfn.
 
-Fixes: 22af48cf91aa ("vdpa: factor out vhost_vdpa_pa_map() and vhost_vdpa_pa_unmap()")
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Fixes: ad89653f79f1 ("vhost-vdpa: fix page pinning leakage in error path (rework)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Reported-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <CAMuQ4bX-iDvcUOPPY+NLz95tkRJYwWqvzAr=U48uNaub_HZLGw@mail.gmail.com>
-Stable-dep-of: fd1462c96baf ("vhost-vdpa: fix pinned page leak in vhost_vdpa_pa_map() error path")
+Message-ID: <20261031-vhost-vdpa-unpin-v1-1-94ffc9683256@columbia.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/vhost/vdpa.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 43e7528b8fa03..32dde456a181a 100644
+index 32dde456a181a..cfe3bf958f318 100644
 --- a/drivers/vhost/vdpa.c
 +++ b/drivers/vhost/vdpa.c
-@@ -633,6 +633,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+@@ -632,7 +632,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	unsigned long list_size = PAGE_SIZE / sizeof(struct page *);
  	unsigned int gup_flags = FOLL_LONGTERM;
  	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
- 	unsigned long lock_limit, sz2pin, nchunks, i;
-+	unsigned long page_offset;
+-	unsigned long lock_limit, sz2pin, nchunks, i;
++	unsigned long lock_limit, sz2pin, i;
+ 	unsigned long page_offset;
  	u64 start = iova;
  	long pinned;
- 	int ret = 0;
-@@ -645,7 +646,13 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
- 	if (perm & VHOST_ACCESS_WO)
- 		gup_flags |= FOLL_WRITE;
+@@ -668,7 +668,6 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
  
--	npages = PFN_UP(size + (iova & ~PAGE_MASK));
-+	page_offset = iova & ~PAGE_MASK;
-+	if (size > ULONG_MAX - page_offset) {
-+		ret = -EINVAL;
-+		goto free;
-+	}
-+
-+	npages = PFN_UP(size + page_offset);
- 	if (!npages) {
- 		ret = -EINVAL;
- 		goto free;
+ 	cur_base = uaddr & PAGE_MASK;
+ 	iova &= PAGE_MASK;
+-	nchunks = 0;
+ 
+ 	while (npages) {
+ 		sz2pin = min_t(unsigned long, npages, list_size);
+@@ -683,7 +682,6 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 			}
+ 			goto out;
+ 		}
+-		nchunks++;
+ 
+ 		if (!last_pfn)
+ 			map_pfn = page_to_pfn(page_list[0]);
+@@ -714,7 +712,6 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 
+ 				map_pfn = this_pfn;
+ 				iova += csize;
+-				nchunks = 0;
+ 			}
+ 
+ 			last_pfn = this_pfn;
+@@ -729,7 +726,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 			     PFN_PHYS(map_pfn), perm);
+ out:
+ 	if (ret) {
+-		if (nchunks) {
++		if (last_pfn) {
+ 			unsigned long pfn;
+ 
+ 			/*
+@@ -741,7 +738,6 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 			 * the corresponding unpinning will be handled by
+ 			 * vdpa_unmap().
+ 			 */
+-			WARN_ON(!last_pfn);
+ 			for (pfn = map_pfn; pfn <= last_pfn; pfn++)
+ 				unpin_user_page(pfn_to_page(pfn));
+ 		}
 -- 
 2.53.0
 
