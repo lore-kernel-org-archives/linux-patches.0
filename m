@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705750;
-	b=OMNKF5L5tB7gwzaEBNGlpOM0XkXJwSN6BMb/PhanPTUrg/9FbbBuUrx2lmQeEySnEKaz
-	 AidzI6vYqFtaTbeNHk7m+T72BjYFQjcMVrQ17sSAQkP8rG/RiINWe476hnkKUAmYzzKKJ
-	 iXwdqpBimJ4YzLF9OBh9klueT8s9WKCV9ckeWKzXYCfb0UeOIYRBnw7hibygYpdCkJWdx
-	 8ZClQOedrPJfmmNfRVulKKnqU3ihPsVVfZqdzt3KVygYGDzbSZ8lYH3/0ELbScnC4g9pg
-	 sRr3GA/2m4c3abhGeBktp45GkWNyogjw+VdWYOsv7kIUB3QDo6l8eOYezTXS5Vx6yUA==
+	t=1795705752;
+	b=E82EsXGjT8ApSH9HrIwVC0k6W4fJS3escmjc5En2SVZzVegOeAetmrYPl6JFIRCG//Mw
+	 6eNZME3C4hxMeE1EG8FYUBuM0Ebi2EsvCMFxVYbfbZZMwq1cErrQzS5F2p5qZmhUqfpVg
+	 OloBtI01VkZanwgmDLHtlEv8NqYx1i7oE0UQ6ROYPzDND4wnHyrKCSZw2Iz4boxeXq7Oy
+	 Di5Ec53rwIXOswBYWEB3BNAnBWpv4UFvOAb5hs+ap2bC0Xp3aw8y8i9CtnWs1mTd6bwOm
+	 2AU/FyX67KmQK1pJWeLxSp3xHpJ/c8oju/fOUpbjN0vdnx+Pts/G3BD1gxVTLy1Nx6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9P9RVzMJjhRVR5Wdw+GxHKyOIn0Gy6sh8Op7EjNi56Y=;
-	b=RegUuSKlNqNE26SYgv5w6ABn6/RKU/2/z078FeJdqXS9q5WA4T421rUoxQPuVukQeHiq
-	 bE6KxNfuFfrUdc+b6l7qGtepiGsOAgwiCKQG0sDuL9Zh7X4vPqmyg7XFHizXnb1fTzVOg
-	 jV4yySlQrfiAsymvKLuwv3GBEsa2Pur9JHBPJChVE+LCcTn88+Bi9lZ1YGYauDENO/Wk3
-	 FFZ6nTcaftwihJoMczaRLpeR23fzqXR8L0ibzN1QPQGg6wM0lM/oBWTnil+Ip/YwVtM8w
-	 wFyF8rtoZzbk0YpSpYmrNDXbebY8rt39tHOivT9KiaQGU8hk62K8Azhg8dW0f2UhSxA==
+	bh=zeC+wDfBsq6L1quN0Vk1OwtnyZ7dhPTsEt6fM6F7PhU=;
+	b=uj0Qlq3cnGnKJ9lZVS44lBgRYWnCpZ11ZYK5wBFxgDUvSmLtS4HsBTg/DrQydnAqorpN
+	 RMdmADCFoFVCrM5iD3q//nYuD8eME2wPAHLoWdgsiAMmPcZwFIl7oG2VA0vhQM2fBkdd+
+	 kh4M9nOs4whb/7xLz65SjgLw4U8eR3csdsj6QGdb+V0ZLCR7Z4OJSYWKcx6Y1Wu9tpwj+
+	 9q8KH10ysmGMPkmQKWtqMxYhkCxLthyepUlnekZYufTOcbzSBkkEWuPOsWoZFXrCLpvuo
+	 WXcrtCNEUVpiHudEvl3gEnNdTl9FIfeOrxBXxLQglUI97QfcSOSgHVnrprI64x8NOFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUwRaATh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zvNXmF9E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25991606A69F;
-	Thu, 26 Nov 2026 15:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A569C606A33C;
+	Thu, 26 Nov 2026 15:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUwRaATh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0FA1F000E0;
-	Thu, 26 Nov 2026 15:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zvNXmF9E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B91C1F000C0;
+	Thu, 26 Nov 2026 15:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705750;
-	bh=9P9RVzMJjhRVR5Wdw+GxHKyOIn0Gy6sh8Op7EjNi56Y=;
+	s=korg; t=1795705752;
+	bh=zeC+wDfBsq6L1quN0Vk1OwtnyZ7dhPTsEt6fM6F7PhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUwRaAThXpdhNY9sYBGymItyS29iq/wvZX+m1DItOJp+6mmHEAR5szcjuAWrNkbGz
-	 AU9Gioc2V8LIdG/AtgGWuC3JKAKetqQjRhXDt1kMrubacURH0qA6Wxvn0qG/edhNZR
-	 rZik05tfdZ4qH4EKEHaSgCJ6ML+EhXId4WJyo/+o=
+	b=zvNXmF9ECH2JNJD+3lifqbOf8FGlZM8CMKQColTa/4yayh9AMffaq0+XPVBT+VP/G
+	 LytNTslCynR/96GdCd0YzQBYtqM4qJIRpL4ANkQBSRg/ckkZBqeFGnD5DT9rzuwH/s
+	 TduIzHVHEoBIgP1V9YPvMSfbKRtKyhUmG5jXWt2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Czirr <maxx-cz@web.de>,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Semyon Maryasin <simeon@maryasin.name>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 301/319] iio: hid-sensor: Fix scale for magnetic north heading
-Date: Thu, 26 Nov 2026 15:41:09 +0100
-Message-ID: <20261126144013.551610109@linuxfoundation.org>
+Subject: [PATCH 5.15 302/319] iio: hid-sensors: fix fractional part for unit exponents -7 and -8
+Date: Thu, 26 Nov 2026 15:41:10 +0100
+Message-ID: <20261126144013.575300504@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,43 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Czirr <maxx-cz@web.de>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit c72dcaeaabd60e164e7324f80ccb037e879eefdd upstream.
+commit 79c8dffd84e9784ec05bea68dbe5e71f7ec9941a upstream.
 
-hid_sensor_format_scale() applies the HID unit exponent only when
-the usage and unit match an entry in unit_conversion[].
+split_micro_fraction() scales the remainder to micro units by
+multiplying it by 10^(6 - exp). The unit exponent of a HID field goes
+down to -8, so exp can be 7 or 8 here. Then the argument of int_pow()
+is negative, which the unsigned parameter turns into a huge power of
+ten: 0 modulo 2^64. As a result, the fractional part of a value read
+from the hysteresis attributes is always reported as 0.
 
-Rotation-from-north support uses
-HID_USAGE_SENSOR_ORIENT_COMP_MAGN_NORTH, but that usage has no entry in
-the conversion table. As a result, the unit exponent is ignored and the
-heading can be exposed with a scale of 1 instead of the scale specified
-by the HID descriptor.
+Divide by 10^(exp - 6) in these two cases. This matches the reverse
+conversion in convert_to_vtf_format().
 
-Add a unitless conversion entry so the HID unit exponent is applied to
-the magnetic north heading. A sensor reporting an exponent of -5 then
-correctly exposes a scale of 0.00001 instead of 1.
-
-Fixes: abea9c62c32f ("iio: hid-sensor-magn-3d: Add support for rotation from north")
+Fixes: 73c6768b710a ("iio: hid-sensors: Common attribute and trigger")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maximilian Czirr <maxx-cz@web.de>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Tested-by: Semyon Maryasin <simeon@maryasin.name>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/hid-sensors/hid-sensor-attributes.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/common/hid-sensors/hid-sensor-attributes.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
 +++ b/drivers/iio/common/hid-sensors/hid-sensor-attributes.c
-@@ -38,6 +38,8 @@ static struct {
- 	{HID_USAGE_SENSOR_COMPASS_3D, 0, 0, 1000000},
- 	{HID_USAGE_SENSOR_COMPASS_3D, HID_USAGE_SENSOR_UNITS_GAUSS, 1, 0},
+@@ -95,9 +95,14 @@ static void simple_div(int dividend, int
+ static void split_micro_fraction(unsigned int no, int exp, int *val1, int *val2)
+ {
+ 	int divisor = int_pow(10, exp);
++	unsigned int rem;
  
-+	{HID_USAGE_SENSOR_ORIENT_COMP_MAGN_NORTH, 0, 1, 0},
-+
- 	{HID_USAGE_SENSOR_INCLINOMETER_3D, 0, 0, 17453293},
- 	{HID_USAGE_SENSOR_INCLINOMETER_3D,
- 		HID_USAGE_SENSOR_UNITS_DEGREES, 0, 17453293},
+ 	*val1 = no / divisor;
+-	*val2 = no % divisor * int_pow(10, 6 - exp);
++	rem = no % divisor;
++	if (exp > 6)
++		*val2 = rem / (unsigned int)int_pow(10, exp - 6);
++	else
++		*val2 = rem * int_pow(10, 6 - exp);
+ }
+ 
+ /*
 
 
