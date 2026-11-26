@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704436;
-	b=Kq5NQN7h2AZwMRzj77EMP2xdkf/iZQKh3/M7KqjBb/l6WsHvNkvdlaX12m3SyqG+p+7q
-	 dH4cvhn5n9zOHcgrf5WsRNUo+0GqUWr+NzW7jVX9D7AbsN7w9oGm/8Cao2JNcnLLaYs3w
-	 3N5Y2VvM0bEZoPg7ZcohMP9M3boqBLkSFcfmTP0I6RKXnpKdUEH1qfynaGZ1r6Cb7nJ42
-	 T6qzDsrvG0I/bZPPVtHL/0PNHrQcZQ0z4O0BFX1X4AG2p3MLVL1yQgnuKJoTDDDgc+5wV
-	 9HR2EK2hgL76j3HAG3UzdFJ/hQnyKVkztr17vxZ4syxgWCdKrghqotWp2ERSptCsi8g==
+	t=1795704439;
+	b=V1MRPDWd3rdlpMv+fcmVPhiQZck8ppTQm26yQgEIf6B66EEkmObN2ZygOY/qBf8sbyVj
+	 hiK8IHvQeuTEoZ9JawlAPchrvlq2pNeSzHDdwLIMORUTlQa4CMLJEkQ1YZKADjU56JwfQ
+	 ZF98x92MBYKyi47261cvuAAsLVl7zdjBPq/1+hpTCu7OTh8J9+qpBLuZkXgk6T2Y9sPj4
+	 K3Dkp49h1EngM29uYrAOkq8rYQLJNML7h9IkatdjvgDLBxXObMFMVJS3/S5wAo88MOo8j
+	 eH9FvwBJ6epKVroxuH6U9pHfHqU1sK0balHuiALNt+OTfXE3QE+B3VVSrfSOQw3yPpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C868S1iW/8DgJ+0jRuVmsz3Qy4+n/DCIdVXHqgB8vtk=;
-	b=uDjVsVWkVYD92918A18hIVxZSxx5X/3u70l2peICh+JJwBvV0sSV7xBkic0HgtN7s7GZ
-	 YOoRwEVeIG2bqsIByFhqu/mKvNgVUVl+UUwF++poBXpfehEGq3eot3BmHPRYe+rAw/qI1
-	 jrhBwo8x1rBdlvFRyj+6nVKhhBXUh+Vu7U7fjf5LfNvRx+jAI6BMZF7OFcPUqpfp1qX68
-	 bakiGIFmAF75MubNmcbiLF/IDeDlc9R+67dvLASOpFlE8uI8CN5ef92yLIMEaVbIgrKQF
-	 CkV0oWQlZB175Jv9pDuAU3xK6H+B3JqaQeGIya1+mH53WE33/6qBf0Fa9k+QmwFSLew==
+	bh=xYN4rrrDm29r9Mh/WHd/FBlslY/o/DP2CAgvxCQPMYE=;
+	b=5A8r5xP6ZqY8wL2FIetIQKVfJ9kKUjGkeWqIdbShC/1S/gDItYKU15LsuVFKPsl0sBA+
+	 +2BpEtve5vqrk7SweMD3NXBUYccXXX8Lvs7/ca7oxeAJEMQpd8AveheRqrVi3a48rnwox
+	 WqA9A/qhjK066qTmQAMRo+oEK/dVu6kPE+jXAdchXdUcJa4JxEsGotHofHvwRifhGwhnW
+	 zD8fjmv7TFGORtsvM1uQuvHUMl5L8DnmDgVTiuIbk9zBeE6EGRz7xso6cVDX3eLuJ2z3e
+	 C3v8GBAyb6ZPI280PT7apf+lPulTd4V9VObT+GpPY+YtptIGdz61LmSRarOYzy0Z9DA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6ohzqjY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kI0EOYzW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A572A606A31C;
-	Thu, 26 Nov 2026 14:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0883606A31E;
+	Thu, 26 Nov 2026 14:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6ohzqjY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134821F000C4;
-	Thu, 26 Nov 2026 14:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kI0EOYzW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D131F000C4;
+	Thu, 26 Nov 2026 14:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704436;
-	bh=C868S1iW/8DgJ+0jRuVmsz3Qy4+n/DCIdVXHqgB8vtk=;
+	s=korg; t=1795704439;
+	bh=xYN4rrrDm29r9Mh/WHd/FBlslY/o/DP2CAgvxCQPMYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6ohzqjYSX13BvmjLvbJ+xD9NO4jag2XzOU/vrgCUDeJo/AeuqFyJhJjhLXOtYsjK
-	 DmwfgdAHl8+6VrX3CxHcU1keGr31ipwfXmcNITDxvEgTzDKDaXWN1H2zTD21cRd09J
-	 RUN9q/he+gylAU5oKNDrCzgB2BcT5YrmNkz2+w6g=
+	b=kI0EOYzWuucdnOSXRQ2aaBhaY5Yv3kTXx+f6fGXESbsQKhXfm+7+HCoAM1e6gpPwJ
+	 /Okgsl3LH3NtL1UxhV5jGOWdOKVPp2wNmIYiovLtvZS8Euuz7TbezOVaXDSWD8p8Yi
+	 mj28bQudggTDgmwL9NDKFOyz/3OpOpcP/WVQkJfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Umang Pokhriyal <umangpokhriyall@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 124/265] net: require a full socket in sock_confirm_neigh()
-Date: Thu, 26 Nov 2026 15:37:34 +0100
-Message-ID: <20261126143613.698045233@linuxfoundation.org>
+Subject: [PATCH 5.10 125/265] tun: delete the flow entries of the moved queue on detach
+Date: Thu, 26 Nov 2026 15:37:35 +0100
+Message-ID: <20261126143613.769457279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,86 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Umang Pokhriyal <umangpokhriyall@gmail.com>
 
-[ Upstream commit c78b47704934e44442f4e48bfdcc99039e3b85a5 ]
+[ Upstream commit 4cc0a3f897074cea28dae38f1cd9bb230dae5d86 ]
 
-An skb can retain dst_pending_confirm after its original output and
-socket owner have changed. For example, a raw MSG_CONFIRM packet can
-cross veth, have a TCP request socket assigned by TPROXY, and be bridged
-into gretap. Neighbor output for the outer packet then calls
-sock_confirm_neigh() with the request socket in skb->sk.
+When a queue is detached, __tun_detach() moves the last queue into the
+freed slot and decrements tun->numqueues. The flow entries that point at
+the old index of the moved queue, now tun->numqueues, are meant to be
+deleted, but the call passes tun->numqueues + 1, an index that never
+exists, so nothing is deleted.
 
-The helper unconditionally treats a non-NULL skb->sk as a full socket
-when accessing sk_dst_pending_confirm. TCP request and TIME_WAIT sockets
-do not contain that field. This produces an out-of-bounds four-byte read
-and, if the word is nonzero, an out-of-bounds four-byte zero write. A
-KASAN-enabled kernel reports:
+Until those entries are refreshed by a write on their flow or age out,
+tun_automq_select_queue() returns an index past the last queue, and
+netdev_core_pick_tx() sends every such flow to queue 0 and warns:
 
-  BUG: KASAN: slab-out-of-bounds in ip_finish_output2+0xc9f/0xd60
-  Read of size 4 at addr ffff8880bdc3d880 by task tproxy_dst_conf/1771
+  tapq0 selects TX queue 3, but real number of TX queues is 3
 
-Require sk_fullsock() before accessing the socket field, moving the
-existing helper earlier in the header to make it available here. Keep
-neigh_confirm() independent of the socket type so the skb's neighbor
-confirmation still works, including for socketless packets. This also
-covers the IPv6, VRF, and BPF neighbor-output callers.
+Found with an LLM while testing how a VMM detaches tap queues when a
+guest lowers its virtio-net queue pairs. With four queues, 30 flows
+learned on queue 3 and queue 1 detached, all 30 went to queue 0 with the
+warning; with this patch they are spread by hash and no warning is
+printed (3 runs each, in a guest booted on net).
 
-Fixes: 4ff0620354f2 ("net: add dst_pending_confirm flag to skbuff")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261104132900.1071940-1-edumazet@kernel.org
+Pass tun->numqueues.
+
+Fixes: 96442e42429e ("tuntap: choose the txq based on rxq")
+Signed-off-by: Umang Pokhriyal <umangpokhriyall@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261104174240.138491-1-umangpokhriyall@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/net/tun.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 0598dcd65f2ca..3c58b28570c41 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2125,6 +2125,14 @@ struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie);
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index d706c7fd6adee..5dd99581dfcbf 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -683,7 +683,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
+ 		}
  
- struct dst_entry *sk_dst_check(struct sock *sk, u32 cookie);
- 
-+/* This helper checks if a socket is a full socket,
-+ * ie _not_ a timewait or request socket.
-+ */
-+static inline bool sk_fullsock(const struct sock *sk)
-+{
-+	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
-+}
-+
- static inline void sk_dst_confirm(struct sock *sk)
- {
- 	if (!READ_ONCE(sk->sk_dst_pending_confirm))
-@@ -2136,7 +2144,8 @@ static inline void sock_confirm_neigh(struct sk_buff *skb, struct neighbour *n)
- 	if (skb_get_dst_pending_confirm(skb)) {
- 		struct sock *sk = skb->sk;
- 
--		if (sk && READ_ONCE(sk->sk_dst_pending_confirm))
-+		if (sk && sk_fullsock(sk) &&
-+		    READ_ONCE(sk->sk_dst_pending_confirm))
- 			WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
- 		neigh_confirm(n);
- 	}
-@@ -2710,14 +2719,6 @@ skb_sk_is_prefetched(struct sk_buff *skb)
- #endif /* CONFIG_INET */
- }
- 
--/* This helper checks if a socket is a full socket,
-- * ie _not_ a timewait or request socket.
-- */
--static inline bool sk_fullsock(const struct sock *sk)
--{
--	return (1 << sk->sk_state) & ~(TCPF_TIME_WAIT | TCPF_NEW_SYN_RECV);
--}
--
- static inline bool
- sk_is_refcounted(struct sock *sk)
- {
+ 		synchronize_net();
+-		tun_flow_delete_by_queue(tun, tun->numqueues + 1);
++		tun_flow_delete_by_queue(tun, tun->numqueues);
+ 		/* Drop read queue */
+ 		tun_queue_purge(tfile);
+ 		tun_set_real_num_queues(tun);
 -- 
 2.53.0
 
