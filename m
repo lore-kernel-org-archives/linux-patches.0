@@ -1,65 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795706473;
-	b=PHKGrAxyd/QOSw2WTYY3bsi191r/pXi5oJwta3vKnJNsy78vxoV4XgqvuuGxeoFgkHi8
-	 2759UPjYdrlmt10cxViARsjCeQuvUceouc7BUlwxTpsBNeVRzSLoiCE00BVrf7w11uIjB
-	 MN6+c5umu6xDRB7Ei/XaFjvwx8NIT6G9MhD68x4+xfNgX/ShRQcf1FgBMURRF/wqzQfxW
-	 OclmqWdqs6gKzFxVCAEB9jxaGFTiwcEbKhfcKTCG6MyrYRj3Ksxy/3zoOA7F88lbewTdK
-	 +l4PoVQjZZDPgzfq9VN78WZStQb3G5I4hnrwD2gt5bMgNtnlmlZCQ2lviQwmN9A7jMw==
+	t=1795708332;
+	b=KkaT4HPPdVbTYsdzKso9FsrjoOLuyW0HkEepunpqGPkzEMprGM/ol5KuRV8iFvAExX/a
+	 4DuoDJnk8PInG3ksG+YNhv0YjIDO3BIgqJnUSiotFppTbbTKa6dC0N05VEe+fjONLTPVG
+	 vdlzjxeIFGLQoyGISgb/ZfH9dDIcINIjCtElj5rGApcsIP9ML1UJdeyPDwxyyeunOCBWw
+	 QyiAN1nxONxlq0l/d/OIEOBPmC1Vq9nKijMWykaTXpbxC2uud+yvoKLlrD8KweFiYgl4m
+	 f4AMz5bs9yenFarNfKwQHYeJbawuHs5o12epamp0KhfUeT+ubTaEg9QELmp0uPBBViA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795706473;
-	h=DMARC-Filter:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=LPCVK2nUqlJeOSs2RKIyxIYO2gZqoAZrPrguVsEqfzs=;
-	b=pOCUaiZ7SwAzuKcaS1lokdbn65CzODK2zpxb4+6WwcbqZD0Wh3G6RdKJlHaDr9obp3Aw
-	 LixgKIM+eKSe0qJuCA7jnq8E+DnOlhk7wzgKUc6vGdSmWIzhoK/eRnXPaCF2GmwaYot6s
-	 Gq9+kEH1SYo8VkOg7YL+fdAWIhIm+Xue0aQ6rof1/wUP2crWpgTZssbFgJtRIKcJIvJQv
-	 R/p8WDop2FNyRs1O8yRGRkLE3E/L/bEnlDJO1bq4frY838WkRtkQYXGpCwxoWapks6w+q
-	 4Md64j0vzkGRAYfqYLxTTVMSpcuC084x2poFQBpXieErs74R0KOcCD9GTJOdghudmaQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795708332;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=PsJrhw/qD5kUJUapuNeSh8uHKjzWdiRgnqrKaM1xuOk=;
+	b=L0gDB4FwRpalC3fd9HpH1lcXOt5LVcsICWx6QN8n9/hp/8FD3/aDe4opeqkRDEhasOXq
+	 w7asuFDyDHgqqmsT9+Tz8MHWhI9SbRY/Oj3v/XIcLi5WghI8CVU7sH6YtgIVEu8+k1IyT
+	 yEI1kg2/miWaDY7Fpw7o61fI5YVt4JWwCGBeiN3deH+OQPwdqBkkjhD4tNVbhuiGr4Lp6
+	 RB+Mm1QI5RihGo9LnaALI+YzJuxHuNiGwpj3WpjKy+culqJQz0nbpOdXSpjjo3kGEqryS
+	 ZLL/K/ZChFbjbY0Nl+HTONXfGwC52eR47bwfkWYnF1iEn2cRx5ubNva4Uv9A5oCBh8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=B9qjo5kJ;
-	arc=none smtp.remote-ip=185.128.211.58
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD9C606A31E;
-	Thu, 26 Nov 2026 15:21:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBD9C606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=So+WdnWi;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8303A606A31C;
+	Thu, 26 Nov 2026 15:52:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8303A606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=B9qjo5kJ
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=librecast.net; s=2026110900; h=In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=LPCVK2nUqlJeOSs2RKIyxIYO2gZqoAZrPrguVsEqfzs=; t=1795706471; x=1796570471; 
-	b=B9qjo5kJad71kR/OssxJlLOQgD5zBNxDB4RhdGlfacNeMIOo95GQStWgCJ1pxxVjqmFjWwxRi+1
-	FcYNs9s4J+ztWfZAhJLMlLd4o7ls1y0GKNCE2QVvdTiNoUHk/OFFH7XGgYtMzlmIvb4GJmhwzd7QL
-	CepB8Ad61AMRHQ8bNKEOGE422YOJYY+RXJ+gkCgZu86ViEt4dO3VQ4M7SZgzUoN7vIAAS86UJ4Hrt
-	0LlFCd9tDGALIf0LUkjM400JHjEt0mx0A/6aMnBodfN1yA4i2aPoK8MOjTi+XvIi9T/bNYNrTzCVx
-	bLq3VK8f2w5NR3lGU9mU13Jbw7+44lloC1vQ==;
-Date: Thu, 26 Nov 2026 16:21:03 +0100
-From: Brett A C Sheffield <bacs@librecast.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/319] 5.15.227-rc1 review
-Message-ID: <awhOX69A7DAA_-UX@karahi.librecast.net>
-References: <20261126144006.732901931@linuxfoundation.org>
- <awhK_0exBWstjZw7@karahi.librecast.net>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=So+WdnWi
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E995E1BA8;
+	Thu, 26 Nov 2026 07:52:07 -0800 (PST)
+Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8D9373F632;
+	Thu, 26 Nov 2026 07:52:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795708330; bh=t/iAXo76mNWOYi6NXRXLm9HYRbfENwEmeSuVZl+vjQ8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=So+WdnWiITxUEA+zPA0qZrHfIgEWB8UDt3yn4IEO5THcFQuUupbSyZ38WSbYLlzZO
+	 Rdd4TpDOmHWWTHsRW+t1aSXOFu6+xeusbEXx8t6R4TR3fxZ+3I/eAfWH7BVYVPd6hg
+	 fcIkARwHaaJVtuaYyOlwbtgwfzyTh/vzHdKQd+qA=
+Date: Thu, 26 Nov 2026 15:52:00 +0000
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+	linux-coco@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Christian K?nig <christian.koenig@amd.com>,
+	Joerg Roedel <joro@8bytes.org>, Marc Zyngier <maz@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Thomas Gleixner <tglx@kernel.org>, Will Deacon <will@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Brian Starkey <Brian.Starkey@arm.com>,
+	John Stultz <jstultz@google.com>,
+	Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H . Peter Anvin" <hpa@zytor.com>, Kiryl Shutsemau <kas@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	"K . Y . Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
+	linaro-mm-sig@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v10 04/13] irqchip/gic-v3-its: Allocate shared tables
+ using CoCo shared memory allocator
+Message-ID: <awhVoDXluqpncgcd@arm.com>
+References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
+ <20261116091137.94252-5-aneesh.kumar@kernel.org>
+ <awQd81MwZqi55gf8@arm.com>
+ <yq5aa4mybbmv.fsf@kernel.org>
+ <20261124134621.GI9566@ziepe.ca>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -69,75 +109,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <awhK_0exBWstjZw7@karahi.librecast.net>
+In-Reply-To: <20261124134621.GI9566@ziepe.ca>
 
-On 2026-11-26 16:06, Brett A C Sheffield wrote:
-> On 2026-11-26 15:36, Greg Kroah-Hartman wrote:
-> > -------------
-> > Note, this is the LAST 5.15.y kernel release to happen.  After this, it
-> > is end-of-life.  You should not be using this kernel tree at all, UNLESS
-> > you are an Android system.  If you are running Android, please go get
-> > your 5.15.y updates from Google's public kernel tree after this release
-> > for any "important" bugfixes for that platform as they will be keeping
-> > it alive for another year or so for their specific platform
-> > configurations and then it will wind down. But really, even Android
-> > systems should have moved on by now to a more modern kernel...
-> > -------------
-> > 
-> > This is the start of the stable review cycle for the 5.15.227 release.
-> > There are 319 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 28 Nov 2026 14:39:40 +0000.
-> > Anything received after that time might be too late.
+On Tue, Nov 24, 2026 at 09:46:21AM -0400, Jason Gunthorpe wrote:
+> On Tue, Nov 24, 2026 at 07:00:00PM +0530, Aneesh Kumar K.V wrote:
 > 
-> Build failure:
+> > Taking Jason's feedback into account, we could have the allocator
+> > request compound pages and recover the actual allocation order with
+> > compound_order(). That would avoid passing an order to free:
+> > 
+> > void *alloc_cc_shared_node(int nid, gfp_t gfp, unsigned int order);
+> > void *alloc_cc_shared(gfp_t gfp, unsigned int order);
+> > void free_cc_shared(void *addr);
 > 
->   CC      init/do_mounts_rd.o
-> init/do_mounts_rd.c: In function ‘rd_load_image’:
-> init/do_mounts_rd.c:277:9: error: implicit declaration of function ‘init_flush_fput’ [-Wimplicit-function-declaration]
->   277 |         init_flush_fput();
->       |         ^~~~~~~~~~~~~~~
-> make[1]: *** [scripts/Makefile.build:289: init/do_mounts_rd.o] Error 1
-> make: *** [Makefile:1925: init] Error 2
+> It probably shouldn't be order here, that is hard to use. Just size_t
+> len
+> 
+> And round up internally
 
-There's only one commit that's touched that file, but here's the bisect log
-anyway to confirm:
-
-git bisect start
-# status: waiting for both 'good' and 'bad' commits
-# bad: [a9da0b4a13a74d7a1467763436363f282daf1dc3] Linux 5.15.227-rc1
-git bisect bad a9da0b4a13a74d7a1467763436363f282daf1dc3
-# status: waiting for 'good' commit(s), 'bad' commit known
-# good: [4f2df9a01754521fbba3493e8ad91ef65515e68c] Linux 5.15.226
-git bisect good 4f2df9a01754521fbba3493e8ad91ef65515e68c
-# bad: [47697c180afc80509e5e97988d4d89752e2c2a0b] igmp: use the joined device when leaving a multicast group
-git bisect bad 47697c180afc80509e5e97988d4d89752e2c2a0b
-# good: [742f6ce280227e06c5733ff398d06ec3493dab21] nvmet-tcp: limit the connections accepted per work run
-git bisect good 742f6ce280227e06c5733ff398d06ec3493dab21
-# bad: [6b9cba97bd3643bcc6e34d5a820a4355b6338aa9] locking/osq: Switch osq_wait_next()/atomic_cmpxchg() ordering
-git bisect bad 6b9cba97bd3643bcc6e34d5a820a4355b6338aa9
-# good: [61c45b12bc4686b73eebba53ce4c21cc294d4410] ALSA: hda/core: Stop capability walk on empty capability header
-git bisect good 61c45b12bc4686b73eebba53ce4c21cc294d4410
-# good: [4ce5f905314dc6434f6f1aa3f2d24c7de0d17076] MIPS: Avoid dead code/data elimination when using recordmcount
-git bisect good 4ce5f905314dc6434f6f1aa3f2d24c7de0d17076
-# bad: [d72db6abd57295c6353918412ce527de32d317a5] include/linux/fs.h: add inode_lock_killable()
-git bisect bad d72db6abd57295c6353918412ce527de32d317a5
-# good: [c2f40975285feab0a3a0733a193290db0f941a52] MIPS: SB1250: Validate and update IRQ affinity
-git bisect good c2f40975285feab0a3a0733a193290db0f941a52
-# bad: [099ed898765127422a634c2768820b3de329ef5d] vfs: preserve subsecond timestamps at filesystem time limits
-git bisect bad 099ed898765127422a634c2768820b3de329ef5d
-# bad: [f1311182306c2b85f4724cb776467034a36baaa6] initrd: flush deferred fput() before mounting root
-git bisect bad f1311182306c2b85f4724cb776467034a36baaa6
-# first 'bad' commit: [f1311182306c2b85f4724cb776467034a36baaa6] initrd: flush deferred fput() before mounting root
-
-Confirmed that reverting f1311182306c2b85f4724cb776467034a36baaa6 fixes the
-build.
-
+Minor point in favour of keeping the '_pages' naming and order is that
+it makes it more obvious what alignment is returned for code that needs
+it like the ITS. Otherwise we can just document it, I don't have a
+strong opinion either way (only that it's simpler than what was proposed
+earlier).
 
 -- 
-Brett Sheffield (he/him)
+Catalin
