@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705016;
-	b=IzS6lSQu6f1wZNIs/DIy6q+EvuF6kI6UDRma1+gOnKu18cKXcxqTgvlmLJXbFuozw+0b
-	 o5pGZfWpUoxxk1ccmVvKNoSjxTdCn501i7eyMxc/XtKV9EgjE5u2N1niiDwaPiG+pZozl
-	 THuHHMTN5iz6Wt/86qrt2Mxc5qRkoqQJut+wZIe+mltCGYgeFCQldirPvHQkUCSgiHQCa
-	 LyOdqy15iTEomO05a+1S98Ac3WD6LhmEpb7P/18fw0S15aRkC4e1R5xF3Fcy+n/Ih5B8s
-	 J/2ueyFhP/8wgW6jVmD+ZDUe7nz2xl+uRoLNPbby5NolW+67JoGnxp1UrVtttL868Wg==
+	t=1795705019;
+	b=x2NgaK+jFcsMNBaB6S3NqjiGGbHJKLWmk6mibddtulC6uMy6yhxlxrYa4DVQYNUeflbf
+	 TOm8fmsr72g7XP8MxKu8CtvSurV4nJ+X/kLkujuPCYsK0Fp+aRKoy5ghYItNLRhmpl3ED
+	 7PTG4ec6uEK9pBslDeW7QkBIljtGbIQcBSOVFb9pCeNvk6D7XUMLVxyxnnO8PU5zxTGdO
+	 JtpQ/mgy1eea14yeKjOTAmVRhOlR0QyOsl4yos8Mii+WbzLxozEyywObVxRfJ58BbkTii
+	 cYSLNShgQe+o3EK2SOei/tnhCu35FeRGDMbSYRVHqg2UkX6/f6UYTKKP7rFI9qM0dEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705019;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OrCotzV+tWgVs25YmBidjCqWgHupo0G+k+NkaLbuR9M=;
-	b=4rjBcFpbUJ1Kh2ljvOthFMJU/Ath/eDtYvBf2UCxdHDYJZ8PbpTDhmX4SbOMenAL5GTG
-	 uRLmfJgWjGByqDiTaj94w3PI74IvKwTMbKThjIJdvsTXmZF4vpg1eKj9rUWBAahS0OG5F
-	 rmt36ojiZAkGbje81fgmUVIzlqffydCCpDSzmQliiY9YNx+brRE9ehvegFvu5dzPhVv6X
-	 Jr5UyvmNcpXvB73ZCwEInLl3uJv85R8oabSc6h7xtFZxIiTwV9W57exHoE7qxUGweGFCH
-	 iLQODSyg5f+TLuBEpb/DJGl8CM52Y0mT1R1Yt/eJoj8xAd6pK5kgBjLZoUY4a0VgwUA==
+	bh=yJM7qEXS98xxKqTu0aJuehcmCmDf/zwZHuHaqC/FUYw=;
+	b=LAXz48bXXRFQrCuKgp2XFgfXhfEIUvY5t/rs88vYp6TVHuxUGa/YuM1uQd2COlLzOC1B
+	 nfS02WcYASb+uZHSOx3Me6pg97qCBNJMAwtzRpipWNJnwrs0kKpBsReaykK+G+XIkVX0M
+	 PksviToRlzSTgfgAi5LY5sbmxMLFwhlw5Hv9AuJHZwALQDcfOZfxHorzwOV8AwzA4Wg90
+	 5Xo2Jdg5zlYhf7Dze2SLor8jXVealRdEOMH9hHXgmKB8zo2mJUB4fv371dIIDTp0vKoX2
+	 OagAMKyj1M4AhVg+qhgtqb5bEWFxiVb3H6Nvmt4CAPxemziuzlbyjziG2adqVMDZT5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rilUsrxV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLPPl+Ut;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595F4606A33D;
-	Thu, 26 Nov 2026 14:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0954C606A33E;
+	Thu, 26 Nov 2026 14:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rilUsrxV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6271F000C0;
-	Thu, 26 Nov 2026 14:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLPPl+Ut
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D5C1F000C0;
+	Thu, 26 Nov 2026 14:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705016;
-	bh=OrCotzV+tWgVs25YmBidjCqWgHupo0G+k+NkaLbuR9M=;
+	s=korg; t=1795705018;
+	bh=yJM7qEXS98xxKqTu0aJuehcmCmDf/zwZHuHaqC/FUYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rilUsrxVhZoLqvlo6nWPMfYaNpdEOd2C9tZiqZXM7d9s0Jt1/BNVv8xHEjKnARJBe
-	 fJW11ggei/LZOZRpTyDEfNCHBHMSQIpivEReFSTXeLtew3J/XJ0zD5H1vzYI1lPRcR
-	 A0oXKvTM+vJnGP0UaLR/z/DXwopTZ4luEzXqJTyc=
+	b=JLPPl+UtU9JLVQIcYlTDKUTjR2irYmSonZmGgaIzXkEZDQ5Xk0n8NtECYmmikS3kJ
+	 ueU021wdtCNkH5m/kBxK4XArSPfvEcywheV5I5PMuDtUa7slLw1xh4u43/CLr6OwQs
+	 g9dErLgVbDUuFsagf4yWmdruwSPxD0aFywCIDnCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Austin <alex.austin@amd.com>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/319] sfc: ptp: avoid racing PPS timestamp updates
-Date: Thu, 26 Nov 2026 15:37:02 +0100
-Message-ID: <20261126144007.958339556@linuxfoundation.org>
+Subject: [PATCH 5.15 055/319] vhost-scsi: preserve event ordering
+Date: Thu, 26 Nov 2026 15:37:03 +0100
+Message-ID: <20261126144007.980580947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,131 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Austin <alex.austin@amd.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 23d23e6c6517d0fea4f64340a23e33c89f82c03c ]
+[ Upstream commit a9a428115b7d8aa45e12e41899f90f60551bfa82 ]
 
-efx_ptp_pps_worker() can race with SIOCHWTSTAMP via
-efx_ptp_change_mode(). After the worker completes synchronization, the
-ioctl can start another synchronization and update host_time_pps while
-the worker copies it into the PPS event. This can report a partially
-updated timestamp. Serializing synchronization transactions alone does
-not protect this copy, which happens after phc_lock is released.
+vhost_scsi_send_evt() uses llist_add(), so pending events are LIFO.
+vhost_scsi_complete_events() walks the detached list directly.
+This can deliver a later hotplug or hotunplug event before an earlier
+one.
 
-Return the timestamp through the caller's own pps_event_time rather
-than the shared field in efx_ptp_data, so the worker reads storage no
-one else can write.
+Reverse the detached list before processing it.
+This keeps delivery in enqueue order.
 
-Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
-Signed-off-by: Alex Austin <alex.austin@amd.com>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Link: https://patch.msgid.link/20261026123023.3566549-4-alex.austin@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a6c9af87363c ("tcm_vhost: Add hotplug/hotunplug support")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260915094244.7900-2-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ptp.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/vhost/scsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
-index 801a28cb00ad1..b720ee908cd70 100644
---- a/drivers/net/ethernet/sfc/ptp.c
-+++ b/drivers/net/ethernet/sfc/ptp.c
-@@ -260,7 +260,6 @@ struct efx_ptp_timeset {
-  * @evt_frag_idx: Current fragment number
-  * @evt_code: Last event code
-  * @start: Address at which MC indicates ready for synchronisation
-- * @host_time_pps: Host time at last PPS
-  * @adjfreq_ppb_shift: Shift required to convert scaled parts-per-billion
-  * frequency adjustment into a fixed point fractional nanosecond format.
-  * @current_adjfreq: Current ppb adjustment.
-@@ -327,7 +326,6 @@ struct efx_ptp_data {
- 	int evt_frag_idx;
- 	int evt_code;
- 	struct efx_buffer start;
--	struct pps_event_time host_time_pps;
- 	unsigned int adjfreq_ppb_shift;
- 	s64 current_adjfreq;
- 	struct ptp_clock *phc_clock;
-@@ -932,7 +930,8 @@ static void efx_ptp_read_timeset(MCDI_DECLARE_STRUCT_PTR(data),
- static int
- efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 		      size_t response_length,
--		      const struct pps_event_time *last_time)
-+		      const struct pps_event_time *last_time,
-+		      struct pps_event_time *host_time_pps)
- {
- 	unsigned number_readings =
- 		MCDI_VAR_ARRAY_LEN(response_length,
-@@ -1010,6 +1009,10 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 			   "PTP bad synchronisation seconds\n");
- 		return -EAGAIN;
- 	}
-+
-+	if (!host_time_pps)
-+		return 0;
-+
- 	delta.tv_sec = (last_sec - start_sec) & 1;
- 	delta.tv_nsec =
- 		last_time->ts_real.tv_nsec -
-@@ -1026,8 +1029,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 	delta.tv_nsec += ktime_to_timespec64(mc_time).tv_nsec;
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index fde8e61c236ec..18d2b0c28c6dc 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -516,7 +516,7 @@ static void vhost_scsi_evt_work(struct vhost_work *work)
+ 	struct llist_node *llnode;
  
- 	/* Set PPS timestamp to match NIC top of second */
--	ptp->host_time_pps = *last_time;
--	pps_sub_ts(&ptp->host_time_pps, delta);
-+	*host_time_pps = *last_time;
-+	pps_sub_ts(host_time_pps, delta);
- 
- 	return 0;
- }
-@@ -1040,7 +1043,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
-  * the function that registered it, so a secondary function can capture here
-  * without serializing against the primary.
-  */
--static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
-+static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings,
-+			       struct pps_event_time *host_time_pps)
- {
- 	struct efx_ptp_data *ptp = efx->ptp_data;
- 	MCDI_DECLARE_BUF(synch_buf, MC_CMD_PTP_OUT_SYNCHRONIZE_LENMAX);
-@@ -1089,7 +1093,7 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
- 				 &response_length);
- 	if (rc == 0) {
- 		rc = efx_ptp_process_times(efx, synch_buf, response_length,
--					   &last_time);
-+					   &last_time, host_time_pps);
- 		if (rc == 0)
- 			++ptp->good_syncs;
- 		else
-@@ -1427,14 +1431,15 @@ static void efx_ptp_pps_worker(struct work_struct *work)
- {
- 	struct efx_ptp_data *ptp =
- 		container_of(work, struct efx_ptp_data, pps_work);
-+	struct pps_event_time host_time_pps = {};
- 	struct efx_nic *efx = ptp->efx;
- 	struct ptp_clock_event ptp_evt;
- 
--	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS))
-+	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS, &host_time_pps))
- 		return;
- 
- 	ptp_evt.type = PTP_CLOCK_PPSUSR;
--	ptp_evt.pps_times = ptp->host_time_pps;
-+	ptp_evt.pps_times = host_time_pps;
- 	ptp_clock_event(ptp->phc_clock, &ptp_evt);
- }
- 
-@@ -1796,7 +1801,8 @@ int efx_ptp_change_mode(struct efx_nic *efx, bool enable_wanted,
- 				rc = efx_ptp_start(efx);
- 			if (rc == 0) {
- 				rc = efx_ptp_synchronize(efx,
--							 PTP_SYNC_ATTEMPTS * 2);
-+							 PTP_SYNC_ATTEMPTS * 2,
-+							 NULL);
- 				if (rc != 0)
- 					efx_ptp_stop(efx);
- 			}
+ 	mutex_lock(&vq->mutex);
+-	llnode = llist_del_all(&vs->vs_event_list);
++	llnode = llist_reverse_order(llist_del_all(&vs->vs_event_list));
+ 	llist_for_each_entry_safe(evt, t, llnode, list) {
+ 		vhost_scsi_do_evt_work(vs, evt);
+ 		vhost_scsi_free_evt(vs, evt);
 -- 
 2.53.0
 
