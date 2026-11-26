@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704163;
-	b=QNVtQeAbBaYncB/eFuJgwsySdOkKAQ1m/+xgxs6DDmnUXrmG0Je7mdS6RxMUU/XG0biQ
-	 ecsXuaBzJWvODIHfQjEGK7atTxYroMxiUwmql/PlRynVGpBXOYm0gVbXT+yWrQkYwnr+/
-	 0ITufwNWQER0qqRNLkzk14Ar2pQlz2y+wBL13wJxK0seZZ4im9r2iZqG9bANtD/whlD+s
-	 PLZDwJvcCP76Gt44kTIaNGfTDP1ze0T6ot8lPdAf7opl3ltpc1meSqms55C+IlhjEYWI7
-	 T8MAWAdnOQQFDV8kcftIWCUl/6R4/rRTB3hT50nRucH2XRYKq905KCVBhFoDNoNTEag==
+	t=1795704166;
+	b=b9HFpfDtbqx8K7k9GZ05eogkHPEIYevsZy1nZZ0LtnuFrzkrZJ9sVTpPNmR90N4eP7zo
+	 O37roX5HJuebiv/Xc1LNwkf+IoNpNkRwWSvWiPBG/4toE7Qul8LJiJ8ZwfQ2xQTrxapCP
+	 35pxdh2y72cbO4DDsKpjesBu8QwPA03MORhr3nOCZcDPIe3yzFXu2VzUopgwCZRPNHehr
+	 84LQemSzIWEr8AjhvfBXRFYkn/exOv7lX5k62wQBNtG38zEheIM/TuYXBQqO8zCf84cJ+
+	 ssD69RaH2kGH1ctsxPNraaBRIxkdeZSuJftB4WBPxDan+zqTE9Y5GsOCzYAZ4yCg29A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704163;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e7sQa8X0672ZzdPDwvXMjA/ML2cFQy0h9CADMOOIwtw=;
-	b=v2hSZn0S9NJzai6+Pb7kSLtyo3M3La3xeA1fNc/v6lEMfhdbHqME+JNYfxsVFwUIQBUz
-	 By+Nr87cnLmBLJRlxH4+f2SEdh0ZmPITIhOCHJ/pg4j+yxP81R/dT3d3U8jNXn3l0ZIpG
-	 OlrBVPp63SxNRXeeKTR3rSH8m0/xUeewQcbvbFc2DZlZ/EOjru8KeHEK0FuIM2KN4BZdN
-	 SVm2WByanHc3ZOkUytYvZtCe0SlxOH8RhydwQv3rGzQSVNdnSh1QrterXib7IcVEievxi
-	 wY8K1pIMbVG0HJtGJJol7apTqlsaXYrUwKSLr7VLDOVMyIT+kYA/2aST/QMf/ny8pjQ==
+	bh=J1w/VqvQ+uMDSQ9sW+MOYMYz98zLeTYsNfebKn6HFBI=;
+	b=DslRREiZcB4hMzhmlBivAOX5rtrqUMhZtvn2+BqF+UcdhWcymMEaHzypFbtjujd2+EWf
+	 R+3E9rVgdnto/0ni0lWTMrK4OaqowafaE9i5GwCV1OHau1x8U+992pjE5Jq5elkqu9dtW
+	 3kjgdgpW4jBVfRfusRCUnxyq3+QJClmaIYaiaRCjgS8hGHwOcYw5t/kyypf6FXHNsQ+zK
+	 fZFVHhY86P2v7Y/KKYMH6ns6lCVRbAcFLuHnMJLTwyNW9jlPhQZndEsspDuB1FgWVyJFU
+	 YPmA+m18cuzZPeRs7/LpAFD8JKuyWVKTMqMUWl0n+LTW6/DFKzxz88ezQ64tXbiUMrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRTSLgOz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fJt7p95M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AF3606A32D;
-	Thu, 26 Nov 2026 14:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B30606A321;
+	Thu, 26 Nov 2026 14:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRTSLgOz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D4E1F000D1;
-	Thu, 26 Nov 2026 14:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fJt7p95M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FC11F000F0;
+	Thu, 26 Nov 2026 14:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704163;
-	bh=e7sQa8X0672ZzdPDwvXMjA/ML2cFQy0h9CADMOOIwtw=;
+	s=korg; t=1795704166;
+	bh=J1w/VqvQ+uMDSQ9sW+MOYMYz98zLeTYsNfebKn6HFBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cRTSLgOzSOXy5r26WsmJwYkfZOs8cgQPn5HfGU4CIOAL0ocwnaMZQ14J+8q+iBgxx
-	 9tCPJLagQz4VLnFywFvE/fxP7mtwzlGZWJeRYOOejJHP9U3keVm6H9qMuVqkDetNEB
-	 vZwBckJV1RfYYoHt+LPeaQOmLTEmFs+Mu/DQF6zU=
+	b=fJt7p95Mk7KdPkqGuAJv92YkLibNsRbiZZM3PVkIOX2fR3dcNYklTCFXOvPLTHs8M
+	 dC2m2+OrIfhrnWmvG/OVOq4Z1WCtrT3KjReYgtHVY2KS29VZTmkeiKu1CaCetRyUY4
+	 lV2fKKdl7xJH7YTN5xBYjvkSR722Bd/H9QIG/UeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Filippo Falezza <effeffe99@gmail.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/265] wifi: ath10k: Fix miscellaneous spelling errors
-Date: Thu, 26 Nov 2026 15:35:58 +0100
-Message-ID: <20261126143607.060630069@linuxfoundation.org>
+Subject: [PATCH 5.10 029/265] wifi: ath10k: Stop unanswered temperature reads
+Date: Thu, 26 Nov 2026 15:35:59 +0100
+Message-ID: <20261126143607.121524650@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,468 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Filippo Falezza <effeffe99@gmail.com>
 
-[ Upstream commit b8a71b953653dfd6b005356bff8463503dd0f965 ]
+[ Upstream commit 2a87e367c62856b87a90f745c6b7d2eb91e0c51f ]
 
-Fix misspellings flagged by 'codespell'.
+Reading the ath10k hwmon temperature sends WMI_PDEV_GET_TEMPERATURE and
+waits up to 5 s (ATH10K_THERMAL_SYNC_TIMEOUT_HZ) for the reply event,
+holding conf_mutex. Not all firmware answers: the WCN3990 firmware
+WLAN.HL.3.3.1-00694-QCAHLSWMTPLZ-1 on a Motorola Moto G 5G Plus
+codename nairo (SM7250) never sends the event, so every read of
+temp1_input stalls for 5 s, logs
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20220909145300.19223-1-quic_jjohnson@quicinc.com
-Stable-dep-of: 2a87e367c628 ("wifi: ath10k: Stop unanswered temperature reads")
+  ath10k_snoc 18800000.wifi: failed to synchronize thermal read
+
+and returns -ETIMEDOUT. Tools that read all hwmon sensors, such as
+lm-sensors, hang for 5 s on every run, and configuration changes of the
+interface wait for conf_mutex in the meantime.
+
+Whether the firmware answers cannot be told from the chip: firmware that
+answers and firmware that does not both advertise
+WMI_SERVICE_THERM_THROT, and WCN3990 firmware differs between devices.
+Instead, remember that the running firmware did not answer, and return
+-EOPNOTSUPP right away on later reads. Forget it when the firmware
+starts, so that a restarted or updated firmware is asked again.
+
+The first read after each firmware start still takes 5 s when the
+firmware does not answer. Reads on firmware that answers are unchanged.
+
+Fixes: e98199a8c27f ("ath10k: enable QCA6174/QCA9377 to read the chip temperature")
+Signed-off-by: Filippo Falezza <effeffe99@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-ath10k-temperature-v2-1-0793e80d73bc@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/bmi.c         |  4 ++--
- drivers/net/wireless/ath/ath10k/ce.c          |  2 +-
- drivers/net/wireless/ath/ath10k/core.c        |  2 +-
- drivers/net/wireless/ath/ath10k/core.h        |  4 ++--
- drivers/net/wireless/ath/ath10k/coredump.c    |  2 +-
- drivers/net/wireless/ath/ath10k/coredump.h    |  2 +-
- drivers/net/wireless/ath/ath10k/debug.c       |  2 +-
- drivers/net/wireless/ath/ath10k/debugfs_sta.c |  2 +-
- drivers/net/wireless/ath/ath10k/htt_rx.c      |  2 +-
- drivers/net/wireless/ath/ath10k/htt_tx.c      |  2 +-
- drivers/net/wireless/ath/ath10k/hw.c          |  6 +++---
- drivers/net/wireless/ath/ath10k/mac.c         |  8 ++++----
- drivers/net/wireless/ath/ath10k/pci.c         |  2 +-
- drivers/net/wireless/ath/ath10k/pci.h         |  2 +-
- drivers/net/wireless/ath/ath10k/qmi.c         |  2 +-
- drivers/net/wireless/ath/ath10k/rx_desc.h     |  2 +-
- drivers/net/wireless/ath/ath10k/sdio.c        |  2 +-
- drivers/net/wireless/ath/ath10k/thermal.c     |  2 +-
- drivers/net/wireless/ath/ath10k/thermal.h     |  2 +-
- drivers/net/wireless/ath/ath10k/usb.h         |  2 +-
- drivers/net/wireless/ath/ath10k/wmi-tlv.h     |  4 ++--
- drivers/net/wireless/ath/ath10k/wmi.c         |  2 +-
- drivers/net/wireless/ath/ath10k/wmi.h         | 14 +++++++-------
- 23 files changed, 37 insertions(+), 37 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c    | 1 +
+ drivers/net/wireless/ath/ath10k/thermal.c | 9 ++++++++-
+ drivers/net/wireless/ath/ath10k/thermal.h | 2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/bmi.c b/drivers/net/wireless/ath/ath10k/bmi.c
-index 4481ed375f55d..af6546572df26 100644
---- a/drivers/net/wireless/ath/ath10k/bmi.c
-+++ b/drivers/net/wireless/ath/ath10k/bmi.c
-@@ -101,7 +101,7 @@ int ath10k_bmi_get_target_info_sdio(struct ath10k *ar,
- 	cmd.id = __cpu_to_le32(BMI_GET_TARGET_INFO);
- 
- 	/* Step 1: Read 4 bytes of the target info and check if it is
--	 * the special sentinal version word or the first word in the
-+	 * the special sentinel version word or the first word in the
- 	 * version response.
- 	 */
- 	resplen = sizeof(u32);
-@@ -111,7 +111,7 @@ int ath10k_bmi_get_target_info_sdio(struct ath10k *ar,
- 		return ret;
- 	}
- 
--	/* Some SDIO boards have a special sentinal byte before the real
-+	/* Some SDIO boards have a special sentinel byte before the real
- 	 * version response.
- 	 */
- 	if (__le32_to_cpu(tmp) == TARGET_VERSION_SENTINAL) {
-diff --git a/drivers/net/wireless/ath/ath10k/ce.c b/drivers/net/wireless/ath/ath10k/ce.c
-index 000f199fc68bd..ed39c0291f8ec 100644
---- a/drivers/net/wireless/ath/ath10k/ce.c
-+++ b/drivers/net/wireless/ath/ath10k/ce.c
-@@ -1323,7 +1323,7 @@ EXPORT_SYMBOL(ath10k_ce_per_engine_service);
- /*
-  * Handler for per-engine interrupts on ALL active CEs.
-  * This is used in cases where the system is sharing a
-- * single interrput for all CEs
-+ * single interrupt for all CEs
-  */
- 
- void ath10k_ce_per_engine_service_any(struct ath10k *ar)
 diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 906868edccbdd..9baf7974bb441 100644
+index 9baf7974bb441..336883f08a305 100644
 --- a/drivers/net/wireless/ath/ath10k/core.c
 +++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -2844,7 +2844,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
- 		 * enabled always.
- 		 *
- 		 * We can still enable BTCOEX if firmware has the support
--		 * eventhough btceox_support value is
-+		 * even though btceox_support value is
- 		 * ATH10K_DT_BTCOEX_NOT_FOUND
- 		 */
+@@ -2674,6 +2674,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
+ 	clear_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
  
-diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
-index 2edb5eafdfdb8..676bc33526df1 100644
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -79,7 +79,7 @@
- /* The magic used by QCA spec */
- #define ATH10K_SMBIOS_BDF_EXT_MAGIC "BDF_"
+ 	ar->running_fw = fw;
++	ar->thermal.broken = false;
  
--/* Default Airtime weight multipler (Tuned for multiclient performance) */
-+/* Default Airtime weight multiplier (Tuned for multiclient performance) */
- #define ATH10K_AIRTIME_WEIGHT_MULTIPLIER  4
- 
- #define ATH10K_MAX_RETRY_COUNT 30
-@@ -852,7 +852,7 @@ enum ath10k_dev_flags {
- 	/* Disable HW crypto engine */
- 	ATH10K_FLAG_HW_CRYPTO_DISABLED,
- 
--	/* Bluetooth coexistance enabled */
-+	/* Bluetooth coexistence enabled */
- 	ATH10K_FLAG_BTCOEX,
- 
- 	/* Per Station statistics service */
-diff --git a/drivers/net/wireless/ath/ath10k/coredump.c b/drivers/net/wireless/ath/ath10k/coredump.c
-index 7eb72290a925c..1c9103dba6232 100644
---- a/drivers/net/wireless/ath/ath10k/coredump.c
-+++ b/drivers/net/wireless/ath/ath10k/coredump.c
-@@ -531,7 +531,7 @@ static const struct ath10k_mem_section qca6174_hw30_sdio_register_sections[] = {
- 
- 	{0x40000, 0x400A4},
- 
--	/* SI register is skiped here.
-+	/* SI register is skipped here.
- 	 * Because it will cause bus hang
- 	 *
- 	 * {0x50000, 0x50018},
-diff --git a/drivers/net/wireless/ath/ath10k/coredump.h b/drivers/net/wireless/ath/ath10k/coredump.h
-index 42404e246e0e9..25b44d3184e39 100644
---- a/drivers/net/wireless/ath/ath10k/coredump.h
-+++ b/drivers/net/wireless/ath/ath10k/coredump.h
-@@ -125,7 +125,7 @@ enum ath10k_mem_region_type {
-  * To minimize the size of the array, the list must obey the format:
-  * '{start0,stop0},{start1,stop1},{start2,stop2}....' The values below must
-  * also obey to 'start0 < stop0 < start1 < stop1 < start2 < ...', otherwise
-- * we may encouter error in the dump processing.
-+ * we may encounter error in the dump processing.
-  */
- struct ath10k_mem_section {
- 	u32 start;
-diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
-index 64d48d8cce50c..1f37257ca40f6 100644
---- a/drivers/net/wireless/ath/ath10k/debug.c
-+++ b/drivers/net/wireless/ath/ath10k/debug.c
-@@ -1081,7 +1081,7 @@ static ssize_t ath10k_write_fw_dbglog(struct file *file,
-  * struct available..
-  */
- 
--/* This generally cooresponds to the debugfs fw_stats file */
-+/* This generally corresponds to the debugfs fw_stats file */
- static const char ath10k_gstrings_stats[][ETH_GSTRING_LEN] = {
- 	"tx_pkts_nic",
- 	"tx_bytes_nic",
-diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-index f7912c72cba34..5598cf706daab 100644
---- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-+++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-@@ -498,7 +498,7 @@ static char *get_num_ampdu_subfrm_str(enum ath10k_ampdu_subfrm_num i)
- {
- 	switch (i) {
- 	case ATH10K_AMPDU_SUBFRM_NUM_10:
--		return "upto 10";
-+		return "up to 10";
- 	case ATH10K_AMPDU_SUBFRM_NUM_20:
- 		return "11-20";
- 	case ATH10K_AMPDU_SUBFRM_NUM_30:
-diff --git a/drivers/net/wireless/ath/ath10k/htt_rx.c b/drivers/net/wireless/ath/ath10k/htt_rx.c
-index 9218c4c55452b..148eea5aa82fa 100644
---- a/drivers/net/wireless/ath/ath10k/htt_rx.c
-+++ b/drivers/net/wireless/ath/ath10k/htt_rx.c
-@@ -2380,7 +2380,7 @@ static bool ath10k_htt_rx_proc_rx_ind_hl(struct ath10k_htt *htt,
- 
- 	/* I have not yet seen any case where num_mpdu_ranges > 1.
- 	 * qcacld does not seem handle that case either, so we introduce the
--	 * same limitiation here as well.
-+	 * same limitation here as well.
- 	 */
- 	if (num_mpdu_ranges > 1)
- 		ath10k_warn(ar,
-diff --git a/drivers/net/wireless/ath/ath10k/htt_tx.c b/drivers/net/wireless/ath/ath10k/htt_tx.c
-index cedb15d5626f0..4959ab2db6756 100644
---- a/drivers/net/wireless/ath/ath10k/htt_tx.c
-+++ b/drivers/net/wireless/ath/ath10k/htt_tx.c
-@@ -1132,7 +1132,7 @@ int ath10k_htt_tx_fetch_resp(struct ath10k *ar,
- 	int len = 0;
- 	int ret;
- 
--	/* Response IDs are echo-ed back only for host driver convienence
-+	/* Response IDs are echo-ed back only for host driver convenience
- 	 * purposes. They aren't used for anything in the driver yet so use 0.
- 	 */
- 
-diff --git a/drivers/net/wireless/ath/ath10k/hw.c b/drivers/net/wireless/ath/ath10k/hw.c
-index 57c58af64a575..ec8e459cae278 100644
---- a/drivers/net/wireless/ath/ath10k/hw.c
-+++ b/drivers/net/wireless/ath/ath10k/hw.c
-@@ -83,7 +83,7 @@ const struct ath10k_hw_regs qca99x0_regs = {
- 	.ce5_base_address			= 0x0004b400,
- 	.ce6_base_address			= 0x0004b800,
- 	.ce7_base_address			= 0x0004bc00,
--	/* Note: qca99x0 supports upto 12 Copy Engines. Other than address of
-+	/* Note: qca99x0 supports up to 12 Copy Engines. Other than address of
- 	 * CE0 and CE1 no other copy engine is directly referred in the code.
- 	 * It is not really necessary to assign address for newly supported
- 	 * CEs in this address table.
-@@ -119,7 +119,7 @@ const struct ath10k_hw_regs qca4019_regs = {
- 	.ce5_base_address                       = 0x0004b400,
- 	.ce6_base_address                       = 0x0004b800,
- 	.ce7_base_address                       = 0x0004bc00,
--	/* qca4019 supports upto 12 copy engines. Since base address
-+	/* qca4019 supports up to 12 copy engines. Since base address
- 	 * of ce8 to ce11 are not directly referred in the code,
- 	 * no need have them in separate members in this table.
- 	 *      Copy Engine             Address
-@@ -923,7 +923,7 @@ static void ath10k_hw_map_target_mem(struct ath10k *ar, u32 msb)
- 	ath10k_hif_write32(ar, address, msb);
- }
- 
--/* 1. Write to memory region of target, such as IRAM adn DRAM.
-+/* 1. Write to memory region of target, such as IRAM and DRAM.
-  * 2. Target address( 0 ~ 00100000 & 0x00400000~0x00500000)
-  *    can be written directly. See ath10k_pci_targ_cpu_to_ce_addr() too.
-  * 3. In order to access the region other than the above,
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 5409c4fd6ca7f..d15a07d3f23b1 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -3888,7 +3888,7 @@ static int ath10k_mac_tx(struct ath10k *ar,
- 		ath10k_tx_h_seq_no(vif, skb);
- 		break;
- 	case ATH10K_HW_TXRX_ETHERNET:
--		/* Convert 802.11->802.3 header only if the frame was erlier
-+		/* Convert 802.11->802.3 header only if the frame was earlier
- 		 * encapsulated to 802.11 by mac80211. Otherwise pass it as is.
- 		 */
- 		if (!(info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP))
-@@ -7987,7 +7987,7 @@ static void ath10k_flush(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 
- /* TODO: Implement this function properly
-  * For now it is needed to reply to Probe Requests in IBSS mode.
-- * Propably we need this information from FW.
-+ * Probably we need this information from FW.
-  */
- static int ath10k_tx_last_beacon(struct ieee80211_hw *hw)
- {
-@@ -9571,7 +9571,7 @@ static const struct ieee80211_iface_limit ath10k_tlv_if_limit_ibss[] = {
- 	},
- };
- 
--/* FIXME: This is not thouroughly tested. These combinations may over- or
-+/* FIXME: This is not thoroughly tested. These combinations may over- or
-  * underestimate hw/fw capabilities.
-  */
- static struct ieee80211_iface_combination ath10k_tlv_if_comb[] = {
-@@ -9813,7 +9813,7 @@ int ath10k_mac_register(struct ath10k *ar)
- 		WLAN_CIPHER_SUITE_BIP_GMAC_128,
- 		WLAN_CIPHER_SUITE_BIP_GMAC_256,
- 
--		/* Only QCA99x0 and QCA4019 varients support GCMP-128, GCMP-256
-+		/* Only QCA99x0 and QCA4019 variants support GCMP-128, GCMP-256
- 		 * and CCMP-256 in hardware.
- 		 */
- 		WLAN_CIPHER_SUITE_GCMP,
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index 24ae59c572066..e5dd4ef6363e6 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -1244,7 +1244,7 @@ static void ath10k_pci_process_htt_rx_cb(struct ath10k_ce_pipe *ce_state,
- 	unsigned int nbytes, max_nbytes, nentries;
- 	int orig_len;
- 
--	/* No need to aquire ce_lock for CE5, since this is the only place CE5
-+	/* No need to acquire ce_lock for CE5, since this is the only place CE5
- 	 * is processed other than init and deinit. Before releasing CE5
- 	 * buffers, interrupts are disabled. Thus CE5 access is serialized.
- 	 */
-diff --git a/drivers/net/wireless/ath/ath10k/pci.h b/drivers/net/wireless/ath/ath10k/pci.h
-index 862d0901c5b8d..84de80c995fe8 100644
---- a/drivers/net/wireless/ath/ath10k/pci.h
-+++ b/drivers/net/wireless/ath/ath10k/pci.h
-@@ -81,7 +81,7 @@ struct ath10k_pci_pipe {
- 	/* Handle of underlying Copy Engine */
- 	struct ath10k_ce_pipe *ce_hdl;
- 
--	/* Our pipe number; facilitiates use of pipe_info ptrs. */
-+	/* Our pipe number; facilitates use of pipe_info ptrs. */
- 	u8 pipe_num;
- 
- 	/* Convenience back pointer to hif_ce_state. */
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index ae6b1f402adfe..d1de6b717dd0e 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -792,7 +792,7 @@ static void ath10k_qmi_event_server_arrive(struct ath10k_qmi *qmi)
- 		return;
- 
- 	/*
--	 * HACK: sleep for a while inbetween receiving the msa info response
-+	 * HACK: sleep for a while between receiving the msa info response
- 	 * and the XPU update to prevent SDM845 from crashing due to a security
- 	 * violation, when running MPSS.AT.4.0.c2-01184-SDM845_GEN_PACK-1.
- 	 */
-diff --git a/drivers/net/wireless/ath/ath10k/rx_desc.h b/drivers/net/wireless/ath/ath10k/rx_desc.h
-index 13a1cae6b51b0..59bd196163d25 100644
---- a/drivers/net/wireless/ath/ath10k/rx_desc.h
-+++ b/drivers/net/wireless/ath/ath10k/rx_desc.h
-@@ -434,7 +434,7 @@ struct rx_mpdu_end {
-  *     - 4 bytes for WEP
-  *     - 8 bytes for TKIP, AES
-  *  [padding to 4 bytes]
-- *  c) A-MSDU subframe header (14 bytes) if appliable
-+ *  c) A-MSDU subframe header (14 bytes) if applicable
-  *  d) LLC/SNAP (RFC1042, 8 bytes)
-  *
-  * In case of A-MSDU only first frame in sequence contains (a) and (b).
-diff --git a/drivers/net/wireless/ath/ath10k/sdio.c b/drivers/net/wireless/ath/ath10k/sdio.c
-index d87bb3275b392..cc5f5c07449b3 100644
---- a/drivers/net/wireless/ath/ath10k/sdio.c
-+++ b/drivers/net/wireless/ath/ath10k/sdio.c
-@@ -1058,7 +1058,7 @@ static int ath10k_sdio_mbox_proc_pending_irqs(struct ath10k *ar,
- 
- out:
- 	/* An optimization to bypass reading the IRQ status registers
--	 * unecessarily which can re-wake the target, if upper layers
-+	 * unnecessarily which can re-wake the target, if upper layers
- 	 * determine that we are in a low-throughput mode, we can rely on
- 	 * taking another interrupt rather than re-checking the status
- 	 * registers which can re-wake the target.
+ 	if (!test_bit(ATH10K_FW_FEATURE_NON_BMI,
+ 		      ar->running_fw->fw_file.fw_features)) {
 diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
-index 36c9a1364253f..cefd97323dfe5 100644
+index cefd97323dfe5..51484c986298c 100644
 --- a/drivers/net/wireless/ath/ath10k/thermal.c
 +++ b/drivers/net/wireless/ath/ath10k/thermal.c
-@@ -98,7 +98,7 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
- 	temperature = ar->thermal.temperature;
- 	spin_unlock_bh(&ar->data_lock);
+@@ -74,6 +74,12 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 		goto out;
+ 	}
  
--	/* display in millidegree celcius */
-+	/* display in millidegree celsius */
- 	ret = snprintf(buf, PAGE_SIZE, "%d\n", temperature * 1000);
- out:
- 	mutex_unlock(&ar->conf_mutex);
++	/* Don't stall every read on firmware that never answers */
++	if (ar->thermal.broken) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	reinit_completion(&ar->thermal.wmi_sync);
+ 	ret = ath10k_wmi_pdev_get_temperature(ar);
+ 	if (ret) {
+@@ -89,7 +95,8 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 	time_left = wait_for_completion_timeout(&ar->thermal.wmi_sync,
+ 						ATH10K_THERMAL_SYNC_TIMEOUT_HZ);
+ 	if (!time_left) {
+-		ath10k_warn(ar, "failed to synchronize thermal read\n");
++		ath10k_warn(ar, "failed to synchronize thermal read, not asking again until the firmware restarts\n");
++		ar->thermal.broken = true;
+ 		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
 diff --git a/drivers/net/wireless/ath/ath10k/thermal.h b/drivers/net/wireless/ath/ath10k/thermal.h
-index 5fdb020f4da38..1f4de9fbf2b30 100644
+index 1f4de9fbf2b30..d1fb5b958c37c 100644
 --- a/drivers/net/wireless/ath/ath10k/thermal.h
 +++ b/drivers/net/wireless/ath/ath10k/thermal.h
-@@ -19,7 +19,7 @@ struct ath10k_thermal {
+@@ -19,6 +19,8 @@ struct ath10k_thermal {
  	/* protected by conf_mutex */
  	u32 throttle_state;
  	u32 quiet_period;
--	/* temperature value in Celcius degree
-+	/* temperature value in Celsius degree
++	/* the running firmware did not answer a temperature request */
++	bool broken;
+ 	/* temperature value in Celsius degree
  	 * protected by data_lock
  	 */
- 	int temperature;
-diff --git a/drivers/net/wireless/ath/ath10k/usb.h b/drivers/net/wireless/ath/ath10k/usb.h
-index 34d683e8fc183..48e066ba81624 100644
---- a/drivers/net/wireless/ath/ath10k/usb.h
-+++ b/drivers/net/wireless/ath/ath10k/usb.h
-@@ -26,7 +26,7 @@
- #define ATH10K_USB_EP_ADDR_APP_DATA_MP_OUT      0x03
- #define ATH10K_USB_EP_ADDR_APP_DATA_HP_OUT      0x04
- 
--/* diagnostic command defnitions */
-+/* diagnostic command definitions */
- #define ATH10K_USB_CONTROL_REQ_SEND_BMI_CMD        1
- #define ATH10K_USB_CONTROL_REQ_RECV_BMI_RESP       2
- #define ATH10K_USB_CONTROL_REQ_DIAG_CMD            3
-diff --git a/drivers/net/wireless/ath/ath10k/wmi-tlv.h b/drivers/net/wireless/ath/ath10k/wmi-tlv.h
-index b39c9b78b32bd..dbb48d70f2e93 100644
---- a/drivers/net/wireless/ath/ath10k/wmi-tlv.h
-+++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.h
-@@ -1813,7 +1813,7 @@ struct wmi_tlv_pdev_get_temp_cmd {
- 
- struct wmi_tlv_pdev_temperature_event {
- 	__le32 tlv_hdr;
--	/* temperature value in Celcius degree */
-+	/* temperature value in Celsius degree */
- 	__le32 temperature;
- 	__le32 pdev_id;
- } __packed;
-@@ -2548,7 +2548,7 @@ struct nlo_channel_prediction_cfg {
- 
- 	/* Preconfigured stationary threshold.
- 	 * Lesser value means more conservative. Bigger value means more aggressive.
--	 * Maximum is 100 and mininum is 0.
-+	 * Maximum is 100 and minimum is 0.
- 	 */
- 	__le32 stationary_threshold;
- 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index 2852d31cedd6d..8cbe1a2edc8ae 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -3577,7 +3577,7 @@ static void ath10k_wmi_update_tim(struct ath10k *ar,
- 	__le32 t;
- 	u32 v, tim_len;
- 
--	/* When FW reports 0 in tim_len, ensure atleast first byte
-+	/* When FW reports 0 in tim_len, ensure at least first byte
- 	 * in tim_bitmap is considered for pvm calculation.
- 	 */
- 	tim_len = tim_info->tim_len ? __le32_to_cpu(tim_info->tim_len) : 1;
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.h b/drivers/net/wireless/ath/ath10k/wmi.h
-index e244b7038e606..96d9175fd63ee 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.h
-+++ b/drivers/net/wireless/ath/ath10k/wmi.h
-@@ -3168,7 +3168,7 @@ struct wmi_start_scan_common {
- 	/* dwell time in msec on passive channels */
- 	__le32 dwell_time_passive;
- 	/*
--	 * min time in msec on the BSS channel,only valid if atleast one
-+	 * min time in msec on the BSS channel,only valid if at least one
- 	 * VDEV is active
- 	 */
- 	__le32 min_rest_time;
-@@ -3194,7 +3194,7 @@ struct wmi_start_scan_common {
- 	 * and bssid_list
- 	 */
- 	__le32 repeat_probe_time;
--	/* time in msec between 2 consequetive probe requests with in a set. */
-+	/* time in msec between 2 consecutive probe requests with in a set. */
- 	__le32 probe_spacing_time;
- 	/*
- 	 * data inactivity time in msec on bss channel that will be used by
-@@ -4393,7 +4393,7 @@ struct wmi_pdev_stats_tx {
- 	/* wal pdev continuous xretry */
- 	__le32 pdev_cont_xretry;
- 
--	/* wal pdev continous xretry */
-+	/* wal pdev continuous xretry */
- 	__le32 pdev_tx_timeout;
- 
- 	/* wal pdev resets  */
-@@ -5236,7 +5236,7 @@ enum wmi_vdev_param {
- 	 * scheduler.
- 	 */
- 	WMI_VDEV_OC_SCHEDULER_AIR_TIME_LIMIT,
--	/* enable/dsiable WDS for this VDEV  */
-+	/* enable/disable WDS for this VDEV  */
- 	WMI_VDEV_PARAM_WDS,
- 	/* ATIM Window */
- 	WMI_VDEV_PARAM_ATIM_WINDOW,
-@@ -5368,7 +5368,7 @@ enum wmi_10x_vdev_param {
- 	 * scheduler.
- 	 */
- 	WMI_10X_VDEV_OC_SCHEDULER_AIR_TIME_LIMIT,
--	/* enable/dsiable WDS for this VDEV  */
-+	/* enable/disable WDS for this VDEV  */
- 	WMI_10X_VDEV_PARAM_WDS,
- 	/* ATIM Window */
- 	WMI_10X_VDEV_PARAM_ATIM_WINDOW,
-@@ -5900,7 +5900,7 @@ enum wmi_sta_ps_param_tx_wake_threshold {
- enum wmi_sta_ps_param_pspoll_count {
- 	WMI_STA_PS_PSPOLL_COUNT_NO_MAX = 0,
- 	/*
--	 * Values greater than 0 indicate the maximum numer of PS-Poll frames
-+	 * Values greater than 0 indicate the maximum number of PS-Poll frames
- 	 * FW will send before waking up.
- 	 */
- 
-@@ -6943,7 +6943,7 @@ struct wmi_echo_ev_arg {
- };
- 
- struct wmi_pdev_temperature_event {
--	/* temperature value in Celcius degree */
-+	/* temperature value in Celsius degree */
- 	__le32 temperature;
- } __packed;
- 
 -- 
 2.53.0
 
