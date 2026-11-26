@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704330;
-	b=qqMamj538TPID/G7yIruSq3OdFDMrV8FGqrvYWZE5Dez7zzbMzqpUJEqTR6Ov91MTCUD
-	 AXK9bDOox5pRLkBYv5K9jsm0SVUmHa8w7XysKgwWB/5vOGauAbuEGIXejsC/VQr+Hhu0X
-	 ds9VbZVMgwcIg9X4IRprKeCpTQhwRsh+1ohHWcGoJJo23yfO1vUMstUxs9bkroqy8den4
-	 Njta9LrTvVxxDc5235p2w7bcolXtBDCOFPywXefLow5p1n7X8VLhyvheagYaj9U4qfeyh
-	 zph3NQLofSYsS/v6JmJMBVaF9GlJS2F53bc63XAa/4bAMfKZ0r/NlgWSbmFnqrvj9yg==
+	t=1795704333;
+	b=3TYtthOTc1C58rKRMrm3SUcu7iQcD+yzlnntxyNnSaiVMVcLA2yUpSo2nzaMvE5U8KzU
+	 xC9bH9ppy2fO4T1OTHZulCjmmdIExS8oR77kaRK8oAVEmiFPyn7Zksb3KGayMlWb/cKTh
+	 pL6KLWuEXSlJMl+wKcLkjTv3GFApaEh/RXv4dci8fXjBljhoHeA4lk/WshfvUb/+Hvld5
+	 XH18y2DBlpXlUHW5lAdwIjW67Bc/hHIqWKau3GSJnUaJ9PVTreXK3W7oRz3XYkRqxDzRy
+	 qsYcFeCc8mS9ejxrMErpSbJlRX+xhaacrPMJTIVhnnp/KmfsFoV/KvNu/EsQu8vXqVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7ZJJDeOGF8BJtaGdngzeWWAUdPuQm8FMeNEiSPdgro0=;
-	b=lraJMGdvFzKLis4leCvcIHUk2Gvk0FWkyp4ji2lHXpK5vmhyrii4SJIpBuo5hVN9kz/j
-	 YFAWefi6y63AD2eJGmQwXSKTkBeKIVGKL2ByR80eF5g04uYcywaSJrGq9AnnN068+oL7y
-	 I5h+45pGErKLXIkRpfrfRB/aSlnka634dRH8fvbawvMH50UpfBdsuK2o4TFqMDL2pfiad
-	 cGLQhySqgNJFVwWMokijlOZzgjuQGzc4wdTEHxQFrDFSoXwtFh8ujXbYzcLAz+mWxZQrU
-	 Z06gui0nABi+VJ8eBY+Sljz/xhSDrB5JPh/Ll848KVxBw3s9smRZ5cf9heK+uTtWyuA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=B8mnbwiqYsFDsAv5f1NhJZjKlcRLq0fYPUIY+hFkQCU=;
+	b=k8Eh0/+ivbcutdSkK37RADTBY1k7x6DAQRg2HK7O6jkT9OveYoo+JYFF5FjqQp30Mhi+
+	 GXv17yqDLdGZarBENy7IKAVImeUSjHufUrrBMk2UTHh8zZcGBnlrC1iEz3LILjsSnKwvD
+	 +JSIFjpcWBZCURymMe/jQ0As/3meEN8FNigSCSshUlcV/ghSfVJm9xddO9X7HvWH60T4o
+	 hFhLiA9d8TFomdNNU/pZgRmdWBVW6XSfqZZ1bFlL6qRN83dLl6knfeMOfyXHnY7W33nLO
+	 MtB4WJ9PkQoXOERHnVVLmc9vsZQb458mIKpk4MokCcSH+G0lOfYKhV4zIZYVP+zim7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xEERE6eP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaLb+8hW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CDE606A31C;
-	Thu, 26 Nov 2026 14:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14508606A326;
+	Thu, 26 Nov 2026 14:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xEERE6eP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB891F000C6;
-	Thu, 26 Nov 2026 14:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaLb+8hW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045EE1F000C0;
+	Thu, 26 Nov 2026 14:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704329;
-	bh=7ZJJDeOGF8BJtaGdngzeWWAUdPuQm8FMeNEiSPdgro0=;
+	s=korg; t=1795704332;
+	bh=B8mnbwiqYsFDsAv5f1NhJZjKlcRLq0fYPUIY+hFkQCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xEERE6ePmmbkrayA2diAgyT1P3eH85rueuBjRhuFggN+gcZ6xzpCCZ54M9+Ss08WU
-	 tLbTF4qio9PaYe7l+PnKAZcrWxJFHtiWtpWvMX6Ej8L9hhAh8Vpv38OuA7N5PVUx/r
-	 1rDxNcgk6+F6Oi+QtIiCpSiPlUw74XH/c6fg7ntw=
+	b=eaLb+8hW++ajkXu4bMGAm0nuHW/JTFcT/Jo6Gk6W9V4EJ3eO2jzeu89kCZOY4r/LM
+	 SllIGUNLRrQnFP4pxIxXKdvrFC6zcgPDifMuY8oVSYPe7oxFO6jEYIsYWTaA9wrACQ
+	 U5Ak5nTZ1SSgl0FmKItcbdB0fdqJjwxoTgp8+8Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal.kopec@3mdeb.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Colton Pawielski <colton.pawielski@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/265] ALSA: hda/core: Stop capability walk on empty capability header
-Date: Thu, 26 Nov 2026 15:36:54 +0100
-Message-ID: <20261126143610.899149400@linuxfoundation.org>
+Subject: [PATCH 5.10 085/265] net: 8139cp: keep Rx masked while NAPI is scheduled
+Date: Thu, 26 Nov 2026 15:36:55 +0100
+Message-ID: <20261126143610.957995057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -62,71 +63,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Kopeć <michal.kopec@3mdeb.com>
+From: Colton Pawielski <colton.pawielski@gmail.com>
 
-[ Upstream commit f65c917397c77daeb7e6d0893ebe89107ddd5692 ]
+[ Upstream commit 547b1ae5ec50b7d81b05b4219e0db7e56279d65f ]
 
-snd_hdac_bus_parse_capabilities() walks the controller's linked
-capability list starting at LLCH. On some platforms one of the entries
-reads back as all zeros. Such a header does not describe a capability,
-but the walk still treats it as one: it falls into the default case and
-reports an error, printing the raw register value instead of the
-capability ID:
+cp_rx_poll() calls napi_complete_done() and only then takes cp->lock
+with interrupts disabled to unmask the Rx interrupts. An interrupt
+that is not masked while polling (TxOK, TxErr, ...) can arrive in
+between. cp_interrupt() then sees the Rx status bits, which are still
+set, finds NAPI no longer scheduled, masks Rx and schedules NAPI again.
+cp_rx_poll() then carries on and unmasks Rx anyway.
 
-  snd_hda_intel 0000:00:1f.3: Unknown capability 0
+>From that point Rx interrupts are enabled while NAPI is scheduled:
+cp_interrupt() leaves the Rx bits for the poll routine, does not mask
+them because napi_schedule_prep() fails, and the level-triggered
+interrupt fires again as soon as it returns. On an SH7751 LANDISK
+under combined Tx/Rx load this interrupt storm was captured with a RAM
+trace right before the board locked up hard.
 
-The walk then stops anyway, because the next pointer of a zero header
-is 0, so the message is only noise.
+Mask Rx in cp_interrupt() whenever Rx status is pending, not only when
+NAPI gets scheduled. If the race leaves Rx unmasked, the next interrupt
+masks it again, and the pending poll unmasks it when it completes.
 
-Treat an all-zero header as the end of the list, the same way a failed
-read (-1) is already handled, and log it at debug level only. Also
-print the capability ID in hex for a genuinely unknown capability,
-instead of the full header value.
-
-Fixes: 0b00a5615dc4 ("ALSA: hdac_ext: add hdac extended controller")
-Signed-off-by: Michał Kopeć <michal.kopec@3mdeb.com>
-Link: https://patch.msgid.link/20261102114939.2182131-1-michal.kopec@3mdeb.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: ab1e7e1d2666 ("8139cp: use napi_complete_done()")
+Signed-off-by: Colton Pawielski <colton.pawielski@gmail.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261031-b4-8139cp-napi-v2-1-5824797c0fe6@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/hdac_controller.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/8139cp.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/hda/hdac_controller.c b/sound/hda/hdac_controller.c
-index 522d1897659cb..d1d2dd7e77ff4 100644
---- a/sound/hda/hdac_controller.c
-+++ b/sound/hda/hdac_controller.c
-@@ -322,6 +322,13 @@ int snd_hdac_bus_parse_capabilities(struct hdac_bus *bus)
- 			break;
- 		}
+diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
+index 086fce1b15269..6e48cf171f0c5 100644
+--- a/drivers/net/ethernet/realtek/8139cp.c
++++ b/drivers/net/ethernet/realtek/8139cp.c
+@@ -600,11 +600,11 @@ static irqreturn_t cp_interrupt (int irq, void *dev_instance)
+ 		goto out_unlock;
+ 	}
  
-+		/* An all-zero header means no capability is present here */
-+		if (!cur_cap) {
-+			dev_dbg(bus->dev, "Empty capability header at offset 0x%x\n",
-+				offset);
-+			break;
-+		}
-+
- 		switch ((cur_cap & AZX_CAP_HDR_ID_MASK) >> AZX_CAP_HDR_ID_OFF) {
- 		case AZX_ML_CAP_ID:
- 			dev_dbg(bus->dev, "Found ML capability\n");
-@@ -352,7 +359,8 @@ int snd_hdac_bus_parse_capabilities(struct hdac_bus *bus)
- 			break;
+-	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr))
+-		if (napi_schedule_prep(&cp->napi)) {
+-			cpw16_f(IntrMask, cp_norx_intr_mask);
++	if (status & (RxOK | RxErr | RxEmpty | RxFIFOOvr)) {
++		cpw16_f(IntrMask, cp_norx_intr_mask);
++		if (napi_schedule_prep(&cp->napi))
+ 			__napi_schedule(&cp->napi);
+-		}
++	}
  
- 		default:
--			dev_err(bus->dev, "Unknown capability %d\n", cur_cap);
-+			dev_err(bus->dev, "Unknown capability ID 0x%x\n",
-+				(cur_cap & AZX_CAP_HDR_ID_MASK) >> AZX_CAP_HDR_ID_OFF);
- 			cur_cap = 0;
- 			break;
- 		}
+ 	if (status & (TxOK | TxErr | TxEmpty | SWInt))
+ 		cp_tx(cp);
 -- 
 2.53.0
 
