@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705019;
-	b=x2NgaK+jFcsMNBaB6S3NqjiGGbHJKLWmk6mibddtulC6uMy6yhxlxrYa4DVQYNUeflbf
-	 TOm8fmsr72g7XP8MxKu8CtvSurV4nJ+X/kLkujuPCYsK0Fp+aRKoy5ghYItNLRhmpl3ED
-	 7PTG4ec6uEK9pBslDeW7QkBIljtGbIQcBSOVFb9pCeNvk6D7XUMLVxyxnnO8PU5zxTGdO
-	 JtpQ/mgy1eea14yeKjOTAmVRhOlR0QyOsl4yos8Mii+WbzLxozEyywObVxRfJ58BbkTii
-	 cYSLNShgQe+o3EK2SOei/tnhCu35FeRGDMbSYRVHqg2UkX6/f6UYTKKP7rFI9qM0dEg==
+	t=1795705021;
+	b=vW1spVu4HdEzK47yWkxb9MfO4vhOaNxqpHoTPN0n0p0z6MpyA83wAYwf/9tFpCI3Onid
+	 SLh0PWeGw2tzcasFYaun0j80+wvc8sfo6Kf3sNqIN2qEry9VcRZfqHeN9uEnX6m54/of7
+	 Pk5GMjwul4DrELfA3REax4pfpnpHWAXBLB6MFvJiZgULe6rlGb5u6oXHPuvGwDIO5D6Cm
+	 CXSt+wYvEZ22oE1h+XLqf91LEqAZR4EAUWSBVsPMF4/5CZoR4lT+2WY6cUFE1sXWLqHER
+	 FWG7Zl3egu3/+iLzTcjoaHeeuQ+cN/QF2Ss3GsCLLOsFSd7rXJA5taT68MDeYDuYGsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705021;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yJM7qEXS98xxKqTu0aJuehcmCmDf/zwZHuHaqC/FUYw=;
-	b=LAXz48bXXRFQrCuKgp2XFgfXhfEIUvY5t/rs88vYp6TVHuxUGa/YuM1uQd2COlLzOC1B
-	 nfS02WcYASb+uZHSOx3Me6pg97qCBNJMAwtzRpipWNJnwrs0kKpBsReaykK+G+XIkVX0M
-	 PksviToRlzSTgfgAi5LY5sbmxMLFwhlw5Hv9AuJHZwALQDcfOZfxHorzwOV8AwzA4Wg90
-	 5Xo2Jdg5zlYhf7Dze2SLor8jXVealRdEOMH9hHXgmKB8zo2mJUB4fv371dIIDTp0vKoX2
-	 OagAMKyj1M4AhVg+qhgtqb5bEWFxiVb3H6Nvmt4CAPxemziuzlbyjziG2adqVMDZT5g==
+	bh=kEtoMlNyJn/Zm9vf3NbB22oBprvDjnNtb0z+QaK0FKk=;
+	b=Pj9wWXZpGNfVMeH7IOB5XUSv+CDpIzM7TWpRpL8P+VQ0MFWMU0oZRV5gYqmUCETrYf5g
+	 h5AePMJMBpkteZ/LNKiZn4M9AnxF2fQXBUu8Rc2ECbq26Mf7q/C+gDFb5h80ZMVQCgU7p
+	 lsRBHKP0dPijLPp7/Xz/yfIhmgGreZrMkbkYbK+rtdqGpmkFoNCT8qOA7w0UUxVtvNtWd
+	 9XNZ3aSlYLIjqnyqJLRxPV2xwkQxXxzweAK97wZNJkfPqP1nE4zJJcWaLc0XAAiaKm1V0
+	 iEodtTBxBtCoQchlGbWvinHAldotzpgXiBPj7OCCtHktQqnS052+7n2VhQhXiFeWy3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLPPl+Ut;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILHGUuV7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0954C606A33E;
-	Thu, 26 Nov 2026 14:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1E0606A31C;
+	Thu, 26 Nov 2026 14:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLPPl+Ut
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D5C1F000C0;
-	Thu, 26 Nov 2026 14:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILHGUuV7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E465D1F000C4;
+	Thu, 26 Nov 2026 14:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705018;
-	bh=yJM7qEXS98xxKqTu0aJuehcmCmDf/zwZHuHaqC/FUYw=;
+	s=korg; t=1795705021;
+	bh=kEtoMlNyJn/Zm9vf3NbB22oBprvDjnNtb0z+QaK0FKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JLPPl+UtU9JLVQIcYlTDKUTjR2irYmSonZmGgaIzXkEZDQ5Xk0n8NtECYmmikS3kJ
-	 ueU021wdtCNkH5m/kBxK4XArSPfvEcywheV5I5PMuDtUa7slLw1xh4u43/CLr6OwQs
-	 g9dErLgVbDUuFsagf4yWmdruwSPxD0aFywCIDnCw=
+	b=ILHGUuV7SBDYLe5yoDdcgoKZEREBPcM0Ncd3Km94xsP741uZffg+qrgSsMDla0AD+
+	 9uWNG2qWlwZiAvF/S6vZOTYtFdod1ffbf3cU9QoVLkmhh2LSTTHazQbv2LviqTdfbo
+	 KlL3Vj+BQSzniBsi2m8Acek+EFUWlk6oc5RpDSSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/319] vhost-scsi: preserve event ordering
-Date: Thu, 26 Nov 2026 15:37:03 +0100
-Message-ID: <20261126144007.980580947@linuxfoundation.org>
+Subject: [PATCH 5.15 029/319] gpio: omap: Propagate runtime PM failures in probe and request
+Date: Thu, 26 Nov 2026 15:36:37 +0100
+Message-ID: <20261126144007.398596425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,41 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit a9a428115b7d8aa45e12e41899f90f60551bfa82 ]
+[ Upstream commit 05be1a99d6d68b24cbe24a191e1af67c70193ac3 ]
 
-vhost_scsi_send_evt() uses llist_add(), so pending events are LIFO.
-vhost_scsi_complete_events() walks the detached list directly.
-This can deliver a later hotplug or hotunplug event before an earlier
-one.
+pm_runtime_get_sync() can fail when the OMAP PM domain cannot
+resume a GPIO controller, but omap_gpio_probe() and
+omap_gpio_request() ignore its return value.
 
-Reverse the detached list before processing it.
-This keeps delivery in enqueue order.
+Consequently, probe can register a GPIO controller despite a failed
+resume, while a GPIO request can report success and modify GPIO
+state even though runtime-PM acquisition failed.
 
-Fixes: a6c9af87363c ("tcm_vhost: Add hotplug/hotunplug support")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260915094244.7900-2-physicalmtea@gmail.com>
+Use pm_runtime_resume_and_get() in both paths and propagate
+resume errors. On probe failure, disable runtime PM and unprepare
+the debounce clock when applicable.
+
+Reproduced both failures on QEMU N800 by injecting -EIO from the
+OMAP PM-domain resume callback. The original driver continues
+probe and accepts the GPIO request - while the patched driver
+rejects both operations with -EIO. Normal GPIO controller
+registration continues to work without fault injection.
+
+Fixes: 77640aabd755 ("OMAP: GPIO: Implement GPIO as a platform device")
+Fixes: 55b93c32520d ("gpio/omap: use pm-runtime framework")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261029103626.1527919-2-thnkslprpt@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-omap.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index fde8e61c236ec..18d2b0c28c6dc 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -516,7 +516,7 @@ static void vhost_scsi_evt_work(struct vhost_work *work)
- 	struct llist_node *llnode;
+diff --git a/drivers/gpio/gpio-omap.c b/drivers/gpio/gpio-omap.c
+index 171e2150c3626..cdb17d4bce747 100644
+--- a/drivers/gpio/gpio-omap.c
++++ b/drivers/gpio/gpio-omap.c
+@@ -777,8 +777,11 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
+ {
+ 	struct gpio_bank *bank = gpiochip_get_data(chip);
+ 	unsigned long flags;
++	int ret;
  
- 	mutex_lock(&vq->mutex);
--	llnode = llist_del_all(&vs->vs_event_list);
-+	llnode = llist_reverse_order(llist_del_all(&vs->vs_event_list));
- 	llist_for_each_entry_safe(evt, t, llnode, list) {
- 		vhost_scsi_do_evt_work(vs, evt);
- 		vhost_scsi_free_evt(vs, evt);
+-	pm_runtime_get_sync(chip->parent);
++	ret = pm_runtime_resume_and_get(chip->parent);
++	if (ret < 0)
++		return ret;
+ 
+ 	raw_spin_lock_irqsave(&bank->lock, flags);
+ 	omap_enable_gpio_module(bank, offset);
+@@ -1465,7 +1468,13 @@ static int omap_gpio_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, bank);
+ 
+ 	pm_runtime_enable(dev);
+-	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret < 0) {
++		pm_runtime_disable(dev);
++		if (bank->dbck_flag)
++			clk_unprepare(bank->dbck);
++		return ret;
++	}
+ 
+ 	if (bank->is_mpuio)
+ 		omap_mpuio_init(bank);
 -- 
 2.53.0
 
