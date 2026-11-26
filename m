@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705286;
-	b=HBdC29mERgBb52CfYbKyB8DjeN8eNOZAPAz5p+joF7YMCocjeC0gSppsW1XsaXqbDD9g
-	 TqjJBbRHx2uHEzNtP3HdbGPRUHPKuCwXjDqHfJwOicAp6Ww98EUOc38pb8rsx3xyiYOCL
-	 UV5ON6DpAZ0yjKeeVaAwh/xY4jBhHf1JRIf6HyuwVnSmAwdqKb0XQaTwAfwDEBc6dFKLw
-	 SueRzJ8If6qCFj/MOGZiBqpbqghhX2aHG0WGHN4dIIHzYaWPOfOlIbzHvMvdV5hwcFMbw
-	 dpc4B1dIzO+8rG1l2FGRDshN7SoTiaHdNiL4v3UZ04yyERDYie0vWQHJJG++yKWl5tQ==
+	t=1795705289;
+	b=I78UWrCL+jZieS0An11yQprtEYTZuzUIl2RV0eUeZLjaChUFsb1/DvLahGUt8gjoVf9X
+	 17oV4B6aw5ut5sUkLdBxc9FD+hdJ+eJgeqmwyyq+Z22wIPz5DWqysEf/RxBHl2T8W9AEm
+	 /Rc+JJlqpIa4C8/+5Qtnvb/gprpdAbPmwCoVgH1fMLkf+I3SKddQJxduqtMrvay8RjNtj
+	 4tdCVxZXHtFW+gttFjrC+j4hxeik8AEV08tVjF4xHprXgf3l+eaHIlsqtHPFB2HQcSYic
+	 bEOsvzWt79KVTMgNO7GnW9Q0ziHRmBnPnskFMt/F6hgCM8mk5+CiH1mUISumuC2+jZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZnwY/kVK1PyaIKjFzPwpUeOEOPw2dpxLElFZKnJMnpM=;
-	b=YVBzkx5j3cK7CojRGl89k329m8wnt132EDr05lidiLwV91iBj322duvb6jUa5u0KPL6T
-	 tz/03rrzYe5vD0oS4wYtDUDjwH9YLD6madkpQ1JSxw0lAZxTbRIy1JCxjEKu41SmaenEK
-	 6H+1pNBwBCcgdIbIDPVirnvJqzVW/GPoRJaERB4jtE+fIw1DLg5sNksVgWdsdU6Tuu0K1
-	 x8gF8oRBYaxVBEW6/bbA91XApB5lbtuF6MoTt1LEOqTUvZr+cYXpMD9twHxR4OYV0BrAQ
-	 QJ9lD2rygLtP8KlhivhRGGGqGrh4BYFNEerPAxJR3t/RfZLA8AYGL+nwt2MsWzdRZxQ==
+	bh=/tBkdDF9wpRJVXYhS9FdQVt5pK6sU+pA4EfE4ZtQhEM=;
+	b=YZWrZOjbJPM85o4+1RqUMqRPLFo22Fe6xvTGXHujchClihifgasJadw+8b/ElTqgthr0
+	 do1nP0gQjyGlKMBrldXhUxpXeGN2JL6D15wlKDiJ/P8jATOe3CQzqryUY6XZJbwHZv2c4
+	 ICvXyqyZJmqm9FxGtO6pj7IqnT9PDesK5FYjMmsXkSGWDbRu5altdMXZA8KQRDRXMG6Br
+	 Meb+3/V3/ZCJoiUFficJJKLlyByanBGc1UWnCA4yHgA2ZoOrQ91frKXj0uPHzuzqOMuhm
+	 3Lb0rDbU8q8Itq66Y5lCOEV8k4DbFGJZm2091AaGtjmiwW38PkvfA69ASW3fMniOhbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyxqflKc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZXsavb7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C34E606A31E;
-	Thu, 26 Nov 2026 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B74606A31C;
+	Thu, 26 Nov 2026 15:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyxqflKc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FE01F000C4;
-	Thu, 26 Nov 2026 15:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZXsavb7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F241F000D0;
+	Thu, 26 Nov 2026 15:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705285;
-	bh=ZnwY/kVK1PyaIKjFzPwpUeOEOPw2dpxLElFZKnJMnpM=;
+	s=korg; t=1795705289;
+	bh=/tBkdDF9wpRJVXYhS9FdQVt5pK6sU+pA4EfE4ZtQhEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IyxqflKc1FtWqIN6iWpM11K7ISNVKktk6Uz5kDf9FY6v5YhUl2pKazjF34B6ZE52A
-	 P0997+akB5Z2ISqCckELBCWQ/1tzlSa6snGkaD7ecXCmK/wfkB8iSUTufur7FD6H52
-	 Tz5amLMsJENpmINht2VFzZF1OR6EY5Ny+YOria3E=
+	b=sZXsavb7U5I68FNNOz9pz5Y8Y68ngjpDqswJVm4PZ+C/XkIEkSs+87SVtt83SKiXj
+	 t+3dfiZhb7NRTkTQC2yS/6zfs0urKCeCjmeojZW1nVVxAhyd1Jqt+M2BJecHUwhUNI
+	 khfheeEni2nXXRdJKw0JFOnARU+uMM/7SMJEQc6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
+	Umang Pokhriyal <umangpokhriyall@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/319] bonding: fix slave_cnt leak on XDP enslave failure
-Date: Thu, 26 Nov 2026 15:38:35 +0100
-Message-ID: <20261126144010.065654735@linuxfoundation.org>
+Subject: [PATCH 5.15 148/319] tun: delete the flow entries of the moved queue on detach
+Date: Thu, 26 Nov 2026 15:38:36 +0100
+Message-ID: <20261126144010.087757198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,85 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Umang Pokhriyal <umangpokhriyall@gmail.com>
 
-[ Upstream commit a978095699641d4f83a32b499a981c419c94abca ]
+[ Upstream commit 4cc0a3f897074cea28dae38f1cd9bb230dae5d86 ]
 
-bond_enslave() increments bond->slave_cnt before setting up XDP on the
-new slave. If that setup fails (slave has no XDP support, already has
-an XDP program, or dev_xdp_propagate() fails), the error path jumps to
-err_sysfs_del, which never decrements slave_cnt.
+When a queue is detached, __tun_detach() moves the last queue into the
+freed slot and decrements tun->numqueues. The flow entries that point at
+the old index of the moved queue, now tun->numqueues, are meant to be
+deleted, but the call passes tun->numqueues + 1, an index that never
+exists, so nothing is deleted.
 
-Each failed enslave therefore leaves slave_cnt one too high:
-- SIOCBONDINFOQUERY reports a wrong num_slaves,
-- balance-rr picks slave ids beyond the end of the slave list, so
-  bond_get_slave_by_id() falls back to the first usable slave and
-  transmit is skewed toward it.
+Until those entries are refreshed by a write on their flow or age out,
+tun_automq_select_queue() returns an index past the last queue, and
+netdev_core_pick_tx() sends every such flow to queue 0 and warns:
 
-Reproducer:
+  tapq0 selects TX queue 3, but real number of TX queues is 3
 
-  ip link add bond0 type bond mode balance-rr
-  ip link set bond0 xdpdrv obj xdp_dummy.bpf.o sec xdp
-  for i in 0 1 2; do
-    ip link add d$i type dummy
-    ip link set d$i master bond0   # fails: Slave does not support XDP
-  done
+Found with an LLM while testing how a VMM detaches tap queues when a
+guest lowers its virtio-net queue pairs. With four queues, 30 flows
+learned on queue 3 and queue 1 detached, all 30 went to queue 0 with the
+warning; with this patch they are spread by hash and no warning is
+printed (3 runs each, in a guest booted on net).
 
-num_slaves read via SIOCBONDINFOQUERY is 3 before this patch, 0 after.
+Pass tun->numqueues.
 
-Add an err_dec_slave_cnt label ahead of err_sysfs_del and use it from
-the three XDP failure paths, which are the only failures after the
-increment.
-
-Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261104092851.688361-1-edumazet@kernel.org
+Fixes: 96442e42429e ("tuntap: choose the txq based on rxq")
+Signed-off-by: Umang Pokhriyal <umangpokhriyall@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261104174240.138491-1-umangpokhriyall@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/tun.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 17f08b7dd5395..13c85464842ab 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2195,7 +2195,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
- 				     "Slave does not support XDP");
- 			res = -EOPNOTSUPP;
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
- 	} else if (bond->xdp_prog) {
- 		struct netdev_bpf xdp = {
-@@ -2209,14 +2209,14 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 			SLAVE_NL_ERR(bond_dev, slave_dev, extack,
- 				     "Slave has XDP program loaded, please unload before enslaving");
- 			res = -EOPNOTSUPP;
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 652cb1c638081..bde1063a21913 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -672,7 +672,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
  		}
  
- 		res = slave_dev->netdev_ops->ndo_bpf(slave_dev, &xdp);
- 		if (res < 0) {
- 			/* ndo_bpf() sets extack error message */
- 			slave_dbg(bond_dev, slave_dev, "Error %d calling ndo_bpf\n", res);
--			goto err_sysfs_del;
-+			goto err_dec_slave_cnt;
- 		}
- 		if (bond->xdp_prog)
- 			bpf_prog_inc(bond->xdp_prog);
-@@ -2231,6 +2231,9 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	return 0;
- 
- /* Undo stages on error */
-+err_dec_slave_cnt:
-+	WRITE_ONCE(bond->slave_cnt, bond->slave_cnt - 1);
-+
- err_sysfs_del:
- 	bond_sysfs_slave_del(new_slave);
- 
+ 		synchronize_net();
+-		tun_flow_delete_by_queue(tun, tun->numqueues + 1);
++		tun_flow_delete_by_queue(tun, tun->numqueues);
+ 		/* Drop read queue */
+ 		tun_queue_purge(tfile);
+ 		tun_set_real_num_queues(tun);
 -- 
 2.53.0
 
