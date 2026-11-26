@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705224;
-	b=G4DPRfaL5dL+7Zmu+eZwsOqScaq0qUILWt7T6aGxwZ4b7KkIzAjBnBBWhB4/SAms8FEh
-	 udhXuwPv9orw5oo6JvpG7XyTV9eqZUi72V6QaCcvHxV3POKgaPdSG99v2fJDdIpqKhLk9
-	 OvD/TgcuVxG0edh2+Ld6IaHezgYafsdbOeP2LJHyRjSSc1c8vghukyOq3UnUfoeE8lnWd
-	 LHq2Bdf3OiFMXKjawofiTA4/uUKJCfMA3uX0Ec4gPJz0eAR75KgBuYxOoq905aSpJW9t0
-	 9nvF8XiLTwrnqRXmOcE8A0XVtcVIZ4An9IX7NOq5+k6D8SKULhQWpuwAKmNEaV/SbAQ==
+	t=1795705227;
+	b=G4zk5CISNk9lhkHfXeMTh38rbI4Rmgvyrf/Wr5ukZx9CdGrccuA0ofw94pm6sf/2+FgI
+	 Sbn2WbVGZwBo4pznLGBoL9m/Qpczt6bTyRkpX2gzYiTNIATwUxd2ahH3s0DKAsaDG/80o
+	 WiGQQDtxalgUV9G3gzgHiqpqvHLF5dpQqL1W/42YOOMKSuUl8OWb/YMMVCboe+g9hI58o
+	 jgeB1EpF69qlvzLGzQAINNHd48V6eXmIDh/L4MWc1+ODoBozGvQG7YeH3C7wvHAbZ0RaJ
+	 3gbxqPbOf7abVJkyQeM+P7h7MO1nnurcvGTOx4li5HQMvAyUulmT8oKbea1ICo9yuDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qAv8QdswW4v04C54HTVRXQJC6VyRgMRp0xjuMBbL+GI=;
-	b=G0c24Ws7DNIMxtAFXxjmc8DKVU8S0jSJouPdV//nDbGNy7NKzHX9wyeLouU9B9BabXF2
-	 5LHsLDWSxk2XxaGQZac09Tk5ABl9z3qwDXSEDp7rkRlHlFWO3XCDMkNOTmQkymNO8DPzo
-	 1wjfsLw1Xl2rEAyAv1cSv82mpumDtMbezXQw9kZtytQJm1H6K27+bjHTVJnjwqWOUUkEV
-	 Vg7sm+FOBgCBorrT+qw5YtbKG0CxRwdDU8xN0/hPjlwRMaQMVglAjIfxQyyhN5ZomKeNd
-	 h7cRH0+q8bv3SpH8eYigiJdyJ7sg/BtRI+4WAk31m+yny91IdDjl9OMqPBVi40jHAOg==
+	bh=We6iPzmm/Bs7YC7JUEfUcK9DqY2lICsFLKn23PHX6cU=;
+	b=KIQ4/1JVyoW+8BiimtLtk2InHqZa09bOQ8Q45E3M5iP4Jl/f6suCV0v9Qaoh2WZfwwhV
+	 D8GZIe8RzM+VKJQBf32lnxzQmllIYV01k0Mfx8Rru4DVAlgVOYgzAsgjrZidv6aOefgCx
+	 jRP2seXT3ct/F/ogOdgngtpYQawCP5H9H95PjAw54s8lWt4JZFw6OXUVrkDFrU5+jycth
+	 uxPMIkoGn6Da6gW9rMSFOEnMbslffN4ZZ2EbWxSVtjqwSVkWmNQyLqdJ/a99XKgRJ3iM3
+	 e19ggU1y4GOc2BV5Y5Y/+HHRtPG/0PPcSKgga9LwHGM4VhP/0jRRFl3uNYdlo2+nDtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkO028bv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x4gIxp/M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B0A606A329;
-	Thu, 26 Nov 2026 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABCB606A31C;
+	Thu, 26 Nov 2026 15:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkO028bv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177591F000D8;
-	Thu, 26 Nov 2026 15:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x4gIxp/M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9901F000C0;
+	Thu, 26 Nov 2026 15:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705224;
-	bh=qAv8QdswW4v04C54HTVRXQJC6VyRgMRp0xjuMBbL+GI=;
+	s=korg; t=1795705227;
+	bh=We6iPzmm/Bs7YC7JUEfUcK9DqY2lICsFLKn23PHX6cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wkO028bvM62l/n6a2qJB5ryEFy0voyz20hArZrQ9GSyiR/5y+u7AYOkVVxj02o5y6
-	 CecQDlMsl3Qh3sbVTGXJcUHw55RdgsCjZbSgOPJqudFmUdhbasqN0YAfPKN1c5Rfsj
-	 GuyAH5QiZnSsTdngd/TQM7AdW0Aliv4+mLG4VuWI=
+	b=x4gIxp/M4/l3w9mczw9hkZrVBxr5FFFtZdWqtzu1/PXJW6uzucdCJXo8y/SYLXVr7
+	 DLoBDfHr7UPH8ZIlmjl0+Phmm46nSL0OZEvzOLJj1Rz3vbPFlrvLjeW+rEiI2f9gV/
+	 /zPrZVZeOMitoeEuMbVUeSvJ2PI8ujrGpT/zHvGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/319] nvmet-rdma: take a device off the list last
-Date: Thu, 26 Nov 2026 15:37:29 +0100
-Message-ID: <20261126144008.571437778@linuxfoundation.org>
+Subject: [PATCH 5.15 082/319] nvmet-rdma: queue the release work under the mutex
+Date: Thu, 26 Nov 2026 15:37:30 +0100
+Message-ID: <20261126144008.593780181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -74,20 +74,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 86ae3841aea4e29d7ac08d5614ca3823dc8dfbc9 ]
+[ Upstream commit 80095787f776967361cca76357f19e5445e0cd75 ]
 
-nvmet_rdma_remove_one() disconnects the queues of a device and flushes
-nvmet-wq, but since commit a3dd7d0022c3 it returns right away if the
-device isn't on device_list. nvmet_rdma_free_dev(), run by the release
-work of the last queue, takes the device off that list first and frees
-the SRQs and the PD afterwards. A device removal in between finds
-nothing on the list, returns, and the RDMA core frees the device under
-ib_dealloc_pd().
+nvmet_rdma_remove_one() takes the queue mutex, unlists each queue of
+the device and queues its release work, then flushes nvmet-wq. So a
+queue that still holds objects on the device must either be on the
+list or have its release work queued. nvmet_rdma_queue_disconnect()
+breaks that: it unlists the queue under the mutex, drops it, and only
+then calls __nvmet_rdma_queue_disconnect() to queue the work. A device
+removal in that window finds nothing to wait for, and the release work
+then destroys the QP and CQ share on a freed device.
 
-Free the SRQs and the PD first and unlist the device last, so the
-remove callback finds it and its flush waits for the release work.
+Queue the work before dropping the mutex, as nvmet_rdma_remove_one()
+itself does. That's safe now that rdma_disconnect() no longer sleeps on
+an iWARP event that needs the same mutex.
 
-Fixes: a3dd7d0022c3 ("nvmet-rdma: Don't flush system_wq by default during remove_one")
+Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
@@ -97,35 +99,37 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/nvme/target/rdma.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index d9ca9510dac5f..995e2c112cc6d 100644
+index 995e2c112cc6d..0487ed0aeb1d3 100644
 --- a/drivers/nvme/target/rdma.c
 +++ b/drivers/nvme/target/rdma.c
-@@ -1199,13 +1199,18 @@ static void nvmet_rdma_free_dev(struct kref *ref)
- 	struct nvmet_rdma_device *ndev =
- 		container_of(ref, struct nvmet_rdma_device, ref);
+@@ -1741,17 +1741,17 @@ static void __nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
  
-+	nvmet_rdma_destroy_srqs(ndev);
-+	ib_dealloc_pd(ndev->pd);
-+
-+	/*
-+	 * Only delete from the device list once all RDMA resources are torn
-+	 * down because nvmet_rdma_remove_one waits for the release work only
-+	 * if the device still is on the list.
-+	 */
- 	mutex_lock(&device_list_mutex);
- 	list_del(&ndev->entry);
- 	mutex_unlock(&device_list_mutex);
- 
--	nvmet_rdma_destroy_srqs(ndev);
--	ib_dealloc_pd(ndev->pd);
+ static void nvmet_rdma_queue_disconnect(struct nvmet_rdma_queue *queue)
+ {
+-	bool disconnect = false;
 -
- 	kfree(ndev);
++	/*
++	 * Queue the release work with &nvmet_rdma_queue_mutex held, so that
++	 * nvmet_rdma_remove_one() either finds the queue on the list or the
++	 * work has already been queued.
++	 */
+ 	mutex_lock(&nvmet_rdma_queue_mutex);
+ 	if (!list_empty(&queue->queue_list)) {
+ 		list_del_init(&queue->queue_list);
+-		disconnect = true;
++		__nvmet_rdma_queue_disconnect(queue);
+ 	}
+ 	mutex_unlock(&nvmet_rdma_queue_mutex);
+-
+-	if (disconnect)
+-		__nvmet_rdma_queue_disconnect(queue);
  }
  
+ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
 -- 
 2.53.0
 
