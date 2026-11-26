@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704916;
-	b=u2v7/3fd81tYOH3j9ghJ+7fz/OHYlZtJ4t/UhgsOR4uehz92rckOli2wt3ilvNC8v5wu
-	 h2p143k1emrYkjvfOiv/1UaKzLn4prGF8/kKIYY+qIc6+7kzeW8HTBvc3446RX5QOM3VI
-	 HfD1X00y1+vLPUlcwsDDo1ib+g1FxtvhM5Ls8vV3HChpplRMabjF2Gg0FmX9+kcTXXcS+
-	 whj8BjH2Bz8NT/rzHzcm9DHg8bcvaDZ5RJZrje6Gw/DtL9Lz6FYc6ARBvoRXwzc8+mE8w
-	 e5pbCECJ8lVZFs27epglcb9jTTObYAAInJ8Ohc//Pr29b3+f3s9BrXezkrWs50LjShA==
+	t=1795704919;
+	b=rbrd4ufpDryZzF/924Whos5esVBq7qPibCaat0BcprDaK3kjiTIuDTpV2RVtEHDIDhZ4
+	 /1Z+FjSeb3DOxUrXlCJP+zFB2hlB54rkp4/NHR0r44CJoBSBjjWkmgKIQkMnpgymHw8/g
+	 soH6vZUCa8kWx65mbc7MfS/s+jFtksaJPmmTUIBz1A1mFl2dTOyS53neaUPaC3BztDIFO
+	 /ZX7ckZ/9XAboHzjTldhsmsga41OjKuiZlb/r8b3QyNBpAKzxQV5ZTaCj4n0DYBK3Vw2E
+	 lV8eqNXP44o7DFv9VAlm05qq/QRSoEinVfB1N27y/6F+dQpY0uL5VVLvlBg13Mmhx7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704916;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704919;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WPHjeaelukrD8paaS2kPfKoVZqpHVmuCqozgswpnVJ4=;
-	b=RJn0fzSKp+OU4G7xl7yhaIqFMlFvcqZWqV2gfLPzSCNsJa2APSgFzO2mm2WFbdY+65IU
-	 /oOJc3bkJUuErXTl/jin7ZB8ahm/EZiJOMjNOhIB7kqO6waq05bxva7sEu9pGWPHtq4/O
-	 6AlQIRS5DOybZgbU6n3oKkzg9A69slJNIYv7ltZFBB3MjURm4fyiARAGfEVIJMv0sQpQs
-	 v9T8Qj4NvmC59+aO0dBSBBC5NB4/N+7Yn1WYkuel21iqOE91bihvjaRsnMqk+Ipg9ZXGq
-	 U+91lpOvbkdeLko/a3KKa5BuzysSyJwwc2KFK/dsoWiOpILgPvMSTn+HJnfsxK1kFng==
+	bh=5FE/d25LaX4+vkTB3pfXH2WdBDsHjt/8dxxQ58zMDc8=;
+	b=1FgFtIGhCJyM/K0YbRF5eraf3r5b/HSCndTmiWFNN6QB5M4c0htsAepHQNd2552hgqbr
+	 hPtqjaz8+H1C6paw7UjrFXeBwcZ8kQ6vycvLl0wgIS9duSfi+7TNDve2AkJuE70Gav4LZ
+	 KkedZg1gYbSOvOabydp03bc07bZmgh2PhZkT68pk5d2GAOSuUZpfOhIzxxp9au+lSQ7cN
+	 D0BV9urfhc9roNb4efskehiZaIndLyfz8/ymgkVemqWopfOnyuFUjajRR87goyX3Me/W5
+	 6NABcm8FJf88hmIRwGBU1xcK1P4GeWwsPbQSGumuLQTKW0Ym2HjaiVWKwpjdttwqAOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9R4pc2w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGNWYic0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57648606A31E;
-	Thu, 26 Nov 2026 14:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05853606A31E;
+	Thu, 26 Nov 2026 14:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9R4pc2w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D341F000C4;
-	Thu, 26 Nov 2026 14:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lGNWYic0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6BD1F000C0;
+	Thu, 26 Nov 2026 14:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704915;
-	bh=WPHjeaelukrD8paaS2kPfKoVZqpHVmuCqozgswpnVJ4=;
+	s=korg; t=1795704918;
+	bh=5FE/d25LaX4+vkTB3pfXH2WdBDsHjt/8dxxQ58zMDc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9R4pc2w0hmVrlY3/O7SYLIS+3WMQy/XnK7EluBj/8bz19m5q6KQGOW2F8wf2RfEe
-	 TczMBxtZdW++iumVIxt1aQLlM4Qts8q0F9NMPmgncQXt3Rb2BmZVHQEuMVr53iVu88
-	 ZRY4LYSvVH5Ln/XmoyI5yyEK7mUxjqP5ekD+nd6I=
+	b=lGNWYic0K4ZPaWPGtz3tw5I2u5LqNtrss3AmTiJK4z+Or14nH8Do7uOreqMr4M46E
+	 0xaPuhMiwRVQoVQNcP051KLjOb0OhKTaULHYC/sSy5SWPsoQF8jKNfbOg1Gm3FwpHV
+	 A/fN3mRyg2ZdM7jlOuuHSVqwvW6IYzedpa/DaPog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Mark Bundschuh <mkbund@amazon.com>,
+	Giovanni Vignone <gio@octane.security>,
+	Shubham Antil <shubham@octane.security>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/319] netfilter: nft_ct: expectation timeouts are passed in milliseconds
-Date: Thu, 26 Nov 2026 15:36:10 +0100
-Message-ID: <20261126144006.793159536@linuxfoundation.org>
+Subject: [PATCH 5.15 020/319] xfrm: zero-initialise km_event in the replay-notify path
+Date: Thu, 26 Nov 2026 15:36:28 +0100
+Message-ID: <20261126144007.197718434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,92 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Shubham Antil <shubham@octane.security>
 
-[ Upstream commit 6fb421bd07f156cdf0cdede062d31f1c21def326 ]
+[ Upstream commit e35a12dffd5da67b6ca12bd23eebdd0570592205 ]
 
-Userspace passes '5000' in case user asks for 5 seconds.
+xfrm_replay_notify(), xfrm_replay_notify_bmp() and
+xfrm_replay_notify_esn() declare a struct km_event on the stack and
+initialise only its .event and .data.aevent fields, leaving .seq and
+.portid uninitialised. build_aevent() then builds the XFRM_MSG_NEWAE
+message with those fields:
 
-Allowing for sub-second expectation lifetimes makes sense to me. so
-fix up the kernel side instead of munging nft to send a value rounded
-up to next second.
+  nlmsg_put(skb, c->portid, c->seq, ...)
 
-Also note that this violates nft convention of passing integers in
-network byte order, but we can't change this anymore.
+so the netlink header of a replay event carries uninitialised stack
+values rather than defined ones. This was confirmed at runtime rather
+than by inspection alone: the .seq and .portid carried in that header
+hold values that nothing in the replay path assigns.
 
-Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 3679da4ad8be ("netfilter: nft_ct: move custom expectation support to helper")
-[ b8b09dc2bf35 ("netfilter: nf_conntrack_expect: use conntrack GC to
-  reap expectations") is not backported because it replaces the
-  expectation timer with GC reaping in 9 files, so timer_list expires is
-  set, and mod_timer_pending() after insert. ]
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+The request-driven paths set these header fields from the requester
+(xfrm_get_ae() / xfrm_new_ae()); only the kernel-originated replay path
+leaves them unset. Zero-initialise the event so the header fields are 0,
+the correct value for a kernel-originated notification.
+
+Fixes: f8cd54884e67 ("[IPSEC]: Sync series - core changes")
+Reported-by: Giovanni Vignone <gio@octane.security>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Shubham Antil <shubham@octane.security>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_replay.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 4e723257f356d..af58d86b07838 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -1184,11 +1184,23 @@ struct nft_ct_expect_obj {
- 	u32		timeout;
- };
+diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
+index 6f6a18dc375b7..9937d0e61b7d7 100644
+--- a/net/xfrm/xfrm_replay.c
++++ b/net/xfrm/xfrm_replay.c
+@@ -40,7 +40,7 @@ static void xfrm_replay_notify_esn(struct xfrm_state *x, int event);
  
-+static int nft_ct_expect_timeout_get(const struct nlattr *attr, u32 *val)
-+{
-+	unsigned long jiffies_val = msecs_to_jiffies(nla_get_u32(attr));
-+
-+	if (jiffies_val > UINT_MAX)
-+		return -ERANGE;
-+
-+	*val = jiffies_val;
-+	return 0;
-+}
-+
- static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 				  const struct nlattr * const tb[],
- 				  struct nft_object *obj)
+ void xfrm_replay_notify(struct xfrm_state *x, int event)
  {
- 	struct nft_ct_expect_obj *priv = nft_obj_data(obj);
-+	int err;
+-	struct km_event c;
++	struct km_event c = {};
+ 	/* we send notify messages in case
+ 	 *  1. we updated on of the sequence numbers, and the seqno difference
+ 	 *     is at least x->replay_maxdiff, in this case we also update the
+@@ -304,7 +304,7 @@ static void xfrm_replay_advance_bmp(struct xfrm_state *x, __be32 net_seq)
  
- 	if (!tb[NFTA_CT_EXPECT_L4PROTO] ||
- 	    !tb[NFTA_CT_EXPECT_DPORT] ||
-@@ -1224,8 +1236,11 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 		return -EOPNOTSUPP;
- 	}
+ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
+ {
+-	struct km_event c;
++	struct km_event c = {};
+ 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
+ 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
  
-+	err = nft_ct_expect_timeout_get(tb[NFTA_CT_EXPECT_TIMEOUT], &priv->timeout);
-+	if (err)
-+		return err;
-+
- 	priv->dport = nla_get_be16(tb[NFTA_CT_EXPECT_DPORT]);
--	priv->timeout = nla_get_u32(tb[NFTA_CT_EXPECT_TIMEOUT]);
- 	priv->size = nla_get_u8(tb[NFTA_CT_EXPECT_SIZE]);
+@@ -356,7 +356,7 @@ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
+ static void xfrm_replay_notify_esn(struct xfrm_state *x, int event)
+ {
+ 	u32 seq_diff, oseq_diff;
+-	struct km_event c;
++	struct km_event c = {};
+ 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
+ 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
  
- 	return nf_ct_netns_get(ctx->net, ctx->family);
-@@ -1245,7 +1260,7 @@ static int nft_ct_expect_obj_dump(struct sk_buff *skb,
- 	if (nla_put_be16(skb, NFTA_CT_EXPECT_L3PROTO, htons(priv->l3num)) ||
- 	    nla_put_u8(skb, NFTA_CT_EXPECT_L4PROTO, priv->l4proto) ||
- 	    nla_put_be16(skb, NFTA_CT_EXPECT_DPORT, priv->dport) ||
--	    nla_put_u32(skb, NFTA_CT_EXPECT_TIMEOUT, priv->timeout) ||
-+	    nla_put_u32(skb, NFTA_CT_EXPECT_TIMEOUT, jiffies_to_msecs(priv->timeout)) ||
- 	    nla_put_u8(skb, NFTA_CT_EXPECT_SIZE, priv->size))
- 		return -1;
- 
-@@ -1295,7 +1310,7 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
- 		          &ct->tuplehash[!dir].tuple.src.u3,
- 		          &ct->tuplehash[!dir].tuple.dst.u3,
- 		          priv->l4proto, NULL, &priv->dport);
--	exp->timeout.expires = jiffies + priv->timeout * HZ;
-+	exp->timeout.expires = jiffies + priv->timeout;
- 
- 	if (nf_ct_expect_related(exp, 0) != 0)
- 		regs->verdict.code = NF_DROP;
 -- 
 2.53.0
 
