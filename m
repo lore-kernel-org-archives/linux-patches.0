@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705380;
-	b=Lt89g7A/HSletPMSnVNHbmZU3Hl37txGYcCRyQjWXadH15zPrDGhBD2g4sTY6reUWl/Z
-	 bBOkEKCj2l6O2idhqmQevFtRvVakKY97WOXIbahnJzR1if01iU7vbf0pn8hhO/shdeuG7
-	 TKC4FnbSXrJvHm6/UDDzKaXwmZdUJRb45ljQOkz7C7hO62BMFRjRl0i8mhgRXgNHKD1ka
-	 Z/6d20SVaZ2MlDrrXr1R9EtXBo2V+3pXYvCI8LWigqWDqdCRfanzVo6gQw2oqq4vvQ+/u
-	 7dfWCYG0aS+vmF0iHH1Y27qM1/2YCqiDErMChSvr/CACdwrh+CB/scVP3CjUX6GMJjQ==
+	t=1795705382;
+	b=WZPiseqBrPqX/M/iKFIPpAxOAVUWgzfIMhDWB7eRBSrpJDf7XAZS9Sm6n6gtbOA9PU5S
+	 H4WYbl9v0nSPFsBLmeCOdWPa6exuNggCV7AsHP78qkSwhGDwwhiw+/ssTBGDP2D2Suxin
+	 yv1CSiYFZnSih1VhnwQSh1G0g6MDs/c5rqZ+n8Jop3re7ij8QGn7eIRVQ0BqpijzzK/tJ
+	 GpbaN9qggfeQhYi2+DS3/CkRv2THTYOsl6zk6UaabAO9g2mm/pDeieH8qp1ZgC+ea3BTC
+	 ThAUKhR7HRVNQ/ZGQNV2N1w9HclwN5dR12ZmvL4dWph+Liu0YT8zu/knXYni9Hk7h3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oljiIQ+b1NH7uq871HyxIqpd2HAgEFXn9SIBoqxlkWo=;
-	b=xxKsRdt99s8cfBJRVeTPkp3AWSzt4SwiPFL7pr2Q01WT4kHdTxF9+yJwv/hCv+sVCi92
-	 rhL+EFJfp90FbX7++5QhmIUVCXLt1h0QXvUhJVnvP5wwsM3YuA9xQTRo6Agm8/EgBr6La
-	 bUl3yra3w59iFYXxrIByMf2Tote/ia3t+3Pm61SYIneesjxykXoxYdT6896Zwwgpxj/9h
-	 Th+RrshiLS122LY0Msv3jBL7bB62ZIkNIKl8BGi7Fz8I+dWa/nEieg6J5E0ZLY7AIW+xB
-	 s6QUFbN92Z/dobkxZFRaNJc4hmjSEj3sDbGV8KiPs8HKINd9EnmxTSowpwxNNsO0HyA==
+	bh=6vPWBS6cqJpCLYi53zk0JzrW1V3WNs0K1PJxf49atak=;
+	b=prTj9bHYH9mPQc09bYLfEKbgg+mNqfx7VL2KMI56kV4xrVRU1ueneydtAT/Jl4zEUjvq
+	 qUMnuK4jrw4ydZVdA/LvagI8KEaob4QF0URbJZ2F5DQPElkLtk5NdVIx/ueDROtHVdKMm
+	 /NwRakcBs7xF+imEBela2gUAlb9iFGf94iONU2TUhB1fqX+2lvfUvniy+ALgxi5m/TVHp
+	 STAj5HQigaxfXSHrHAapfZUgQ/Yd3yRrA2VT5ZwN5WG8Z9pyh2CJISd7225WZsNrkUinv
+	 olSvelml41jEqftxXeDY/zYZhuigovf1lJgPdYBb/q61R9ildUtoWiZUG3ypWXKidOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzxVxGBh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOAUNIZD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E06606A31E;
-	Thu, 26 Nov 2026 15:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50FE606A31E;
+	Thu, 26 Nov 2026 15:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzxVxGBh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2F81F000C0;
-	Thu, 26 Nov 2026 15:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gOAUNIZD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA961F000C6;
+	Thu, 26 Nov 2026 15:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705379;
-	bh=oljiIQ+b1NH7uq871HyxIqpd2HAgEFXn9SIBoqxlkWo=;
+	s=korg; t=1795705382;
+	bh=6vPWBS6cqJpCLYi53zk0JzrW1V3WNs0K1PJxf49atak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IzxVxGBh8Nm+VUBx3AlFESqosBo9VBN3jyU+N50kw33hIN+Djw5rKFJMUIxX1cBU0
-	 xEQMTdloYsN4wpb/AK29YSjZXWTlEtv98GbLazW5ZETsU47oxk63pKTVyM2kCuMBf3
-	 ofQUtRpj1pi+Pr5KeSUvX3vzSr79WbONWjXKdGCE=
+	b=gOAUNIZDLu41S1TRc2uI7HaHNuzn6dMVjsFsN9+SVurjE6K4swXCwjP1Jo1N3GT2h
+	 /j/nZhlhE6OiojGwI5t0SSYf/xkocZXi0rnw/iqmWuAvSTIpmtCBxGC8apK8aa/HNK
+	 S/mSZUZu9J+7TrTZv9/MTEjCZJZvjZeHvpe4Kc8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergei Nizovtsev <snizovtsev@cloudlinux.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 171/319] ALSA: caiaq: Kill EP1 URB before unregistering the input device
-Date: Thu, 26 Nov 2026 15:38:59 +0100
-Message-ID: <20261126144010.606494831@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 5.15 180/319] mm/memory_hotplug: resize zones under their seqlock
+Date: Thu, 26 Nov 2026 15:39:08 +0100
+Message-ID: <20261126144010.809632342@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,124 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 5d325345185015024a86abca4cc5fa6a3f75294e upstream.
+commit 58e81bb7de5aac8ec5e4aa21d401e7dafbd4058b upstream.
 
-snd_disconnect() unregisters the input device via
-snd_usb_caiaq_input_disconnect() and only afterwards kills the EP1
-command URB (cdev->ep1_in_urb). The EP1 completion handler
-usb_ep1_command_reply_dispatch() feeds snd_usb_caiaq_input_dispatch()
-for EP1_CMD_READ_{ERP,ANALOG,IO} replies, which report into
-cdev->input_dev. Since commit b04dcbb7f7b1 ("ALSA: caiaq: Use
-snd_card_free_when_closed() at disconnection") the input device is
-unregistered from snd_usb_caiaq_input_disconnect() but cdev->input_dev
-is cleared only later, in snd_usb_caiaq_input_free() from the card
-destructor. As the dispatch guard only tests cdev->input_dev for NULL,
-an EP1 reply that completes after input_unregister_device() but before
-cdev->ep1_in_urb is killed reports into an input device that has
-already been unregistered and, with no evdev client holding it open,
-freed.
+With CONFIG_DEBUG_VM the page allocator checks that a page which is
+freed, split or allocated lies within its zone. The check reads
+zone->zone_start_pfn and zone->spanned_pages under zone->span_seqlock, as
+memory hotplug can change the two at any time.
 
-Normally the window is closed by the USB core: usb_unbind_interface()
-calls usb_disable_interface() before ->disconnect(), which flushes the
-EP1 URB as long as endpoint 0x81 belongs to the interface being
-unbound. But caiaq addresses EP1 through the device-wide pipe
-usb_rcvbulkpipe(usb_dev, 0x1) without checking which interface owns
-the endpoint. If a device declares it in another interface, the URB
-stays live across snd_disconnect() of the interface that owns the card.
+Commit 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking") removed
+the write side, since all resizing is serialized by the hotplug lock. That
+leaves the reader without protection. When memory below the start of a
+zone goes online, the start is lowered first and the size is raised
+afterwards. When the lowest memory of a zone goes offline, the size is
+reduced first. In between, the zone seems to end before its last pages. If
+one of them goes through the allocator at that moment, it is reported as
+being outside of the zone triggers VM_BUG_ON_PAGE().
 
-This needs a crafted device descriptor; a device that has EP1 in the
-interface caiaq is bound to is not affected.
+Write the two fields in a write section of the seqlock. Interrupts are
+disabled as pages are freed from interrupts, too, and the reader would
+wait for the writer which it has interrupted.
 
-Kill cdev->ep1_in_urb (and the paired midi_out_urb) before the input
-and audio disconnect helpers, so no EP1 completion can run once the
-input device has been unregistered.
-
-Reproduced under KASAN with raw-gadget + dummy_hcd emulating an Audio
-Kontrol 1 (17cc:0815) with the EP1 bulk pair in interface 1: only
-interface 0 was bound to snd-usb-caiaq and then unbound through sysfs
-while the gadget flooded EP1 with EP1_CMD_READ_ERP replies. With no PCM
-stream running the window is very short and was only hit by stalling
-the unbinding CPU with a kgdb breakpoint at
-snd_usb_caiaq_audio_disconnect(). With the fix applied, the same test
-runs clean.
-
-  BUG: KASAN: slab-use-after-free in input_event+0x3a/0xc0
-  Read of size 8 at addr ffff8880151a4028 by task sh/118
-
-  Call Trace:
-   <IRQ>
-   input_event+0x3a/0xc0
-   snd_usb_caiaq_input_dispatch+0xab2/0xf00
-   usb_ep1_command_reply_dispatch+0x1f3/0x580
-   __usb_hcd_giveback_urb+0x246/0x400
-   dummy_timer+0x1415/0x3380
-   __hrtimer_run_queues+0x39d/0x800
-   hrtimer_run_softirq+0x187/0x2d0
-   handle_softirqs+0x1ff/0x930
-   __irq_exit_rcu+0x15b/0x210
-   irq_exit_rcu+0xe/0x20
-   sysvec_apic_timer_interrupt+0x81/0xb0
-   </IRQ>
-   <TASK>
-   asm_sysvec_apic_timer_interrupt+0x1a/0x20
-  RIP: 0010:snd_usb_caiaq_audio_disconnect+0x0/0x70
-   snd_disconnect+0x81/0x110
-   usb_unbind_interface+0x1a0/0x860
-   device_release_driver_internal+0x2c5/0x470
-   unbind_store+0xde/0x100
-   </TASK>
-
-  Allocated by task 80:
-   input_allocate_device+0x47/0x340
-   snd_usb_caiaq_input_init+0x4c/0x1ac0
-   snd_probe+0xab3/0x1160
-   usb_probe_interface+0x2ea/0x810
-
-  Freed by task 118:
-   kfree+0x1ea/0x5c0
-   input_dev_release+0xab/0xd0
-   device_release+0xcf/0x250
-   kobject_put+0x169/0x320
-   snd_disconnect+0x79/0x110
-   usb_unbind_interface+0x1a0/0x860
-
-Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
+Fixes: 27cacaad16c5 ("mm,memory_hotplug: drop unneeded locking")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
-Assisted-by: Claude:claude-opus-4-8
-Link: https://patch.msgid.link/20261112094904.2430318-1-snizovtsev@cloudlinux.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: LLM
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/20261103-pgalloc-ai-hotfixes-v2-4-e0d2890ab74f@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ mm/memory_hotplug.c |   44 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -587,14 +587,19 @@ static void snd_disconnect(struct usb_in
- 
- 	snd_card_disconnect(card);
- 
-+	/*
-+	 * Kill the EP1 URB before disconnecting the input device: its
-+	 * completion reports into cdev->input_dev, which input_disconnect()
-+	 * frees without clearing the pointer.
-+	 */
-+	usb_kill_urb(cdev->ep1_in_urb);
-+	usb_kill_urb(cdev->midi_out_urb);
-+
- #ifdef CONFIG_SND_USB_CAIAQ_INPUT
- 	snd_usb_caiaq_input_disconnect(cdev);
- #endif
- 	snd_usb_caiaq_audio_disconnect(cdev);
- 
--	usb_kill_urb(cdev->ep1_in_urb);
--	usb_kill_urb(cdev->midi_out_urb);
--
- 	snd_card_free_when_closed(card);
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -390,6 +390,22 @@ static unsigned long find_biggest_sectio
+ 	return 0;
  }
  
++/*
++ * The page allocator checks pages against the span of their zone while the
++ * zone is resized, see page_outside_zone_boundaries(). It must not see the
++ * new value of one field together with the old value of the other one.
++ */
++static void zone_set_span(struct zone *zone, unsigned long start_pfn,
++			  unsigned long spanned_pages)
++{
++	unsigned long flags;
++
++	write_seqlock_irqsave(&zone->span_seqlock, flags);
++	zone->zone_start_pfn = start_pfn;
++	zone->spanned_pages = spanned_pages;
++	write_sequnlock_irqrestore(&zone->span_seqlock, flags);
++}
++
+ static void shrink_zone_span(struct zone *zone, unsigned long start_pfn,
+ 			     unsigned long end_pfn)
+ {
+@@ -405,13 +421,10 @@ static void shrink_zone_span(struct zone
+ 		 */
+ 		pfn = find_smallest_section_pfn(nid, zone, end_pfn,
+ 						zone_end_pfn(zone));
+-		if (pfn) {
+-			zone->spanned_pages = zone_end_pfn(zone) - pfn;
+-			zone->zone_start_pfn = pfn;
+-		} else {
+-			zone->zone_start_pfn = 0;
+-			zone->spanned_pages = 0;
+-		}
++		if (pfn)
++			zone_set_span(zone, pfn, zone_end_pfn(zone) - pfn);
++		else
++			zone_set_span(zone, 0, 0);
+ 	} else if (zone_end_pfn(zone) == end_pfn) {
+ 		/*
+ 		 * If the section is biggest section in the zone, it need
+@@ -422,11 +435,10 @@ static void shrink_zone_span(struct zone
+ 		pfn = find_biggest_section_pfn(nid, zone, zone->zone_start_pfn,
+ 					       start_pfn);
+ 		if (pfn)
+-			zone->spanned_pages = pfn - zone->zone_start_pfn + 1;
+-		else {
+-			zone->zone_start_pfn = 0;
+-			zone->spanned_pages = 0;
+-		}
++			zone_set_span(zone, zone->zone_start_pfn,
++				      pfn - zone->zone_start_pfn + 1);
++		else
++			zone_set_span(zone, 0, 0);
+ 	}
+ }
+ 
+@@ -653,12 +665,12 @@ static void node_states_set_node(int nod
+ static void __meminit resize_zone_range(struct zone *zone, unsigned long start_pfn,
+ 		unsigned long nr_pages)
+ {
+-	unsigned long old_end_pfn = zone_end_pfn(zone);
++	unsigned long end_pfn = max(start_pfn + nr_pages, zone_end_pfn(zone));
+ 
+-	if (zone_is_empty(zone) || start_pfn < zone->zone_start_pfn)
+-		zone->zone_start_pfn = start_pfn;
++	if (!zone_is_empty(zone) && start_pfn > zone->zone_start_pfn)
++		start_pfn = zone->zone_start_pfn;
+ 
+-	zone->spanned_pages = max(start_pfn + nr_pages, old_end_pfn) - zone->zone_start_pfn;
++	zone_set_span(zone, start_pfn, end_pfn - start_pfn);
+ }
+ 
+ static void __meminit resize_pgdat_range(struct pglist_data *pgdat, unsigned long start_pfn,
 
 
