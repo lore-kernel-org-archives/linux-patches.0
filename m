@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704839;
-	b=IcGgctOk2QelnpZpvtRMxREwuGSw8sTyXjqeziFrv18tP9hApUM9EpYZXJsskgbdhiav
-	 7H5P6fm9+ezytppvos75H1u3htY2Vo8CUBqK8kBjkNBgLoYBL+OauJayUCH9ZFLMb+kqq
-	 1UQiVzyvPVtbtSbRyecz3eiIEUn+gj29URDB8m0y6uLg3VyAlj0DaRKP0RgZ4ISbQtaMf
-	 JZOpyQqVxD+wWfm3XXYHcOS7ekqE0RUDE8CmzEXEsl8T8+gCfBDErOMV8sr7SgRXl7GIS
-	 M+k16/3b3ED3vVqarCp2fxvIsXsRZcDSnY52fxAiuNV10TunpaAiPWxuZi9hr0T14cw==
+	t=1795704842;
+	b=RqablZ8Rp6uN8mEUgtsOHt+XX9z6NnRTE/MQuiqX5ICt+XWR8ES6cbfnYs2N2CRs/hci
+	 LNO69ks4GxQd6X+GzSN8xFgSBJdA4BqP6uI78SPgb8bUAvMKMji5qlH+k+cRx/OnjxQ5d
+	 gXNf2cKeByBrZ9a0RRAsuXMWJzr4+cMU/vplWjY3m22/VV1P9B/6SLHREml/gM6rQfguJ
+	 yb+or3mFFhPIPGNX2HpCBaDFicG6ck3R2ZjXjjjCA31FjnrsqZOKnF+AMh1mhCkdG0GRg
+	 NJuiiapiRa/OvhetCvcsSJpdl8zroiqGK9dpyV+bVpvcWO4W6QVzl8JQrtEfLtInX9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704839;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j1JP0MCfr9hC7aGOZ2QtK/PD2PGjSXgOrFtwoojD9+M=;
-	b=dGvrAOESL0vKtpxMk6Eg/eJTc0vMuoM+MVFdYvO1zCF0gWhCelMdnJcrMEdJGVOwSvn1
-	 9MWbBj/SXH+4vYhFUxq0aOlrzlCdHLZxkc/WmMgp86Rj8Ku9RBiDxbFsyK6OeNrP0VNPZ
-	 XUkV5rhqu30ee7Xi85sPYHdXqoRoMmrEGvR/6YXao2gsd+KXqROKfw3rUXnmE+3P0VipE
-	 iaP2mF+ZDN5aa7CpG2KI/2pVdEJVCZCxuA44UdAgBucpi43nn350f2d1j6jc3wmdkgE7C
-	 KcVbAZWW5w0RMWUehsy+Ws9mjyYCiTWts2m6qhG3kwUEDYuOwtT5tPDhM05ZpWOhFTA==
+	bh=vHzE5PiLqzHyKl+OVRoYl+sJQiSiockqyVu5cFSBwPc=;
+	b=h8/Eq+6AW5lZQTkW+vDX08/h43KFQQVY2IvzvgUdvYExdDsmrcGQxqvHDadNX/QqX9Tu
+	 Fg1JVGXonaWdtja1E1N/1IQF+XIZEy2quD6Ndm4iv8nLZpwUTjxQYvsMkcxy35huohPSz
+	 hIkIWXmGi6oz7U67TUt3Fypgdwen8CQPpLz4DkdL+QEVaGt/Xv4NdfpeVegxFp6OSnC2Z
+	 Yeeau8MwDnFUOoyGic7Zd7BEaorJGTAEGrll9KAu0cgLdbbaUmIQLeQXVIpjXTlBVbp4b
+	 X7d6bNW4KYhnpv2RsnXZPos6iGJN8fRYTrvTiv+v1VEurgYGLqCqbFQ70ft7X+WM1bg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsIlPkvg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="E4z/UTzx";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D5A606A31C;
-	Thu, 26 Nov 2026 14:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006BC606A31C;
+	Thu, 26 Nov 2026 14:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsIlPkvg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17331F000C4;
-	Thu, 26 Nov 2026 14:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4z/UTzx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954941F000C4;
+	Thu, 26 Nov 2026 14:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704838;
-	bh=j1JP0MCfr9hC7aGOZ2QtK/PD2PGjSXgOrFtwoojD9+M=;
+	s=korg; t=1795704841;
+	bh=vHzE5PiLqzHyKl+OVRoYl+sJQiSiockqyVu5cFSBwPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zsIlPkvgduBq8MlZNuvinma2Sx8N/uW5zghD1anNm87mFD9q1Q+gBYRWZJk0S0AUb
-	 IIZ4YeqaTUSB3deAfTtuAqOQmLt3xlENHx5u3udf3hZswr12yAo42kFDJPRPS5yawD
-	 RVKeHVBnYbZi7RZe/jMp9aP91zY5CaHy4uFjq6c8=
+	b=E4z/UTzxh9i9APeA3N3psBQn9lm8N5Z3QZVMmY/27KCDMPRJ8pswDWG+OfAoYnApp
+	 TZK0Ckx2abEh0ZrwluTcpSHHozrI0rWLavoQyEWmug+ITrs13sX/9EJW1fjOQXrdRq
+	 t7f3aMHX/DC3xXX0y1tZyDWnRm9jbxuoMo9jopSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Rayabharam <mail@anirudhrb.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH 5.10 259/265] vhost: handle error while adding split ranges to iotlb
-Date: Thu, 26 Nov 2026 15:39:49 +0100
-Message-ID: <20261126143623.364296052@linuxfoundation.org>
+	Mostafa Saleh <smostafa@google.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>
+Subject: [PATCH 5.10 260/265] vfio/platform: prevent read-only region mappings from becoming writable
+Date: Thu, 26 Nov 2026 15:39:50 +0100
+Message-ID: <20261126143623.415909711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,40 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anirudh Rayabharam <mail@anirudhrb.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 03a91c9af2c42ae14afafb829a4b7e6589ab5892 upstream.
+commit 420bed9131dbbe37abe9d6b32af51219875811e0 upstream.
 
-vhost_iotlb_add_range_ctx() handles the range [0, ULONG_MAX] by
-splitting it into two ranges and adding them separately. The return
-value of adding the first range to the iotlb is currently ignored.
-Check the return value and bail out in case of an error.
+vfio_platform_mmap() rejects writable mappings of regions without the
+WRITE flag, but leaves VM_MAYWRITE set.  Userspace can map such a region
+read-only and then upgrade the mapping to writable with mprotect().
 
-Signed-off-by: Anirudh Rayabharam <mail@anirudhrb.com>
-Link: https://lore.kernel.org/r/20220312141121.4981-1-mail@anirudhrb.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Clear VM_MAYWRITE for regions without the WRITE flag, as i915 does for
+its read-only objects and as fixed in drm/vc4 (CVE-2026-68445),
+drm/panthor (CVE-2024-53071) and commit a5edadbae57e ("ptp: vmclock:
+prevent read-only mappings from becoming writable").
+
+Note this is defensive hardening: no in-tree platform driver currently
+publishes a region without the WRITE flag.  The guard costs nothing and
+keeps the mmap() interface honest if a read-only region ever appears.
+
+Fixes: fad4d5b1f042 ("vfio/platform: support MMAP of MMIO regions")
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Link: https://lore.kernel.org/r/20260929094848.7439-2-suruurism@gmail.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/iotlb.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/vfio/platform/vfio_platform_common.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/vhost/iotlb.c
-+++ b/drivers/vhost/iotlb.c
-@@ -62,8 +62,12 @@ int vhost_iotlb_add_range_ctx(struct vho
- 	 */
- 	if (start == 0 && last == ULONG_MAX) {
- 		u64 mid = last / 2;
-+		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
-+				perm, opaque);
-+
-+		if (err)
-+			return err;
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -617,9 +617,13 @@ static int vfio_platform_mmap(void *devi
+ 			&& (vma->vm_flags & VM_READ))
+ 		return -EINVAL;
  
--		vhost_iotlb_add_range_ctx(iotlb, start, mid, addr, perm, opaque);
- 		addr += mid + 1;
- 		start = mid + 1;
- 	}
+-	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)
+-			&& (vma->vm_flags & VM_WRITE))
+-		return -EINVAL;
++	/* Prevent read-only region mappings from being upgraded with mprotect() */
++	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)) {
++		if (vma->vm_flags & VM_WRITE)
++			return -EINVAL;
++
++		vma->vm_flags &= ~VM_MAYWRITE;
++	}
+ 
+ 	vma->vm_private_data = vdev;
+ 
 
 
