@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704386;
-	b=kRb/X/4Z9rzkFXeZ/eNrr+nUoPqiD2hwwmfpuBITlsrwFpiigUiIUCxBIjfZyCRFt11q
-	 aEqmb4Ynn1G9oUKLMTvaVpRrHOh2JRSt0vrZS7BOaiIsjcl4An4PvF9DQo9TJ7Pk0M5/9
-	 BqxykeIsJnEIrSSqUfwp5cwxnw+givDsgP/yNpIYpLwwU8oNw6QNwggHKJvqaA2ZaRAG+
-	 4c4CzvD+jaAUgjQoLrTa/iy5VwNJg5C7QBjT9FCArXqCScXpndTPs4aGIXqH6ix8JKgqk
-	 CEGFlcTREIWO7CgRxd51zPJIM9adB0GVV+qAKxKgg3n9arGOx0oRmOwaRqUbY6xFXDQ==
+	t=1795704388;
+	b=CH+lTIlxJAwI3v20373KE7Iuho84ouwoR/03KgiGuIsWPAVvGgBXdsRWG7J2GO0WZyzO
+	 TvTfOXRWtwW7//0jny57c3Y+xNaoSAurzaQd6TNbWw6M8WlYMAXqE9TPz61Zc97/2SIqN
+	 5f7rYI+U2oeX+ZfxrjkLPa8sTMAKSMNOaL4VcKFCJEm2upxmFkN3cuwVPlHCzh3dPlN0E
+	 lXfuv2L0h7LZ2MtWPC1+m1pmVdVXlz/qKa/03ikbMJtdGsucnqqEusM45cIAAY8Babiks
+	 62haPxERPcRgpUfBErdOuxPk79zePcI1nZt0U63l/ZofeJwx/KPU8i8eHmVq2RuFuLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MixPJ+oslY88ReTqOEza5sUe/PYnK4voaDXhtUUh5Go=;
-	b=AmZ7Je89u7gB4FsBik3X65vlxh9csTf5aYOIMK2wV84J6U/Nsls9xR3Yrfo241l6mK08
-	 1+ZzPZTusFIPOoYqpPwrdaF0uWanb2Xe4AgZkWTBBiSPKUj7wCrtqTLPmVugVTgVlMXyo
-	 iSKn63jjwqEpQx0ZK8Ljoli0dYH8bN+gRs+2grkEsKrUxMxi6eHi2Ti1z8oFIiyYkRvzA
-	 OlkaRLSJzXu4T54XyZpxDNbpXbsIZghQ3m/bvTDEKkAddq1EPsX/cGuKA+HymY/8b3fYL
-	 5N7SKVlEB02aXfmQX1kn8QW/dZgA98k7anmSIl2eulwADXzrhX2/vB6VB3zw7stK/lw==
+	bh=6ax6kPILKqMYr9cxAzL9u7uKQer5WP0MIgFNGSf1s9c=;
+	b=WaNUQ9ez87DUvb1bVZDujqJL7jlVHL6zPv1W0T2Bg+fLZdZKPqqCMXlRsqIHAb5OM01s
+	 7lBfzsffZba7+mgHgrn9rMGJMuLq6o172OtwQAj78ltsazjH86hmEJRETG8tjNCVXfaSX
+	 HhpVOZF+j0RaMuyXCOnfPd7tE8rLQ9rwfnMozGU9KA2Utv9Uana6TpWHY5dKkDeg3uI4t
+	 gLiOZJupkv8CY5eElOMyAAWYf3ot5TX206YC4UqNwTgqGJNplTkvTFHtry24ry/YXhxaa
+	 KvNqbAO5xHQSykqQK+hzHrFmigmQBApXqeXqYKzx9ipCPdWSTGYR+mPJHU8XmbsE7Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svwV7ns4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shORgacB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4E4606A31C;
-	Thu, 26 Nov 2026 14:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45DD606A329;
+	Thu, 26 Nov 2026 14:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svwV7ns4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338881F000C6;
-	Thu, 26 Nov 2026 14:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shORgacB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172A01F000C6;
+	Thu, 26 Nov 2026 14:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704385;
-	bh=MixPJ+oslY88ReTqOEza5sUe/PYnK4voaDXhtUUh5Go=;
+	s=korg; t=1795704388;
+	bh=6ax6kPILKqMYr9cxAzL9u7uKQer5WP0MIgFNGSf1s9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svwV7ns4ZQb4gA0EcJuQNJIBBfgUQaw1W2YKJkK9Mf0oERy1OQ1e9g8HoNKeptfpe
-	 Ja3JlQ/aStKstTaol1VjeLGOUwLrZmDlSgKTg/w05l4fvm9Nd/EcdHPDkxr2+RuXod
-	 GBwzbUa3VAWTL1rx92CT7B1MgfY4vs4OUQXPrsbY=
+	b=shORgacBAP2Gls6ElZNWPttFcNU4ou8hmK/wLlNXS1hTVIqhtDfiFx1wZlgWB14pp
+	 AsWgCRRXc6Y9/1Vv5qoFqha/SMecEoqISZAOj4MUpZiCfIXMNHo2pZgAiU5kclKQyL
+	 fEDULzfsAFgXdYuxePWEsiyEjkX7161MDu1Y2ip8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/265] net/mlx5e: IPoIB, Fix QPN lookup race
-Date: Thu, 26 Nov 2026 15:37:17 +0100
-Message-ID: <20261126143612.525115017@linuxfoundation.org>
+Subject: [PATCH 5.10 108/265] calipso: do not charge request socket options to the listener
+Date: Thu, 26 Nov 2026 15:37:18 +0100
+Message-ID: <20261126143612.592123378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,125 +71,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 29066b0fc046a2965129a74325b98d9abb4647a9 ]
+[ Upstream commit b4a2cc6d748d3056a25812dcf5f5377a59afd02f ]
 
-The parent RX completion path can load a QPN hash entry before
-mlx5i_pkey_del_qpn() unlinks and frees it, then dereference freed memory.
+calipso_req_setattr() and calipso_req_delattr() allocate ireq->ipv6_opt
+with ipv6_renew_options(), which charges the listener sk_omem_alloc
+through sock_kmalloc().
 
-Use RCU hlist operations and defer freeing with kfree_rcu(). The existing
-RCU read-side section in mlx5e_napi_poll() covers the lookup. Keep ht_lock
-for writers and acquire it before looking up the entry to delete.
+tcp_v6_reqsk_destructor() frees ireq->ipv6_opt without uncharging it,
+so each request socket leaks its options size from the listener
+budget. Once sysctl_optmem_max is reached, sock_kmalloc() fails,
+calipso_req_setattr() returns -ENOBUFS, and tcp_v6_route_req() drops
+all subsequent SYN packets. __sk_destruct() also reports an optmem
+leakage when the listener is destroyed.
 
-Fixes: 7e7f4780c340 ("net/mlx5e: IPoIB, Use hash-table to map between QPN to child netdev")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261031225749.14214-1-prathameshdeshpande7@gmail.com
+Uncharging in tcp_v6_reqsk_destructor() would not be correct: after a
+migration, req->rsk_listener is no longer the socket that was charged.
+
+These options belong to the request socket, there is no reason to
+charge them to the listener. Change ipv6_renew_options() to use
+kmalloc() when its sk argument is NULL, and use this from
+calipso_req_setattr() and calipso_req_delattr(),
+like cipso_v4_req_setattr() which uses kzalloc().
+
+Note:
+
+After this patch, calipso_req_setattr() and calipso_req_delattr()
+no longer need the listener. Commit 10876da918fa ("calipso: Fix
+null-ptr-deref in calipso_req_{set,del}attr().") could be reverted
+in net-next (also removing the then unused sk variables), so that
+CALIPSO works with SYN cookies.
+
+Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/179378292255.488856.6917577451813010963@kernel.org/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Cc: Kuniyuki Iwashima <kuniyu@google.com>
+Cc: Paul Moore <paul@paul-moore.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20261104150318.1156620-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/ipoib/ipoib.h |  2 +-
- .../mellanox/mlx5/core/ipoib/ipoib_vlan.c     | 26 +++++++++++--------
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ net/ipv6/calipso.c | 12 ++++--------
+ net/ipv6/exthdrs.c |  5 +++--
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-index b79dc1e28c418..abeba54b985ce 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-@@ -78,7 +78,7 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev);
- int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn);
- int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn);
+diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+index 2aeccea1ec196..0d7183183181b 100644
+--- a/net/ipv6/calipso.c
++++ b/net/ipv6/calipso.c
+@@ -1223,7 +1223,7 @@ static int calipso_req_setattr(struct request_sock *req,
+ 	if (IS_ERR(new))
+ 		return PTR_ERR(new);
  
--/* Get the net-device corresponding to the given underlay QPN */
-+/* Get the net-device for a QPN. Caller must hold rcu_read_lock(). */
- struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn);
+-	txopts = ipv6_renew_options(sk, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
++	txopts = ipv6_renew_options(NULL, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
  
- /* Shared ndo functions */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-index 7163d9f6c4a6f..6b63ae7de2183 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-@@ -31,6 +31,7 @@
+ 	kfree(new);
+ 
+@@ -1231,10 +1231,8 @@ static int calipso_req_setattr(struct request_sock *req,
+ 		return PTR_ERR(txopts);
+ 
+ 	txopts = xchg(&req_inet->ipv6_opt, txopts);
+-	if (txopts) {
+-		atomic_sub(txopts->tot_len, &sk->sk_omem_alloc);
++	if (txopts)
+ 		txopt_put(txopts);
+-	}
+ 
+ 	return 0;
+ }
+@@ -1264,14 +1262,12 @@ static void calipso_req_delattr(struct request_sock *req)
+ 	if (calipso_opt_del(req_inet->ipv6_opt->hopopt, &new))
+ 		return; /* Nothing to do */
+ 
+-	txopts = ipv6_renew_options(sk, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
++	txopts = ipv6_renew_options(NULL, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
+ 
+ 	if (!IS_ERR(txopts)) {
+ 		txopts = xchg(&req_inet->ipv6_opt, txopts);
+-		if (txopts) {
+-			atomic_sub(txopts->tot_len, &sk->sk_omem_alloc);
++		if (txopts)
+ 			txopt_put(txopts);
+-		}
+ 	}
+ 	kfree(new);
+ }
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 53b79a83e0e53..3dc1f57650436 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -1244,7 +1244,7 @@ static void ipv6_renew_option(int renewtype,
+  * not copied into the new set of options.
+  *
+  * The new set of options is allocated from the socket option memory
+- * buffer of @sk.
++ * buffer of @sk, or with kmalloc() if @sk is NULL.
   */
- 
- #include <linux/hash.h>
-+#include <linux/rculist.h>
- #include "ipoib.h"
- 
- #define MLX5I_MAX_LOG_PKEY_SUP 7
-@@ -39,11 +40,12 @@ struct qpn_to_netdev {
- 	struct net_device *netdev;
- 	struct hlist_node hlist;
- 	u32 underlay_qpn;
-+	struct rcu_head rcu;
- };
- 
- struct mlx5i_pkey_qpn_ht {
- 	struct hlist_head buckets[1 << MLX5I_MAX_LOG_PKEY_SUP];
--	spinlock_t ht_lock; /* Synchronise with NAPI */
-+	spinlock_t ht_lock; /* Serialize hash table updates */
- };
- 
- int mlx5i_pkey_qpn_ht_init(struct net_device *netdev)
-@@ -68,13 +70,14 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev)
- 	kfree(ipriv->qpn_htbl);
- }
- 
--static struct qpn_to_netdev *mlx5i_find_qpn_to_netdev_node(struct hlist_head *buckets,
--							   u32 qpn)
-+static struct qpn_to_netdev *
-+mlx5i_find_qpn_to_netdev_node(struct mlx5i_pkey_qpn_ht *ht, u32 qpn)
- {
--	struct hlist_head *h = &buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
-+	struct hlist_head *h = &ht->buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
- 	struct qpn_to_netdev *node;
- 
--	hlist_for_each_entry(node, h, hlist) {
-+	hlist_for_each_entry_rcu(node, h, hlist,
-+				 lockdep_is_held(&ht->ht_lock)) {
- 		if (node->underlay_qpn == qpn)
- 			return node;
- 	}
-@@ -96,7 +99,7 @@ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn)
- 	new_node->netdev = netdev;
- 	new_node->underlay_qpn = qpn;
- 	spin_lock_bh(&ht->ht_lock);
--	hlist_add_head(&new_node->hlist, &ht->buckets[key]);
-+	hlist_add_head_rcu(&new_node->hlist, &ht->buckets[key]);
- 	spin_unlock_bh(&ht->ht_lock);
- 
- 	return 0;
-@@ -109,16 +112,17 @@ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn)
- 	struct mlx5i_pkey_qpn_ht *ht = ipriv->qpn_htbl;
- 	struct qpn_to_netdev *node;
- 
--	node = mlx5i_find_qpn_to_netdev_node(ht->buckets, qpn);
-+	spin_lock_bh(&ht->ht_lock);
-+	node = mlx5i_find_qpn_to_netdev_node(ht, qpn);
- 	if (!node) {
-+		spin_unlock_bh(&ht->ht_lock);
- 		mlx5_core_warn(epriv->mdev, "QPN to netdev delete from HT failed\n");
- 		return -EINVAL;
- 	}
- 
--	spin_lock_bh(&ht->ht_lock);
--	hlist_del_init(&node->hlist);
-+	hlist_del_rcu(&node->hlist);
- 	spin_unlock_bh(&ht->ht_lock);
--	kfree(node);
-+	kfree_rcu(node, rcu);
- 
- 	return 0;
- }
-@@ -128,7 +132,7 @@ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn)
- 	struct mlx5i_priv *ipriv = netdev_priv(netdev);
- 	struct qpn_to_netdev *node;
- 
--	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl->buckets, qpn);
-+	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl, qpn);
- 	if (!node)
+ struct ipv6_txoptions *
+ ipv6_renew_options(struct sock *sk, struct ipv6_txoptions *opt,
+@@ -1272,7 +1272,8 @@ ipv6_renew_options(struct sock *sk, struct ipv6_txoptions *opt,
  		return NULL;
+ 
+ 	tot_len += sizeof(*opt2);
+-	opt2 = sock_kmalloc(sk, tot_len, GFP_ATOMIC);
++	opt2 = sk ? sock_kmalloc(sk, tot_len, GFP_ATOMIC) :
++		    kmalloc(tot_len, GFP_ATOMIC);
+ 	if (!opt2)
+ 		return ERR_PTR(-ENOBUFS);
  
 -- 
 2.53.0
