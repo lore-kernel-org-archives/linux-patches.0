@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705778;
-	b=3RTg8sxZwLssdAmb6X3weTMLEZRv9WPmDLQDMCe+kgsywkFoW6qX06kygGPbka9YtawM
-	 3WW3kyoMGr1YOXBDLiiJIgcb8UZissd9Df/4gXv20fLh/vt3W0zd3+8aeYlx2K37iCO3M
-	 8QnfHlztFjrhpls1X8TpSqWQMH2bLxXZadiXd7BdD1dZOOBHYjGdzGDQ6Bp3mRuXR2MVj
-	 nAcMaNqn/t2Hix7K9YsYxpTAK9kA6MQvjMFsz9h7tlgFeBDZum4FxjgdGE35HU7UjbkgL
-	 qDwoBFXJT6mFbUJTa0ktQlGvRjpt8i1cIHmidkRDiZgzjliXQDAhozFHC+y2A1yTcqg==
+	t=1795705782;
+	b=sDu2vpySjal2ECrHfiU6qMe3p6XYmMwMTRHJ/GB9pVesITQ6wQuP5LLHzSGLns6xJCqj
+	 8UYjhj3XD3gpynKqOcYWEJoFPLNTm59lReeKa+fdRtAIHC3/CBYNCDZ5DuhoqlvpgXCaZ
+	 vB3OISze8czcTPdfPXRdn+8NQOQdwbJLtFhWqhyDwNhncuUHhGpeoWJfULb75bpsJ6JLE
+	 x3OBJ3ukgChHffX54i9pmEsRlM2UtBVblFbyGHsapshQ47n2f+EAEg7o+V1Q/4nP++Qxb
+	 kxlpJw8KTdhQU4TQtiW/SH324fpzR7RSE+kFuLDxa2PRFa9Jmmt5tp9GYoVrBJsuy5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705778;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J34EHfSk0El41+ALlThCStf/Cdor8uyz5rUN0hxcQbc=;
-	b=0J84qGVoWX0s4PP6m+yx/89vYef0YrLmVmtxpCL6/Jqmr2m/8vj7SyQNfSgsp2OtOZcV
-	 FWhcKu2N+pzp4w+e+Jd6PG0esVoJqNojAlChTyFAeP5oDQWocMOXTbdakSOFkmfo/XhUL
-	 VueCHFDExKT3OYNkxGM6WVYoSxmdh5pmMuB1j4fbWoh8rG3QnQLsrfttCpAf29wf1OMtH
-	 SagspfEekrLYWxwYEcYFvLjhmZryGYqdEmVvOwJ0IJD1ipb9oZ7GJwIxmdugNSITQw3N0
-	 uOdMq0Zwc9owwOiai5JVoD2iuKkBQ7th8QTuhoZOmwLX3MUE7Z6d3ApLBjN+tSryQRw==
+	bh=6fIhGgpNwGj/Z/cIcOzG9UEBTs+nvymVDbVoGu61W98=;
+	b=cMDZVJO30su60/4pWs0JXsznzCw617z1aQG8yho8Ia4NegeFkf0y2sJVPGNI52weBgxv
+	 WXa3PK7lBmYoEEHhIOKbXpDRfo2V+aXrsLWiJwExdynrHG5VHsW6TZ8WEh9z8bBpWxFF2
+	 TEZxi5QAazn98fcvNtMYvr4B50AljoM1AzADAntXmUdZPhkLbGqPAiHlerC8GLx2eBYFl
+	 4cmJcZCGbGyqp9V3fNyECdiXsVGBk/hv1pB13MusmD27EldvvSJ5+4R/H0Tev2Of9Rp7W
+	 f7CehXXUEoHBSnrXzQJh8xu1WVMoGQ+NAFsVhz6FIDqrae9Ohr3cAuLrnk/8Aq/oJbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwKIiNeI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JO2pbsu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F14606A326;
-	Thu, 26 Nov 2026 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6124C606A31C;
+	Thu, 26 Nov 2026 15:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwKIiNeI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF7F1F000EE;
-	Thu, 26 Nov 2026 15:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JO2pbsu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7054F1F000C0;
+	Thu, 26 Nov 2026 15:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705778;
-	bh=J34EHfSk0El41+ALlThCStf/Cdor8uyz5rUN0hxcQbc=;
+	s=korg; t=1795705781;
+	bh=6fIhGgpNwGj/Z/cIcOzG9UEBTs+nvymVDbVoGu61W98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwKIiNeIE2pqwyMjZktr4wfS+Yy2Vl7B2eE5En4xDUCPTKyWleP4WJEkBXpNblTZI
-	 PNI55GRw9VLWVwm+3E0YjhTR2+iFdA3aY1/kZ4GPKXBv483cbln9e08gcRoaMlCg5B
-	 MD+0bOH7eciPNkp/mMan9gTbL72O+H1SHphNc02s=
+	b=2JO2pbsurMhrRxpD69F9pEMknTLYP8ZC4OR60lN7Sxzc5T8os29N32QEt0Tfa0fxS
+	 Yi5V0Nz+uwxfOIaV8SgIfhi7KJtol0RomI4Y9aBm05JxKFF4J/Tc39cGfhFZseZIrX
+	 EBoBdOFhsrymfW10cjL3dXD7+LoJ4Q9xmEcSG2l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 310/319] sctp: fix skb_over_panic when adding addresses with a pending delete of another family
-Date: Thu, 26 Nov 2026 15:41:18 +0100
-Message-ID: <20261126144013.755844135@linuxfoundation.org>
+	Mani Tofigh <mt4022@columbia.edu>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 311/319] nvme: fix deadlock on nvme_subsystems_lock in nvme_init_subsystem()
+Date: Thu, 26 Nov 2026 15:41:19 +0100
+Message-ID: <20261126144013.777798576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,99 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Mani Tofigh <mt4022@columbia.edu>
 
-commit ce09d8c13a15fe881d0a04c91979dcdf45ed9543 upstream.
+commit ba1213be15c613a1c03db69ea6480ca140a6ca00 upstream.
 
-sctp_make_asconf_update_ip() accounts for a pending DEL_IP
-parameter by reusing the length of the address being added. The
-write-back side instead serializes the pending address itself,
-with its own address family. If the pending delete is IPv6
-(20-byte parameter) while the added addresses are IPv4 (8-byte),
-the chunk is allocated 12 bytes short and sctp_addto_chunk()
-writes past the end of the skb. E.g. on mainline (05441d697f7f):
+Connecting a controller to a new subsystem deadlocks when
+sysfs_create_link() fails in nvme_init_subsystem(), e.g., on an
+allocation failure.  The error path drops the last subsystem reference
+with nvme_subsystems_lock held and nvme_destroy_subsystem() takes the
+same lock again:
 
-    skbuff: skb_over_panic: text:ffffffff84859c77 len:392 put:20
-        tail:0x188 end:0x180 dev:<NULL>
-    kernel BUG at net/core/skbuff.c:215!
-    CPU: 0 UID: 1000 PID: 379 Comm: poc_sctp
-    Call Trace:
-     skb_panic
-     skb_put
-     sctp_addto_chunk
-     sctp_make_asconf_update_ip
-     sctp_send_asconf_add_ip
-     sctp_setsockopt_bindx
-     __x64_sys_setsockopt
+  nvme nvme0: failed to create sysfs link from subsystem.
+  ============================================
+  WARNING: possible recursive locking detected
+  ...
+  nvmesubsys/95 is trying to acquire lock:
+  (nvme_subsystems_lock){+.+.}-{4:4}, at: nvme_destroy_subsystem+0x1b/0x1e0
 
-Requires addip enabled on the endpoint (net.sctp.addip_enable=1).
+  but task is already holding lock:
+  (nvme_subsystems_lock){+.+.}-{4:4}, at: nvme_init_identify+0x81e/0x34b0
+  ...
+  Call Trace:
+   __mutex_lock+0x1a2/0x26e0
+   nvme_destroy_subsystem+0x1b/0x1e0
+   nvme_init_identify.cold+0x3bc/0x56f
+   nvme_init_ctrl_finish+0x1bc/0x7a0
+   nvme_loop_configure_admin_queue+0x205/0x2b0
+   nvme_loop_create_ctrl+0x480/0xd10
+   nvmf_dev_write+0x365/0x650
+   vfs_write+0x1e3/0x1250
+   ksys_write+0xfa/0x200
+   do_syscall_64+0xfb/0x590
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  ...
+  INFO: task nvmesubsys:95 blocked for more than 20 seconds.
+  INFO: task nvmesubsys:95 is blocked on a mutex likely owned by task nvmesubsys:95.
 
-Account for the pending delete with its own address family, as the
-write-back side already does.
+Every later controller setup or removal then waits for the lock too.
+The nvme_validate_cntlid() error path for an existing subsystem does the
+same put, and deadlocks the same way if the other references go away in
+between.
 
-This issue was discovered by an LLM code scanner.
+Drop the lock before the put.  For a new subsystem, take it off the list
+first so another controller can't find it in between.  With the fix,
+the connect fails and the next connect works.
 
+This bug was identified and confirmed with the help of a deterministic
+hypervisor currently under development.  The C reproducer below however
+hits it within about 30s.
+
+Fixes: 32fd90c40768 ("nvme: change locking for the per-subsystem controller list")
 Cc: stable@vger.kernel.org
-Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261111082313.1606366-1-bsdhenrymartin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mani Tofigh <mt4022@columbia.edu>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |   28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/nvme/host/core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -2891,7 +2891,6 @@ struct sctp_chunk *sctp_make_asconf_upda
- 	int addr_param_len = 0;
- 	union sctp_addr *addr;
- 	int totallen = 0, i;
--	int del_pickup = 0;
- 	struct sctp_af *af;
- 	void *addr_buf;
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2850,7 +2850,11 @@ static int nvme_init_subsystem(struct nv
+ 	return 0;
  
-@@ -2906,16 +2905,21 @@ struct sctp_chunk *sctp_make_asconf_upda
- 		totallen += addr_param_len;
- 
- 		addr_buf += af->sockaddr_len;
--		if (asoc->asconf_addr_del_pending && !del_pickup) {
--			/* reuse the parameter length from the same scope one */
--			totallen += paramlen;
--			totallen += addr_param_len;
--			del_pickup = 1;
--
--			pr_debug("%s: picked same-scope del_pending addr, "
--				 "totallen for all addresses is %d\n",
--				 __func__, totallen);
--		}
-+	}
-+
-+	if (asoc->asconf_addr_del_pending) {
-+		/* The DEL_IP parameter is serialized from the pending address
-+		 * itself below; account for its own address family, which may
-+		 * differ from the added ones.
-+		 */
-+		addr = asoc->asconf_addr_del_pending;
-+		af = sctp_get_af_specific(addr->v4.sin_family);
-+		totallen += paramlen;
-+		totallen += af->to_addr_param(addr, &addr_param);
-+
-+		pr_debug("%s: picked del_pending addr, "
-+			 "totallen for all addresses is %d\n",
-+			 __func__, totallen);
- 	}
- 
- 	/* Create an asconf chunk with the required length. */
-@@ -2938,7 +2942,7 @@ struct sctp_chunk *sctp_make_asconf_upda
- 
- 		addr_buf += af->sockaddr_len;
- 	}
--	if (flags == SCTP_PARAM_ADD_IP && del_pickup) {
-+	if (flags == SCTP_PARAM_ADD_IP && asoc->asconf_addr_del_pending) {
- 		addr = asoc->asconf_addr_del_pending;
- 		af = sctp_get_af_specific(addr->v4.sin_family);
- 		addr_param_len = af->to_addr_param(addr, &addr_param);
+ out_put_subsystem:
++	if (!found)
++		list_del_init(&subsys->entry);
++	mutex_unlock(&nvme_subsystems_lock);
+ 	nvme_put_subsystem(subsys);
++	return ret;
+ out_unlock:
+ 	mutex_unlock(&nvme_subsystems_lock);
+ 	return ret;
 
 
