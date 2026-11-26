@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705021;
-	b=vW1spVu4HdEzK47yWkxb9MfO4vhOaNxqpHoTPN0n0p0z6MpyA83wAYwf/9tFpCI3Onid
-	 SLh0PWeGw2tzcasFYaun0j80+wvc8sfo6Kf3sNqIN2qEry9VcRZfqHeN9uEnX6m54/of7
-	 Pk5GMjwul4DrELfA3REax4pfpnpHWAXBLB6MFvJiZgULe6rlGb5u6oXHPuvGwDIO5D6Cm
-	 CXSt+wYvEZ22oE1h+XLqf91LEqAZR4EAUWSBVsPMF4/5CZoR4lT+2WY6cUFE1sXWLqHER
-	 FWG7Zl3egu3/+iLzTcjoaHeeuQ+cN/QF2Ss3GsCLLOsFSd7rXJA5taT68MDeYDuYGsw==
+	t=1795705024;
+	b=mbeMvT9bCBVP+aQ1YJllxs3yyiMnuIELldN76fwi4snTTabogvD57dZVf0b6SgTMKND2
+	 /Ur6fud6hzfrAz2uAdy8UmHQ/z9TfL697eOID/Hhj+jly+38an0OWWlYCd/2jnDKkMgxo
+	 5BKwHNxu4DbGJhtdi7UQA/Ot3yRVqgjUgcJ5cxE9DsXXOJIyqy7bR4twMH1GSBx/E4f+z
+	 wz/92grmeXDzeAsrSIfy7wLsvKCayMmZuc/EwSMRo5OhUDD84DNMREfJCCSY1/+Z2+kCG
+	 68p3qi2E58jyXbD2T6THBhanaX5FIjHuerHj36SJM7M3X3fWsV0SNOjtjnAxDxROuvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kEtoMlNyJn/Zm9vf3NbB22oBprvDjnNtb0z+QaK0FKk=;
-	b=Pj9wWXZpGNfVMeH7IOB5XUSv+CDpIzM7TWpRpL8P+VQ0MFWMU0oZRV5gYqmUCETrYf5g
-	 h5AePMJMBpkteZ/LNKiZn4M9AnxF2fQXBUu8Rc2ECbq26Mf7q/C+gDFb5h80ZMVQCgU7p
-	 lsRBHKP0dPijLPp7/Xz/yfIhmgGreZrMkbkYbK+rtdqGpmkFoNCT8qOA7w0UUxVtvNtWd
-	 9XNZ3aSlYLIjqnyqJLRxPV2xwkQxXxzweAK97wZNJkfPqP1nE4zJJcWaLc0XAAiaKm1V0
-	 iEodtTBxBtCoQchlGbWvinHAldotzpgXiBPj7OCCtHktQqnS052+7n2VhQhXiFeWy3w==
+	bh=vpfgYztnK1O5uwhjO6HIBdp/vqfq7VmMsKhqIbb9my4=;
+	b=KLlC75T/pgUvp/GEq2RJN7Py/o+IHyq5sPUN2aJ7HZxF2/ln7DNpHxhPGGPt5xsuiCD3
+	 h0WwBaHLM/sFWb5bRMqBYHveNCCa6/7yeNSWVGMwOORXlIcaTX7q2ZNeb6Rj9HraHMhFn
+	 iJpL6Xkwp/YbksdAOt1t0WxpR8eNS7FMw8L9ODJSIbRvmmL0c8DXsZKR+k9jKHCp57h1H
+	 G+WuZztWS8OKhvfLFpkMRSllkS1DxOa2bT//VHMZ/QMabwhrNE/Dwt5/13I89iwuZqwSw
+	 UEqmO+Pw0U8yDirsQTdLVTlbmZEQGr1jojQg1uYcEtK9jlQ3p3mCjz90/sqjeynj4kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILHGUuV7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fArxERMe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1E0606A31C;
-	Thu, 26 Nov 2026 14:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7544F606A31C;
+	Thu, 26 Nov 2026 14:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILHGUuV7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E465D1F000C4;
-	Thu, 26 Nov 2026 14:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fArxERMe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897191F000C0;
+	Thu, 26 Nov 2026 14:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705021;
-	bh=kEtoMlNyJn/Zm9vf3NbB22oBprvDjnNtb0z+QaK0FKk=;
+	s=korg; t=1795705024;
+	bh=vpfgYztnK1O5uwhjO6HIBdp/vqfq7VmMsKhqIbb9my4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILHGUuV7SBDYLe5yoDdcgoKZEREBPcM0Ncd3Km94xsP741uZffg+qrgSsMDla0AD+
-	 9uWNG2qWlwZiAvF/S6vZOTYtFdod1ffbf3cU9QoVLkmhh2LSTTHazQbv2LviqTdfbo
-	 KlL3Vj+BQSzniBsi2m8Acek+EFUWlk6oc5RpDSSk=
+	b=fArxERMeda3eqlyH4WPtAbO19GL28JUAH1XvD3MoEe0pbQyR5JzE8eMQqYnhGAiSm
+	 ZdS505lV0e12IZ/fogNVu69ZVYB64guHXNcd3ASRYAH5x0e7l3qDyjxHytdNKmqZBa
+	 73TrLgz18NBnkdlRpt/C8E2fP5LeW8cIROwCsntc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/319] gpio: omap: Propagate runtime PM failures in probe and request
-Date: Thu, 26 Nov 2026 15:36:37 +0100
-Message-ID: <20261126144007.398596425@linuxfoundation.org>
+Subject: [PATCH 5.15 056/319] vhost: reject invalid IOTLB update permissions
+Date: Thu, 26 Nov 2026 15:37:04 +0100
+Message-ID: <20261126144008.003069750@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,70 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Linfeng Sun <linfeng.sun.dev@gmail.com>
 
-[ Upstream commit 05be1a99d6d68b24cbe24a191e1af67c70193ac3 ]
+[ Upstream commit b179f21d2d8a60ede29a00472bffdefb0284ef39 ]
 
-pm_runtime_get_sync() can fail when the OMAP PM domain cannot
-resume a GPIO controller, but omap_gpio_probe() and
-omap_gpio_request() ignore its return value.
+vhost_chr_write_iter() validates the type and size of an IOTLB update, but
+does not validate its permission field. An invalid permission can therefore
+reach perm_to_iommu_flags() and trigger its warning in vhost_vdpa_map().
 
-Consequently, probe can register a GPIO controller despite a failed
-resume, while a GPIO request can report success and modify GPIO
-state even though runtime-PM acquisition failed.
+Reject IOTLB UPDATE messages whose permission field is empty or contains
+bits outside VHOST_ACCESS_RW before dispatching them to a backend.
 
-Use pm_runtime_resume_and_get() in both paths and propagate
-resume errors. On probe failure, disable runtime PM and unprepare
-the debounce clock when applicable.
-
-Reproduced both failures on QEMU N800 by injecting -EIO from the
-OMAP PM-domain resume callback. The original driver continues
-probe and accepts the GPIO request - while the patched driver
-rejects both operations with -EIO. Normal GPIO controller
-registration continues to work without fault injection.
-
-Fixes: 77640aabd755 ("OMAP: GPIO: Implement GPIO as a platform device")
-Fixes: 55b93c32520d ("gpio/omap: use pm-runtime framework")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Link: https://patch.msgid.link/20261029103626.1527919-2-thnkslprpt@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260913-fix-vhost_chr_write_iter-v1-1-76bf1f436cfe@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-omap.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/vhost/vhost.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-omap.c b/drivers/gpio/gpio-omap.c
-index 171e2150c3626..cdb17d4bce747 100644
---- a/drivers/gpio/gpio-omap.c
-+++ b/drivers/gpio/gpio-omap.c
-@@ -777,8 +777,11 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
- {
- 	struct gpio_bank *bank = gpiochip_get_data(chip);
- 	unsigned long flags;
-+	int ret;
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index d8c81c25b7475..15ded95d4117a 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1171,7 +1171,8 @@ ssize_t vhost_chr_write_iter(struct vhost_dev *dev,
+ 		goto done;
+ 	}
  
--	pm_runtime_get_sync(chip->parent);
-+	ret = pm_runtime_resume_and_get(chip->parent);
-+	if (ret < 0)
-+		return ret;
- 
- 	raw_spin_lock_irqsave(&bank->lock, flags);
- 	omap_enable_gpio_module(bank, offset);
-@@ -1465,7 +1468,13 @@ static int omap_gpio_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, bank);
- 
- 	pm_runtime_enable(dev);
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(dev);
-+		if (bank->dbck_flag)
-+			clk_unprepare(bank->dbck);
-+		return ret;
-+	}
- 
- 	if (bank->is_mpuio)
- 		omap_mpuio_init(bank);
+-	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
++	if (msg.type == VHOST_IOTLB_UPDATE &&
++	    (!msg.size || !msg.perm || (msg.perm & ~VHOST_ACCESS_RW))) {
+ 		ret = -EINVAL;
+ 		goto done;
+ 	}
 -- 
 2.53.0
 
