@@ -1,57 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705393;
-	b=KSberFg+8NeHs7e4IHYEiIqs+eLcdX7LF4bijwv9gFhjI43jvW+a4Uc0rLw0YSg8NhZ1
-	 h08wM/Jb1jcWjGrLPfqPNDm72mJ8lDGEZ8unoTrXpWoWKNpJ638iND6WBQFQits6Y/yS5
-	 bDJJqCs/7NO2KhPjkFa5JfFTVGwcGqmaFZK4XQV4scMyD7HcfBdRn9q5hg6N+RweKvErP
-	 SYloloxFv9kb2WKdc1vk3f8PymRFUcHBJ7lrxZiJpzs1k7TRW9mfgbqG+lb5PWnx89i88
-	 va3mZR6enwZxLzfqYCfmY+eXa+7IuUer4rBaBqt9YpOcR/d8O1TRNBgqB8UxkrTIbhg==
+	t=1795705396;
+	b=MZHz4CQQ6k9EZ9N+eOp3W49SPvBg1z3ijrOwmAqQcHqVwyUSs+r1xqusvN3FuFxbOX5x
+	 wm+aGACcaIAMINIyR8vC13bMnqfik2MufoB2AWZ3Y5Xh0ktT0WJi12b1Iwj6QkKgkM0W2
+	 XI+kilO7PLzFLGz9q0EWmz7HwHrSSC/+YelQN14uzPGkQBOzwTEcFDSHqhsEuhhEAVllS
+	 q5OzMwXDvnDMv3r5Q1tNNpAiUPPhAMv2a72yNXntwmX/mWqujRDBM/GifPDlognIrbfqX
+	 H1ho6LUoMOLMG3jniKOTYVDAwnC7ePQQaNmhSavYRMhqOhC5WxKFqz5XRdY/g5B9Q6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KE1DcPDJ80rOHoZe6MA2jl3sLWV6W5hlzptMme1Q0vo=;
-	b=E5Rs708TCwe1Pdvy4kjVe08sAhC+RFzrnSNtai7TkuOnf4XMigZ4LCFYdRaw02z2QcK+
-	 WmgaC34nufoYmwvETO0Dv77KPkhFHwf5CMTC1SmBYqpFYT/zUsTS5jTmmwPew5TPg+Ttq
-	 hTcu/MT7UYuprsyKwmRxssYGy6n90iEawfp7tJ1lIHb8Pbo/Xi2kNaDvWPpg2H2jL9V95
-	 dUCJKxOoeUHvIvKsdrA70rh7NU47FxmcnADXnlDM2rY4Hil21icaavyvb2MoGLNopnDm1
-	 +V4K+0u0rpgyFS6oDaODjUjATHRLvf3XiRirMvqh51Bi5ijq/Mj06pWtTWApSY4CDWg==
+	bh=kSdkYxU7bMSS0OSDPbDhuCd0pJV+cG2PfKkmvl+Dd1Y=;
+	b=XW44Br7bIE2aJPKaYx5Ex2AZJyavHBma0l0EVjRx7xahRpdMr/81ROAqzlnSQGCcsEav
+	 wuQFpdbux3t0sU5FHra20h9TtKbmUjzEZhEA5EtGw1qEm2boA246Y+vAZ+w5Op10HqsXy
+	 UuJ65kcvqsoQDk27jkWaC5F07NKQyv902G0XJj3qe3SCnY1gescElWOUQ6Ry8i/do7vqO
+	 UcXcaKcQpfS5UXvRXxhz4lryd+1bJ97ZuvvYwWb2cqpVR6ydv304LsBC+NaEQSc9fHYzf
+	 2rJYD+DA8e2KvS/oYmGzQ5VK/MgtktslSTB58r1GQE52WgOCYuUpXoaJu9xxvXxIXpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ut6oHlCu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmaw3X1x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF1B606A323;
-	Thu, 26 Nov 2026 15:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F89606A31C;
+	Thu, 26 Nov 2026 15:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ut6oHlCu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39791F000CA;
-	Thu, 26 Nov 2026 15:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmaw3X1x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300591F000C6;
+	Thu, 26 Nov 2026 15:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705393;
-	bh=KE1DcPDJ80rOHoZe6MA2jl3sLWV6W5hlzptMme1Q0vo=;
+	s=korg; t=1795705395;
+	bh=kSdkYxU7bMSS0OSDPbDhuCd0pJV+cG2PfKkmvl+Dd1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ut6oHlCu8TgXDLyOh/Gw4SfsRnkwjLV+xqKRNy4NINs4oizrs8U9kOSwtRLpAA14T
-	 qUiU7xh+XkKLtUkswLI9yWXgTeXTSzHKz+kf9Y3aS7ZM0UeM9fItQbF7D5Clf1SDw2
-	 hodm/kptGM9R0eJIlAVue4F5krIRXb6COD2yT4R4=
+	b=jmaw3X1xkX1aJSNQ/1F1939B+GfFVZgLMMl7msW1bjKzZ8/aKvvbqjJf+UmzSoW+I
+	 CHOvHzwiewvN7Xppx8/RkGRhOc5oyh+pgh5F+c6TwFRi6M3s1+08FdYdg+7weKpe7K
+	 7FGscgCoibMj7LTTtU36r9NX0NpnGmrcYI+yaHJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+512459401510e2a9a39f@syzkaller.appspotmail.com,
-	syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Bin Lan <lanbincn@139.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/319] ext4: avoid infinite loops caused by residual data
-Date: Thu, 26 Nov 2026 15:39:12 +0100
-Message-ID: <20261126144010.898114834@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 185/319] mctp: accept MSG_CMSG_COMPAT in recvmsg
+Date: Thu, 26 Nov 2026 15:39:13 +0100
+Message-ID: <20261126144010.921150457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -73,88 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 5422fe71d26d42af6c454ca9527faaad4e677d6c ]
+commit 350e1d0d3b386fcc0cff2d37aa920fab4800bf72 upstream.
 
-On the mkdir/mknod path, when mapping logical blocks to physical blocks,
-if inserting a new extent into the extent tree fails (in this example,
-because the file system disabled the huge file feature when marking the
-inode as dirty), ext4_ext_map_blocks() only calls ext4_free_blocks() to
-reclaim the physical block without deleting the corresponding data in
-the extent tree. This causes subsequent mkdir operations to reference
-the previously reclaimed physical block number again, even though this
-physical block is already being used by the xattr block. Therefore, a
-situation arises where both the directory and xattr are using the same
-buffer head block in memory simultaneously.
+32-bit userspace running on a 64-bit kernel is unable to receive MCTP
+messages on an AF_MCTP socket, even though sending succeeds. There is
+nothing for MCTP to do with it beyond not rejecting it, as af_packet,
+af_key and can/isotp already do, for example.
 
-The above causes ext4_xattr_block_set() to enter an infinite loop about
-"inserted" and cannot release the inode lock, ultimately leading to the
-143s blocking problem mentioned in [1].
-
-If the metadata is corrupted, then trying to remove some extent space
-can do even more harm. Also in case EXT4_GET_BLOCKS_DELALLOC_RESERVE
-was passed, remove space wrongly update quota information.
-Jan Kara suggests distinguishing between two cases:
-
-1) The error is ENOSPC or EDQUOT - in this case the filesystem is fully
-consistent and we must maintain its consistency including all the
-accounting. However these errors can happen only early before we've
-inserted the extent into the extent tree. So current code works correctly
-for this case.
-
-2) Some other error - this means metadata is corrupted. We should strive to
-do as few modifications as possible to limit damage. So I'd just skip
-freeing of allocated blocks.
-
-[1]
-INFO: task syz.0.17:5995 blocked for more than 143 seconds.
-Call Trace:
- inode_lock_nested include/linux/fs.h:1073 [inline]
- __start_dirop fs/namei.c:2923 [inline]
- start_dirop fs/namei.c:2934 [inline]
-
-Reported-by: syzbot+512459401510e2a9a39f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1659aaaaa8d9d11265d7
-Tested-by: syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com
-Reported-by: syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=512459401510e2a9a39f
-Tested-by: syzbot+1659aaaaa8d9d11265d7@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Tested-by: syzbot+512459401510e2a9a39f@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/tencent_43696283A68450B761D76866C6F360E36705@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ Minor context conflict resolved. ]
-Signed-off-by: Bin Lan <lanbincn@139.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Link: https://patch.msgid.link/20261105160704.2546031-1-dave@stgolabs.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/mctp/af_mctp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 33624c68a3d75..f6dbd3eaaccd4 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4392,9 +4392,13 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+--- a/net/mctp/af_mctp.c
++++ b/net/mctp/af_mctp.c
+@@ -148,7 +148,7 @@ static int mctp_recvmsg(struct socket *s
+ 	u8 type;
+ 	int rc;
  
- 	err = ext4_ext_insert_extent(handle, inode, &path, &newex, flags);
- 	if (err) {
--		if (allocated_clusters) {
-+		/*
-+		 * Gracefully handle out of space conditions. If the filesystem
-+		 * is inconsistent, we'll just leak allocated blocks to avoid
-+		 * causing even more damage.
-+		 */
-+		if (allocated_clusters && (err == -EDQUOT || err == -ENOSPC)) {
- 			int fb_flags = 0;
--
- 			/*
- 			 * free data blocks we just allocated.
- 			 * not a good idea to call discard here directly,
--- 
-2.53.0
-
+-	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK))
++	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK | MSG_CMSG_COMPAT))
+ 		return -EOPNOTSUPP;
+ 
+ 	skb = skb_recv_datagram(sk, flags, flags & MSG_DONTWAIT, &rc);
 
 
