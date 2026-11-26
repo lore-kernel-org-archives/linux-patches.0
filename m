@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704727;
-	b=azIazmG0WDMzThSyvmFiTQasvrY2Qaf4SUOe9c2vvMe+MAraYLeJLO2GgE4lVNaISYJM
-	 gaJGESddFKqyHgg2UR5TJKSfR4GL8DlnG5EIkx49ewFpY5sa3ONrDDFIcUSqCdh+1L1Lb
-	 3ybNKWG6NIgFCtJwnLp0xNfqfU0MzHSIVEbx6XC2rF279jxm0go4PJ09gHK2LDuRBoXz4
-	 jlEOlF4v/occYCEkZdsery8C459ysG6zc0F1dYdjlSGQOiD0mK5gpeq6CeypU6ten2QKe
-	 PDg/EnNdveuBlz7tgZJrRsKYSavisEaIS0tG+gOodYkbxazhxdGKzffIqo9PXEf+cGA==
+	t=1795704730;
+	b=jE5JHUzH2Y/bHRZMmgct9pS0NPUy6dLfdxZmxx3+w4JKJMbjS05ceP4BRg4wU18fx/VW
+	 U8fVAtJb8zvGO49lRGXufmCle/fqkJJ0ELe39qyhTagvb0ETpT8X8Prl72PfBd7Lql2yV
+	 JiKT3nGUBKBcDhI6Jq5ZyqDyf5oTCATtofzFPozfRqhEgaO8KOEHWeICAfxU7hgkDd1iA
+	 A1B8w7dSqoMvef47KiqXab2A7jyeP2njGbI6FzYcxe6jJwOX+gA2j89FwqGlXZj1xtYVX
+	 IwZcQmBJi+XtklI5rCRPfSziS2XLXmpryCQARTEyVuEsmEZGAucTB91FjyP9PukcLUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704730;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=uqRagh+6sD00IyUCGULZVdxf82dnFpYtHgph6GmHJ1s=;
-	b=LMTThaL0UUwVX+JINDMEdKPOhlQymmG3/M68ZcojAfpvcBuqnTnWfPYkHoMq6MZPtB2l
-	 6Fg++gqYyMPcXf+yHQN+1ZyGe7o5i88bXBDFm/PfttbxieMgkOrGcxRCyb1y1/a201dTl
-	 XjNuiDISwtfAhse0FBxspKHjGbpKprpuXhoZ01YdtGXR1yW1Pp+uhdMNU5xucC83m4GvF
-	 fTc/VDRYkAwdhbXqfmq0DYKv6SAC1+6bfigG9U83QEQ6j+TH2WHTK3zlMKKoKTaRvP1C3
-	 obAs/go5Gb90MrJ0/phyEVvQWNVx50yoJti0YkhEsC6TILh9ZJuoLGt8Ow7UL78Y8ig==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=NLFrn8s0OZikaI1lkX5Z+8Wbp5NXpUgtkJXlsLqQbFM=;
+	b=0ofS6tvudoZOlQgmO+Luqv0g+h8rATdg8axVySP7Kq3KfNTi7cTcUDQboc3BG5DWVDP5
+	 6mlK3vvLybs3aNieujBKPnLZtettXmgURPemCmGmH6KXhjtq2KegZ/O6vjXKCWQuGQRKk
+	 Uak0sHKsca69cn8gnefsKTiXHtRGTZOH1g9TNiMR5WF1/Avxah4WS00MJqxDsPDPpiddk
+	 +2shVFMlUHTxKHwq+fqKYQLzPicqPLSRhRMcPEOuR72t2Z0tUAsI7ovHxY0LZTyE3vcis
+	 UgeQz5KGxBeqHWM041BSlOaPNLEaysgviIOjLAy88du0D0QjMwBTRQIkOGiH5c/IBcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKUgRyy6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZjk0DEJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB50606A32E;
-	Thu, 26 Nov 2026 14:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CCD606A31C;
+	Thu, 26 Nov 2026 14:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKUgRyy6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52361F000E6;
-	Thu, 26 Nov 2026 14:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZjk0DEJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25FF1F000C6;
+	Thu, 26 Nov 2026 14:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704727;
-	bh=uqRagh+6sD00IyUCGULZVdxf82dnFpYtHgph6GmHJ1s=;
+	s=korg; t=1795704730;
+	bh=NLFrn8s0OZikaI1lkX5Z+8Wbp5NXpUgtkJXlsLqQbFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKUgRyy6+WUCyBWPTk7vMSAdBT8j++CnwQICVkJyQmT5NUHALZzrosrPLEDOYfron
-	 lvJsoqzqhgydbp5IFla2pfRnueaFfjvXFIBV31/rFAvUnr7KOrx/LLuWcDVuw+FPj8
-	 GCuRTyYf2+7AwGIOL40hppkLd3PozOspIA2EAC7Q=
+	b=RZjk0DEJjIHXdAkWduT6OlBpsR2XjdheaHe9jWWXZCGj+gjvq0TGFEOLYGI6Ib7SL
+	 FX0eTdJXJpBKjtWkUEWUtXmMxDMuoSHwH65rDTdgpWL+EFtXO2cUhG+fz9eh88TffL
+	 bI4KEN/gqqxYm7G2GIlpz+k+J0DyWmYlW4F9C0NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
 	stable <stable@kernel.org>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 222/265] usb: uas: ignore UAS for ASMT135x bridges (174c:55aa)
-Date: Thu, 26 Nov 2026 15:39:12 +0100
-Message-ID: <20261126143620.764145953@linuxfoundation.org>
+Subject: [PATCH 5.10 223/265] usb: usbtest: prevent divide by zero in simple_io() with zero length
+Date: Thu, 26 Nov 2026 15:39:13 +0100
+Message-ID: <20261126143620.841731890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -62,96 +64,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit fafd23d61494461256d374f67c121f2712e1af2f upstream.
+commit fdaca138694111153f96c7d76877734b9dbf0e01 upstream.
 
-The ASMedia chip detection in uas_use_uas_driver() assumes that every
-device with idVendor/idProduct 174c:5106 or 174c:55aa reporting a
-config.MaxPower of 0 is an ASM1153 with working UAS.
+A divide error oops was observed in simple_io():
 
-ASMT135x bridges (iProduct "ASMT135x") share the same 174c:55aa id and
-also report MaxPower == 0, so they take the "ASM1153, do nothing"
-path — but their UAS implementation is broken:
+	usbtest 1-1:1.0: TEST 3:  write/1 0..0 bytes 16307 times
+	Oops: divide error: 0000 [#1] SMP KASAN
+	RIP: 0010:simple_io+0x2c4/0x540 drivers/usb/misc/usbtest.c:497
 
-- The first READ(16) issued by sd probing times out after 30 s;
-  enumeration only completes after a uas_eh_abort_handler plus a full
-  uas_eh_host_reset_handler cycle:
+The variable-length tests (test 3 and test 4) compute the next URB
+size with "len %= max", where max is the original
+urb->transfer_buffer_length. However, when a zero-length transfer is
+requested (param->length == 0), simple_alloc_urb() still returns a valid
+URB with transfer_buffer_length set to 0. On the first vary update,
+"len %= max" divides by zero and the kernel oopses.
 
-    scsi 3:0:0:0: Direct-Access  ASMT  ASMT135x  0  PQ: 0 ANSI: 6
-    sd 3:0:0:0: [sdb] tag#26 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
-    sd 3:0:0:0: [sdb] tag#26 CDB: Read(16) 88 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00
-    scsi host3: uas_eh_host_reset_handler start
-    usb 6-2: reset SuperSpeed USB device number 2 using xhci_hcd
-    scsi host3: uas_eh_host_reset_handler success
+Commit 564e69893c63 ("USB: usbtest: prevent a divide by zero bug") added
+the equivalent zero check to alloc_sglist(), which covers the
+scatterlist tests (test 7/8), but the single-URB variable-length path in
+simple_io() was left unprotected.
 
-- Under concurrent load the bridge stalls: all inflight commands (20+
-  UAS tags in the captured incident, mixed READ(16)/WRITE(16)) hit the
-  30 s UAS timeout in the same event, forcing repeated abort/reset
-  cycles and eventually a USB disconnect.  Writes dropped mid-flight
-  during these resets returned zeros to the filesystem (observed as
-  XFS metadata corruption on the mounted volume).
+Fix this by returning -EINVAL early from simple_io() when vary is
+requested but max is zero, so the divide by zero never occurs.
+Zero-length transfers without vary remain valid for the other callers of
+simple_io().
 
-- Sequential-write throughput is ~45 MiB/s under UAS versus ~136 MiB/s
-  after disabling UAS (usb-storage BOT mode), which is fully stable:
-  several tens of GiB written without a single error.
-
-- Bulk reads of healthy LBA ranges do work under UAS (~190 MiB/s, no
-  errors); the failure pattern is command-timeout at enumeration and
-  under queue depth / write load, not a broken transfer path.
-
-Since 174c:55aa is shared across several ASMedia bridges and enclosure
-rebrandings, distinguish the ASMT135x by its product string — the same
-approach used for the HIKSEMI MD202 check a few lines below.  The
-product strings of working bridges using the same id ("ASM1053E",
-"ASM1153", "ASM1153E", "ASM1351", vendor rebrands such as "YZWY_TECH")
-do not contain "ASMT135", so the match is safe.
-
-Verified on an ORICO enclosure (iManufacturer "ASMT", iProduct
-"ASMT135x", bcdDevice 1.00) attached through an Alpine Ridge TB3 dock:
-with the equivalent usb-storage quirks parameter (174c:55aa:u) the
-device is completely stable.
-
-Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20261014165741.35758-1-olivier.kaloudoff@gmail.com
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20261016072750.34256-1-25031212351@stu.xidian.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/uas-detect.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/misc/usbtest.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/storage/uas-detect.h
-+++ b/drivers/usb/storage/uas-detect.h
-@@ -78,6 +78,8 @@ static int uas_use_uas_driver(struct usb
- 	 * ASM1051 - with broken (*) uas support
- 	 * ASM1053 - with working uas support, but problems with large xfers
- 	 * ASM1153 - with working uas support
-+	 * ASMT135x - broken uas support, shares the ASM1153 MaxPower == 0
-+	 *            signature, identify it by its product string
- 	 *
- 	 * Devices with these chips re-use a number of device-ids over the
- 	 * entire line, so the device-id is useless to determine if we're
-@@ -99,7 +101,11 @@ static int uas_use_uas_driver(struct usb
- 			(le16_to_cpu(udev->descriptor.idProduct) == 0x5106 ||
- 			 le16_to_cpu(udev->descriptor.idProduct) == 0x55aa)) {
- 		if (udev->actconfig->desc.bMaxPower == 0) {
--			/* ASM1153, do nothing */
-+			if (udev->product && strstr(udev->product, "ASMT135")) {
-+				/* ASMT135x, broken uas */
-+				flags |= US_FL_IGNORE_UAS;
-+			}
-+			/* else ASM1153, do nothing */
- 		} else if (udev->speed < USB_SPEED_SUPER) {
- 			/* No streams info, assume ASM1051 */
- 			flags |= US_FL_IGNORE_UAS;
+--- a/drivers/usb/misc/usbtest.c
++++ b/drivers/usb/misc/usbtest.c
+@@ -466,6 +466,9 @@ static int simple_io(
+ 	int			retval = 0;
+ 	unsigned long		expire;
+ 
++	if (vary && !max)
++		return -EINVAL;
++
+ 	urb->context = &completion;
+ 	while (retval == 0 && iterations-- > 0) {
+ 		init_completion(&completion);
 
 
