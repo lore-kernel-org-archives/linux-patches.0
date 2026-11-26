@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704539;
-	b=CeceuZgUkbcEsbCVWPKHYaaRAxpBaTwLlTITnpG3GBj0CmLmQO6ABQFeXpLChTKGuixB
-	 7IO27LGyuqyx57/0qJzLkxO2nxZ641ESNrVWJl9vdmm4tQv669jpV0M9+vTZIKUthYO+R
-	 A4Nxgeag5NUDVWJH85O9UX5mppFItq8aW3vMKQWJJPqKV/sFaztf+LrOL6bvcH9IHRB8d
-	 bPzfQgtGorY5K48TZZ6izTW4jzldhpTp76kQaEG0PrcrRmJRVO9m5nn1ged7hwv+FkS/S
-	 3udLz+0weLSVfBaWWN5+qTAlyIZ2OSTu+R+3B94UnFTvKYakuR8Ya5PZ2vpDKWh50UA==
+	t=1795704542;
+	b=sqsyc0rds9yU0T820CK1a4X+lm7zIdQgvuWh0i+BPdfCbXGmZHkY5Cd+Au6apoclOkHD
+	 A98FHQD/Ga8vbEKDQ29v+crUzBZrsH73uruvmhC3Dew/FLd0T5+sQTJMwlsvn81TcGYDU
+	 lw7khaXDrQmGyGNgJcgqSohKsyn3rU1gGGYoWk8N/XI1VymIZGFOfWZJYLtzyaQtVRtvk
+	 GQVJnSKuHg7f51Cf3k35ahJ+ZrLQuj4d9kGoMnyD3p2Fbwk8ZkCZimKAHTrD8RXcx56F9
+	 rjWB9o05sr9i2hJ/ceXyGxNVVORD/msF7GVgPnBMk8HSv8XpvcQ8SIQ+ehKQyfK6k6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704539;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=y9c2m22/43t5x+10Yk3M0GafCEPm6l+lb4SSs7DWfyY=;
-	b=1I1J50mTVIxVZyfwVQbsH7eksb/8DGKeeJglFTusBF4KQ1hcm3/xMeH9JRk98xmnympk
-	 HgwAE+35z6FmtN9hyslHUnMVYyjvUgYuf03rpJjtK4VPDqQOchDI5KLBLMdrmXkHolbCz
-	 1fxdPQrsrLVBR8zXUyyDZCQ88nbjvMAVbHQJlteKKjOfK20dz/yzwJk89KySkKj5fQgbp
-	 0AS9qsrJESVE6wo1zIhvajfn/u3jJ+b2uC+O2mxQkc1IkKzd4cNM50YViw6vloJdz/rRj
-	 RYtsh7sQ5gbYMUXX3z6dkjylW4Q4bvrUfuX5/dnF3+Pt+Levt7/HWJ4tqwSAnXFQ9Yg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oapEMry0T/E245m/chFmaxO+Mp2yl+BzRpx/xyvkAiE=;
+	b=mNdoQcG2so1Lk8lO+u5ITUf1yHyRoVNoDxAzIkowPf/MDCooVsd9bJVmejOU/FW1ujrK
+	 AGWHB9Hb74ARB3gSrg9zpTd9bZyy8Ks15wMd9bcAXdvWdka+eS9aREAOYiEim/S2q9kED
+	 8nzLnKVERwYvodWcqpAeKP4cxjgEhDd3dcMMZRbiuJx/geetk4UT2dLj3A0DAhwXwPbpb
+	 JE6Ai11A8sA71ljkZhY1gkoS6NFDbas3/W7y4c0vGm3q4KfmYt+cOyii2XknGv9kBEWkW
+	 hFYJJHePEK/iaijW19QJG3kSBaQtsjXcBm6ZhKQPJlUSgSbwWg3Y15NToCgUXrBstKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0vWIwml;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=se+zAEQU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F29606A31C;
-	Thu, 26 Nov 2026 14:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3D9606A31C;
+	Thu, 26 Nov 2026 14:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0vWIwml
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECF51F000C0;
-	Thu, 26 Nov 2026 14:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=se+zAEQU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DE91F000C4;
+	Thu, 26 Nov 2026 14:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704538;
-	bh=y9c2m22/43t5x+10Yk3M0GafCEPm6l+lb4SSs7DWfyY=;
+	s=korg; t=1795704541;
+	bh=oapEMry0T/E245m/chFmaxO+Mp2yl+BzRpx/xyvkAiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0vWIwmlCTMmiCIQIKmYS+yUsm6pqi4uwZsIvovYEFQTKKSMSY/31DSyrCyBxla1q
-	 FxKlbM/MtH2yKKqA/J5FiS/8fXvxy04SMYnJvMqmjz5wx3Iyr/e1z4ktn/FeNXlGt6
-	 RyA8wnhvjkj2Q30cy9PLnGmN6GQXcooMA0a/sPS0=
+	b=se+zAEQU60/gK7W6zP0pRZ7BVwnHinYXftdryoomypH55eWs2PKRC7lM02uero45N
+	 BZ8qpNdZGhL6Pi5evMa0Lqh5WjM0LKSLbFangrUVxoYziKGG3uNMQVXTD8lYUw9SYs
+	 GeUXtNcUHM3uypwNinhjNJlz2CnETtkRov8k6VvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Zhang <zhiqizhangg@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.10 142/265] bootconfig: Allow keys with the maximum supported depth
-Date: Thu, 26 Nov 2026 15:37:52 +0100
-Message-ID: <20261126143614.949734445@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	=?UTF-8?q?Dani=C3=ABl=20Trujillo?= <datrujillo@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 160/265] ipv4: fib_trie: prevent speculative out-of-bounds child access
+Date: Thu, 26 Nov 2026 15:38:10 +0100
+Message-ID: <20261126143616.325875451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -61,58 +62,126 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiqi Zhang <zhiqizhangg@gmail.com>
+From: Daniël Trujillo <datrujillo@nvidia.com>
 
-commit cab697164b47eecfa2f146024f5d661f99a1a1e7 upstream.
+commit fd3d73286662950656f54616d0b3fea29e2dc99a upstream.
 
-xbc_verify_tree() accepts keys with XBC_DEPTH_MAX (16) components,
-but xbc_node_compose_key_after() returns -ERANGE immediately after
-storing the sixteenth component. It rejects the key before discovering
-that there are no more ancestors to collect.
+fib_table_lookup() checks the child index against the bounds before
+passing it to get_child_rcu().
 
-For example, a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p = value can be attached
-to an initrd successfully. However, bootconfig -l stops listing and
-prints "Failed to compose key -34". In the kernel, the same error
-propagates through copy_xbc_key_value_list() during its length probe,
-so proc_boot_config_init() returns before creating /proc/bootconfig.
+The index is derived from the lookup key, which in turn is derived from
+flp->daddr. A userspace process can therefore influence the index by
+triggering lookups for chosen destination IPv4 addresses.
 
-Check the array capacity before storing the next component. This lets
-exactly XBC_DEPTH_MAX components be composed while retaining the check
-before any out-of-bounds store.
+If this bounds check is mispredicted as in-bounds, an out-of-bounds index
+can be transiently passed to get_child_rcu(). The value loaded beyond the
+child array is then treated as a node pointer. A later transient
+dereference of that pointer can cause a data-dependent cache footprint.
 
-I found this issue while reviewing bootconfig's depth handling and used
-OpenAI Codex to verify the failure and develop the fix. I reviewed the
-change and wrote and ran the regression tests.
+This was found during Spectre-v1 research. Leakage was demonstrated with
+instrumentation that delays branch resolution with a CLFLUSH before the
+mispredicted branch and makes the leaked location deterministic for
+reproducible measurement. In that setup, a userspace-controlled IPv4
+lookup key was able to trigger a transient out-of-bounds child access.
+The transient use of the loaded value as a pointer caused a
+data-dependent cache footprint that was recoverable from userspace using
+Prime+Probe. A real-world attacker would likely need to delay branch
+resolution, which was not demonstrated end-to-end without the added
+CLFLUSH.
 
-Link: https://lore.kernel.org/all/20261104073742.21202-2-zhiqizhangg@gmail.com/
+Sanitize the index with array_index_nospec() before accessing the child
+array. This removed the observed leakage in the described setup.
 
-Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+Apply the hardening before setting cindex in fib_table_lookup(), because
+cindex can later be used by the backtrace path to load another child
+pointer. fib_find_node() has the same pattern, with the checked index
+derived from a user-provided key in fib_table_insert() and
+fib_table_delete(). leaf_walk_rcu() has a similar checked cindex before
+get_child_rcu(), and the traversed state can be influenced by userspace
+actions. fib_find_node() runs under RTNL and leaf_walk_rcu() is not on
+the packet lookup hot path, so harden those analogous accesses in the
+same way. Also harden fib_trie_get_next(), where a mispredicted loop
+condition could transiently read one child past the array.
+
+I see a slowdown of roughly 10% in a microbenchmark where we call
+fib_table_lookup() with 64 routes directly from inside the kernel. I
+observed no slowdown in a loopback UDP sendto() microbenchmark.
+
+Fixes: 9f9e636d4f89 ("fib_trie: Optimize fib_table_lookup to avoid wasting time on loops/variables")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhiqi Zhang <zhiqizhangg@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Daniël Trujillo <datrujillo@nvidia.com>
+Link: https://patch.msgid.link/20261106-fib-trie-nospec-v3-1-53da6550dcf8@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/fib_trie.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -236,9 +236,9 @@ int __init xbc_node_compose_key_after(st
- 		node = xbc_node_get_parent(node);
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -60,6 +60,7 @@
+ #include <linux/export.h>
+ #include <linux/vmalloc.h>
+ #include <linux/notifier.h>
++#include <linux/nospec.h>
+ #include <net/net_namespace.h>
+ #include <net/ip.h>
+ #include <net/protocol.h>
+@@ -965,6 +966,8 @@ static struct key_vector *fib_find_node(
+ 			break;
+ 		}
  
- 	while (node && node != root) {
--		keys[depth++] = xbc_node_index(node);
- 		if (depth == XBC_DEPTH_MAX)
- 			return -ERANGE;
-+		keys[depth++] = xbc_node_index(node);
- 		node = xbc_node_get_parent(node);
- 	}
- 	if (!node && root)
++		index = array_index_nospec(index, 1ul << n->bits);
++
+ 		/* keep searching until we find a perfect match leaf or NULL */
+ 	} while (IS_TNODE(n));
+ 
+@@ -1423,6 +1426,8 @@ int fib_table_lookup(struct fib_table *t
+ 		if (IS_LEAF(n))
+ 			goto found;
+ 
++		index = array_index_nospec(index, 1ul << n->bits);
++
+ 		/* only record pn and cindex if we are going to be chopping
+ 		 * bits later.  Otherwise we are just wasting cycles.
+ 		 */
+@@ -1720,6 +1725,8 @@ static struct key_vector *leaf_walk_rcu(
+ 		if (cindex >> pn->bits)
+ 			break;
+ 
++		cindex = array_index_nospec(cindex, 1ul << pn->bits);
++
+ 		/* descend into the next child */
+ 		n = get_child_rcu(pn, cindex++);
+ 		if (!n)
+@@ -1741,6 +1748,8 @@ static struct key_vector *leaf_walk_rcu(
+ 			continue;
+ 		}
+ 
++		cindex = array_index_nospec(cindex, 1ul << pn->bits);
++
+ 		/* grab the next available node */
+ 		n = get_child_rcu(pn, cindex++);
+ 		if (!n)
+@@ -2396,7 +2405,10 @@ static struct key_vector *fib_trie_get_n
+ 
+ 	while (!IS_TRIE(pn)) {
+ 		while (cindex < child_length(pn)) {
+-			struct key_vector *n = get_child_rcu(pn, cindex++);
++			struct key_vector *n;
++
++			cindex = array_index_nospec(cindex, child_length(pn));
++			n = get_child_rcu(pn, cindex++);
+ 
+ 			if (!n)
+ 				continue;
 
 
