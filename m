@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705053;
-	b=VFsK70Fw/Z2jkh9OLcZWa1U/dR/QVw7rKcPQGcw4BZj0IiptHZE6Pc2wp8x8/66xbQQE
-	 2e19R8TXbwzd22ZU+DvKX36xh6JTpjaW6uYaL0xDTzxHRjPhFeYE3wDJy/woCWCaXz91c
-	 bzFFP1e1lBE6dIEsu/10/eXlp0bQZeaD0/DCWk4BwyqcSuvnJie6b9OQtFss20yMocNq0
-	 LiC+IUUH+T+aloB5bylBB2z8yztQuUFvf5P1RQBIDNIUMBurMvycZODjZdTzmMbJTdGcl
-	 /CZJ/TITUaR4gLyGuBsvfUc6tDBWrWePX9EidMnxXMyllLp6jmjn4Cxpz5Cbk26oOYw==
+	t=1795705056;
+	b=R056+ejn+jLi63wxDH4WRlWtCClsF2CX5lNDtRQxiztfIaUPge2StpDmSaGI3FKEZ0Ux
+	 oOQsPsOS+LyJ+gMlMTa/DsIsooOEF5SCBS7QNmUekBGwKh+gMAD8MrRREG5wWb7VIUbZy
+	 3fyplC2fsFDtMFTbXDAxfo+j3VAM63wBwNc8NXofYdxBIvuxMUQj8VVBlEDb+8J8avtWK
+	 B5UQ0sErxRTz7Ixt7B5t5lkSTvj5omzmM2OBq6eVSOqUi/LxgbC5oojR1Q4xQblGx6UWJ
+	 oXGHeL4aZrsM2lGb15Pfwfvt4lqS6gvcPSaDBiM1j+7OBZrgIUy5UIXiWHtIHDDHC7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1jMAiG6NtotNR+yXfhK5XOqbhRIn8ppi5G9Ks0KVEBs=;
-	b=ivlk+aYBIPlK2gSYZt/xS0k0XBPDMcFv3usIQTQbOoQGzwP3MesFs3Jd9ZIiAn40D3QM
-	 zGC+Rf1cF8YjF1U6Gz4t4jQa5ygfvv7EHQe6CHd/s0ZsqAKPx4u8k2QlHnTOP/SU62B1j
-	 yfWcuyTLQaCwZ8GmyToSuUK1xTGkGF0h4QJstdb93xwQJY0j3TykAj6Zf5wI8FPBN2h3T
-	 kyblQf+sEK7Mn5EtwiGVRuo7ZYkLVYnDBiFkqVhrAS4cdj6c/7s0mi3qgX++YaqW0A36T
-	 zn+4WnS3W0zbBGPbE5JsH2ZWKU5RBH1WDkT/9yhau1U9AuKT+WIQZ45NJZYkjbb9TlA==
+	bh=tOMoTsRvS55YHpw4iJ12WRv5pKxNkcKDcksiB4bb5fA=;
+	b=racheR2g0Ya/ygaEme3ErHck/kRh9ZqFZokoPBO3ur4c4HXjBeulhksecNQ6vImFp4RI
+	 jwwV73GUhSELcwJbE+6DcqQea90caPdaBPLZLzYcBC5Yj33lA504wO9RbikVu7uUW7TVO
+	 hsApw5U9HxOzpSFntd6EwEZ2UqHTikU6NENLb8tW8F8Jrga7hATAXDxUEKRsHil5/ARm6
+	 wSfwlHp7vBK46X95XHosq4tKpvZgxMgyY7A5iKzNeamE8UuHVixBG6znSBhFBSpNIezlb
+	 OYDVimhQlNmJpBq8ofTQCPXpNipYeCizFmtqNy7dZ08X+YSxCUHqhThfIawaUQ9my2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2L6HoLg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a32P4myl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45531606A323;
-	Thu, 26 Nov 2026 14:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789A2606A687;
+	Thu, 26 Nov 2026 14:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2L6HoLg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648961F00ACF;
-	Thu, 26 Nov 2026 14:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a32P4myl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F23B1F000EE;
+	Thu, 26 Nov 2026 14:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705052;
-	bh=1jMAiG6NtotNR+yXfhK5XOqbhRIn8ppi5G9Ks0KVEBs=;
+	s=korg; t=1795705056;
+	bh=tOMoTsRvS55YHpw4iJ12WRv5pKxNkcKDcksiB4bb5fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2L6HoLguggfmwXGqX6aAMWbylKln3dyGw7cncINSo+HjXO1kQatNpEFnlRqv1FT6
-	 SjIfSsLDLZIlftcVfZ4RLwZYeuiX7FEozmVV3V0TdGbrVh9mGrYosna2j/EpE/E6Zl
-	 zVHJXlfYJj/D0eGD7zdPea9aMNx9QI/v7ZBhPYf8=
+	b=a32P4myldJj+4ZPim1UBy2GdoVfmCNh98KMdgy92ARtA9IeP9xMVWmpFkImh5f8xu
+	 JyCBlscqJ0STZfHRf7brXfwGqqgYW/LamYyO9uNkaKoM/yrCd8cPpojmRstQm7wWX9
+	 mHVYTXd0kkaC3JiwV+sdYJ/fqqp5gSNO7X3ww+SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guolingxing <guolingxing@tju.edu.cn>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Binbin Deng <18983559317@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/319] btrfs: verity: propagate orphan insertion errors when enabling verity
-Date: Thu, 26 Nov 2026 15:36:38 +0100
-Message-ID: <20261126144007.421405719@linuxfoundation.org>
+Subject: [PATCH 5.15 066/319] Bluetooth: hci_core: Initialize link key before publication
+Date: Thu, 26 Nov 2026 15:37:14 +0100
+Message-ID: <20261126144008.227842033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,45 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guolingxing <guolingxing@tju.edu.cn>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit 45a686dff6b91c3667cd8188d3a02c69f62f4d00 ]
+[ Upstream commit ae9c8df1ffb84560ac01cbdc26cfb19027f4d25f ]
 
-btrfs_begin_enable_verity() ignores the return value of
-btrfs_orphan_add() and unconditionally returns 0. If orphan insertion
-fails, btrfs_orphan_add() aborts the transaction, but the generic
-fs-verity code still proceeds with Merkle tree construction because
-the begin_enable_verity callback reported success.
+hci_add_link_key() allocates a new link key with kzalloc(), inserts it into
+hdev->link_keys with list_add_rcu(), and only then initializes its address,
+value, type, and PIN length.  RCU readers such as hci_find_link_key()
+and the debugfs link_keys_show() do not take hci_dev_lock, so they can
+traverse the new entry during that initialization window and observe
+a zero or partially initialized key.
 
-Return the error so that fs-verity stops immediately instead of
-continuing after the initialization failure.
+This can be triggered by racing a link-key update with another CPU looking
+up or dumping keys.  In particular, userspace can issue
+MGMT_OP_LOAD_LINK_KEYS while another process reads the corresponding
+debugfs file.
 
-The transaction is already aborted by btrfs_orphan_add() and the
-handle is released by btrfs_end_transaction(), so no additional
-cleanup is needed.
+Complete all fields of a newly allocated key before publishing it with
+list_add_rcu().  Existing keys remain visible and keep their current
+in-place update behavior.
 
-Fixes: 705242538ff3 ("btrfs: verity metadata orphan items")
-Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
+
+Fixes: 0378b5977013 ("Bluetooth: Convert link keys list to use RCU")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index 4968535dfff0a..e5d7763fe6e0f 100644
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -605,7 +605,7 @@ static int btrfs_begin_enable_verity(struct file *filp)
- 		set_bit(BTRFS_INODE_VERITY_IN_PROGRESS, &inode->runtime_flags);
- 	btrfs_end_transaction(trans);
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index b544dc030904b..c5e4616edb04c 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2491,7 +2491,6 @@ struct link_key *hci_add_link_key(struct hci_dev *hdev, struct hci_conn *conn,
+ 		key = kzalloc(sizeof(*key), GFP_KERNEL);
+ 		if (!key)
+ 			return NULL;
+-		list_add_rcu(&key->list, &hdev->link_keys);
+ 	}
  
--	return 0;
-+	return ret;
- }
+ 	BT_DBG("%s key for %pMR type %u", hdev->name, bdaddr, type);
+@@ -2515,6 +2514,9 @@ struct link_key *hci_add_link_key(struct hci_dev *hdev, struct hci_conn *conn,
+ 	else
+ 		key->type = type;
  
- /*
++	if (!old_key)
++		list_add_rcu(&key->list, &hdev->link_keys);
++
+ 	if (persistent)
+ 		*persistent = hci_persistent_key(hdev, conn, type,
+ 						 old_key_type);
 -- 
 2.53.0
 
