@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705335;
-	b=a098NBY+SikHCHJZW4kILIpABIlgKpHRaeBeC7dTBcXxnftNmMeQSuJXuhiPG/2x4lae
-	 xzm7etQyBntMx1TIhyG1ufdIajA9Ue9Jy37+kYOYNao01boH3qzvGlYYksNtlxzKttwIk
-	 5X7kH2iBEzYf/HSNHFJyxyQdRl+olVKDlU+Rl9E4jwpsrlqFJUQ0rAGW0hE4o1ThUuHLJ
-	 vS71JqspAbXc7bEr+jweznrLVMfjVymosiNAtotYPDCOo20VIb1a7GeRDW5gvQ0qgPbnP
-	 fBDGp44y1rBgXjolJLuqBm5sqzuB9DYElEsfOkjRZbT8RCYGWyuqvXQozbqyicxh3Ng==
+	t=1795705341;
+	b=UYigJ0Kg/Z4gzcA02n7hl1pj00nuzAlKgnUcZjhWGymbQXm/xm91w6pbRZGwhsbZ9l9a
+	 3PMv0mKVGCbFXtAv3nV9AA95HU1kQO9Nux8UuB8ILLgJaKaz97wpkAseT/XqWPU/ysN24
+	 cB+FRN5WqlH7+t1rCY1AgsTBVRMZh4+C/dt47Bv1MFxt437fqfP7uKoa+l9ONNJqOlxFV
+	 Eq2e+6DuY74ezgb2Y1Lz3UTQhTLNjIwLT1UkthiY4qik1GWD2GFMXkXdGmMTacoqQroqB
+	 MJ5K0C5fkX4sk1vqviRQ0uOQEv/xSOubyMsrHd6P/JfzNUFqRXiBQpFcQULxSIMXLdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4L9jnopwies3jkYcnJyJgEtG4AQuJgERoEsMPpyMHFg=;
-	b=3pzyXgB6p6we8zS6sPnpijnpVmXY/eHYrMQbIWs5gbyxKvbwBYHneQ7wWFVOlHF0ZzpF
-	 /0XSK6kGgAT7KcJY+1Ti/cen7dcCRdIMLQZdariMMYXKuttUtiwbG3Kn/baKQ1dPwVnvG
-	 icNY1No1kKBw05iBwyQRzoVoL93Z5zZxdhTo5l4XLiBcQqWfyBHisXA6Di1SBwmJ/Xx2z
-	 aYS++MrB8Ab11/fa0NBvS7vZRcEVUnaXrzj+q5KruWMCXi7CNFCJHzd4ZBd6rWgwAR3fL
-	 GM7Z6MrSIiczGy8rRokFKBfEM4GUAiROU2H5dTU4GDyq/dH0vcuI70PaEiYxAcUnO2Q==
+	bh=JlOvyv9Ph4cgJ8pHcTRk097w+NMhwnIhv6tpn2ikAxw=;
+	b=QWj5aGq40tp+uVKqEjmuRAEfNHWikGjrLWDPg4TviCLb59FjbnyaT3sWsZrU/k3MUjLM
+	 dxyJQWh0i9Xo/3deyxsOXT/AJ28ng29HVGNUYa7rDv0k8s/Dnqrky5k4LVoUR1LRfvsMa
+	 JVp6brRvwi0y8l7Wp5VKPXM9rlHg+fMIsLl3Dg3gP4mNvqLID/4loel1ctVgVcMc9Snv/
+	 We+3ckg1rdOO/wBPfuEck72QL6hXEhrTK9z0oeAsr4kDAqkImFz/HgECFUEazc1A6IDy7
+	 bNBAh57wcHPnZJyoE1MnWWnOa7T+g1joGJl6UpDCNhbigbGS1Dy1MtYyP60BN/72+nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6gTX3Qh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S2wCabPf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09144606A31E;
-	Thu, 26 Nov 2026 15:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54CF606A33B;
+	Thu, 26 Nov 2026 15:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6gTX3Qh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07C21F000D3;
-	Thu, 26 Nov 2026 15:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S2wCabPf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FA61F000D1;
+	Thu, 26 Nov 2026 15:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705334;
-	bh=4L9jnopwies3jkYcnJyJgEtG4AQuJgERoEsMPpyMHFg=;
+	s=korg; t=1795705340;
+	bh=JlOvyv9Ph4cgJ8pHcTRk097w+NMhwnIhv6tpn2ikAxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6gTX3QhkyLSkdsBvT4MT7jXgJstLqLL2wJVTXSPIkrhH5HVKJnwn+txAQhtW8utz
-	 6QpR53bVaxknJi0DW5A+n/YWQoEX8cDPbbaz7sjkpMOZxdgMLWQrgL1lfmWhT3b26+
-	 m07vVPwHPrXoTJJmvg/195v+lMOUQ7UvVxiu5HbE=
+	b=S2wCabPf9LZtsJhfgG+/jVnp6szzJk6RnqARwq+n5r7QSp7sh1vURt0pK1aAeHq6j
+	 MVS9FGHdsn8m/crXZKJIkKDVX1KxZH+6i5pH9B/J0zNsTCj2wUOqksTCw02GzeHq8j
+	 tPwpcArHRSEprFiVTmz9Fq581lPzTU7QbCrcFG8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wenwen Fu <wenwfu@qti.qualcomm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/319] net/mlx5e: IPoIB, Fix QPN lookup race
-Date: Thu, 26 Nov 2026 15:38:14 +0100
-Message-ID: <20261126144009.587222769@linuxfoundation.org>
+Subject: [PATCH 5.15 163/319] tracing: skip boot kprobe setup when no events were requested
+Date: Thu, 26 Nov 2026 15:38:51 +0100
+Message-ID: <20261126144010.426534375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,126 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Wenwen Fu <wenwfu@qti.qualcomm.com>
 
-[ Upstream commit 29066b0fc046a2965129a74325b98d9abb4647a9 ]
+[ Upstream commit 2388a673e9276de30c7e917fce50830e497d46cc ]
 
-The parent RX completion path can load a QPN hash entry before
-mlx5i_pkey_del_qpn() unlinks and frees it, then dereference freed memory.
+setup_boot_kprobe_events() calls enable_boot_kprobe_events() even when
+the kprobe_event= boot parameter was not supplied. That call takes
+event_mutex without any command-line probes to enable.
 
-Use RCU hlist operations and defer freeing with kfree_rcu(). The existing
-RCU read-side section in mlx5e_napi_poll() covers the lookup. Keep ht_lock
-for writers and acquire it before looking up the entry to delete.
+Asynchronous eval-map updates also hold event_mutex. A normal boot can
+therefore wait in init_kprobe_trace() for this background work despite
+having no boot probes to set up.
 
-Fixes: 7e7f4780c340 ("net/mlx5e: IPoIB, Use hash-table to map between QPN to child netdev")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261031225749.14214-1-prathameshdeshpande7@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Return early when the boot-event buffer is empty. Keep the mutex
+protection in trace_event_update_all() and retain setup for explicit
+kprobe_event= parameters. Bootconfig handles its own probe enablement,
+and the existing trace_eval_sync() still waits for background work
+before init memory is freed.
+
+Link: https://lore.kernel.org/all/20261106021457.2648231-1-wenwfu@qti.qualcomm.com/
+
+Fixes: 970988e19eb0 ("tracing/kprobe: Add kprobe_event= boot parameter")
+Signed-off-by: Wenwen Fu <wenwfu@qti.qualcomm.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/ipoib/ipoib.h |  2 +-
- .../mellanox/mlx5/core/ipoib/ipoib_vlan.c     | 26 +++++++++++--------
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ kernel/trace/trace_kprobe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-index 99d46fda9f82f..69a666d91c643 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-@@ -78,7 +78,7 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev);
- int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn);
- int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn);
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 03d4ac41d9031..354ad90ceb68a 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -1920,6 +1920,9 @@ static __init void setup_boot_kprobe_events(void)
+ 	char *p, *cmd = kprobe_boot_events_buf;
+ 	int ret;
  
--/* Get the net-device corresponding to the given underlay QPN */
-+/* Get the net-device for a QPN. Caller must hold rcu_read_lock(). */
- struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn);
++	if (!kprobe_boot_events_buf[0])
++		return;
++
+ 	strreplace(kprobe_boot_events_buf, ',', ' ');
  
- /* Shared ndo functions */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-index 5308f23702bca..f0df52aa26a77 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-@@ -31,6 +31,7 @@
-  */
- 
- #include <linux/hash.h>
-+#include <linux/rculist.h>
- #include "ipoib.h"
- 
- #define MLX5I_MAX_LOG_PKEY_SUP 7
-@@ -39,11 +40,12 @@ struct qpn_to_netdev {
- 	struct net_device *netdev;
- 	struct hlist_node hlist;
- 	u32 underlay_qpn;
-+	struct rcu_head rcu;
- };
- 
- struct mlx5i_pkey_qpn_ht {
- 	struct hlist_head buckets[1 << MLX5I_MAX_LOG_PKEY_SUP];
--	spinlock_t ht_lock; /* Synchronise with NAPI */
-+	spinlock_t ht_lock; /* Serialize hash table updates */
- };
- 
- int mlx5i_pkey_qpn_ht_init(struct net_device *netdev)
-@@ -68,13 +70,14 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev)
- 	kfree(ipriv->qpn_htbl);
- }
- 
--static struct qpn_to_netdev *mlx5i_find_qpn_to_netdev_node(struct hlist_head *buckets,
--							   u32 qpn)
-+static struct qpn_to_netdev *
-+mlx5i_find_qpn_to_netdev_node(struct mlx5i_pkey_qpn_ht *ht, u32 qpn)
- {
--	struct hlist_head *h = &buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
-+	struct hlist_head *h = &ht->buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
- 	struct qpn_to_netdev *node;
- 
--	hlist_for_each_entry(node, h, hlist) {
-+	hlist_for_each_entry_rcu(node, h, hlist,
-+				 lockdep_is_held(&ht->ht_lock)) {
- 		if (node->underlay_qpn == qpn)
- 			return node;
- 	}
-@@ -96,7 +99,7 @@ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn)
- 	new_node->netdev = netdev;
- 	new_node->underlay_qpn = qpn;
- 	spin_lock_bh(&ht->ht_lock);
--	hlist_add_head(&new_node->hlist, &ht->buckets[key]);
-+	hlist_add_head_rcu(&new_node->hlist, &ht->buckets[key]);
- 	spin_unlock_bh(&ht->ht_lock);
- 
- 	return 0;
-@@ -109,16 +112,17 @@ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn)
- 	struct mlx5i_pkey_qpn_ht *ht = ipriv->qpn_htbl;
- 	struct qpn_to_netdev *node;
- 
--	node = mlx5i_find_qpn_to_netdev_node(ht->buckets, qpn);
-+	spin_lock_bh(&ht->ht_lock);
-+	node = mlx5i_find_qpn_to_netdev_node(ht, qpn);
- 	if (!node) {
-+		spin_unlock_bh(&ht->ht_lock);
- 		mlx5_core_warn(epriv->mdev, "QPN to netdev delete from HT failed\n");
- 		return -EINVAL;
- 	}
- 
--	spin_lock_bh(&ht->ht_lock);
--	hlist_del_init(&node->hlist);
-+	hlist_del_rcu(&node->hlist);
- 	spin_unlock_bh(&ht->ht_lock);
--	kfree(node);
-+	kfree_rcu(node, rcu);
- 
- 	return 0;
- }
-@@ -128,7 +132,7 @@ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn)
- 	struct mlx5i_priv *ipriv = netdev_priv(netdev);
- 	struct qpn_to_netdev *node;
- 
--	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl->buckets, qpn);
-+	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl, qpn);
- 	if (!node)
- 		return NULL;
- 
+ 	while (cmd && *cmd != '\0') {
 -- 
 2.53.0
 
