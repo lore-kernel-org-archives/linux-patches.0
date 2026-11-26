@@ -1,86 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.194.8.81
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795710970;
-	b=WvdfzUFg59+J5jKuUPPfaqkArgfNlu41Dp0OMZ8P4N4saU15rGmoIV1lSeccXMhPL856
-	 boqkM4NBX/0qvFCLT0oNhW7HbQGuCWLioLOlhaYhV/iS3+WXWoNVXI+VlM9KxTGt635XN
-	 6TRCdXeX9DimJAb+d3D0+7H+sQFV4+hCwr+oZUSgYC/Irjx2VvmQzyfh5xlsr1kl1aUKl
-	 2I8ab8vG/EF8EJKP7BSPsNxU3ty3uBS6kgyP5LDNTCRDX9sLGCDtZezfKGPOaN+TFZ2Ij
-	 w8nRqgJu0JMm74q3t5MXfvI3YMepmk70jx4NZBSTDV+p10a7fcjqJYPmHhdCNkkd7eg==
+	t=1795714769;
+	b=LTH2Sxe/nyc8syxfdkG90t1genNKyh7gVvN3roTubX5/ifFA68ydbCCXh44aiK4QpeH7
+	 OMO7Vyo5i9ohJ260QoPq7Mw4KhGfT1KW7t8Jk80xlFoRbXlQuwHBKsHmyx0M+wsyfnDPw
+	 GEKMwBuQD1lYxBiTPC6pUvfKVxkWRcaAVzFi6XsneL+TtNq8Lfh1i4QC0mdDJ/toD4Sah
+	 t8P5xEZQkKIBIZudRitsgBUb5vc/w2GX3JuBN8TIMfRzff2kA4zxWy98YQGGquxWQL2ZC
+	 GuN1ChUPOxjDC7w5GWrNpU7ykHslNCTTr1aM8OhsrBHBW61wPJ/dUAOFUJu4sarl3Iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795710970;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=/V/q6vN01qyM55wT6FtlhrNcKv+AqGvLCJ3sSHicCRM=;
-	b=JJhQMwvLS3lbQLNs8tzYlkzFJFWTP5FU15VL8PwYdLnUHI9/tbJg1OWofFotcxgdaH8D
-	 6vKNY8ztm9oyLkINv/9a5pwC5ENIgI9yCs3EVVzkoTL1Xce2lCSAT2DSMVv2YXmzSb+7+
-	 msMMAFELsoyOu9pdfc9WZet1UvGlTOaPCuoCZkP6hdRcK7qeDrW0eiJVVU8nUIJLCGBgn
-	 jhI9je85SPV22t5ExSZKpw7+rMm6Ajrgke0BZvscS14zSbn/Yk1L+MBh8V0zsTt9dIpIF
-	 GvxG9dmdn6EEutup4IRouGOeXA4gCIEI1+cg3vl5+jNDKSQh7AXkjH8xVGd18Bfqcwg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795714769;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=vjKPx8Oct1fhU4GmmUv33pDO/iZO410ObJiapa+6LsY=;
+	b=EYpLjFCR9rNyiI0n6yUbTGvvMBs2sbP+Spo9+mNEyTqlPeuh48bDEbPpCBMPsTAG+q4T
+	 q6G2A8nTAExOjGJk4r/WLDpm4uzleq3aLecYKupbIBpeblC+y68FNUlHDstsPWklSotZs
+	 ukKyUyakh9bU1YszBBmK7IaeXQYMv9MFXNlJMvaptxVbLFkqM2WcvPgcVlF0a0ixhuYin
+	 M7hhDY+W7jHUdJa2dihuPURs1iR2H+pFOSxU+XmTVFdKb3/6ZP9rU7osxgQc59fsCuQeD
+	 YqsVm1m5BD8YtK99Tjx01lynGTmhxrfHo0bNmatKCBxQTSCxj71+KywINwbGcWntKFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=googlemail.com;
-	spf=pass smtp.mailfrom=googlemail.com;
-	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=mx8n0jWt;
-	arc=none smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=dolcini.it;
+	spf=pass smtp.mailfrom=dolcini.it;
+	dkim=pass header.d=dolcini.it header.i=@dolcini.it header.a=rsa-sha256 header.s=default header.b=p1DyyxhY;
+	arc=none smtp.remote-ip=217.194.8.81
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D976606A33A
-	for <patches@lists.linux.dev>; Thu, 26 Nov 2026 16:36:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D976606A33A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3255E606A31C
+	for <patches@lists.linux.dev>; Thu, 26 Nov 2026 17:39:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3255E606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=mx8n0jWt
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4bb69f5b161so46930255e9.0
-        for <patches@lists.linux.dev>; Thu, 26 Nov 2026 08:36:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20260707; t=1795710969; x=1796315769; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/V/q6vN01qyM55wT6FtlhrNcKv+AqGvLCJ3sSHicCRM=;
-        b=mx8n0jWtX67MJZGYnshMsbZ93aMEtBPDnuUO1/Q6Wqf7C7xF35/tqxkn4U5KFLtcvT
-         KCnzrTjplb0Xo52vjHdnVTR9ofN9HBAsr3VNL/etjK1KB5l6eYTehVLC77EeTaJAzbnj
-         lbG3M/Ru1KLoLvhBvyS+fTlReHHSwkKhgnDoSw1Uao5+Of5sj+eIUlOWvB6EZoMfvyOA
-         7zSlkKkWor2KjaXQ/3x7TY5bUt4FGxdLNGMXsEw9TbR2nehcOC24tArQ6cT1QpeOWGs2
-         d79oz55OaPZ2Nv2PRw/D/YC2u3mqZsvMBS/EcgvjRPJVFDyRyn3LmMl4fIvps77VWvgN
-         GY4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795710969; x=1796315769;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/V/q6vN01qyM55wT6FtlhrNcKv+AqGvLCJ3sSHicCRM=;
-        b=BCoKjQ3hVxRwITUCNVH6b+NDk/Jt0oCJjciHOgmhVSj/b0lduHmNMT03W8W55XuAuq
-         g2DJQlNjsWGThav+1vHlQR6x+jArClfVcHsAp2MXlUIpHjA0qJc8keLHpCfMADSWstxJ
-         3/NDqXL4IPsJUJlC0RC5SNhYd/gzg5g/9lIyvXZVKxTUajZBfoGkmSMrBWXIk0pxFmfD
-         muUx8RvqDR5N0D124i9zFFeXdL9QGsKdvENiA9+OFrBZBRZsGN3R2uyb3rXgrF0J3BjA
-         wP6l81LUEPIGbmLDyAECNHuOXw8q+DC0BM9ko7g5xxV/cfRCNeikWizwPrrHbyE9UCSq
-         J9bw==
-X-Gm-Message-State: APuU4Z9KBBk8QedvmJmUL+J84vtCNrRmIAZsQoY+SSwrn5zNA9b+i91i
-	tqNXC6tVx2ZL/ySWmQeAybElP/Tk3osCKfeVeZLxNcFQfZ4AFT2Ew4c=
-X-Gm-Gg: AZFdTZdph2nvIqkVI8RVVramN0hUZh91MlO5mMjWy+mVEXVOMEhN0rscjBzz3xhSxsv
-	urc66oYBxohjB3XHd1FnUkQ6LCNTQLFTWTZ5o3/J61DqXiL/AVOrNHtzRPF0IAvmVq0D+wej7Hk
-	vtoHnvBM6PY2L0noVBv8+8njmYDEyDe7BhHxWdctO6TNn9M72Eo41aJPMt6okWAepiDvbDtWdKz
-	d1P8vg1HqFRqP4MOWR4trGiNxaAerIINhbExFK2k+iuu367m+zgT3VKs7oQ23MCR8YK+6YCcuvk
-	xOmmJHj3z429T+IUhM4Rh1lYTNy7NxtemA6rqErywNaATF54LJPnWuUWqGUq0P1HGs4OzI71jcx
-	+rhcxE2Zl8NJ1NPHHBGfU6OJvRGdjlZUO7t/hkRTaeWdYjd4DbaUYnkoGUtEv6IZXI5EqVh9sEn
-	Sdh/d45xqgdR/jfD1Fs9DVQ5Zt13vQNA7PI1iEnTAPfLMmdw7V8AR/LcU+M6288DcrYWFd2jIrc
-	/vHaXUPlSd2/5KSiB7zmq9kdt/zSQGIp52xzjPlugTTSpOAkSgr2UV2QT7NjIsW15BnaAv5a2N3
-	vDjbTWA2iD32WjpL0K4y/3l7Y6F/ycRym09QxyvBsirCCTT2osDDbg6CCBPNiu4cbUGk9/FAsBI
-	yjlGg
-X-Received: by 2002:a05:600c:64c7:b0:4bb:68b9:f610 with SMTP id 5b1f17b1804b1-4bb887ffee2mr416755365e9.9.1795710968740;
-        Thu, 26 Nov 2026 08:36:08 -0800 (PST)
-Received: from [192.168.1.3] (p5b2ac210.dip0.t-ipconnect.de. [91.42.194.16])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb884c3063sm606032885e9.15.2026.11.26.08.36.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Nov 2026 08:36:08 -0800 (PST)
-Message-ID: <2b097c77-6ffb-4463-b154-661f3731c412@googlemail.com>
-Date: Thu, 26 Nov 2026 17:36:07 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=dolcini.it header.i=@dolcini.it header.a=rsa-sha256 header.s=default header.b=p1DyyxhY
+Received: from francesco-nb (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id AE6222002F;
+	Thu, 26 Nov 2026 18:39:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1795714764;
+	bh=vjKPx8Oct1fhU4GmmUv33pDO/iZO410ObJiapa+6LsY=; h=From:To:Subject;
+	b=p1DyyxhY+A8szHG0kuJZ1T6qBOPiZnYBNsYTlSnQwjIT85yjA1xwZElY434wC+VHm
+	 zjh1GSFaEAKNskWDME0lS2n5kH2vZlhQ4e+njbrssOfWmz9e/4dR62ZDvyWJ53XO2m
+	 3nu88H8I0fTPTw5v4Rfa22J1Wr1PBMWYnBmGd0Mg/7QGw0+NLgHCGZCex+1uxt3JvI
+	 29forau0ijMMWw6YtNPd3p7Iqulfz8flzMPc4rrMWr3wujMz+5xDSJnWyC+Vi6C1h7
+	 /sliw18c7WHE9qrFDMwqa7BdIKaEeiCkgYBHZov5zdKI2CjGZVRdK+yUNZZz2xlag+
+	 h2ELbeWLYtPDg==
+Date: Thu, 26 Nov 2026 18:39:20 +0100
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	sungbyeongchan <tjdqudcks0424@naver.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>, Nishanth Menon <nm@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/990] 6.18.66-rc1 review
+Message-ID: <20261126173920.GA180459@francesco-nb>
+References: <20261125143822.072087159@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,44 +71,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 000/815] 6.12.120-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261126105709.009001842@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20261126105709.009001842@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261125143822.072087159@linuxfoundation.org>
 
-Am 26.11.2026 um 11:58 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.120 release.
-> There are 815 patches in this series, all will be posted as a response
++Nishanth, Vignesh, Michael and sungbyeongchan
+
+Hello Greg,
+
+On Wed, Nov 25, 2026 at 03:22:47PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.66 release.
+> There are 990 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-Just like rc1, rc2 builds, boots and works fine on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or 
-regressions found.
+Failure on various TI K3 boards (AM62, AM62P and AM69), during our CI/CD tests
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+[  477.440292] rtc-ds1307 0-0032: write error -110
+[  478.374406] wm8904 1-001a: ASoC error (-110): at snd_soc_component_update_bits() on wm8904.1-001a for register: [0x00000043]
+[  478.464258] rtc-ds1307 0-0032: read error -110
+[  479.520264] rtc-ds1307 0-0032: write error -110
+[  480.342404] wm8904 1-001a: ASoC error (-110): at snd_soc_component_update_bits() on wm8904.1-001a for register: [0x0000005a]
+[  480.576282] rtc-ds1307 0-0032: read error -110
+[  481.600274] rtc-ds1307 0-0032: write error -110
+[  482.310409] wm8904 1-001a: ASoC error (-110): at snd_soc_component_update_bits() on wm8904.1-001a for register: [0x0000000e]
+[  482.624288] rtc-ds1307 0-0032: read error -110
+[  483.680291] rtc-ds1307 0-0032: write error -110
+[  484.278402] wm8904 1-001a: ASoC error (-110): at soc_component_read_no_lock() on wm8904.1-001a for register: [0x0000004a]
+[  484.320383] INFO: task kworker/1:5:66 blocked for more than 362 seconds.
+[  484.330368]       Not tainted 6.18.66-rc2-8.1-devel #1
+[  484.338741] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  484.350050] INFO: task weston-simple-e:783 blocked for more than 241 seconds.
+[  484.360452]       Not tainted 6.18.66-rc2-8.1-devel #1
 
+According to claude the issue is
 
-Beste Grüße,
-Peter Schneider
+commit e498eb93f961 ("virtio_ring: use shadow flags when detaching split descriptors")
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+and those commits should be dropped
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+  e498eb93f961 ("virtio_ring: use shadow flags when detaching split descriptors") [22944d517ff8]
+  9dc6b944f16c ("virtio_ring: factor out split indirect detaching logic") [44b6e54e4a0a]
+  4b7bf8d55032 ("virtio_ring: code cleanup in detach_buf_split") [032159f85f3f]
+
+I am not able to do any test now or tomorrow, unfortunately. And the
+above analysis is just claude. Might be correct, might be wrong.
+
+Francesco
+
