@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704396;
-	b=gydpVuof08BoAf3r7EMeoZiC7+dYKaOwVnb8epwl44pvbZijsvs62GoMbHRbl4jWuCDm
-	 pUq+wAhz+g01hZ9c85RfjA1SsHiyPhRMRq4lZKet1fLynpSZt66XmxBHnKREz9OI7iY8F
-	 yf2H61ZbOBbRv8FrfSUJ63HmrAReYUyGPZMwQNE0OjFuv+EtzVS4Jqpv8Em5wLZybmauA
-	 MiLU0AH57Dkt+Hyj++YWOYGEscFrU5rG1xPMJKnmznfEyI3uD23xM70eOx0VgY9W4T0Do
-	 Rw8wJEBGCUa0zFa6BLnXeppg/kKtAHZ8wzWbPoUaX2QP9scw2V2mVxeLf9aHqN9lOuA==
+	t=1795704399;
+	b=xceyvGQnKSDIW7ryLeQSVfa7TgxJrMHFP+dBEVN8oFqlfDlsUGYtZb9OTJBOd4qacuNR
+	 UbyYBtFDsYkJZp/nMQZvQPPz62ph+H9ysHJ9JtXFpSxvl4skjScSuAsJxZbMGTh+etEJG
+	 cfEcI/i2n9gQJxrkEBbxAynAunWltW42qPO/jMu4C0EEn3SKRV4nzXBFRdQbZIpdROIVu
+	 MFoWFr2yPUP9779BHOQ0hlnM81vv2WfBQ6iM5Y0AxHb3bRz2p3RlMSH24EXqNKG/J+F0K
+	 Pxwg4wXUz2nYe6fJP2hc46hlYi8yVBnqO6osHsdu03KmEpbU8p1b3xn1EdhmzJ/QhXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VatMBk91YUX9NrLfMwSGHPsW3fKpkXLf62kgFNuOVDg=;
-	b=5W01yQkAtH0xp4afVrg/PO8tVbS9GHm4x+vffFEDd4jt6uJq4Dn8z7QKsuPQy+Rf39Yr
-	 vZMXivvkhnqmDSuUr0qPk5z06HzGhtjPZWbhvDeeOJ6NT43zfY0ebrpu4Y0ATBV3eUDqu
-	 ZoovMkgnqEFISWrVe4fC12T0JmLk8X9X/SI60zFG6w8zudXkXfjk1wZ2UpA4SIJXZUaqO
-	 4ZZexO54Q/O7qN5gUF5mkKwxRXXxFqeuYw2GKpRZhi2ZIbr/Sg8VmK1HPouA6Dvg7H0Ib
-	 /1V7pESDwO1lrUIr9k0GNSJI77KSDLKzW3pOzuckzAjrp2mqtStYqxZoSbUzTEiKozA==
+	bh=2lM/7Qq+uFHZnnixYJfmcYA8lqdoLLVCHp/ijiW45gU=;
+	b=dnktpF6xXoYFeaK3ql/WLC8pFt0YSGLRgX6xlZdLOKatkr0eJZMDGbzTSDvgeQSvTA6Y
+	 ou17a9MfomY2BcrAzQIWVnBTOaZZ+MevYXBABjC9UHm0LGTHnWUcLD1dpvB5K1ZE+MNeW
+	 a+s2jwGjkGjn7ZDWpTE+xNnwE95hJIqTVtva+vlSP4UuBh8i9esLirW6/tPQhmGqR5jYG
+	 oiLfLeLJWySiJb1qz8M2zhQHtYTRnFjDBdOgeZK6fNhxFocp6QmT+IfRhOa1U2iJHxAqd
+	 kBKGvt+U0eMuPI4bXMKKv4/viezrcRYheN+ApQWLumvPtcwcYxnGytO4ETTW2vO+Y+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5Y9zMuQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n93/8oyb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE889606A327;
-	Thu, 26 Nov 2026 14:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6970B606A321;
+	Thu, 26 Nov 2026 14:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5Y9zMuQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F266E1F000C6;
-	Thu, 26 Nov 2026 14:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n93/8oyb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71131F000E1;
+	Thu, 26 Nov 2026 14:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704396;
-	bh=VatMBk91YUX9NrLfMwSGHPsW3fKpkXLf62kgFNuOVDg=;
+	s=korg; t=1795704399;
+	bh=2lM/7Qq+uFHZnnixYJfmcYA8lqdoLLVCHp/ijiW45gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A5Y9zMuQr5yIDfHO+ytW0Y4WAVxEOVLIKbo1cQ++qxlmkujlxB7Hy0YL0edCXIEZp
-	 5O51nELPkaOFcB/mwh71AjPkn4aMfb2RWK2hSB0THJmt/alS/c0I5wD7kb4YxBO9xt
-	 ILKaFZxWPIGxyG2b/nBR5D1PcEPt7eWgG0V2qGNg=
+	b=n93/8oyb4Qbih+FyYYak7WPZb1qAnB5mNoEYIse4ivk74yfLve/djNI+42D8nMwmY
+	 Ocy1tjg2pgYjjJtOAnaHaSmgFxJ/ekeuwoYpVVFHL+KPe7BbwXyiZfw4u+sCbb//oR
+	 1wcj5ilEq5ONfDP+rjt4XLl0Ae5q0naU75jQZN3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/265] ata: libata-scsi: fix MODE SELECT handling of data after the mode page
-Date: Thu, 26 Nov 2026 15:37:21 +0100
-Message-ID: <20261126143612.797428491@linuxfoundation.org>
+Subject: [PATCH 5.10 094/265] vfs: preserve subsecond timestamps at filesystem time limits
+Date: Thu, 26 Nov 2026 15:37:04 +0100
+Message-ID: <20261126143611.563278978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,79 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 6fde0444d07ec954f3d885375e0402ff2f2e5064 ]
+[ Upstream commit 55a0c91000646b008261e3b1e15d1e774f3026e4 ]
 
-ata_scsi_mode_select_xlat() only supports one mode page per MODE SELECT
-command, and rejects a parameter list with data after the mode page with
-INVALID FIELD IN PARAMETER LIST. However:
+timestamp_truncate() clears tv_nsec whenever the clamped seconds equal
+either filesystem time limit. This also drops the fractional part of
+timestamps whose seconds were already within the supported range.
 
-- It does not set the field pointer, so the sense data reports 0xffff as
-  the FIELD POINTER.
+For example, setting a JFS mtime to 0.123456789 produces 0.000000000,
+although the filesystem can store the requested value. Utilities such
+as touch and cp -p consequently lose valid subsecond timestamps when
+preserving these endpoint values. Timestamps strictly between the
+filesystem limits are unaffected.
 
-- It only checks for data after the mode page after the mode page
-  handler has been called. ata_mselect_control_ata_feature() has then
-  already updated the CDL enabled flag of the device, even though the
-  command is rejected and the CDL setting of the device is not changed.
+Only clear tv_nsec when clamping actually changes tv_sec. Continue to
+truncate in-range nanoseconds to the filesystem's timestamp granularity,
+including when the seconds equal either endpoint.
 
-- For the control mode page, ata_mselect_control_spg0() does not need an
-  ATA command, so the check is skipped, and the data after the mode page
-  is silently ignored.
+Ben Hutchings suggested comparing clamped and original seconds in the
+2019 utimes review. That caller was switched to timestamp_truncate(),
+but the helper retained its endpoint equality check.
 
-Check for data after the mode page before calling the mode page
-handlers, and set the FIELD POINTER to the first byte after the mode
-page, i.e. to the first byte of the next mode page.
-
-The reason why only one mode page per command is supported is that a
-MODE SELECT command is translated into at most one ATA command, so
-update the comment accordingly.
-
-Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261103205448.931471-11-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/lkml/12c095e595836a7ff7f2c7b2a32cb5544dd29b55.camel@codethink.co.uk/
+Fixes: 50e17c000c46 ("vfs: Add timestamp_truncate() api")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261101113815.52911-1-dennylin0707@gmail.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ fs/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 6374cd9062a24..af4d183dfa423 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3851,6 +3851,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 	if (pg_len > len)
- 		goto invalid_param_len;
+diff --git a/fs/inode.c b/fs/inode.c
+index 59ad098db6c9c..ac1c681669e38 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -2318,9 +2318,10 @@ struct timespec64 timestamp_truncate(struct timespec64 t, struct inode *inode)
+ {
+ 	struct super_block *sb = inode->i_sb;
+ 	unsigned int gran = sb->s_time_gran;
++	time64_t seconds = t.tv_sec;
  
-+	/*
-+	 * A MODE SELECT command is translated into at most one ATA command, so
-+	 * only one mode page per command is supported. Reject any data after
-+	 * the mode page before calling the mode page handlers, which may
-+	 * already update the device flags.
-+	 */
-+	if (len > pg_len) {
-+		fp = p - buffer + pg_len;
-+		goto invalid_param;
-+	}
-+
- 	switch (pg) {
- 	case CACHE_MPAGE:
- 		if (ata_mselect_caching(qc, p, pg_len, &fp) < 0) {
-@@ -3871,13 +3882,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 		goto invalid_param;
- 	}
+ 	t.tv_sec = clamp(t.tv_sec, sb->s_time_min, sb->s_time_max);
+-	if (unlikely(t.tv_sec == sb->s_time_max || t.tv_sec == sb->s_time_min))
++	if (unlikely(t.tv_sec != seconds))
+ 		t.tv_nsec = 0;
  
--	/*
--	 * Only one page has changeable data, so we only support setting one
--	 * page at a time.
--	 */
--	if (len > pg_len)
--		goto invalid_param;
--
- 	return 0;
- 
-  invalid_fld:
+ 	/* Avoid division in the common cases 1 ns and 1 s. */
 -- 
 2.53.0
 
