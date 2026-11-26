@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704365;
-	b=yr1m9c4WGnHA2PN06pQjIGExrWAIye1BYyJrgEFpVJMKElKO2czLefuBjFZ8x2dfrhli
-	 OewmBb7NZtKvD1OXUZuJG3ci2PQcBXxzPFjZBq3EXGBIMKPulD2KQaNvwK+5bAcOnp1GL
-	 IWZ9OKcJK2UwTNfOeRbvjOD+aDIDywTzEfZaNkBXGA3buRFL0J1l+BM4ZzzVeo3vaaguu
-	 s3Wj7sw9aQbYgItmfY4yKUaoxscaHaZuYTg9rnqRUarO3FkNp6Dit1Wnrf3py74Y8wctY
-	 eEISEoo7CkKd9KImxRY1d/VRubKUx/wIR/Se58X//KLvWbjHNW96hO+G+lXVrZwozSg==
+	t=1795704368;
+	b=oBGHsHSQ9h4Hc/ei7tgH4D6De6+PrlJdlc4k7A5mSvddLz/NfA0r4KJmhvVmrtlsJYCS
+	 pfmtTKxxT/EsuYry287nLTBowrCOBt3bx3iZwtqwphfmfp2lQF/0nlGJLXHPfAZnqFnIJ
+	 uc9nQQaVO0Q+AxY9siIRbtZHASzkYgElXKhk3/jH7IoDkKomAoV9QBlE73HsUvxIZiZ8S
+	 rA+3PqJ/qQDVGG3PvXso4xDV6ucAUYijB9m07ukm0R4Nx4IEkz0kxAuP9bU7QIHSX6xFA
+	 T7B8SAb9yy0xFZh0AARL6w/qDAh98ET8TRhzGpiNujNq02s1zvCxF3FLfEF+xvmRNLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704368;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3raW4usx6YsHA/EGxdMhG0RFP6zZyz4veY6XKVBqj9w=;
-	b=4yrvGq21hoYeavZywNppKGR2u33+rHT9v/QUpJiJPZtoxEam8+JU0GtnMvFiGz0H8I2C
-	 RiWQsO1arccw0pYprpADi1zAMLtEfplvK/DCyMLLMZ2xoCLYsmIHR6dHc6cBEBsufDsum
-	 LHWSX6gFJtCjJu+yNQUSUhnC+vA/S6KeW5vBDNrDAZvsr/9Dk9AuttzM4WrHtTtkilOIC
-	 oxlF1VXSJ5Taw2gFxBcu2G6x84b8jwAw3s/n8M3TngnnQTKA/Fmb9NuQ9bTmQZhmsbiWK
-	 z/XSCczZJr77U3YAL8kVmoM8KtT+Zivb0KA1+dkUrW75zFBIl6nvFw8qD3XpaQaclMg==
+	bh=3VIjRmKj0JNwZYFlMHSXWYZYCpNTX9GK+3v1TSf8m4c=;
+	b=XylHl0g4AcpJie7of7qUf2SwqwFy8GnZhdpLLBnjlUcbD+OOVrP9jwf5ovgNlZ4kPan2
+	 5og3GCKE4v4WWwrdO5Wxu12QK0r9IZad+LuR2Pe3NxuFHl5R2SxjgOIvsTRJ2IeduKDOR
+	 iHkBTuw/zKHvAcmh2FigBIOLN3d2prS48mkmeMiiFiUjUc1008Fwb9LxWDLNZwjXUcWuy
+	 y8QLhPNyYNHjdD7dRBGZE2A1X+DXVX9ehvm0+Fs+r6iNVkHHsO/bGmx4QGd3VP/Xubm9K
+	 Stfv1jppmOn0VTcCQ6wn9Q1mDtZifBjgewjHUCHiVorC8Ab1N/vvYkfNyv88xkOWklA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2JBcRIQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lzaf9h2Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5F7606A339;
-	Thu, 26 Nov 2026 14:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDFD606A31C;
+	Thu, 26 Nov 2026 14:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2JBcRIQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4E91F000E6;
-	Thu, 26 Nov 2026 14:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lzaf9h2Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9398D1F000EF;
+	Thu, 26 Nov 2026 14:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704365;
-	bh=3raW4usx6YsHA/EGxdMhG0RFP6zZyz4veY6XKVBqj9w=;
+	s=korg; t=1795704368;
+	bh=3VIjRmKj0JNwZYFlMHSXWYZYCpNTX9GK+3v1TSf8m4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D2JBcRIQ6ni4K8nD6FPYu3IJxG+9v3ANOQblFcJxroQWf78YVYzQqqKkWI+ISYvUK
-	 54nyQnHaQjECbOPhEY6sZvsgp6/OB4MFKA7y7wTE0gV1hwpFma+2au6/AMkb0/C9sW
-	 Ud7Ms7cJ5E3uEvyYxkbVJilATzD9SVCExgjYQIcA=
+	b=Lzaf9h2Y5dNbj+5Rhjb94/OKzQVR3gRIHGE4w7AUJuLgfAEitdJU6AVeOHADH7e7g
+	 tfze9HkTr4yuk9YmQJD5gIBullcjw++d21juuW1iVQzzS5WNTkUt3ngtvux76AzPZm
+	 zDOgTkklk1u+GtbexrNDYkPkcTducwE3XcEUip+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Austin <alex.austin@amd.com>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Abbott Liu <liuwenliang@huawei.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/265] sfc: ptp: avoid racing PPS timestamp updates
-Date: Thu, 26 Nov 2026 15:36:14 +0100
-Message-ID: <20261126143608.182597572@linuxfoundation.org>
+Subject: [PATCH 5.10 093/265] initrd: flush deferred fput() before mounting root
+Date: Thu, 26 Nov 2026 15:37:03 +0100
+Message-ID: <20261126143611.496770166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,131 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Austin <alex.austin@amd.com>
+From: Abbott Liu <liuwenliang@huawei.com>
 
-[ Upstream commit 23d23e6c6517d0fea4f64340a23e33c89f82c03c ]
+[ Upstream commit 807c1d7125a2b3ca5705a803aa2e19f9d53d1ea3 ]
 
-efx_ptp_pps_worker() can race with SIOCHWTSTAMP via
-efx_ptp_change_mode(). After the worker completes synchronization, the
-ioctl can start another synchronization and update host_time_pps while
-the worker copies it into the PPS event. This can report a partially
-updated timestamp. Serializing synchronization transactions alone does
-not protect this copy, which happens after phc_lock is released.
+Booting an old-style initrd, i.e. a filesystem image instead of a cpio
+archive, with "root=/dev/ram rootfstype=squashfs" can fail to mount the
+root filesystem:
 
-Return the timestamp through the caller's own pps_event_time rather
-than the shared field in efx_ptp_data, so the worker reads storage no
-one else can write.
+    RAMDISK: squashfs filesystem found at block 0
+    RAMDISK: Loading 68449KiB [1 disk] into ram disk... done.
+    No filesystem could mount root, tried:
+     squashfs
+    Kernel panic - not syncing: VFS: Unable to mount root fs on
+    "/dev/ram" or unknown-block(1,0)
 
-Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
-Signed-off-by: Alex Austin <alex.austin@amd.com>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Link: https://patch.msgid.link/20261026123023.3566549-4-alex.austin@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+rd_load_image() copies the image into /dev/ram with kernel_write() and
+then drops the file with fput(). The data only reaches the ramdisk once
+the final __fput() releases the block device and bdev_release() calls
+sync_blockdev(). But that __fput() is deferred. Since commit
+343f4c49f243 ("kthread: Don't allocate kthread_struct for init and
+umh") init is a user mode task, so the __fput() is queued as task work
+and only runs once init returns to userspace, i.e. long after
+mount_root(). Before that it ran as delayed fput work at least a jiffy
+later, which doesn't help either.
+
+Whether the mount survives this depends on the block size. Squashfs
+calls sb_min_blocksize() first and set_blocksize() syncs and drops the
+page cache when the requested block size differs from the current one.
+That hides the problem for most configurations. With
+CONFIG_SQUASHFS_4K_DEVBLK_SIZE=y and 4K pages both block sizes are 4K
+because set_init_blocksize() gives a page-aligned ramdisk a PAGE_SIZE
+block size on the first open. So set_blocksize() does nothing and
+squashfs reads the superblock with bios that bypass the page cache. brd
+has no page for that range yet and returns zeroes, so the magic check
+fails and the mount returns -EINVAL. With rootfstype= naming a single
+filesystem there is nothing left to retry and mount_root_generic()
+panics.
+
+Fixing this in squashfs would be the wrong end. Most block-backed
+filesystems read their superblock or their file data with bios that
+bypass the block device page cache, so they are exposed to the same
+race, just less loudly.
+
+So flush the deferred fput() in rd_load_image() right after dropping the
+ramdisk file, the same way mount_root_generic() already does before it
+retries with another filesystem type. All deferred closes at this point
+belong to files the boot itself created.
+
+Verified on arm64 QEMU with an openEuler Embedded rootfs image packed as
+squashfs.
+
+Fixes: 93e72b3c612a ("squashfs: migrate from ll_rw_block usage to BIO")
+Signed-off-by: Abbott Liu <liuwenliang@huawei.com>
+Link: https://patch.msgid.link/20260930084632.2965573-1-liuwenliang@huawei.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ptp.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ init/do_mounts_rd.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
-index 801a28cb00ad1..b720ee908cd70 100644
---- a/drivers/net/ethernet/sfc/ptp.c
-+++ b/drivers/net/ethernet/sfc/ptp.c
-@@ -260,7 +260,6 @@ struct efx_ptp_timeset {
-  * @evt_frag_idx: Current fragment number
-  * @evt_code: Last event code
-  * @start: Address at which MC indicates ready for synchronisation
-- * @host_time_pps: Host time at last PPS
-  * @adjfreq_ppb_shift: Shift required to convert scaled parts-per-billion
-  * frequency adjustment into a fixed point fractional nanosecond format.
-  * @current_adjfreq: Current ppb adjustment.
-@@ -327,7 +326,6 @@ struct efx_ptp_data {
- 	int evt_frag_idx;
- 	int evt_code;
- 	struct efx_buffer start;
--	struct pps_event_time host_time_pps;
- 	unsigned int adjfreq_ppb_shift;
- 	s64 current_adjfreq;
- 	struct ptp_clock *phc_clock;
-@@ -932,7 +930,8 @@ static void efx_ptp_read_timeset(MCDI_DECLARE_STRUCT_PTR(data),
- static int
- efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 		      size_t response_length,
--		      const struct pps_event_time *last_time)
-+		      const struct pps_event_time *last_time,
-+		      struct pps_event_time *host_time_pps)
- {
- 	unsigned number_readings =
- 		MCDI_VAR_ARRAY_LEN(response_length,
-@@ -1010,6 +1009,10 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 			   "PTP bad synchronisation seconds\n");
- 		return -EAGAIN;
- 	}
-+
-+	if (!host_time_pps)
-+		return 0;
-+
- 	delta.tv_sec = (last_sec - start_sec) & 1;
- 	delta.tv_nsec =
- 		last_time->ts_real.tv_nsec -
-@@ -1026,8 +1029,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
- 	delta.tv_nsec += ktime_to_timespec64(mc_time).tv_nsec;
- 
- 	/* Set PPS timestamp to match NIC top of second */
--	ptp->host_time_pps = *last_time;
--	pps_sub_ts(&ptp->host_time_pps, delta);
-+	*host_time_pps = *last_time;
-+	pps_sub_ts(host_time_pps, delta);
- 
- 	return 0;
- }
-@@ -1040,7 +1043,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
-  * the function that registered it, so a secondary function can capture here
-  * without serializing against the primary.
-  */
--static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
-+static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings,
-+			       struct pps_event_time *host_time_pps)
- {
- 	struct efx_ptp_data *ptp = efx->ptp_data;
- 	MCDI_DECLARE_BUF(synch_buf, MC_CMD_PTP_OUT_SYNCHRONIZE_LENMAX);
-@@ -1089,7 +1093,7 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
- 				 &response_length);
- 	if (rc == 0) {
- 		rc = efx_ptp_process_times(efx, synch_buf, response_length,
--					   &last_time);
-+					   &last_time, host_time_pps);
- 		if (rc == 0)
- 			++ptp->good_syncs;
- 		else
-@@ -1427,14 +1431,15 @@ static void efx_ptp_pps_worker(struct work_struct *work)
- {
- 	struct efx_ptp_data *ptp =
- 		container_of(work, struct efx_ptp_data, pps_work);
-+	struct pps_event_time host_time_pps = {};
- 	struct efx_nic *efx = ptp->efx;
- 	struct ptp_clock_event ptp_evt;
- 
--	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS))
-+	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS, &host_time_pps))
- 		return;
- 
- 	ptp_evt.type = PTP_CLOCK_PPSUSR;
--	ptp_evt.pps_times = ptp->host_time_pps;
-+	ptp_evt.pps_times = host_time_pps;
- 	ptp_clock_event(ptp->phc_clock, &ptp_evt);
- }
- 
-@@ -1796,7 +1801,8 @@ int efx_ptp_change_mode(struct efx_nic *efx, bool enable_wanted,
- 				rc = efx_ptp_start(efx);
- 			if (rc == 0) {
- 				rc = efx_ptp_synchronize(efx,
--							 PTP_SYNC_ATTEMPTS * 2);
-+							 PTP_SYNC_ATTEMPTS * 2,
-+							 NULL);
- 				if (rc != 0)
- 					efx_ptp_stop(efx);
- 			}
+diff --git a/init/do_mounts_rd.c b/init/do_mounts_rd.c
+index ac021ae6e6fa7..285afe68dbc76 100644
+--- a/init/do_mounts_rd.c
++++ b/init/do_mounts_rd.c
+@@ -270,6 +270,11 @@ int __init rd_load_image(char *from)
+ 	fput(in_file);
+ noclose_input:
+ 	fput(out_file);
++	/*
++	 * The image only reaches the ramdisk when the deferred __fput()
++	 * syncs the block device. Flush it before mount_root() reads it.
++	 */
++	init_flush_fput();
+ out:
+ 	kfree(buf);
+ 	init_unlink("/dev/ram");
 -- 
 2.53.0
 
