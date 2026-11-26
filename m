@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704463;
-	b=M6sfnfKxW8sUklQ5z7sh1Orv8yAPltC3OTInx3IHOrclXMjAtV/HHniC+lpSYPWlWRp9
-	 pDNFgoJP+P+ojC38orATxlB2N/iD8fCBaCvB8SYA7eLNK/OaPRj76C8OIHY5ew24MiboM
-	 Lkv4jLFEzyLAASF3xMZTOcSNDIGSPvcRfuuVulg3mSDDJuOrnxQ0dJpWmMocQ3sq7o1UJ
-	 CR9UCcF8AGj8ETKbrNUbq/0Qp5YVfQjShhXHs+PJCjNK8wEiMStGVUj10u+k6C0yRGB7P
-	 XSTIfhV+jC7WLhFBWvgBCG49+JKquYqprbZran5TpQH6FN34FBZy0XP3nWnZVOHz+UA==
+	t=1795704466;
+	b=OVfzBBeFmZL/XeKP75XSg4r7ztK0zHg0+ZLwWU/OR+c+3C8y+l7tiJCcG5MarWUBlAFi
+	 XeqWOqnnOgQVRnTjV31Ffv6NG9AaXzre3AeF8XTlzrsennicECpiGcd8li8lmS60Cu8fC
+	 JCjrXjP4U+vKBdV5GSqLdXiNEyNBEVPReEkmA6pj8adfAVZsxWRlhvSdShbjIh5ty+DYM
+	 3GlsXYQxz5JlI19TD46ydNq4D3CYUZmQP0WA8smdTyFGuNjT96YteOal1BO31rCI2Thnz
+	 tU0e1tXPJrcqKTUTDZfMep2UWv9bPfaQZRbSSVC53aab3V2H07v6NPxHF0T2x2FLM0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mqKH/PH6ZqptXwLeXfrHTYVFqXWRCi07f3TAzMwCxlk=;
-	b=Bnjd72UVQVn3uuOtP3/G3wJ34S7RGO1qHr+qHDyCfMJdrigpWFK+2EHyzKhHPV6B2N3l
-	 KY7RMPM4lr9XdxMdabcMe2tA3XZ2bLTQJLltxBfi71RmtKJz69Dn/Ak24XjklG3b7hIzC
-	 o+3nLTiq9rqo+c9i/QxYGalTuAgPxLDAnXRCuGMc/FsNBnkWHXbljETsLoH83B9XpfCIV
-	 DAAmKdHL+tzSbsKFUoD/PBV1Qf7EiH+KsjEimGGls4R2aswYvFqcYi4xgz1oeNxluLl1T
-	 3+C9gUuuDJbaX2WmxOLpb80JZIRT6fnVvtltYd3SZNgSd2cJSP3lMqvERDWXQnCF9oQ==
+	bh=nqOVfsEOX90x0oBcD1OFDPIiTqy062kz8WEd+C9o/qc=;
+	b=T3wX4xRfnMzIGbvEmwWowUhtms7POgcQ/RGTLRi7Eu/F8xnq2jo4ydhXkIRa/f54HAyK
+	 gkGgRhiFzL6EhUfCmKfMZIE9JdtGbOBa0fmLtI/Kdqk2un/ca5R7Irsasxw5aY48SkM/n
+	 D5Bk4wMSCl6K0f6P9m/ovavMedxbYY0iqWuPksbZECr0b8dMMjX0WAdppZN/AYv8NMq5v
+	 thUPz/WqkjRd6tIxKlaDL0AISBtXEVinKX63lM9PRv7OeeeIlh9zNVHX+aQf4+6F0dqXD
+	 elCNLsM3kKkQ9bQOFc94alFrspO37H4XySZzcNqEFC0hfiMojf1m9MB1Su3BD+WHgPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NxN1Po3C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ugOyZUiB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5279606A329;
-	Thu, 26 Nov 2026 14:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9579606A31E;
+	Thu, 26 Nov 2026 14:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NxN1Po3C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C6B1F000CA;
-	Thu, 26 Nov 2026 14:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ugOyZUiB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08EA1F000C4;
+	Thu, 26 Nov 2026 14:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704463;
-	bh=mqKH/PH6ZqptXwLeXfrHTYVFqXWRCi07f3TAzMwCxlk=;
+	s=korg; t=1795704466;
+	bh=nqOVfsEOX90x0oBcD1OFDPIiTqy062kz8WEd+C9o/qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NxN1Po3CT92iUYMpAb/h6l8NccPxXvyGakqSSQsATj5EmA81DyHF1aZOkD8nuyZXv
-	 JFjnQm4bvwxdivb9h4Dj8M9q7RPrIN2cMkpe3TX5IVm8JLSWYuQ5p/k7TYe1ybNwut
-	 kMGgk6KLvpdiNGP53dJhTlaPZQtGBj+78C8L6XgQ=
+	b=ugOyZUiB94ZEBHsjVtsCz0LbgHh2l/c3N49ns+vja7rx/rM/c6kurkQ64/c0C4Nvj
+	 BtSBcHtwuTasFRZVVbTiBQY3UqiUlWBD+xbhtRo/uzTs9KKV6ovFK9ReRfZSO2PL+T
+	 cDTKTXWZIVFj5a4+hIM2YAx2CkVbccl+hxq5AGwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ofri Zangi <ofriz@xsightlabs.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Junyoung Jang <graypanda.inzag@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/265] tls: fix async encryption race on weakly ordered architectures
-Date: Thu, 26 Nov 2026 15:37:42 +0100
-Message-ID: <20261126143614.249160431@linuxfoundation.org>
+Subject: [PATCH 5.10 133/265] igmp: use the joined device when leaving a multicast group
+Date: Thu, 26 Nov 2026 15:37:43 +0100
+Message-ID: <20261126143614.323548742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,80 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ofri Zangi <ofriz@xsightlabs.com>
+From: Junyoung Jang <graypanda.inzag@gmail.com>
 
-[ Upstream commit a2fd526d644233d6a892c28173f07c61e21e4c93 ]
+[ Upstream commit 19ec8416a76c08326fe5f814410a1b43046e63be ]
 
-With async encryption, a record can be transmitted without its TLS
-header on weakly ordered architectures such as arm64, because the
-consumer may observe rec->tx_ready set while still seeing the old
-scatterlist entry.
+When a socket joins a multicast group, the ifindex of the device is
+stored in the socket's membership entry. When leaving,
+ip_mc_leave_group() resolves the device again from the request. If the
+request only specifies an interface address and that address is not
+assigned to any device, no device is found. The membership is still
+matched by address and removed from the socket, but the group is not
+released on the device it was joined on.
 
-tls_encrypt_done() restores the TLS header in the scatterlist entry
-(sge->offset -= prot->prepend_size, sge->length += prot->prepend_size)
-and then publishes the record with smp_store_mb(rec->tx_ready, true).
-On another CPU, tls_tx_records() checks rec->tx_ready with READ_ONCE()
-and then reads the entry in tls_push_sg().
+The group is then leaked on the device until the device is unregistered.
+An unprivileged user can trigger this by joining with an ifindex and a
+non-local address and leaving with the address only. It can also happen
+when a socket joins and leaves with the address only and the address is
+removed in between.
 
-Nothing orders these accesses. The barrier in smp_store_mb() comes
-after the tx_ready store, so it does not order the earlier scatterlist
-update before it. On the reader side, READ_ONCE() does not order the
-later loads of sge->offset and sge->length. The reader can therefore
-see tx_ready set together with the old offset and length, and pushes
-the record without its header.
+Fix by resolving the device from the ifindex stored in the membership,
+like ip_mc_drop_socket() does.
 
-Publish tx_ready with smp_store_release() in tls_encrypt_done() and read
-it with smp_load_acquire() in tls_tx_records(), so that observing
-tx_ready guarantees the restored scatterlist entry is visible. Keep the
-full barrier that smp_store_mb() provided as an explicit smp_mb(), as
-it is still needed to order the tx_ready store before the tx_list head
-check.
-
-The issue was discovered during development on an arm64 system.
-A curl download test over kTLS failed with:
-
-  curl: (56) OpenSSL SSL_read: error:0A00010B:SSL routines::wrong version number, errno 0
-
-Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
-Signed-off-by: Ofri Zangi <ofriz@xsightlabs.com>
-Link: https://patch.msgid.link/20261108-tls-async-tx-ordering-v1-1-f9a1844ca88e@xsightlabs.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4eba7bb1d72d ("ipv4: igmp: Allow removing groups from a removed interface")
+Signed-off-by: Junyoung Jang <graypanda.inzag@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261109125312.2208874-1-graypanda.inzag@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/ipv4/igmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index c2344a46dddda..7e71fe2c2f305 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -408,7 +408,8 @@ int tls_tx_records(struct sock *sk, int flags)
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index 5d87e912e1f25..b4f9746ec7ece 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -2291,6 +2291,8 @@ int ip_mc_leave_group(struct sock *sk, struct ip_mreqn *imr)
+ 				iml->multi.imr_address.s_addr)
+ 			continue;
  
- 	/* Tx all ready records */
- 	list_for_each_entry_safe(rec, tmp, &ctx->tx_list, list) {
--		if (READ_ONCE(rec->tx_ready)) {
-+		/* Pairs with smp_store_release() in tls_encrypt_done() */
-+		if (smp_load_acquire(&rec->tx_ready)) {
- 			if (flags == -1)
- 				tx_flags = rec->tx_flags;
- 			else
-@@ -472,8 +473,14 @@ static void tls_encrypt_done(struct crypto_async_request *req, int err)
- 	if (rec) {
- 		struct tls_rec *first_rec;
++		/* The drop request may not resolve to the joined device. */
++		in_dev = inetdev_by_index(net, iml->multi.imr_ifindex);
+ 		(void) ip_mc_leave_src(sk, iml, in_dev);
  
--		/* Mark the record as ready for transmission */
--		smp_store_mb(rec->tx_ready, true);
-+		/* Mark the record as ready for transmission. Pairs with
-+		 * smp_load_acquire() in tls_tx_records(): the sge
-+		 * offset/length update above must be visible before tx_ready.
-+		 */
-+		smp_store_release(&rec->tx_ready, true);
-+
-+		/* Order the tx_ready store before the tx_list head check */
-+		smp_mb();
- 
- 		/* If received record is at head of tx_list, schedule tx */
- 		first_rec = list_first_entry(&ctx->tx_list,
+ 		*imlp = iml->next_rcu;
 -- 
 2.53.0
 
