@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705377;
-	b=QlR2VDUi815E5peCMS0aDxvXTrP04PtDxyyQeU16waSageTN9YjEFoqDEPW8LhP2WOiG
-	 nbrGdpyFhtzgx7fKcMotL8N4QFHtz5LSWqTSzBDJfGZq1W03LBRFb8R/K1gucGWUVqgzP
-	 aTFJK7CPlV9fJvoqVH0Lu0nZTX7DIJr8JUgGtnFqz79XIDle7Vo6ZI13USOsxgloSelrW
-	 SOMjRp5bH6FJLFQV064evratMGKCexRjL9O9CHcYM1DZ/EPeCTVYjvEhsott61RycnimP
-	 wJ0C6xsiJNQoDwiF7YENuNXEiqfcadUN1jrI/JEGS8i6IsVy+aLuBYT2EDp5Em0kI7w==
+	t=1795705380;
+	b=Lt89g7A/HSletPMSnVNHbmZU3Hl37txGYcCRyQjWXadH15zPrDGhBD2g4sTY6reUWl/Z
+	 bBOkEKCj2l6O2idhqmQevFtRvVakKY97WOXIbahnJzR1if01iU7vbf0pn8hhO/shdeuG7
+	 TKC4FnbSXrJvHm6/UDDzKaXwmZdUJRb45ljQOkz7C7hO62BMFRjRl0i8mhgRXgNHKD1ka
+	 Z/6d20SVaZ2MlDrrXr1R9EtXBo2V+3pXYvCI8LWigqWDqdCRfanzVo6gQw2oqq4vvQ+/u
+	 7dfWCYG0aS+vmF0iHH1Y27qM1/2YCqiDErMChSvr/CACdwrh+CB/scVP3CjUX6GMJjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705380;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x3S1jomJIeVPeineb2kzuI5qj8/bFQz0OqhDryH8dUE=;
-	b=iu+qGGUhJkMzWBdkgwBmHr68JvZZ+cc6RjpTEf8Fvk/oiIynhzHfTvslJ3o1Kv6GRqLI
-	 n5h4/Rlkvl4GDMwlvP/M0AeMzc7cFjvjSC//HFEG87YeScOzcRz35q+4inoP8XKF/H2Bk
-	 i9rOjho+qe4PsmM3/JbXJoMIA6H9Yo5NOQoRzthLqsmQ1RsvWGePikAEFt07rBqUtlKJI
-	 bOtAc2sqRoosGXBUgXLVG7R61EbuRX3PMn0021kXtr4g/50PDFjc9sl1d+A0ZNU7gLCW/
-	 5DBcpOhLiH4GFOr2OXZd5JJkdkuiRcYGJ4EuzU/K+7J9+0WBS0CW1VCiarhXsiAlunw==
+	bh=oljiIQ+b1NH7uq871HyxIqpd2HAgEFXn9SIBoqxlkWo=;
+	b=xxKsRdt99s8cfBJRVeTPkp3AWSzt4SwiPFL7pr2Q01WT4kHdTxF9+yJwv/hCv+sVCi92
+	 rhL+EFJfp90FbX7++5QhmIUVCXLt1h0QXvUhJVnvP5wwsM3YuA9xQTRo6Agm8/EgBr6La
+	 bUl3yra3w59iFYXxrIByMf2Tote/ia3t+3Pm61SYIneesjxykXoxYdT6896Zwwgpxj/9h
+	 Th+RrshiLS122LY0Msv3jBL7bB62ZIkNIKl8BGi7Fz8I+dWa/nEieg6J5E0ZLY7AIW+xB
+	 s6QUFbN92Z/dobkxZFRaNJc4hmjSEj3sDbGV8KiPs8HKINd9EnmxTSowpwxNNsO0HyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UelTmpID;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzxVxGBh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1EE606A31C;
-	Thu, 26 Nov 2026 15:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E06606A31E;
+	Thu, 26 Nov 2026 15:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UelTmpID
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28DA71F000C0;
-	Thu, 26 Nov 2026 15:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzxVxGBh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2F81F000C0;
+	Thu, 26 Nov 2026 15:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705376;
-	bh=x3S1jomJIeVPeineb2kzuI5qj8/bFQz0OqhDryH8dUE=;
+	s=korg; t=1795705379;
+	bh=oljiIQ+b1NH7uq871HyxIqpd2HAgEFXn9SIBoqxlkWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UelTmpIDoWjDgA5ydRKFe+5Lqh6ksEzyz+xJ77EFqalRrB/MmQLn/YZQ08t8xH21H
-	 3lVnpZLf6G4PK6jBwkQ4QD4n8wxOKirHTCoPcTju+hivNdWLWZOduTcB8aJ8iL4vgI
-	 yoeQ2DSPbEx3OFBdEtYar5xJzbKptOzb4iV+qH48=
+	b=IzxVxGBh8Nm+VUBx3AlFESqosBo9VBN3jyU+N50kw33hIN+Djw5rKFJMUIxX1cBU0
+	 xEQMTdloYsN4wpb/AK29YSjZXWTlEtv98GbLazW5ZETsU47oxk63pKTVyM2kCuMBf3
+	 ofQUtRpj1pi+Pr5KeSUvX3vzSr79WbONWjXKdGCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Jie Zhan <zhanjie9@hisilicon.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/319] cpufreq: Return -EOPNOTSUPP if no policy supports boost
-Date: Thu, 26 Nov 2026 15:38:10 +0100
-Message-ID: <20261126144009.499791615@linuxfoundation.org>
+	Sergei Nizovtsev <snizovtsev@cloudlinux.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 171/319] ALSA: caiaq: Kill EP1 URB before unregistering the input device
+Date: Thu, 26 Nov 2026 15:38:59 +0100
+Message-ID: <20261126144010.606494831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,55 +67,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
 
-[ Upstream commit 77cf053b041fe13d1fdd2e572e16ee7776ff687d ]
+commit 5d325345185015024a86abca4cc5fa6a3f75294e upstream.
 
-In cpufreq_boost_trigger_state(), if none of the the policies support
-boost, policy_set_boost() will not be called and this function will
-return 0.
+snd_disconnect() unregisters the input device via
+snd_usb_caiaq_input_disconnect() and only afterwards kills the EP1
+command URB (cdev->ep1_in_urb). The EP1 completion handler
+usb_ep1_command_reply_dispatch() feeds snd_usb_caiaq_input_dispatch()
+for EP1_CMD_READ_{ERP,ANALOG,IO} replies, which report into
+cdev->input_dev. Since commit b04dcbb7f7b1 ("ALSA: caiaq: Use
+snd_card_free_when_closed() at disconnection") the input device is
+unregistered from snd_usb_caiaq_input_disconnect() but cdev->input_dev
+is cleared only later, in snd_usb_caiaq_input_free() from the card
+destructor. As the dispatch guard only tests cdev->input_dev for NULL,
+an EP1 reply that completes after input_unregister_device() but before
+cdev->ep1_in_urb is killed reports into an input device that has
+already been unregistered and, with no evdev client holding it open,
+freed.
 
-But it is better to return an error to indicate that the platform
-doesn't support boost.
+Normally the window is closed by the USB core: usb_unbind_interface()
+calls usb_disable_interface() before ->disconnect(), which flushes the
+EP1 URB as long as endpoint 0x81 belongs to the interface being
+unbound. But caiaq addresses EP1 through the device-wide pipe
+usb_rcvbulkpipe(usb_dev, 0x1) without checking which interface owns
+the endpoint. If a device declares it in another interface, the URB
+stays live across snd_disconnect() of the interface that owns the card.
 
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20251202072727.1368285-2-zhenglifeng1@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: a0cde2b601bc ("cpufreq: Preserve global boost state on failed updates")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This needs a crafted device descriptor; a device that has EP1 in the
+interface caiaq is bound to is not affected.
+
+Kill cdev->ep1_in_urb (and the paired midi_out_urb) before the input
+and audio disconnect helpers, so no EP1 completion can run once the
+input device has been unregistered.
+
+Reproduced under KASAN with raw-gadget + dummy_hcd emulating an Audio
+Kontrol 1 (17cc:0815) with the EP1 bulk pair in interface 1: only
+interface 0 was bound to snd-usb-caiaq and then unbound through sysfs
+while the gadget flooded EP1 with EP1_CMD_READ_ERP replies. With no PCM
+stream running the window is very short and was only hit by stalling
+the unbinding CPU with a kgdb breakpoint at
+snd_usb_caiaq_audio_disconnect(). With the fix applied, the same test
+runs clean.
+
+  BUG: KASAN: slab-use-after-free in input_event+0x3a/0xc0
+  Read of size 8 at addr ffff8880151a4028 by task sh/118
+
+  Call Trace:
+   <IRQ>
+   input_event+0x3a/0xc0
+   snd_usb_caiaq_input_dispatch+0xab2/0xf00
+   usb_ep1_command_reply_dispatch+0x1f3/0x580
+   __usb_hcd_giveback_urb+0x246/0x400
+   dummy_timer+0x1415/0x3380
+   __hrtimer_run_queues+0x39d/0x800
+   hrtimer_run_softirq+0x187/0x2d0
+   handle_softirqs+0x1ff/0x930
+   __irq_exit_rcu+0x15b/0x210
+   irq_exit_rcu+0xe/0x20
+   sysvec_apic_timer_interrupt+0x81/0xb0
+   </IRQ>
+   <TASK>
+   asm_sysvec_apic_timer_interrupt+0x1a/0x20
+  RIP: 0010:snd_usb_caiaq_audio_disconnect+0x0/0x70
+   snd_disconnect+0x81/0x110
+   usb_unbind_interface+0x1a0/0x860
+   device_release_driver_internal+0x2c5/0x470
+   unbind_store+0xde/0x100
+   </TASK>
+
+  Allocated by task 80:
+   input_allocate_device+0x47/0x340
+   snd_usb_caiaq_input_init+0x4c/0x1ac0
+   snd_probe+0xab3/0x1160
+   usb_probe_interface+0x2ea/0x810
+
+  Freed by task 118:
+   kfree+0x1ea/0x5c0
+   input_dev_release+0xab/0xd0
+   device_release+0xcf/0x250
+   kobject_put+0x169/0x320
+   snd_disconnect+0x79/0x110
+   usb_unbind_interface+0x1a0/0x860
+
+Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
+Assisted-by: Claude:claude-opus-4-8
+Link: https://patch.msgid.link/20261112094904.2430318-1-snizovtsev@cloudlinux.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/caiaq/device.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index b8d347d0f68e8..10bec33a1d36b 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -2701,7 +2701,7 @@ int cpufreq_boost_trigger_state(int state)
- {
- 	struct cpufreq_policy *policy;
- 	unsigned long flags;
--	int ret = 0;
-+	int ret = -EOPNOTSUPP;
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -587,14 +587,19 @@ static void snd_disconnect(struct usb_in
  
- 	/*
- 	 * Don't compare 'cpufreq_driver->boost_enabled' with 'state' here to
-@@ -2718,6 +2718,10 @@ int cpufreq_boost_trigger_state(int state)
- 		if (ret)
- 			goto err_reset_state;
- 	}
-+
-+	if (ret)
-+		goto err_reset_state;
-+
- 	cpus_read_unlock();
+ 	snd_card_disconnect(card);
  
- 	return 0;
--- 
-2.53.0
-
++	/*
++	 * Kill the EP1 URB before disconnecting the input device: its
++	 * completion reports into cdev->input_dev, which input_disconnect()
++	 * frees without clearing the pointer.
++	 */
++	usb_kill_urb(cdev->ep1_in_urb);
++	usb_kill_urb(cdev->midi_out_urb);
++
+ #ifdef CONFIG_SND_USB_CAIAQ_INPUT
+ 	snd_usb_caiaq_input_disconnect(cdev);
+ #endif
+ 	snd_usb_caiaq_audio_disconnect(cdev);
+ 
+-	usb_kill_urb(cdev->ep1_in_urb);
+-	usb_kill_urb(cdev->midi_out_urb);
+-
+ 	snd_card_free_when_closed(card);
+ }
+ 
 
 
