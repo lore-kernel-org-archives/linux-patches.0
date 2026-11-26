@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704291;
-	b=LvVXBxvLDn0MMAk9GEjwbfokIPCxFVE0jLTZ1EhNFnHhNVqMcEU1Dflly4JptINocADN
-	 xs3MUWWaTniSKAkA85cVZiNvyQ6udTt31wY/7SFIhnJJsTsEUxThoNGRrxJg68DkE6rTZ
-	 aXhxLnqvCYEr+BlfxOWidnZe0HsKU4PW+T/Yk7FoQUCXwtFiYC1EZa1UJHLw7ABPsGBoJ
-	 OfwO75m2ZT8o6x2D7olrEMrHpkfZJxhf0zpjdM9d9ReFaM1IejI5UnOB+9Xh7QMGuoinI
-	 T3mdfGMMknxSCuvJla5nqqvwuA0cyyMdv/4HD93U/eBLRxgCtpJObpKW3EOvCUAuIwA==
+	t=1795704294;
+	b=0nZ3eh4XlaZJOivnK8VTDZ2qfUnenfvkLWB2plxs5XByEx6Fqf/ufMxNjvGpovq5015i
+	 WXpR4X0044Xczz/wGDiXXdWajsXK9G+Ae4e2KVf3osCPf9vKLa3MKyDEYATJMMGJPxZkq
+	 WBrt5gjX7SaAROHWh6yLFkt40Zvx4DhCzGfka96IyPgX8HUFk60nPUpjWJkgGtrGK6UWr
+	 vsVp0qrmUwLGLneoEHW0WN1EGrh3WXCOIMi+pfZliLEUF4uIdB6dG+0fYdxHe90sv9p5L
+	 EO36MIvtLIuiISqgC11oLg2KDSatvpj9mhK2M4ldUXrzLV8eKbBDavGTIoYgfbndpyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XpPmdfFMToHoHwM4HIXJxbB6RC7e9K0ezEGYz+rsl+M=;
-	b=Pds0QK7rmDzThbG5bVcTqbC/9fJluWqFxR4XNvCyOKnKA92eezVGNPvz7EKt0FwHUJEq
-	 EM3eSifzNaTstugvuYs001ubb+wH+RDdMSjTUI7ITy6XwFjcHj7atntonTxXmyA6DlXww
-	 hsqWbOVpSJFLe3uq6LbNG3UL5nFd35YzMdIGZJMqMw9MxUlNkSlPP61sNi+0VuqDG7kqT
-	 j6JLr+nUniMccCGYi+Xk8cAKBHmRi6W/4cv0UQGe4Wyh3JB/ZJgeUM+1+Zk/Hnu+KMFsw
-	 MWlQiXJHQoN03QLpgwoeFK6+FiFbWYhIKuo5pQ0zwlVDCkNZ7Xs2waMaLi4ht5aqoZA==
+	bh=x7p4kajTZ+OQmAjPUfXVnCV+fLdAM8MXJjTl79nGSRE=;
+	b=a0NFlqJmkBZaBQfNGriJ3W8qx7wnN8H20gs7f5l1FMRGeBJDtgCa6pBryFT5ioMo5JSE
+	 RaEvvixALH4FehgKFpSTTu/FdX2OSu0i57fBxijSMCcJmwnsrmjTjECH7czw8EL53Alpd
+	 eiRjtgHbVC399GVgBqbHXmlZhe8B5YY7HX7T2IVXQA523kESPPFVaPTuDFfq4lRvgNF2T
+	 lK0BP0xJa4GTE/fU/SvQ8UM+A4vyl0jbR9nMzuKYnuLh6lZ9CvBg/FeybKn7+xnvGMCzc
+	 EOhxJxl9tzkzdsJDPyzARoDPVYyKyo/MaIZJTT+9EAwSRD6I+WM+lpx/Gj7scPYXdTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xq+i7OdQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UYq2qNJp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDFF606A31E;
-	Thu, 26 Nov 2026 14:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C64606A31E;
+	Thu, 26 Nov 2026 14:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xq+i7OdQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573251F000C4;
-	Thu, 26 Nov 2026 14:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UYq2qNJp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22771F000C4;
+	Thu, 26 Nov 2026 14:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704290;
-	bh=XpPmdfFMToHoHwM4HIXJxbB6RC7e9K0ezEGYz+rsl+M=;
+	s=korg; t=1795704294;
+	bh=x7p4kajTZ+OQmAjPUfXVnCV+fLdAM8MXJjTl79nGSRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xq+i7OdQJoXUxHYxPC39Sfe8fmulg4nTO5Rq9KXsCezMcgya3INfPC4CuH4unQeC4
-	 ON7gX8C9PqioqJyT9WTb49RW55/4uKQpv9ue7wHID8z1itlpumrZ9kbmr8irOzp4Ke
-	 KE/bElBY4fyI9mWQ6MdRZADmBCIO2t4rMXjvuS0U=
+	b=UYq2qNJpgmeUfop+oym9OudASpQxvBbAgLmnyg5ciZ0ALVz7q84vTsJVqWJxz7PQy
+	 qxO62hb3a4rY2rQmitBfzUFtvM6ypijkHi5NB0KWbMslRElt2P0WV6WMdv2dYnR8yf
+	 WaDzzcr0VhzW9PcaFLz4UmlPEwhHSpZyV0ydVr88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	Tom Williams <Tom.D.Williams@MorganStanley.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/265] nvmet-rdma: disconnect a queue on device removal
-Date: Thu, 26 Nov 2026 15:36:42 +0100
-Message-ID: <20261126143610.104295670@linuxfoundation.org>
+Subject: [PATCH 5.10 073/265] tcp: Fix dup-ack detection on non-SACK bidirectional data transfer.
+Date: Thu, 26 Nov 2026 15:36:43 +0100
+Message-ID: <20261126143610.171562709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -72,76 +72,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit a4387799d4228866dc1746b466cd17e1c638d050 ]
+[ Upstream commit 11140c51df12e594d6bf2c8d2af5dec63b0219ac ]
 
-cma_remove_one() sends DEVICE_REMOVAL to the owner of every cm_id on
-the device and then waits, without timeout, until they're all
-destroyed. nvmet_rdma_device_removal() does nothing for a queue cm_id
-and leaves the queues to nvmet_rdma_remove_one(), which only works if
-that runs first. As a module it does, nvmet-rdma registers after
-rdma_cm. Built in, both register at the same initcall level and
-drivers/Makefile lists nvme/ ahead of infiniband/, so cma_remove_one()
-runs first and waits for cm_ids that only the later callback would
-destroy. Since the RDMA CM drops all later events for a cm_id once it
-has sent DEVICE_REMOVAL, a peer closing its connection doesn't help
-either. One connection from anyone who can reach the port hangs "rdma
-link delete" until something else ends the queue.
+When receiving a pure ack from a peer that also sends data, we can
+have SEG.SEQ > SND.WL1, even though the segment contains no data. This
+makes tcp_may_update_window() return true (because of the
+"after(ack_seq, tp->snd_wl1)" condition), and tcp_ack_update_window()
+then adds FLAG_WIN_UPDATE to the segment set of flags, even when
+there's no window update.
 
-Call nvmet_rdma_queue_disconnect() for the queue. It unlists the queue
-and queues the release work, which destroys the cm_id. Don't wait for
-it, rdma_destroy_id() waits for the handler to return, which was the
-deadlock before commit f1d4ef7d8883.
+Since FLAG_WIN_UPDATE prevents the segment from being considered as
+dup-ack (as it's part of FLAG_NOT_DUP), this can inhibit fast
+retransmit on non-SACK connections, making recovery very slow as it
+now entirely relies on RTO.
 
-Fixes: f1d4ef7d8883 ("nvmet-rdma: register ib_client to not deadlock in device removal")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+The "DUPLICATE ACKNOWLEDGMENT" definition of RFC 5681, section 2,
+says that lack of window update is a necessary condition for a dup ack:
+"(e) the advertised window in the incoming acknowledgment equals the
+advertised window in the last incoming acknowledgment.". Spurious
+window updates can thus prevent dup ack detection and, in the end, fast
+retransmit.
+
+Avoid this scenario by setting FLAG_WIN_UPDATE only when a window
+update actually occurs. Pure acks with SEG.SEQ > SND.WL1 can now
+be detected as dup-ack and trigger fast retransmission.
+
+Also, stop setting FLAG_WIN_UPDATE in tcp_ack()'s header prediction
+path. One of the conditions for header prediction to happen is that
+received segments don't trigger a window update. This flag update was
+thus wrong to begin with. Now that tcp_ack_update_window() sets
+FLAG_WIN_UPDATE only if a window update actually occurred, we need the
+header prediction path to stop reporting spurious window updates too.
+Otherwise BPF programs would get inconsistent window update information
+(CA_ACK_WIN_UPDATE) between fast an slow paths.
+
+Finally, add FLAG_SND_UNA_ADVANCED to the definition of FLAG_NOT_DUP.
+This is necessary for the case where an incoming segment acknowledges
+less than a full segment of the retransmit queue. Such segments were
+not considered dubious by tcp_ack_is_dubious() because of the spurious
+FLAG_WIN_UPDATE flag, which prevented the segment from being seen as a
+duplicate ack. Now that FLAG_WIN_UPDATE doesn't cover this scenario
+anymore, we need another way to mark these acks as non-duplicate.
+Adding FLAG_SND_UNA_ADVANCED to FLAG_NOT_DUP is the natural way of
+doing this, since, by definition, a segment advancing SND.UNA, even by
+a small amount, cannot be a duplicate ack.
+
+A side effect of this patch is that repeated zero window acks received
+from peer can now be considered duplicate acks (because of the the
+"|| !win" condition in tcp_may_update_window()). Therefore, they can
+now trigger fast retransmission and fast recovery, including congestion
+window reduction, when the peer is stalled. This is RFC compliant and
+shouldn't have any negative effect.
+
+Add packetdrill selftest. Before this patch, the 1001:2001 segment was
+retransmitted upon RTO, now it's sent right after reception of the
+third duplicate ack.
+
+Thanks to Tom Williams for the investigation help and initial
+reproducer.
+
+Reported-by: Tom Williams <Tom.D.Williams@MorganStanley.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/6426d558e45fc6ab724c40af62e4a8793215dd8a.1793219189.git.gnault@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ net/ipv4/tcp_input.c                          |  6 +--
+ .../tcp_bidir_fast_retransmit_nosack.pkt      | 42 +++++++++++++++++++
+ 2 files changed, 45 insertions(+), 3 deletions(-)
+ create mode 100644 tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 04496a4db7c41..e6269e3391d98 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1738,10 +1738,13 @@ static void nvmet_rdma_queue_connect_fail(struct rdma_cm_id *cm_id,
-  * queue cm_id and/or a device bound listener cm_id (where in this
-  * case queue will be null).
-  *
-- * We registered an ib_client to handle device removal for queues,
-- * so we only need to handle the listening port cm_ids. In this case
-- * we nullify the priv to prevent double cm_id destruction and destroying
-- * the cm_id implicitly by returning a non-zero rc to the callout.
-+ * The RDMA CM waits until each cm_id of the device is destroyed, so a queue
-+ * has to go now. Our ib_client also removes the queues, but it cannot be
-+ * relied on here: built in, it is called after the RDMA CM's client.
-+ *
-+ * For a listening port cm_id we nullify the priv to prevent double cm_id
-+ * destruction and destroying the cm_id implicitly by returning a non-zero
-+ * rc to the callout.
-  */
- static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
- 		struct nvmet_rdma_queue *queue)
-@@ -1749,11 +1752,7 @@ static int nvmet_rdma_device_removal(struct rdma_cm_id *cm_id,
- 	struct nvmet_rdma_port *port;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 58e92af1398ea..a640ddb61ff0f 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -102,7 +102,8 @@ int sysctl_tcp_max_orphans __read_mostly = NR_FILE;
+ #define FLAG_ACK_MAYBE_DELAYED	0x10000 /* Likely a delayed ACK */
  
- 	if (queue) {
--		/*
--		 * This is a queue cm_id. we have registered
--		 * an ib_client to handle queues removal
--		 * so don't interfere and just return.
--		 */
-+		nvmet_rdma_queue_disconnect(queue);
- 		return 0;
- 	}
+ #define FLAG_ACKED		(FLAG_DATA_ACKED|FLAG_SYN_ACKED)
+-#define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED)
++#define FLAG_NOT_DUP		(FLAG_DATA|FLAG_WIN_UPDATE|FLAG_ACKED|	\
++				 FLAG_SND_UNA_ADVANCED)
+ #define FLAG_CA_ALERT		(FLAG_DATA_SACKED|FLAG_ECE|FLAG_DSACKING_ACK)
+ #define FLAG_FORWARD_PROGRESS	(FLAG_ACKED|FLAG_DATA_SACKED)
  
+@@ -3591,11 +3592,11 @@ static int tcp_ack_update_window(struct sock *sk, const struct sk_buff *skb, u32
+ 		nwin <<= tp->rx_opt.snd_wscale;
+ 
+ 	if (tcp_may_update_window(tp, ack, ack_seq, nwin)) {
+-		flag |= FLAG_WIN_UPDATE;
+ 		tcp_update_wl(tp, ack_seq);
+ 
+ 		if (tp->snd_wnd != nwin) {
+ 			tp->snd_wnd = nwin;
++			flag |= FLAG_WIN_UPDATE;
+ 
+ 			/* Note, it is the only place, where
+ 			 * fast path is recovered for sending TCP.
+@@ -3878,7 +3879,6 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 		 */
+ 		tcp_update_wl(tp, ack_seq);
+ 		tcp_snd_una_update(tp, ack);
+-		flag |= FLAG_WIN_UPDATE;
+ 
+ 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPHPACKS);
+ 	} else {
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt b/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
+new file mode 100644
+index 0000000000000..5c66b7171d229
+--- /dev/null
++++ b/tools/testing/selftests/net/packetdrill/tcp_bidir_fast_retransmit_nosack.pkt
+@@ -0,0 +1,42 @@
++// SPDX-License-Identifier: GPL-2.0
++//
++// Verify that non-SACK connections properly detect duplicate acks when mixed
++// with other data segments from peer.
++
++`./defaults.sh`
++
++    0     socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
++   +0...0 connect(4, ..., ...) = 0
++
++   // Three-way handshake, SACK not supported by peer
++   +0 > S  0:0(0) <mss 1460,sackOK,TS val 0 ecr 0,nop,wscale 8>
++   +0 < S. 0:0(0) ack 1 win 65535 <mss 1000>
++   +0 > .  1:1(0) ack 1
++
++   // Send 1000 bytes, peer acks everything
++   +0 send(4, ..., 1000, 0) = 1000
++   +0 > P. 1:1001(1000) ack 1
++   +0 < .  1:1(0) ack 1001 win 65535
++
++   // Send 4000 more bytes
++   +0 send(4, ..., 4000, 0) = 4000
++   +0 > P. 1001:5001(4000) ack 1
++
++   // Receive first dup-ack (considering segment 1001-2001 was lost)
++   +0 < .  1:1(0) ack 1001 win 65535
++
++   // Receive unrelated data segment from peer and ack it
++   +0 < P. 1:11(10) ack 1001 win 65535
++   +0 > .  5001:5001(0) ack 11
++
++   // Receive second dup-ack
++   +0 < .  11:11(0) ack 1001 win 65535
++
++   // Receive another data segment from peer and ack it
++   +0 < P. 11:21(10) ack 1001 win 65535
++   +0 > .  5001:5001(0) ack 21
++
++   // Receive third dup-ack, which should trigger fast retransmit (without
++   // waiting for RTO)
++   +0 < .  21:21(0) ack 1001 win 65535
++   +0 > .  1001:2001(1000) ack 21
 -- 
 2.53.0
 
