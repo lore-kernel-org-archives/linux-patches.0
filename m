@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704439;
-	b=V1MRPDWd3rdlpMv+fcmVPhiQZck8ppTQm26yQgEIf6B66EEkmObN2ZygOY/qBf8sbyVj
-	 hiK8IHvQeuTEoZ9JawlAPchrvlq2pNeSzHDdwLIMORUTlQa4CMLJEkQ1YZKADjU56JwfQ
-	 ZF98x92MBYKyi47261cvuAAsLVl7zdjBPq/1+hpTCu7OTh8J9+qpBLuZkXgk6T2Y9sPj4
-	 K3Dkp49h1EngM29uYrAOkq8rYQLJNML7h9IkatdjvgDLBxXObMFMVJS3/S5wAo88MOo8j
-	 eH9FvwBJ6epKVroxuH6U9pHfHqU1sK0balHuiALNt+OTfXE3QE+B3VVSrfSOQw3yPpQ==
+	t=1795704443;
+	b=vZXDtvp1ox/WAv9Djgy4Afbug9+qsQVbf9m3zoAVJ2WSqmOqRknAXvjlFMSX6AkuqoIw
+	 s0Afty8rj4J6OS9KFwpnObfs048jGSRBN+5Vl/8+VyFHeUq1tJPg6oYwXlVGRM8UKc9y5
+	 VC1nmMFWuI/H5lAXS0sRihL5Olem8yWkRcJjLwN7STc9k/PYYgCb7aLdovYf0eGQigrTE
+	 2+kRGyockgxMbfsV6MvHl2FcTK+pu2nug/LHiflLLe/VZ7MIJKBBHpcfuq4f/x3ufaa12
+	 KfwaA4abnsDLcIutDdqE2rKUZt+WtpbcR48O3YGs5UI2MMvljjz5z2Jze3ePIIA5npg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xYN4rrrDm29r9Mh/WHd/FBlslY/o/DP2CAgvxCQPMYE=;
-	b=5A8r5xP6ZqY8wL2FIetIQKVfJ9kKUjGkeWqIdbShC/1S/gDItYKU15LsuVFKPsl0sBA+
-	 +2BpEtve5vqrk7SweMD3NXBUYccXXX8Lvs7/ca7oxeAJEMQpd8AveheRqrVi3a48rnwox
-	 WqA9A/qhjK066qTmQAMRo+oEK/dVu6kPE+jXAdchXdUcJa4JxEsGotHofHvwRifhGwhnW
-	 zD8fjmv7TFGORtsvM1uQuvHUMl5L8DnmDgVTiuIbk9zBeE6EGRz7xso6cVDX3eLuJ2z3e
-	 C3v8GBAyb6ZPI280PT7apf+lPulTd4V9VObT+GpPY+YtptIGdz61LmSRarOYzy0Z9DA==
+	bh=A2sbCrRiA9QhQ/gLTHCuI6/1TCHU8E1eTQrCQq1Vy1U=;
+	b=3kipYQlWMptdauJsbKX5Qp/uYPqsuDcBW95a13ffPq0R6nT+daCMazC7ZQA8Im2b+7RP
+	 8fi6vsdQgcpxJuntOGm91g8Vst6MYUzplMBaBi9kF3ckdQ0ZJAjSbwmJdUozzfSb69U/1
+	 iX9lSAkwoMqqKsnV0or43G3Rmy9T8z/Ry8UBXXehyTDI8qh9RzeRHGdyFcfqFXqcXbk1O
+	 kAjf/12H07a1kUiRyopaypmU4x7fS8xunSXR+5g1y/2jkTZjbwvIreczRyU7ytNL2Ypio
+	 LDm6A1+xm9g8/J+E1nkTmwXaYP1KBIEc2WKKEal5q4psyWqI32H4++JqqrSLWt8yz1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kI0EOYzW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fxbmra2V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0883606A31E;
-	Thu, 26 Nov 2026 14:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27F8606A31E;
+	Thu, 26 Nov 2026 14:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kI0EOYzW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D131F000C4;
-	Thu, 26 Nov 2026 14:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fxbmra2V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A121F000C4;
+	Thu, 26 Nov 2026 14:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704439;
-	bh=xYN4rrrDm29r9Mh/WHd/FBlslY/o/DP2CAgvxCQPMYE=;
+	s=korg; t=1795704442;
+	bh=A2sbCrRiA9QhQ/gLTHCuI6/1TCHU8E1eTQrCQq1Vy1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kI0EOYzWuucdnOSXRQ2aaBhaY5Yv3kTXx+f6fGXESbsQKhXfm+7+HCoAM1e6gpPwJ
-	 /Okgsl3LH3NtL1UxhV5jGOWdOKVPp2wNmIYiovLtvZS8Euuz7TbezOVaXDSWD8p8Yi
-	 mj28bQudggTDgmwL9NDKFOyz/3OpOpcP/WVQkJfU=
+	b=Fxbmra2Vl4ldlsOACfX43MVIzIITarNwx4h7+TkkMXFws30lNh1NRhzT0m54v3HW+
+	 98/XD2v7Pa0RJ/ZikhyUJw5rTyimxbvztmZ/+4PFgf6Yb9XlLu9+43Qq1CzZich1AM
+	 V3+xyOv1CAK0DiEvswax6n0bzOopOVv4KrbyZD3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umang Pokhriyal <umangpokhriyall@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Chase Hiltz <me@chasehil.tz>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/265] tun: delete the flow entries of the moved queue on detach
-Date: Thu, 26 Nov 2026 15:37:35 +0100
-Message-ID: <20261126143613.769457279@linuxfoundation.org>
+Subject: [PATCH 5.10 126/265] ipv4: route: dont blackhole in-use routes when retiring fnhe routes
+Date: Thu, 26 Nov 2026 15:37:36 +0100
+Message-ID: <20261126143613.858488984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,53 +70,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umang Pokhriyal <umangpokhriyall@gmail.com>
+From: Chase Hiltz <me@chasehil.tz>
 
-[ Upstream commit 4cc0a3f897074cea28dae38f1cd9bb230dae5d86 ]
+[ Upstream commit ae89f2724db1afa96a1f1b661174fc41ae1e88fa ]
 
-When a queue is detached, __tun_detach() moves the last queue into the
-freed slot and decrements tun->numqueues. The flow entries that point at
-the old index of the moved queue, now tun->numqueues, are meant to be
-deleted, but the call passes tun->numqueues + 1, an index that never
-exists, so nothing is deleted.
+When a route cached in a nexthop exception (fnhe) is replaced or
+flushed, rt_bind_exception() and fnhe_flush_routes() call
+dst_dev_put() on it. That sets dst->dev to blackhole_netdev and
+dst->input/output to dst_discard*(), but other CPUs can still be
+using the route, e.g. as a noref dst taken from the fnhe under RCU.
+Packets that reach dst_input() or dst_output() after that are dropped.
 
-Until those entries are refreshed by a write on their flow or age out,
-tun_automq_select_queue() returns an index past the last queue, and
-netdev_core_pick_tx() sends every such flow to queue 0 and warns:
+If dst_dev_put() runs after a forwarded packet has entered ip_output(),
+ip_skb_dst_mtu() in __ip_finish_output() can return the MTU of
+blackhole_netdev (68), and ip_fragment() can then drop a DF packet and
+send ICMP_FRAG_NEEDED with mtu 68 to its source.
 
-  tapq0 selects TX queue 3, but real number of TX queues is 3
+Commit 5018c59607a5 ("ipv4: fix race condition between route lookup and
+invalidation") fixed the same race in rt_cache_route() by putting the
+old route on the uncached list instead of calling dst_dev_put(). Do the
+same for routes retired from an fnhe. rt_flush_dev() still moves them
+to blackhole_netdev when their device is unregistered.
 
-Found with an LLM while testing how a VMM detaches tap queues when a
-guest lowers its virtio-net queue pairs. With four queues, 30 flows
-learned on queue 3 and queue 1 detached, all 30 went to queue 0 with the
-warning; with this patch they are spread by hash and no warning is
-printed (3 runs each, in a guest booted on net).
+fnhe routes are also retired on fnhe expiry (ip_del_fnhe()) and
+eviction (fnhe_remove_oldest()). Those paths don't bump rt_genid, so
+without the obsolete marking ipv4_dst_check() could still accept the
+route. Keep marking retired routes DST_OBSOLETE_DEAD, as dst_dev_put()
+did, so that users that cached them, such as sockets, look up again.
 
-Pass tun->numqueues.
+In a netns reproducer that forwards IPv4 traffic over an ip6tnl device,
+with an fnhe for the destination, while the FIB keeps changing, this
+patch stops the mtu 68 ICMPs and the drops.
 
-Fixes: 96442e42429e ("tuntap: choose the txq based on rxq")
-Signed-off-by: Umang Pokhriyal <umangpokhriyall@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261104174240.138491-1-umangpokhriyall@gmail.com
+Fixes: 95c47f9cf5e0 ("ipv4: call dst_dev_put() properly")
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Chase Hiltz <me@chasehil.tz>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261105182640.2999521-1-me@chasehil.tz
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index d706c7fd6adee..5dd99581dfcbf 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -683,7 +683,7 @@ static void __tun_detach(struct tun_file *tfile, bool clean)
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 8ab568e9314ad..a7f05cf709384 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -615,6 +615,17 @@ static void ip_rt_build_flow_key(struct flowi4 *fl4, const struct sock *sk,
+ 
+ static DEFINE_SPINLOCK(fnhe_lock);
+ 
++/* Other CPUs may still be using @rt, so don't dst_dev_put() it.
++ * rt_flush_dev() handles it if its device is unregistered.
++ * Marking it dead makes ipv4_dst_check() fail for users that cached it.
++ */
++static void fnhe_retire_route(struct rtable *rt)
++{
++	WRITE_ONCE(rt->dst.obsolete, DST_OBSOLETE_DEAD);
++	rt_add_uncached_list(rt);
++	dst_release(&rt->dst);
++}
++
+ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
+ {
+ 	struct rtable *rt;
+@@ -622,14 +633,12 @@ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
+ 	rt = rcu_dereference(fnhe->fnhe_rth_input);
+ 	if (rt) {
+ 		RCU_INIT_POINTER(fnhe->fnhe_rth_input, NULL);
+-		dst_dev_put(&rt->dst);
+-		dst_release(&rt->dst);
++		fnhe_retire_route(rt);
+ 	}
+ 	rt = rcu_dereference(fnhe->fnhe_rth_output);
+ 	if (rt) {
+ 		RCU_INIT_POINTER(fnhe->fnhe_rth_output, NULL);
+-		dst_dev_put(&rt->dst);
+-		dst_release(&rt->dst);
++		fnhe_retire_route(rt);
+ 	}
+ }
+ 
+@@ -1537,10 +1546,8 @@ static bool rt_bind_exception(struct rtable *rt, struct fib_nh_exception *fnhe,
+ 		if (do_cache) {
+ 			dst_hold(&rt->dst);
+ 			rcu_assign_pointer(*porig, rt);
+-			if (orig) {
+-				dst_dev_put(&orig->dst);
+-				dst_release(&orig->dst);
+-			}
++			if (orig)
++				fnhe_retire_route(orig);
+ 			ret = true;
  		}
  
- 		synchronize_net();
--		tun_flow_delete_by_queue(tun, tun->numqueues + 1);
-+		tun_flow_delete_by_queue(tun, tun->numqueues);
- 		/* Drop read queue */
- 		tun_queue_purge(tfile);
- 		tun_set_real_num_queues(tun);
 -- 
 2.53.0
 
