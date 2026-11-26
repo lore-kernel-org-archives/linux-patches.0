@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705596;
-	b=XUAA70aPUe2XGr/ym6mvNI1xbHZvrMXbllAY/4uKIdT0RXiXh+zPEZokGTUW2uZoDjvj
-	 EG7GY9kQcjhaLrTY9XpeLRnhZyoptydJmQSSiC5pozaTQlzu9/4YrbhTTaGBgQgcd0QhH
-	 NCS4zJd+7pVLC6E3CPfpYcc9HAOqprvotqkje7/nNVVdBefRD2YDLhqW6ZcUz39ruKXMP
-	 s1anizw1mOsL1+RyHULi6fKRVlP9khaGV9N/Yt0Z7eZBNl/mwo47UojVaOH9r2hwiA7O9
-	 XTKV4jFDVcyjbeMPj6U/ebnbdmNBKzjbtDc82M9SWwuPj56c5bOA4SrsuTHB30XwZ0Q==
+	t=1795705592;
+	b=VA+xqIh81bAeRTQ1cuDawfWoL5ogly9xcoWaYykmaAFAm8FiXAgIbi1q+2VENDbeaO/f
+	 cPkwN1eBdss5K0CCyRpJxy4ButqHobZfEJDM+3fRWMEZwnC27uOqlwEDJU1Esv2zmHs7b
+	 2AUQ5ikJm4njU7a0WnBI9ueQA9B/HjzXcKsBPdcYJGLBS+NX3Q0gByo/906z0FjZ8goWu
+	 Y7h6g+WAu/UTLCd19BdUptLGFOXhqXOghVzkzMwEGIyG+u/GF37VyrALYkvT93X7+kfS8
+	 oYH3yjOrWybnmuTf59n8u0ZAmp8lU23G1NVDCrt2teC1jyukKXKsdSXBwJybnqP3UJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vVTEGm+B3qqoZ14D4hzlZ/xo3kXfDYweXzTw55staVE=;
-	b=qoqPL+kH5H53nB0GJh4B+cahKxTQX+1kuhhXCsxnaj20lYAVAGirOT1ETbQJlf83iolv
-	 h/5VauepRAioeMMXom30NT0dHRBjNnqRatHdueCdAX1+9ucmo8IQFZCCjSST7/KtZzWzx
-	 NjnPF+fAOWt5x/7gtcvxfp1Niz0DNG4q0oE3dIf4dwJRuNSRBIykf8UjjS1Y4O75LPLkC
-	 0hFx+HgJSo4ZoPJuZ/A1gmiXAlxGHMY5QXdeDAWQNyUXxkZb9PVIY4a+MPCNLlNyEzqw6
-	 iSY5tmarmGZp39eUBeJZvGI6b4A30+45zpXTF5Oe+lALN7pd6alTnqPPgrURCcMWIlA==
+	bh=nA1C9Y5T/gGqVNbsXAx7v7frBHVeeS63YR4hjWP3zg4=;
+	b=XNp+sXHTsqdIYJ43WwvKIBpG7BadeLe1delgkQhzJ8ug7kby/Brscm6fFhu6aS4vAbo4
+	 jxGeARkm4BaHcs1iiSWBE6d+/0gqdjUKUf7PGMjtVvepImH+32avc8dDvKhkyyOx58S5h
+	 7S7ajB3g6OyAiz8UDNKKUXL1A5ds3hbAXh0JCWefXGskrX9oKMq7CmYU7bhxF+AymMho4
+	 iJGHgtVAtHJ45CNLugbbEuu6kgpS2yaRMNVKeEakVQYkrlz9MCAn1WYSlI0ye9LX+mdQT
+	 JofEJMnwoelklfj8kWuPdmcyHRjXwqflUpvjClMnBn+hE85WGUEw3LzIuh8uZNmap+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cIsO0OXO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8sgE1xM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C023606A31C;
-	Thu, 26 Nov 2026 15:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C85606A332;
+	Thu, 26 Nov 2026 15:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cIsO0OXO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797541F000E0;
-	Thu, 26 Nov 2026 15:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X8sgE1xM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD3E1F0093E;
+	Thu, 26 Nov 2026 15:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705596;
-	bh=vVTEGm+B3qqoZ14D4hzlZ/xo3kXfDYweXzTw55staVE=;
+	s=korg; t=1795705592;
+	bh=nA1C9Y5T/gGqVNbsXAx7v7frBHVeeS63YR4hjWP3zg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIsO0OXOtzto2aiX6xVYaxPiVx9qlW9f/qlx6jUQvEaUn1AnMzZZIQOAv/I6UVMfR
-	 5fva2blHZ6DdG5YNdACF0fxX1uWhZuXJFv/GkUaPAyP74cRnMBjX4y81iozdZPCSiY
-	 W2/+oc2dGKpguD0ede8VimUYEvpqUr4xmiGYaBvU=
+	b=X8sgE1xMlC0GGKtbBWmYZfmGRnmVXQxKpAqTInsGijQFYeMRYvW8kCRoigwdcmdPW
+	 1aCIZ6ZoqW4ZqHE3QYNpE1aTLrv3nWPW3c5pFa5d/2KNKN/fVQ9+HifXxmnV9Mm+4r
+	 U0JJNrMAnWyePiYShfkWj1/CdGUFKnSWEULWWrgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Hannes Reinecke <hare@kernel.org>,
-	Kyrylo Biryuk <illofspeed@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 250/319] dm zoned: do not reclaim a random zone into another random zone
-Date: Thu, 26 Nov 2026 15:40:18 +0100
-Message-ID: <20261126144012.386137660@linuxfoundation.org>
+Subject: [PATCH 5.15 249/319] dm zoned: back off when reclaim cannot make progress
+Date: Thu, 26 Nov 2026 15:40:17 +0100
+Message-ID: <20261126144012.364364030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -71,63 +71,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyrylo Biryuk <illofspeed@gmail.com>
 
-commit dab527d83462a618d99bfc96370ce45ae3428706 upstream.
+commit 9bb1d14877f4929be17f7fdbeb4cfdf5025d464b upstream.
 
-dmz_reclaim_rnd_data() falls back to a random destination zone when no
-free sequential zone is available and the target has cache zones. When
-the target is idle and the cache zone list is empty,
-dmz_get_rnd_zone_for_reclaim() selects random zones of the zoned device
-as well, so a random zone is then copied into another random zone. That
-frees nothing: the next pass picks the next random zone and copies it
-again, for as long as the target stays idle.
+When a reclaim pass cannot make progress, dmz_reclaim_work() still ends
+with dmz_schedule_reclaim(). If the target is idle, dmz_should_reclaim()
+keeps returning true, the work is queued again with no delay and the
+worker spins on the same failing pass. This patch handles two such
+cases:
 
-Seen on a two-device target (256 GiB regular cache device plus a 27 TB
-host-managed drive) used as an md RAID5 member: after a full rebuild
-every chunk was mapped and no sequential zone was free, and the idle
-drive kept reading and writing while the free zone counters
-in "dmsetup status" did not change.
+  - dmz_do_reclaim() fails with -ENOSPC because no free zone is
+    available to copy the data into, for example on a target without
+    cache zones that has no free sequential zone left. The next patch
+    also makes this the expected result when an idle target with cache
+    zones has random zones but no free sequential zone.
+  - dmz_do_reclaim() finds no zone it can lock for reclaim and returns
+    -EBUSY. Since commit 90a9b8693f1b ("dm zoned: reclaim random zones
+    when idle"), dmz_should_reclaim() returns true on an idle target
+    whenever the total number of random (and cache) zones is non-zero,
+    whether or not any of them holds data. Each pass then also runs
+    dmz_check_dev(), which checks every device for media events (a TEST
+    UNIT READY on SCSI disks).
 
-Only switch to a random destination zone when the zone being reclaimed
-is a cache zone: moving it to the zoned device still frees cache space.
+The -EBUSY loop lasts as long as the target stays idle; it ends when a
+pass finishes while the target is busy and has enough free zones. On
+three 27 TB host-managed SATA drives used as md RAID5 members (7.2.10
+with the module built out of tree, all random zones free, target idle
+for 300 seconds, kprobes attached, two other drives on the controller
+being zero-filled), each member's SCSI device counted about 108,000
+requests per second with the stock module and the system used about
+915 s of CPU time, against about 46 s with this series. libata completes
+TEST UNIT READY in software, so these counters do not measure commands
+sent to the drives; the cost is CPU time.
 
-This depends on "dm zoned: back off when reclaim cannot make progress":
-without it, dmz_reclaim_work() would retry the resulting -ENOSPC at
-once, and run dmz_check_dev(), for as long as the target stays idle.
+When a pass fails with -ENOSPC or -EBUSY, retrying at once is unlikely
+to make progress: re-arm the idle poll instead, so that reclaim is
+retried after DMZ_IDLE_PERIOD unless a zone allocation or a "reclaim"
+message queues it earlier. On a busy target, zone allocations can
+restart reclaim immediately when free space is low enough to require
+reclaim. Re-arming also keeps the poll running after a complete idle
+drain. The poll can still stop after a pass that ends while reclaim is
+not needed; that is unchanged.
 
-Tested on 7.4-rc1 together with the previous patch, on a two-device
-target (a 512 MiB RAM-backed regular cache device plus a 1 GiB
-scsi_debug host-managed drive) filled until no sequential zone was
-free, then idle for 60 seconds: the stock module made 877
-random-to-random copies; with this series it made none, and each pass
-failed with -ENOSPC once per DMZ_IDLE_PERIOD without a device check.
+Skip the device check for these two results: they normally mean that
+there is no zone to copy into or no zone to reclaim, not that a device
+failed, and the I/O paths check the devices themselves. Use
+queue_delayed_work() so that work an allocation has already queued is
+not postponed.
 
-Fixes: c5c788595292 ("dm zoned: start reclaim with sequential zones")
+A pass that fails with an I/O error, for example on an unreadable block
+of a device that stays online, is still retried at once while the
+target is idle; this patch does not change that.
+
+Tested on 7.4-rc1 with this patch and the next one, on three emulated
+host-managed drives (scsi_debug, 1 GiB, 32 MiB zones) each under
+dm-zoned as md RAID5 members, all random zones free and the target idle
+for 300 seconds. With the stock module each member's SCSI device counted
+about 70.2 million requests and the reclaim workers used 726 s of CPU.
+With this series: 75 requests per member, 30 passes per worker (one per
+DMZ_IDLE_PERIOD) and 0.08 s of CPU. Data written during the tests read
+back with matching checksums, and no kernel warnings were logged.
+
+Fixes: 3b1a94c88b79 ("dm zoned: drive-managed zoned block device target")
+Fixes: 90a9b8693f1b ("dm zoned: reclaim random zones when idle")
 Cc: stable@vger.kernel.org
+Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-zoned-reclaim.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/md/dm-zoned-reclaim.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 --- a/drivers/md/dm-zoned-reclaim.c
 +++ b/drivers/md/dm-zoned-reclaim.c
-@@ -290,7 +290,13 @@ static int dmz_reclaim_rnd_data(struct d
- again:
- 	szone = dmz_alloc_zone(zmd, zrc->dev_idx,
- 			       alloc_flags | DMZ_ALLOC_RECLAIM);
--	if (!szone && alloc_flags == DMZ_ALLOC_SEQ && dmz_nr_cache_zones(zmd)) {
-+	/*
-+	 * If no free sequential zone is available, a cache zone can still be
-+	 * moved into a free random zone of the zoned device, which frees cache
-+	 * space. Do not do this for a random zone: moving it into another
-+	 * random zone frees nothing and, on an idle target, repeats forever.
-+	 */
-+	if (!szone && alloc_flags == DMZ_ALLOC_SEQ && dmz_is_cache(dzone)) {
- 		alloc_flags = DMZ_ALLOC_RND;
- 		goto again;
- 	}
+@@ -539,6 +539,16 @@ static void dmz_reclaim_work(struct work
+ 		dmz_nr_rnd_zones(zmd, zrc->dev_idx));
+ 
+ 	ret = dmz_do_reclaim(zrc);
++	if (ret == -ENOSPC || ret == -EBUSY) {
++		/*
++		 * No zone to copy into (-ENOSPC) or no zone to reclaim
++		 * (-EBUSY): retrying at once cannot make progress and would
++		 * spin. Poll again after the idle period instead, without
++		 * postponing work that an allocation has already queued.
++		 */
++		queue_delayed_work(zrc->wq, &zrc->work, DMZ_IDLE_PERIOD);
++		return;
++	}
+ 	if (ret && ret != -EINTR) {
+ 		if (!dmz_check_dev(zmd))
+ 			return;
 
 
