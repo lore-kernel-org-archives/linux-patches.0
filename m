@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705667;
-	b=YzQV4wRLo8zbyO/zyw/CNFBE8MhbVGr4gqT23Ti00CRfIg+hQkknNumBZbZo5GacccsG
-	 Fq1WJ3l2AEQ9K/pKK1xPqmAGyj0KseT73A5DISS0C+qZG8jUu+G0FkkjPBzHE1+Oz4Hxq
-	 loFNkPNtflCPB2LD3AK9NWK+172+icgxLXaV3zHem6N9vMJ5TWIxVX/kPvO2sQI71TtmT
-	 tgYOBA4BYO619K71Md33WYIos6qlhNJTi2BBOL7V32+7OakKSLlG0/Cxd3Qyph3rUkiAj
-	 J2qmrDVcq5AC2mXWU5yZG1ohkx9JkTBJr2StOoT2A8+ZzR1YbvoCJiNK7WR5N2MuURA==
+	t=1795705671;
+	b=2w45V41WMwAStrEpzIdJrEedRXKpFgy7ssQj5ng9tr8mvia5blEJMXFyirFHoH8qMmmv
+	 8zdr9QlCgZKKNuhXw+CLtDLDl9lWGORjEqcKNkEMY74HCVEx6AiwFhjf5lHhGAIvyOcvU
+	 TvYVkRL6C/4StsDwBKunjR/lksCxvClqq29za6isru71wvFAig15nYaBPfQL6VsPgnh+W
+	 vDTK4E3cKP0kLzYq6E61ljP46rSetXBBmoiUMx6sEX44PMbroODUE3M2QitBVkWhLLnjk
+	 4Y4fTrJ6sGG8vZK9fKXoNfWtqDg5RFXEJdnExmddA9IA7ryXMQ0lLfmxvVrTJvU+TdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=orxylLcDhPF7+h4xpJnxeg+PYQ6An2WrTHRfraW2VHA=;
-	b=1fCtw8ToyVnL0/Ft8xcKUxaDnmEW4t7pNkPPSh0cstrY3KqktcitmxB1Nr6GvqkaAp5V
-	 soM6HGqu1kzJMruu7skR1tqL7r424vbCxfKvwIoHxVYrmEAJZ0UbxFWbn+G/DM85W0Vac
-	 kBMgRkWZNvntJ0o7az92ZBJ7ZH+LgJyl/ni8H3zJ1ixpL26xoRnDYplmm8mUwyTQyLmLS
-	 L0sY7Mmww0oHc8qF+tAL7ncGEElCrx9yEyxoRCdV+GP1/zib1VHUi/HA7OfSrSICxOnzD
-	 2LiopeVPpwZ4TjyXZ/2pwSdbV7wq+S7iUXcgGpKudSVEDtHsQGQKgE//2/HefbLNZCQ==
+	bh=6Uxson0xou3RiKNASvufua8psXrYi+GhIljZe9YZO8c=;
+	b=NMfs3R/22KwpZ0LcxoEsuaW2rnL8LGRXXt45+ON7m0chIcvdpKGLoIv37oAWI0fAJLhc
+	 W9/Zip6eU8J7YJBHgx46VwoYCsRlo78lhVU7oG6Z9XR0Zn38Krfw7D0SqzJGUppFrrlpj
+	 ze5w+Fj4BmYcgZUOKeWD630xzn02cB4Eg/Mp9y/m4IicJg5yk6tCZvY8p0QCjunUTLaeP
+	 xtH4BW3E3xXHEZOHxvOQpuxNvz+BfZ/nMsuNRFrdDrr0D794NQYbE0CHLTVZ8zwBiHOQr
+	 Mq5K5pHc7UlDjzRZkhKYF1XAzx14k2l4O/jw3N2mEjYLc07VwbJK3VRV2thAb5qKlCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8ikvGNF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCji4LEt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC2D606A32E;
-	Thu, 26 Nov 2026 15:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDA2606A333;
+	Thu, 26 Nov 2026 15:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8ikvGNF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323A21F0093C;
-	Thu, 26 Nov 2026 15:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCji4LEt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FE81F000E0;
+	Thu, 26 Nov 2026 15:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705667;
-	bh=orxylLcDhPF7+h4xpJnxeg+PYQ6An2WrTHRfraW2VHA=;
+	s=korg; t=1795705670;
+	bh=6Uxson0xou3RiKNASvufua8psXrYi+GhIljZe9YZO8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8ikvGNFOXj9AVU4H3e+M1EmfZauKM3pYnh5kJ1LGUUtenGdPVqIHGeQtkm5EkleR
-	 ph79YMJmQBREFLOl7amQn2+0dSmfPKX7aDXqugKqg7krX4EL3bgdomZo6zptsNxyLi
-	 bZntFke8QKWWo6eoyMrevuhxZwADvOG/ZRXG58AU=
+	b=kCji4LEtzyYvouExR+QC+Th9+cDNrpEVA7/3NJydSilRzfsAsnTV8LqSXho7aupL3
+	 f4DW5ofOPmkbQh7P1jeRjCJkFrOB/LVymmPobbclHgmkEVmQxGb0fgW9e/mHHfMzk1
+	 9rlbkM+Y/p4b/6qHdefIZSrdr72r961DxWD+5Orc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+782b2f1063e38ba8fa6e@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
-	Leonardo Costa <leonardo.costa@toradex.com>,
-	Hiago De Franco <hiago.franco@toradex.com>
-Subject: [PATCH 5.15 276/319] usb: gadget: f_ncm: restart the TX timer if the TX freelist is empty
-Date: Thu, 26 Nov 2026 15:40:44 +0100
-Message-ID: <20261126144012.983806618@linuxfoundation.org>
+	Brian Ellis <brianellis@gotenna.com>
+Subject: [PATCH 5.15 277/319] usb: gadget: u_serial: fix NULL deref in gs_close() after failed open
+Date: Thu, 26 Nov 2026 15:40:45 +0100
+Message-ID: <20261126144013.006459928@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,65 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+From: Brian Ellis <brianellis@gotenna.com>
 
-commit 78585f90feb3bbaf3b1c642294c8c47e451dc3cf upstream.
+commit ea6cf69ad03c8d85138830c0d2c3b946b5ae231d upstream.
 
-ncm_wrap_ntb() aggregates datagrams into a pending NTB, which is sent
-either when it becomes full, or after 300us since the NTB was started,
-using ndo_start_xmit() (eth_start_xmit()).
+gs_close() opens with
 
-ndo_start_xmit() returns NETDEV_TX_BUSY when the TX freelist is empty.
+	struct gs_port *port = tty->driver_data;
+	...
+	spin_lock_irq(&port->port_lock);
 
-For regular packets this is fine since the networking core will requeue
-them, but for timer-flushed packets there is no logic to handle this
-situation, and HRTIMER_NORESTART is returned from ncm_tx_timeout()
-without checking eth_start_xmit()'s return value.
+and never checks port.  gs_open() assigns tty->driver_data only on the
+port.count 0 -> 1 edge, so any failure earlier in gs_open() leaves it NULL,
+and tty_open() calls tty_release(), and hence ->close(), when ->open()
+fails.
 
-Under sustained TX saturation the request freelist is empty most of the
-time. Since the timer is never restarted, small packets keep getting
-accumulated into the NTB, until either TX_MAX_NUM_DPE packets are stored
-or NTB_DEFAULT_IN_SIZE is reached, which is an unknown amount of time.
+syzbot hit exactly this on arm64.  Fault injection failed the kfifo_alloc()
+of the write buffer in gs_open():
 
-Check the return value of ndo_start_xmit() and restart the timer after
-another 300us.
+   __kfifo_alloc_node+0x10c/0x208 lib/kfifo.c:44
+   gs_open+0x144/0x514 drivers/usb/gadget/function/u_serial.c:636
+   tty_open+0x404/0x89c drivers/tty/tty_io.c:2137
 
+and the tty core's close of the failed open then took port_lock through
+the NULL port:
+
+  BUG: unable to handle kernel paging request in gs_close
+  KASAN: null-ptr-deref in range [0x00000000000003a0-0x00000000000003a7]
+  Call trace:
+   spin_lock_irq include/linux/spinlock.h:372 [inline]
+   gs_close+0xac/0x65c drivers/usb/gadget/function/u_serial.c:698
+   tty_release+0x2c4/0xffc drivers/tty/tty_io.c:1745
+   tty_open+0x46c/0x89c drivers/tty/tty_io.c:2146
+
+Return early instead.  There is nothing to release when the open never got
+far enough to claim the port.
+
+Unlike the check reverted by commit f6c7bc4a6823 ("Revert "usb: gadget:
+u_serial: Add null pointer check in gs_start_io""), this is not hiding a
+race: the tty core calls ->close() for an ->open() that failed by design,
+so driver_data is legitimately unset on that path.
+
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Reported-by: syzbot+782b2f1063e38ba8fa6e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=782b2f1063e38ba8fa6e
 Cc: stable <stable@kernel.org>
-Fixes: 6d3865f9d41f ("usb: gadget: NCM: Add transmit multi-frame.")
-Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
-Tested-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
-Tested-by: Leonardo Costa <leonardo.costa@toradex.com>
-Reported-by: Hiago De Franco <hiago.franco@toradex.com>
-Closes: https://lore.kernel.org/all/20231204183751.64202-1-hiagofranco@gmail.com/
-Link: https://patch.msgid.link/20260817192638.437798-1-cosmin-gabriel.tanislav.xa@renesas.com
+Assisted-by: LLM
+Signed-off-by: Brian Ellis <brianellis@gotenna.com>
+Link: https://patch.msgid.link/20261013-u_serial-gs-close-null-v4-1-9ea038501994@gotenna.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_serial.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1157,6 +1157,7 @@ static enum hrtimer_restart ncm_tx_timeo
- {
- 	struct f_ncm *ncm = container_of(data, struct f_ncm, task_timer);
- 	struct net_device *netdev = READ_ONCE(ncm->netdev);
-+	netdev_tx_t ret;
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -678,6 +678,9 @@ static void gs_close(struct tty_struct *
+ 	struct gs_port *port = tty->driver_data;
+ 	struct gserial	*gser;
  
- 	if (netdev) {
- 		/* XXX This allowance of a NULL skb argument to ndo_start_xmit
-@@ -1167,7 +1168,11 @@ static enum hrtimer_restart ncm_tx_timeo
- 		 *
- 		 * This will call directly into u_ether's eth_start_xmit()
- 		 */
--		netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
-+		ret = netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
-+		if (ret == NETDEV_TX_BUSY) {
-+			hrtimer_forward_now(data, TX_TIMEOUT_NSECS);
-+			return HRTIMER_RESTART;
-+		}
- 	}
- 	return HRTIMER_NORESTART;
- }
++	if (!port)
++		return;
++
+ 	spin_lock_irq(&port->port_lock);
+ 
+ 	if (port->port.count != 1) {
 
 
