@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705629;
-	b=2Y+VsnA6p4qhc1xoR8p8Ka/QajwgjSS47TLvSOI+Qrmk+Y6ZvcurC3dbtijyTdZaOSo3
-	 3EAMBimxATtcY1v4UVRP9wRfuK2fmOH/6OWX8A1RBOgI3a9PlJDq+E1rQcdmWspSljMIx
-	 +J+Ig2kQgXrSlHwFiMIOSICMWNmtTer6FlmUvzmpyj2ZoSgUUm7bOcVx0ORP0pj3/Ihif
-	 EVTzDSVxYTkxswDd0Rbrn09PdiWmvyGLcozg5nfO8QF/kVqUQDKiPH11Ka644YLBUKwZ4
-	 +giRymNYjTPzcU2kqQFmnP9N2jwkQvZfJ0gNfSoa5Hg92zeGuseLkbUNyTOJoGw5VTg==
+	t=1795705632;
+	b=zmfwVer7e+archJiwtdig4CTGnUDuo1a1yhMeRaH1P1P9M8HJLqMLbjBdJTVaEOap8LY
+	 9thQNEM+ZapqF9Pc38oL09l5FPv99QQzj8Kx6WGdgRS2Cn4hNndvEUhqXtvYU9UgdzdK7
+	 4igpr/Lh2F2xodgY9Ao7v26/f+Y677RVXXvY8s8O0g4C73RbOnyyyaIEg0mDFOkny3iLu
+	 IBdr200/1iOD+HGG4tlg0vxv2kIwqWngE8Hc0NEKEgqbAc9Tmo926C3dJnrrkNNLPCvbx
+	 NBDQWbCZArabnCKhPvw6m6dSZxipsmDZfZj01pmAXwiuNMqmtR8c+3g3MCq53QRevLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ml8RRv0equpW5QrzCZXpluQhQ6llhN6er3wk+L6Dtx0=;
-	b=3e111VcKkj2mQkDj5v0/5qlQpsttxRPHg9fuZADgxdEv3pF6j92I8i8ahfqHqorLtQUW
-	 otx9qSjE255Hyxadjx2jxbjmeYf2FAAZpKbLQBXFbYWnul65id+9YV/NLamc1UAheUWK1
-	 k6n30L56VdWl8UGVJm4uYhHiOjnqciCkhkgkfn+VpAjQerpo5GVKsZNJr5m0VwC2fHkDr
-	 CgZYz5Nw1z9qhO8a5zvLvTl1JYGrLfG28+DDhVjPkxHNuxrBBfqwPTtRQQYbJs4WlXdJa
-	 OOMQQ4ISzCfxT28cZkM+bRKVWrwGhW7oTSpBJqmVDm+Tc9h/NtD02KvEu+QYppFWhfw==
+	bh=fcH/FPXJdH9bHMaOKkNcMuNua/c9Ow/A7G32jSTJvrc=;
+	b=R4ca55PXgjqPE+124CKm6xIR1ayq0wO7yPp+7bjDKjjqlO7ZY1Q/A1U0hQQ+TDPvt4co
+	 rtxGezOV9rQCzvdjso2f7QQdths5zE6o6pR1DDcLPvwJePCRLK+7lXJKrOfZXJC6RQw2U
+	 jUeUPfLB9Ef82Ha8W/y4zlH5J58lnpccS6qArt9oET74MB9aQO1KRoCY7EQ0x4sXbOLBf
+	 sg//7pZKr2nazi4jOXn0Enc1QdPDGmyKPkCBmjXsGY0lbnf+bwOYQ0pxpircvoPFSYlKq
+	 SwEZFpZto66gKWCA+lBK/ydi5Jb9ce2gNU6G0ZKFnLU8J0SJzvBRUyTvss9r4g8d/uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PA6ldxlG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzF9KsWx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461D8606A31C;
-	Thu, 26 Nov 2026 15:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099DB606A326;
+	Thu, 26 Nov 2026 15:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PA6ldxlG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7099B1F000C6;
-	Thu, 26 Nov 2026 15:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wzF9KsWx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDEF1F000C6;
+	Thu, 26 Nov 2026 15:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705628;
-	bh=ml8RRv0equpW5QrzCZXpluQhQ6llhN6er3wk+L6Dtx0=;
+	s=korg; t=1795705631;
+	bh=fcH/FPXJdH9bHMaOKkNcMuNua/c9Ow/A7G32jSTJvrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PA6ldxlGqeguiDZ5Nekrp/581pA6k1TnCQuXeSzVdLcewCt7S5n7d69/F1t99tv8a
-	 N0XcOSSaFooZx7wel59kzBq5s1gDdFjTcel0sPXHaogdEASTUvJj3CDSwN3pCwu638
-	 4LNbVO9EfLQvfj43iXxheaJjFW8KxUfMqy5v6QMU=
+	b=wzF9KsWxBEXHuwX36MCXduiHaqTIefJA2R3rUbmY17U/0DWBp2Puen7wPJw6+CVVf
+	 H2mdzQma2vrP2x3wTZ8g8f+bRuImBSz3JpoZc+HRWaKQwCtu/6pFd5C1kJC31pmKRR
+	 h2qHMXKomb355MBVqcEWmbqG30NPqLDoCKoZPk/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 5.15 260/319] comedi: ni_660x: dont poll without a DMA channel
-Date: Thu, 26 Nov 2026 15:40:28 +0100
-Message-ID: <20261126144012.616176072@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.15 261/319] comedi: ni_tio: Fix overflow of the clock period
+Date: Thu, 26 Nov 2026 15:40:29 +0100
+Message-ID: <20261126144012.638075140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,44 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 5a0c88567a5ebbe24ecb7828e200f63ed972718f upstream.
+commit ec214735bb113be747454812035b83010892e0d2 upstream.
 
-A counter command owns a MITE DMA channel from ni_660x_cmd() to
-ni_660x_cancel(). A command does not only end by COMEDI_CANCEL: when the
-reader is too slow mite_sync_input_dma() sets COMEDI_CB_OVERFLOW, and
-counter errors set COMEDI_CB_ERROR, and comedi_handle_events() then calls
-->cancel() from the interrupt handler. That releases the channel and
-clears counter->mite_chan, but s->busy stays set until the owner has read
-the rest of the data and seen the end of the acquisition.
+ni_tio_set_clock_src() stores the period of the clock source, which the
+user passes in nanoseconds, in picoseconds:
 
-do_poll_ioctl() only looks at s->busy, so a COMEDI_POLL in that state
-ends in mite_sync_dma(NULL, s), which dereferences the channel.
+	counter->clock_period_ps = period_ns * 1000;
 
-Test the channel like ni_pcidio_poll() and ni_sync_ai_dma() do. The
-pointer only changes under dev->mutex, which the ioctl holds, or in the
-interrupt handler under interrupt_lock, which is taken here.
+period_ns is an unsigned int, so that the product is computed in 32
+bits, although clock_period_ps is a u64. It wraps for periods above
+4294967 ns, that is for external clocks slower than 233 Hz.
+INSN_CONFIG_GET_CLOCK_SRC then reports a wrong period, and
+ni_tio_set_sync_mode() decides on a wrong one: 4294968 ns become 704 ps,
+which is below the limit of 25 ns under which the alternate
+synchronization mode for fast clocks is switched on.
 
-Fixes: 894db1197347 ("Staging: Comedi: ni_600x: Added support for comedi_poll.")
+The multiplication was done in 64 bits until the constant
+pico_per_nano, a uint64_t, was replaced by a literal. Widen again.
+
+Fixes: 3e90b1c7ebe9 ("staging: comedi: ni_tio: tidy up ni_tio_set_clock_src() and helpers")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-3-1899771ee15b@linuxfoundation.org
+Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20261027-llm-char-misc-comedi-v1-4-1899771ee15b@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/ni_660x.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/ni_tio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/ni_660x.c
-+++ b/drivers/comedi/drivers/ni_660x.c
-@@ -460,7 +460,8 @@ static int ni_660x_input_poll(struct com
- 
- 	/* lock to avoid race with comedi_poll */
- 	spin_lock_irqsave(&devpriv->interrupt_lock, flags);
--	mite_sync_dma(counter->mite_chan, s);
-+	if (counter->mite_chan)
-+		mite_sync_dma(counter->mite_chan, s);
- 	spin_unlock_irqrestore(&devpriv->interrupt_lock, flags);
- 	return comedi_buf_read_n_available(s);
+--- a/drivers/comedi/drivers/ni_tio.c
++++ b/drivers/comedi/drivers/ni_tio.c
+@@ -800,7 +800,7 @@ static int ni_tio_set_clock_src(struct n
+ 				GI_PRESCALE_X2(counter_dev->variant) |
+ 				GI_PRESCALE_X8(counter_dev->variant), bits);
+ 	}
+-	counter->clock_period_ps = period_ns * 1000;
++	counter->clock_period_ps = (u64)period_ns * 1000;
+ 	ni_tio_set_sync_mode(counter);
+ 	return 0;
  }
 
 
