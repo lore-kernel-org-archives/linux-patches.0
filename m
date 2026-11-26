@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704970;
-	b=yjh7oIkQc02YIt15GyfEqUFcRt8QgZZ/dOGz2ECzZaaFBN9geqK4f5s8+D8Y2k3eF3sP
-	 kmBzbeIALGH0D/tBLiRrGTZE4Uuk1QVXtTaZnlkrFix5ohN7GRLIdJ8dgj8B4oqYTAm78
-	 zTZEkOPbuVON1BAbv0LSutn0KoJGFJmA7a+HzKT+fOatL6kC3CVx/E3N/wZiIVNierJEl
-	 bZWQ31Zodui3lozMMpbh7iTL0YPdCA3UIDR5gfEFEgVkM+EASOzuct6BgSrtBOhBFfppZ
-	 VUMzIN+WVfOJOSqt/fTy/TQvqbmwpWLMPk0KfvHZ2Imou9wOzVprGPjMn6oxXH75R4A==
+	t=1795704973;
+	b=l9VcMy9l323jsuK1F3TMis6j3JtHZFbxO2gAp3T19jCTxkpup4f5mJPI+kyaRA+qeoxs
+	 H9+1wEP+jQ7ULe9RKqy2+MzgfQOPNkDvTfMvLzfZ8NC9IAocQAl1Ko0NCSdjIOuwD6wQD
+	 yfcZV78/ek3gUPdeJwo535GLdiE/Hk/q2JBSYAc7gmFOlOh38NPVB5Jvjhhgh4OsTWivC
+	 NEe403NsKVYUI1jTO6BIgDztl/Ajz/YcfQZLJ4s7BtEga1GrSgpEncyEQ2gYCBbVP3xRw
+	 zWqOOhTx5VGt3UDZCNq+ry9RmJVYKq+2PhDLuB7fduV5iUFeutChGrSzb/inBL+mqnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704973;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7+ksaa3tcDO6oDi1Qcg0V02WNPK3qrE2qW2zypeAMMs=;
-	b=t3PN/9GawshcxuaVUIlWz4NPPx2ykr+U/AV8tG5iUTNrmNY6LubAUnz0mdN6hUITxJL9
-	 rLWl+00JmcnJD3vcNQfDZ6ZkeBQYtDWD58FdBSDg3/icaagjjw24GAdKRHAMqyNObm41I
-	 +UreLfJC3MBUmA1hsD3oKEcimqOhXD2r7W2Mjfk2AGviC/L24YHJze4bDW0yTE/U5qJxV
-	 yFF6xz1P9Hq/R/Upq3vkGRiOAr2omdZdpf9SN7L0C8JGYbUE/tmKnOw9Vd+vwmfvP0mU6
-	 o/PBJa4W9pzytttTxckpbt1WHRKcJAOIhXMMX/JMcc8yjz0vj8ehD+SxI/2tQYotKSw==
+	bh=8tIqKUzt4Kv3o+jf8OeeBrA7XCocX1xELHTMs6nUu6w=;
+	b=O7zOsbzRJN5lw6cuQd8DWx9Lo05qH9yGVfott8OJ6b1hizDX4jF/SaGxp9Mm7U/Mw0PH
+	 L9XwpRjPBNHJpA1G7PiO7vmk1ITnJNJHbCwWKXJPgh2UAlspAs69OXBN8vvhvnA1e52N5
+	 UdAiJ64oKyOXuw5giSEhJlztmG6CodYyyBxWO0n1llj3VsoO4k0MytFVPw1pJ6Sk9KAFb
+	 wLhwGVODhsd2VL6D7txozdq9TZ+BD2tyGORnY5f2cc+cxW5UWAcX81v7vt/Lk2IKkwyHs
+	 sZMusiHoAS9sLDATrOm4w9uTS4K22xplPE4wQ6bJqnq/+lXt4F04JVjiXWcIJEjWidA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aFZeqiWV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NoldMnkD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3080606A31E;
-	Thu, 26 Nov 2026 14:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA603606A31E;
+	Thu, 26 Nov 2026 14:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aFZeqiWV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7D31F000D8;
-	Thu, 26 Nov 2026 14:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NoldMnkD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8901F000CA;
+	Thu, 26 Nov 2026 14:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704970;
-	bh=7+ksaa3tcDO6oDi1Qcg0V02WNPK3qrE2qW2zypeAMMs=;
+	s=korg; t=1795704973;
+	bh=8tIqKUzt4Kv3o+jf8OeeBrA7XCocX1xELHTMs6nUu6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aFZeqiWVwTzkHmcYNVutCmvgvXNr8bzo1WmEUwBxnaXn4p4EbDSaFoQ1/nVvCDtob
-	 o9CB9kXpozi0UsPjQaBZNBle0WbOZUqhCJT0l+EG7vClQZ4KoApV5u9t6BuaXPbU0W
-	 3HSmK7V+VoCrzMiQg3sdyzVcpnHSrZtHC8bDa4Uw=
+	b=NoldMnkDpRHyO5DiFCPoPlAQlIbZqr8BME97Ne8fyKnPQ1Kx9oUVmiEc9JzGyEamD
+	 cN7Fem/rZKTEFRVdudcFggOPDjlqEvG89t9jwvoIAtzR47NYADd5mJhD+9++XjwF9b
+	 69pvpFXmIAVnPkZrye0RIMmGrb2LuwctTd5OKzYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/319] bpf: Limit the SRH length in bpf_lwt_seg6_adjust_srh()
-Date: Thu, 26 Nov 2026 15:36:47 +0100
-Message-ID: <20261126144007.620510371@linuxfoundation.org>
+Subject: [PATCH 5.15 040/319] bpf: Dont look for the SRH again in the End.BPF helpers
+Date: Thu, 26 Nov 2026 15:36:48 +0100
+Message-ID: <20261126144007.642562118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,46 +67,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit ac159f39b252971141c49b68a27de0b637debfad ]
+[ Upstream commit 45bcc58d576705d2c001332766e10313f1c55bad ]
 
-bpf_lwt_seg6_adjust_srh() lets an End.BPF prog change the size of the TLVs
-in the SRH. The helper keeps the SRH length in srh_state->hdrlen, in bytes
-and without the first 8 bytes. Later seg6_bpf_has_valid_srh() writes it to
-srh->hdrlen, an 8-bit field in units of 8 bytes. But srh_state->hdrlen has
-no upper limit, and the cast to u8 can truncate it. After that,
-seg6_validate_srh() gets the SRH length from srh->hdrlen, and thus it can
-accept the SRH. Then srh->hdrlen is too small, and a parser reads TLVs as
-the subsequent header.
+A packet can have two SRHs. Thus input_action_end_bpf() uses
+IP6_FH_F_SKIP_RH to skip routing headers with segments_left 0. The helpers
+bpf_lwt_seg6_store_bytes() and bpf_lwt_seg6_adjust_srh() can reallocate the
+head of the skb. Thus they look for the SRH again, but without this flag.
 
-Return -EFAULT when the new srh_state->hdrlen is larger than 2040, the
-largest length that srh->hdrlen can hold. To replace a TLV in the largest
-SRH, a prog can no longer add bytes first. It must remove bytes first.
+  +------------------------+ <- the helpers: srh_state->srh
+  | SRH 1, segments_left 0 |
+  +------------------------+ <- input_action_end_bpf(): srh_state->srh
+  | SRH 2                  |    and srh_state->hdrlen
+  +------------------------+
 
-Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
-Signed-off-by: Chris Mason <mason@kernel.org>
+Then the helpers check offset against the wrong limits. If a helper changes
+TLVs, seg6_bpf_has_valid_srh() writes the length of SRH 2 to SRH 1.
+
+Neither helper changes the offset of the SRH from skb->data. Calculate the
+new address from this offset. To add IP6_FH_F_SKIP_RH is not sufficient,
+because advance_nextseg() can set segments_left of SRH 2 to 0. The helper
+bpf_lwt_seg6_action() can change the headers and still looks for the SRH.
+
+Fixes: fbbc5bc2ab8c ("seg6: ignore routing header with segments left equal to 0")
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-19-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-20-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/filter.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 0ecd9f8ac2e80..07e60e4d9886a 100644
+index 07e60e4d9886a..0ff701919ee67 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -6337,6 +6337,9 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
- 		return -EFAULT;
- 	if (unlikely(len < 0 && (void *)((char *)ptr - len) > srh_end))
- 		return -EFAULT;
-+	/* The length field of the SRH has 8 bits, in units of 8 bytes. */
-+	if (unlikely(len > (U8_MAX << 3) - srh_state->hdrlen))
-+		return -EFAULT;
+@@ -6185,11 +6185,12 @@ BPF_CALL_4(bpf_lwt_seg6_store_bytes, struct sk_buff *, skb, u32, offset,
+ 		this_cpu_ptr(&seg6_bpf_srh_states);
+ 	struct ipv6_sr_hdr *srh = srh_state->srh;
+ 	void *srh_tlvs, *srh_end, *ptr;
+-	int srhoff = 0;
++	int srhoff;
  
- 	if (len > 0) {
- 		ret = skb_cow_head(skb, len);
+ 	if (srh == NULL)
+ 		return -EINVAL;
+ 
++	srhoff = (unsigned char *)srh - skb->data;
+ 	srh_tlvs = (void *)((char *)srh + ((srh->first_segment + 1) << 4));
+ 	srh_end = (void *)((char *)srh + sizeof(*srh) + srh_state->hdrlen);
+ 
+@@ -6202,8 +6203,7 @@ BPF_CALL_4(bpf_lwt_seg6_store_bytes, struct sk_buff *, skb, u32, offset,
+ 
+ 	if (unlikely(bpf_try_make_writable(skb, offset + len)))
+ 		return -EFAULT;
+-	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0)
+-		return -EINVAL;
++	/* The head may have moved. */
+ 	srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
+ 
+ 	memcpy(skb->data + offset, from, len);
+@@ -6321,12 +6321,13 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
+ 	struct ipv6_sr_hdr *srh = srh_state->srh;
+ 	void *srh_end, *srh_tlvs, *ptr;
+ 	struct ipv6hdr *hdr;
+-	int srhoff = 0;
++	int srhoff;
+ 	int ret;
+ 
+ 	if (unlikely(srh == NULL))
+ 		return -EINVAL;
+ 
++	srhoff = (unsigned char *)srh - skb->data;
+ 	srh_tlvs = (void *)((unsigned char *)srh + sizeof(*srh) +
+ 			((srh->first_segment + 1) << 4));
+ 	srh_end = (void *)((unsigned char *)srh + sizeof(*srh) +
+@@ -6358,8 +6359,7 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
+ 	hdr = (struct ipv6hdr *)skb->data;
+ 	hdr->payload_len = htons(skb->len - sizeof(struct ipv6hdr));
+ 
+-	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0)
+-		return -EINVAL;
++	/* The bytes in front of offset have moved together with skb->data. */
+ 	srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
+ 	srh_state->hdrlen += len;
+ 	srh_state->valid = false;
 -- 
 2.53.0
 
