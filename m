@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704949;
-	b=spLBXw8hXZkAeakp9qvbolf0dMQ2cw4MZ3QMvOErK5dZdZrLEjyRJgZRAbnra97tXXXr
-	 OomC0qNy/Jd7Rwg8+YHYz30SFyiSRwsq3KY4vzmFqxjP42pqxvF9J73UgAILL2nRcJ1EX
-	 NylJt9WjrNJbrd3J+NxyLuUzhmbPLmjB9ZUaKQsib4jEdQVz+hx7ieueUV98vsav+q151
-	 F0djDN46kYmC+ScykKMJPSctT+OhYXNjrAsQvxQjZmQ/qXDbmlFEw8OliO6Q2WwVDg2g9
-	 +8vtMtW8KcwdkQVYkj5PHf4EY6CPGU4TqILe5l3mgSgqS9iKDdOMt5ikEhVA9Yc8lDg==
+	t=1795704952;
+	b=JlwwF8inr5hPkpUVHSkcQ0buHFxefrsT7vPdVjG1iS1d6q49x5yaVAnA3Z2VaJrv0CHH
+	 92KACma1mNQYpS5RerYvDeTqjso1b64j0yQAqFT5cJ6CDLWeM2w4qCuEpRNiSjkCi2Hxq
+	 BzA/rlM9p9jm2BJdNN6Dw+l2fcabp3J+ksxb7xKg89QB97vgPDduMPWu8hQSB+t7nPQN+
+	 B3hYIvzADFtzgZFCmoTdTzyYQCB0yAHbp+1UI4WusFJm7k6yGa1FwcTIK4EcqmYqZHyO8
+	 yfocCGfP+409pXPVAKyY/yYaK6kyUDBD6Iq5WiHMaSxiYwSJBXIo44FGFD2NiYjrlZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tDzS4JmVJd8lIefQtrWC/x4K0FIf2wMOAXtTNXzIK4U=;
-	b=EexXIC5ELwNu+FKb9hQbQViNBco7Id5dR9m9AN6DYno220Fe9iqqZwxosHSrvIlM+eQy
-	 8ID88nYJnfX9RmQUxRnE0z0oZ3RQ+8j5stgD2YvjyfOMMY5C6XGRU/uzJTiw8zXLaqm/7
-	 MCzPdW/aGClBK6JEfvbgnvVEjXkb19IvWmApNVvdtNvf4psjhoEwnoAZJxNN+YLgBNwWt
-	 BQ1h72M9s+cS6ubZGGwfTDo4Ep64BQe8Hg8je8L51eZKmuCEfKvOSpTC6S+6iYhGvYw1f
-	 HJzK2vexn7BLZhFnli1sh+LpG128/vCNw3SvnzuYHiyGPJ7AJahJdF7M60duGQ9ZXZA==
+	bh=ZjbuOUUQGOBtXN5imZdAPdEG4W60MooFUOrqJYGSv3g=;
+	b=UFSPkKMPkutXfFomvmESsCZ6s0jFY02z03w5QBIIv6HFnCUTsoRv4ON9FmEnZnT3vDIq
+	 jrsuwVL1mASWgaoA7HdXL1MIRkrdkg1znERRSs6SYaaDuWRzY/3Be0YuaM4pArkoOfAzI
+	 Y8EsZiAx1tmyALIpGK/mC88Wbji7RffhBLYoUMm/NYO9YgCS3f0NoCKJMP8xmj8hguhPM
+	 ibb6O5eJwhhfufo1QAa77S85tg1TKARNGbavyCnauZtYt9um+H2v9VU+qqlN0cvpjF08w
+	 qqcp/3vR8vyERtoJ3vmRqyApD5+3zPocK6vmEAhK9nseHZVyff8eeGyEgWJnmXvOilA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlPMB1hE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UFEVMQIX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8C7606A682;
-	Thu, 26 Nov 2026 14:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810C2606A686;
+	Thu, 26 Nov 2026 14:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlPMB1hE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613EF1F000E0;
-	Thu, 26 Nov 2026 14:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UFEVMQIX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11B81F000E1;
+	Thu, 26 Nov 2026 14:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704948;
-	bh=tDzS4JmVJd8lIefQtrWC/x4K0FIf2wMOAXtTNXzIK4U=;
+	s=korg; t=1795704952;
+	bh=ZjbuOUUQGOBtXN5imZdAPdEG4W60MooFUOrqJYGSv3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NlPMB1hEhDIo/+kwGAFYMPnDWGEK/kiqAL1oHaahpHMlJnTR2jGIQ72hnUZidmRYj
-	 3AWKMGQ5HvbsZHPgmfxp71gik+9HHsUV5uhSYs7HIJFnlKUM9BlWg0MVay3A662S1F
-	 f4cMD0NC4q6YcEBVcnTZLxWrRGT1fiVmLZkRAl2U=
+	b=UFEVMQIXJYBZm5Uf7+XH3yFSi6cn5er43VPwKD1HRoiWlWqz4mXOJCAsWiAU2On73
+	 oLMcs4Xy83jc6HIsBFMela7w96gQxL5+R6vgiswdWtFxkBphtzmLKwC3ZxaTl2vRM1
+	 TIhBHPrXrg/T1AOOaAncJTfkq0HGWuIHWLT4BaAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Liang He <windhl@126.com>,
+	Tony Lindgren <tony@atomide.com>,
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/319] drm/amdgpu: Check cs flags.
-Date: Thu, 26 Nov 2026 15:36:16 +0100
-Message-ID: <20261126144006.928427214@linuxfoundation.org>
+Subject: [PATCH 5.15 009/319] ARM: OMAP2+: omap4-common: Fix refcount leak bug
+Date: Thu, 26 Nov 2026 15:36:17 +0100
+Message-ID: <20261126144006.950889306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,42 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit f5ea64f9fcd921bc4e2307a262e19450b8a58524 ]
+commit 7c32919a378782c95c72bc028b5c30dfe8c11f82 upstream.
 
-Had no validation before. libdrm_amdgpu memsets this, even
-for the raw/raw2 functions.
+In omap4_sram_init(), of_find_compatible_node() will return a node
+pointer with refcount incremented. We should use of_node_put() when
+it is not used anymore.
 
-We have a lot of functions touching the ioctl struct, no
-strong opinion on where this is placed, but I thought
-early would be good.
-
-Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Reviewed-by: Faith Ekstrand <faith.ekstrand@collabora.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4d01e15e76358f60ef6734462d2b6d9972b9dfbc)
-Cc: stable@vger.kernel.org
-[ sashal: Moved the flags check from amdgpu_cs_pass1() to amdgpu_cs_parser_init() to match the older parser structure. ]
+Signed-off-by: Liang He <windhl@126.com>
+Message-Id: <20220628112939.160737-1-windhl@126.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/mach-omap2/omap4-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index a87dbd3173d6a..e30dbb3cca7b4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -113,6 +113,9 @@ static int amdgpu_cs_parser_init(struct amdgpu_cs_parser *p, union drm_amdgpu_cs
- 	if (cs->in.num_chunks == 0)
- 		return -EINVAL;
+diff --git a/arch/arm/mach-omap2/omap4-common.c b/arch/arm/mach-omap2/omap4-common.c
+index 0b80f8bcd3047..1553d70546c1c 100644
+--- a/arch/arm/mach-omap2/omap4-common.c
++++ b/arch/arm/mach-omap2/omap4-common.c
+@@ -140,6 +140,7 @@ static int __init omap4_sram_init(void)
+ 			__func__);
+ 	else
+ 		sram_sync = (void *)gen_pool_alloc(sram_pool, PAGE_SIZE);
++	of_node_put(np);
  
-+	if (cs->in.flags)
-+		return -EINVAL;
-+
- 	chunk_array = kvmalloc_array(cs->in.num_chunks, sizeof(uint64_t), GFP_KERNEL);
- 	if (!chunk_array)
- 		return -ENOMEM;
+ 	return 0;
+ }
 -- 
 2.53.0
 
