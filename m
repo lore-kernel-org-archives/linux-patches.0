@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705506;
-	b=JNmcmYjfiSpu55vi4gA0EJVCRFj7IbWOVOzcrSTQqvJ72RhkLQqsRoIcqSeFA/7G1tZ6
-	 D605zpvw16IOjWnCLftatrZC0qwtOXr1Ein8r5+K80bY0o5y5le6FscTnrqUHigtoE/zy
-	 Py2x/ZyEwuSkduldVmiYKu3j8U44F2olgBH+bWJDHvYSjrNv9age69/RnlEn3A3BfreLS
-	 ++MkG/SfEdAZle93WnGGWuSM6EM7Qct0/2zKqwUeCP6cquFJo9YS7/ScDp+ly7RfgoUvS
-	 vnRLMNLULg55dWLGS494Ay0zQTFMpJdHmrLZkC6/f8E9jLxFzm+td3tHxQMCqefRTDA==
+	t=1795705509;
+	b=TRtjmSAqhE374YgfdmLKZk4kzAhMb/VJpsGm7VCen7HYkrwPsfU9ZzPdiq2C200cY55K
+	 76dyHk+gQEBXNR6epMRBANnOrYx2BDaY98E9mtfXDRseom+WCR01YKA2S/aUnVIVGiOzd
+	 g8UKs5jUlIz64LVKWcDzIVNLXdr03bn1evq4wVFtKlkePD9h+qePRYlYiGlc35avm0cAB
+	 obZOVLx1IYBTn45QGk2wewNfn5lnD3kY0X4fVbsSu/wQnib+J4LgZPKibz/O2lawuyDKC
+	 MszHO2tIY/pnRZ8pyqnqP3EbzpklBAqQCMCJy4SkmFNhRzmW6kwmdU9IPzTMjyp2LmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q9dr5/UselDcdqOHjMrWZBlryct8GKnWH3+EMfwfyZM=;
-	b=PvKsSvU21pGdHYhYJUnq6KUa5b2qpXUfl8aoVZ+Ssnqc5dvG49Zp+BRGb6FpyvtjxuOg
-	 Y2WUASh2Mwcu1v16bHgbB+f3sZus6zPnuGa15OEYvXbvstm78fyp48XxSGe/NnMp/6DSt
-	 NAy/71I78uWjJwWOuT7ejS9XPANhfwsUV9mw0zvhjcL2z4ksRzBJdF/UL8GngemkoJ3IK
-	 v7gCxqr9O0tynJbBSiGGIXcxi8ImM07TZbsgwtz5sSwuVFh1vJ45yQ1mA2L5ze5qrZuGz
-	 UlrnL56R32vVMs1LYKJWHvvLyLq1/l+DdlkXu+mBMEyZ69sZBL5k87N14vcM9mL5WzA==
+	bh=NPGgn4gWqPxUbqy+1b/WMagfzheldGJFVEfJi4AdqqY=;
+	b=BB2TvFOVS18YCvZTE30uLLoaPwhq9OJSbFrOdbvaoQhihfaTxF/0JOEf8DX49oWqqOUL
+	 QgCWlWytwHPC91Rk1oC5L9zJuomM0sRejyEz+u/EsqCOSbrTnX5m5/PyinI2VvzBCP5U+
+	 FVVCRUAiiTCG2h317jSlFUel8plDZx41N+WKnPf6dhasl0Ks+FtBHG7l8lqtNmH+84lmO
+	 S1vXarKpFmmD+UrbzlFrrKbaS4hmN1K+O5cuO2RZ2pMF3ZDE3Lf1r9l7j7ovMgX61W5+E
+	 g/rg2jqd4GuWlM3+J63Fx/rQFUaP/VCaya/jSHmOx7j+Vum8Cme8YPt1iFDkFUqoUDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ho5BVBHN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUfboSFt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06248606A68F;
-	Thu, 26 Nov 2026 15:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C4A606A6B6;
+	Thu, 26 Nov 2026 15:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ho5BVBHN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8121F008B2;
-	Thu, 26 Nov 2026 15:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EUfboSFt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7067F1F000D1;
+	Thu, 26 Nov 2026 15:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705505;
-	bh=q9dr5/UselDcdqOHjMrWZBlryct8GKnWH3+EMfwfyZM=;
+	s=korg; t=1795705508;
+	bh=NPGgn4gWqPxUbqy+1b/WMagfzheldGJFVEfJi4AdqqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ho5BVBHNf7knNrBlyXQev/mW9lLnrQoQl+6sqJJwqh2CCzH4fvzvlR7WTLiD7hIs5
-	 j6eI1iiKbRvxFe6Y1GNpGSvWEdr1dV1oBpjtW3F73ml4AE9i0Sbj/LicrOSIbFUQoo
-	 flSeKMNj5F6zIsd5bPLEiVdgVL5Y+AfwYvXdaq8Q=
+	b=EUfboSFt64p/Sycr7IOuazHjk1O4n2D3iHIPnvwT5sYD/BG1GotygP4f3/mnASDP0
+	 9dWluExs7CkwAf7oVqOpuq5orxImWdWrvY+4EY9vvyIAxT3verG2U5z65TEBFryC7d
+	 DSeLWjQqBYegFG9iJs6kxEoomlRzcHOIHPcEyTsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Igor Velkov <iav@iav.lv>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 176/319] mmc: meson-gx: honour the busy timeout for R1b commands
-Date: Thu, 26 Nov 2026 15:39:04 +0100
-Message-ID: <20261126144010.719277783@linuxfoundation.org>
+Subject: [PATCH 5.15 177/319] mmc: meson-gx: name the limit of the CMD_CFG timeout field
+Date: Thu, 26 Nov 2026 15:39:05 +0100
+Message-ID: <20261126144010.741647777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,24 +70,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Igor Velkov <iav@iav.lv>
 
-commit 7e3cc541aa5855bc36e6cbffa82efc2795955a10 upstream.
+commit e1644210d15f7f8adbe6315199b4b73bead63a2c upstream.
 
-For a command without data the driver programs a fixed 1024 ms into the
-CMD_CFG timeout field, and for R1b the controller waits for the card to
-release busy within that time. The core sends erase and cache flush as
-R1b with busy timeouts of up to 60 s and 30 s, and the controller gives
-up after one second:
-
-  mmc_erase: erase error -110, status 0x0
-  mmc1: cache flush error -110
-
-Program the timeout from cmd->busy_timeout, kept between 1024 ms, the
-fixed value until now, and 32768 ms, the most the field holds, and
-rounded up to a power of two. The clamp comes first: MMC_IOC_CMD passes
-cmd_timeout_ms from user space straight into busy_timeout, and
-roundup_pow_of_two() of a value above 2^31 does not fit in unsigned
-int. sdhci takes its command timeout from cmd->busy_timeout in the
-same way.
+The data timeout is capped at a literal 32768 ms with a comment next to
+it. Give the limit a name beside the other timeout constants.
 
 Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
 Cc: stable@vger.kernel.org
@@ -96,40 +82,27 @@ Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/mmc/host/meson-gx-mmc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/mmc/host/meson-gx-mmc.c
 +++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -212,6 +212,20 @@ static unsigned int meson_mmc_get_timeou
- 	return min(timeout, 32768U); /* max. 2^15 ms */
+@@ -123,6 +123,7 @@
+ #define SD_EMMC_CFG_RESP_TIMEOUT 256 /* in clock cycles */
+ #define SD_EMMC_CMD_TIMEOUT 1024 /* in ms */
+ #define SD_EMMC_CMD_TIMEOUT_DATA 4096 /* in ms */
++#define SD_EMMC_CMD_TIMEOUT_MAX 32768 /* in ms, 2^15: limit of CMD_CFG_TIMEOUT_MASK */
+ #define SD_EMMC_CFG_CMD_GAP 16 /* in clock cycles */
+ #define SD_EMMC_DESC_BUF_LEN PAGE_SIZE
+ 
+@@ -209,7 +210,7 @@ static unsigned int meson_mmc_get_timeou
+ 
+ 	timeout = roundup_pow_of_two(timeout);
+ 
+-	return min(timeout, 32768U); /* max. 2^15 ms */
++	return min_t(unsigned int, timeout, SD_EMMC_CMD_TIMEOUT_MAX);
  }
  
-+/* For R1b the controller waits for busy to be released within this timeout. */
-+static unsigned int meson_mmc_get_cmd_timeout_msecs(struct mmc_command *cmd)
-+{
-+	unsigned int timeout = cmd->busy_timeout;
-+
-+	if (!timeout)
-+		return SD_EMMC_CMD_TIMEOUT;
-+
-+	timeout = clamp_t(unsigned int, timeout, SD_EMMC_CMD_TIMEOUT,
-+			  SD_EMMC_CMD_TIMEOUT_MAX);
-+
-+	return roundup_pow_of_two(timeout);
-+}
-+
- static struct mmc_command *meson_mmc_get_next_command(struct mmc_command *cmd)
- {
- 	if (cmd->opcode == MMC_SET_BLOCK_COUNT && !cmd->error)
-@@ -850,7 +864,7 @@ static void meson_mmc_start_cmd(struct m
- 		cmd_data = host->bounce_dma_addr & CMD_DATA_MASK;
- 	} else {
- 		cmd_cfg |= FIELD_PREP(CMD_CFG_TIMEOUT_MASK,
--				      ilog2(SD_EMMC_CMD_TIMEOUT));
-+				      ilog2(meson_mmc_get_cmd_timeout_msecs(cmd)));
- 	}
- 
- 	/* Last descriptor */
+ /* For R1b the controller waits for busy to be released within this timeout. */
 
 
