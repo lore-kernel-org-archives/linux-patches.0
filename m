@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705497;
-	b=X3NDr+wZEbAiIdoAQc3UC7KY7SkgjHqLSABKnM603otijdspR7yHBEkU6bRhOuM1lK8t
-	 NI/OlHRDmlzYUX7gG1g3oCE5eNgypNxMNarghFeblTrMSSIAKopFfHEVpT8W5SPLO8Fuc
-	 /A1oF910xdkxPFDi4AKU7XZDxIK1YuS2vnc36Q11NgWX7sqo9xGybuqgOKRMavfOmtrFb
-	 Nu7z1GI365WJSKTRit80s25aQ4SjYsQLMmJrkNy36uDQWvbEzoMZ3AVZsWdvA2cU31NUl
-	 Ktyj4TshBPcZLHTwfRvnJsKQ/BTAoEJah8It93mTel8uS1BZNhCeKEBgUId6YJeprww==
+	t=1795705500;
+	b=pAWvKfifOIPeErw4YW9vWrStjLGFKzsi7+zoZSbjEtZ4pZmONJTyzFH99XiKWImPhfoT
+	 4zSEOKglDFJMBC3GDFofXC04baGGfzx6nEZkHEpm7D1vH831UlABES2Pg9mqmDuJXpS0H
+	 i6KexP296D4fwA+0hQPqZKxBR5B8cjaHU33RSRaNH2ZioQZm6zON7RByDNboUysvFSaco
+	 FptHK5eE0InCGMAn5FV7jBM6TFaGQWPkK0aLUnylG2FMcps2tI5UAvqFGJnhzmp4KD095
+	 9HMqEimq1HJro0tYcWYpNPE08xvis5WeRfpmEbgYpTfB9Aij/Rbjb3MV56gT60abFXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EBvbW2GNtUJjM0B4cOwZtiaL49xwwJEywQWFQdDVzrE=;
-	b=s/Je3xPxLnGIVw2aHGac/jEouQVdqqYZKIb1hHmfDZaP++QZtAuahUBBNpDRyWGYxhBh
-	 PABApnTNoR0TSt+bo6Z2KC+8BU14kyUm0BpjgwRbTqndaM6ZhSlxPde5bSKx7l44lkqDI
-	 c9VyS3xjdt6eT8kTiBas8WH3MpMRYjicjhOZLSBrMzHq3FujjiJ7Ic2yeQmi/Y2KgYTja
-	 HLT0cQymksXECJv47PN7ks+Z7wrnTsLpl4NkA6j8tQba8HRcB7MgzAvsuvS66k6L6c5XN
-	 DjYHoEZqb3A0oHR0EJyYT+W69zdJzADDUOyeRssn2PCExOZifth0UfFAL8Xr/dOCmcw==
+	bh=Nhay1ry7iHxjxrncWkfxHnIFFdkUYWm7RbqDUMhcHek=;
+	b=g8oFv+IgENrLY8xBlN/z01S7ugSAsWIrlufWXRSx0YWr2LuCz7+609buKv4y8x3EZD2r
+	 jR+vKTCI9ptIax7dzWzrJgqdQv7ExfxJ5olU3xjK09M1lYuYkWzsnoCdRtYpiP/zK1oJW
+	 Qho2FneU6um4fC2lqWKE8w5yPOlzt2RowYh2hOEF6wgoH75FKllHpBRL4hyhM1Zi+LbW4
+	 kaEVcyq2iCWAEZzBR84J0O880GOIOs782Fm82HdvhD30yeTY+BD8N29rZyzRfNr/8dZIK
+	 RnEaTO9xb//1ofEeJQ4PGogacwTWg49QAGI788cd+saUox+kKgtX3oEDCPmJfnotJrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ROzQrdYG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvJgyy7p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591C2606A31C;
-	Thu, 26 Nov 2026 15:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1822606A31E;
+	Thu, 26 Nov 2026 15:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ROzQrdYG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A5E1F000CF;
-	Thu, 26 Nov 2026 15:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvJgyy7p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF3D1F000C4;
+	Thu, 26 Nov 2026 15:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705496;
-	bh=EBvbW2GNtUJjM0B4cOwZtiaL49xwwJEywQWFQdDVzrE=;
+	s=korg; t=1795705499;
+	bh=Nhay1ry7iHxjxrncWkfxHnIFFdkUYWm7RbqDUMhcHek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROzQrdYGQ1GDhemk+8ygoIU14mJJ0gkII75qi6FSh+TcVqoOTZQRbigFVuiRMkmtU
-	 hS8ZDc42WhasSB3U0QjzOgY1Nl1hODBuRPjdqIUDKd+T43Fm4W0w+ryPMkT7MCu3ge
-	 nb20IxSVxsv+6kYpzY6r+hbxJDRD1ntY0+H7AZOE=
+	b=JvJgyy7p8jLoBX0e6Y3xSrIWNzHn4k1rB4vV5Jee3FP1r2umoAjfIXt7VukQJ1KPb
+	 /twRH1j4dr8kQ/UAx4hfCdsv4rC21Vtc8djIydVzF9XWZi9qoLKaaCXAawbB2tHSBG
+	 VCtvQTTFZ7Fqq70qFQwyu9pWOZYJxQnetv2gEhig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Misiurov <andrey.misyrov@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 216/319] xen/gntdev: fix deadlock between map ioctl and mmap
-Date: Thu, 26 Nov 2026 15:39:44 +0100
-Message-ID: <20261126144011.621706963@linuxfoundation.org>
+Subject: [PATCH 5.15 217/319] xen/pvcalls: unwind pvcalls_new_active_socket() step by step
+Date: Thu, 26 Nov 2026 15:39:45 +0100
+Message-ID: <20261126144011.644553923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,81 +68,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Misiurov <andrey.misyrov@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 7620a997e4854c94eacebf0c2d453fbd78ccdb46 upstream.
+commit 702ba3c80a8736898813a2c7484d695278aa114d upstream.
 
-Commit 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl") moved
-copy_to_user() in gntdev_ioctl_map_grant_ref() under priv->lock. A
-fault in copy_to_user() takes mmap_lock, while gntdev_mmap() is called
-with mmap_lock held and takes priv->lock:
+Every error path in pvcalls_new_active_socket() jumps to one shared label
+that does list_del(&map->list) and then hands map to
+pvcalls_back_release_active().  But map comes from kzalloc() and its
+list_head is only published at the very end of the function, after the last
+of those jumps:
 
-  ioctl thread                        mmap thread
-  mutex_lock(&priv->lock)
-                                      mmap_write_lock(mm)
-                                      gntdev_mmap()
-                                        mutex_lock(&priv->lock)
-  copy_to_user() faults
-    mmap_read_lock(mm)
+	down(&fedata->socket_lock);
+	list_add_tail(&map->list, &fedata->socket_mappings);
+	up(&fedata->socket_lock);
 
-Reproduced on Debian 6.12.111 in a Xen guest, with the ioctl argument
-on a MAP_PRIVATE file page that has not been written yet. sysrq-w:
+so on the error path map->list is still {NULL, NULL} and __list_del()
+writes through a NULL pointer.
 
-  task:repro state:D stack:0 pid:4479 tgid:4477 ppid:1 flags:0x00000000
-   rwsem_down_read_slowpath+0x25c/0x480
-   down_read_killable+0x48/0xc0
-   lock_mm_and_find_vma+0x96/0x250
-   do_user_addr_fault+0x12d/0x620
-   exc_page_fault+0x7e/0x180
-   asm_exc_page_fault+0x26/0x30
-   _copy_to_user+0x36/0x50
-   gntdev_ioctl+0x3b9/0xa00 [xen_gntdev]
-   __x64_sys_ioctl+0x97/0xc0
-  task:repro state:D stack:0 pid:4480 tgid:4477 ppid:1 flags:0x00000000
-   __mutex_lock.constprop.0+0x41b/0x720
-   gntdev_mmap+0x4d/0x330 [xen_gntdev]
-   __mmap_region+0x697/0xb10
-   mmap_region+0x78/0xa0
-   do_mmap+0x45d/0x630
-   vm_mmap_pgoff+0xf8/0x1c0
+A frontend gets there with one value it owns: the ring_order field of the
+page it granted.  Anything above MAX_RING_ORDER takes the second goto, and
+nothing else in the function has run by then.
 
-Drop priv->lock before copy_to_user() again. On failure, re-take it
-and remove the map by index, as IOCTL_GNTDEV_UNMAP_GRANT_REF does,
-since another thread may have unmapped it meanwhile.
+The result is an oops in whichever context handled the request - the
+pvcalls-back threaded IRQ handler for PVCALLS_CONNECT, mappass->wq for
+PVCALLS_ACCEPT - and because it happens after down(&fedata->socket_lock)
+that semaphore is never released, so every later operation on the frontend
+blocks on it and the backend never completes backend_disconnect().  (With
+CONFIG_DEBUG_LIST the list_del() only reports and returns, and
+pvcalls_back_release_active() then runs on a map whose irq is still 0 and
+whose bytes, ioworker.wq and saved_data_ready are all NULL.)
 
-Fixes: 45ca1afe2fd1 ("xen/gntdev: fix error handling in ioctl")
+A frontend asking for ring_order 5, on a dom0 built with KASAN
+(the request was issued by a test-only change to the frontend):
+
+[  133.728877] pvcalls_new_active_socket frontend requested ring_order 5, which is > MAX (4)
+[  133.732868] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+[  133.737910] KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+[  133.741666] CPU: 0 UID: 0 PID: 133 Comm: irq/39-pvcalls- Not tainted 7.3.0-kCTLblk2-15482-g21a7f44fd076-dirty #1 PREEMPT(full)
+[  133.746986] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[  133.751512] RIP: 0010:pvcalls_new_active_socket+0x821/0xb90
+[  133.754237] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 f6 01 00 00 48 8d 79 08 4c 8b 6b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 14 02 00 00 4c 89 ea 4c 89 69 08 48 b8 00 00 00
+[  133.763126] RSP: 0018:ffffc900004afb38 EFLAGS: 00010202
+[  133.765861] RAX: dffffc0000000000 RBX: ffff88810886c900 RCX: 0000000000000000
+[  133.769348] RDX: 0000000000000001 RSI: 0000000000000246 RDI: 0000000000000008
+[  133.772787] RBP: 1ffff92000095f6b R08: 0000000000000001 R09: fffff52000095f58
+[  133.776260] R10: 0000000000000003 R11: ffff888100077320 R12: ffff88810858b410
+[  133.779823] R13: 0000000000000000 R14: ffff88810858b460 R15: ffff88810858b400
+[  133.783382] FS:  0000000000000000(0000) GS:ffff8881b034c000(0000) knlGS:0000000000000000
+[  133.787351] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  133.790308] CR2: 00000000006042c0 CR3: 0000000108400001 CR4: 0000000000770ef0
+[  133.793822] PKRU: 55555554
+[  133.795347] Call Trace:
+[  133.796778]  <TASK>
+[  133.798082]  ? __pfx_pvcalls_new_active_socket+0x10/0x10
+[  133.800801]  ? security_socket_post_create+0x4d/0x60
+[  133.803275]  ? release_sock+0x1a/0x1d0
+[  133.805182]  pvcalls_back_event+0x1b09/0x23e0
+[  133.807431]  ? __pfx_pvcalls_back_event+0x10/0x10
+[  133.809814]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[  133.812251]  ? __pfx_pvcalls_back_event+0x10/0x10
+[  133.814554]  irq_thread_fn+0x86/0x150
+[  133.816468]  irq_thread+0x2da/0x580
+[  133.818363]  ? __pfx_irq_thread_fn+0x10/0x10
+[  133.820586]  ? __pfx_irq_thread+0x10/0x10
+[  133.822670]  ? __kthread_parkme+0x88/0x170
+[  133.824803]  ? __pfx_irq_thread+0x10/0x10
+[  133.827153]  ? __pfx_irq_thread+0x10/0x10
+[  133.829304]  kthread+0x2c8/0x3b0
+[  133.831176]  ? recalc_sigpending+0x15c/0x1e0
+[  133.833570]  ? __pfx_kthread+0x10/0x10
+[  133.835572]  ret_from_fork+0x373/0x5b0
+[  133.837581]  ? __pfx_ret_from_fork+0x10/0x10
+[  133.839978]  ? __switch_to+0x3c4/0xb40
+[  133.841984]  ? __pfx_kthread+0x10/0x10
+[  133.843970]  ret_from_fork_asm+0x1a/0x30
+[  133.846031]  </TASK>
+[  133.847420] Modules linked in:
+[  133.849240] ---[ end trace 0000000000000000 ]---
+
+Give each failure its own label, so that only resources that were actually
+acquired are released and the list the map was never added to is left
+alone.  The map is not published anywhere at that point, so the error path
+needs no socket_lock at all.  sock_release() stays in the callee on every
+error path, the way
+commit 8fafac202d18 ("xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()")
+arranged it.
+
+Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrey Misiurov <andrey.misyrov@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261013170745.583279-1-andrey.misyrov@gmail.com>
+Message-ID: <20261110125002.46683-2-yhlee@isslab.korea.ac.kr>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/gntdev.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/xen/pvcalls-back.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -678,15 +678,19 @@ static long gntdev_ioctl_map_grant_ref(s
- 	mutex_lock(&priv->lock);
- 	gntdev_add_map(priv, map);
- 	op.index = map->index << PAGE_SHIFT;
-+	mutex_unlock(&priv->lock);
+--- a/drivers/xen/pvcalls-back.c
++++ b/drivers/xen/pvcalls-back.c
+@@ -333,7 +333,7 @@ static struct sock_mapping *pvcalls_new_
  
- 	if (copy_to_user(u, &op, sizeof(op)) != 0) {
--		list_del(&map->next);
-+		mutex_lock(&priv->lock);
-+		map = gntdev_find_map_index(priv, op.index >> PAGE_SHIFT,
-+					    op.count);
-+		if (map)
-+			list_del(&map->next);
- 		mutex_unlock(&priv->lock);
- 		gntdev_put_map(priv, map);
- 		return -EFAULT;
+ 	ret = xenbus_map_ring_valloc(fedata->dev, &ref, 1, &page);
+ 	if (ret < 0)
+-		goto out;
++		goto out_map;
+ 	map->ring = page;
+ 	map->ring_order = map->ring->ring_order;
+ 	/* first read the order, then map the data ring */
+@@ -341,19 +341,19 @@ static struct sock_mapping *pvcalls_new_
+ 	if (map->ring_order > MAX_RING_ORDER) {
+ 		pr_warn("%s frontend requested ring_order %u, which is > MAX (%u)\n",
+ 				__func__, map->ring_order, MAX_RING_ORDER);
+-		goto out;
++		goto out_unmap_ring;
  	}
+ 	ret = xenbus_map_ring_valloc(fedata->dev, map->ring->ref,
+ 				     (1 << map->ring_order), &page);
+ 	if (ret < 0)
+-		goto out;
++		goto out_unmap_ring;
+ 	map->bytes = page;
  
--	mutex_unlock(&priv->lock);
- 	return 0;
+ 	ret = bind_interdomain_evtchn_to_irqhandler_lateeoi(
+ 			fedata->dev, evtchn,
+ 			pvcalls_back_conn_event, 0, "pvcalls-backend", map);
+ 	if (ret < 0)
+-		goto out;
++		goto out_unmap_bytes;
+ 	map->irq = ret;
+ 
+ 	map->data.in = map->bytes;
+@@ -361,7 +361,7 @@ static struct sock_mapping *pvcalls_new_
+ 
+ 	map->ioworker.wq = alloc_workqueue("pvcalls_io", WQ_UNBOUND, 1);
+ 	if (!map->ioworker.wq)
+-		goto out;
++		goto out_unbind;
+ 	atomic_set(&map->io, 1);
+ 	INIT_WORK(&map->ioworker.register_work,	pvcalls_back_ioworker);
+ 
+@@ -377,11 +377,16 @@ static struct sock_mapping *pvcalls_new_
+ 	write_unlock_bh(&map->sock->sk->sk_callback_lock);
+ 
+ 	return map;
+-out:
+-	down(&fedata->socket_lock);
+-	list_del(&map->list);
+-	pvcalls_back_release_active(fedata->dev, fedata, map);
+-	up(&fedata->socket_lock);
++
++out_unbind:
++	unbind_from_irqhandler(map->irq, map);
++out_unmap_bytes:
++	xenbus_unmap_ring_vfree(fedata->dev, map->bytes);
++out_unmap_ring:
++	xenbus_unmap_ring_vfree(fedata->dev, (void *)map->ring);
++out_map:
++	sock_release(sock);
++	kfree(map);
+ 	return NULL;
  }
  
 
