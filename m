@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705530;
-	b=2C0Mh+twZsllk/asbA8Hquewdog0Xq+NIvEHaWn3m/bmycx83eBDYUz2PyEyy0tGlAwK
-	 BvgOspeEKrqIbqpZcEMMfQgwQA5KiAgNM8prnX2XjTEVJSZC+NtZDNkdV17Mde6RGKMvF
-	 hl9qIyIOCCUnCcNQ6i9mepUWIoSuJYbnK0agVq9A6egmsC5GHh+27oHN6gfLqafGc99NC
-	 dVJwCLxTh7Rur9Kve5t2MlNiZQRwgTEbeGKcF627wmdI0WqVxJi+ZZtgYSEJC38yE9YwK
-	 ziD0Nvbct30YEo9wVUWUmPeeXt5o1r43u/QJr3frZx1ndacYNP0Z3hPGCPrmZBMIJ2A==
+	t=1795705534;
+	b=GIVuj9CzvIl/ExVvA90Ik0WqP4cNC2hjf2VncsC9iuCWUWj/C010WQjkeytbZBbkRget
+	 zJfaSPEokesVnD6C3gnLvULD3KnOutXizo6KN6/vQ/mpub6LDSQLxcNzZSY48NFrjxr3x
+	 rGHisQajxxJ5uQNRmY0k08GzbaIsDtzhnM8oCT5wLAQKN1edhfDEiVNcuFbRNo5kHZVme
+	 R6aDYHAQzSjoCS4wTOsr0q5pcLYurU23pjVXxD48ycykkygLIFXcCpL8H+Vm5nvN24qO/
+	 cyXS8ZmmvplOg1geHXG8RqHCZSLhkVBtKVyXeKpVzlK3gWf5868QBj4Skjp3wjKDbJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705534;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eCHCbkzBb5dsN3PCVdK996mtZvG9RH2etaTke5eheE8=;
-	b=puvgFpTrNR4jmu7s4tqpJb6VqNQ2xeJ7AM6bDxA6QL/DciwVar4BzUzMAymN3EpE3YJt
-	 SpTOqecBt38STnudLaF8hNFQEoFn7ydDp2KeiraMASccNWfWGdII4aOHqevqVb/0+Pgxa
-	 WSpLdBvKeXPWqGo9z+WJkd4PunKcFhDuagSXzWEVptsDhdAAHtofYDLe2uFzVL7+xGj/c
-	 srZ/5AkW6D1bJDg6wMmnLMhmbDtuu0Dyg3A/I6MbmMa2NyCDuZ5NXa2gC8UQhFl9qNgVn
-	 btqDq0r1YF2va+eB4+iMPgqGQVvrM6+Qhk3yO1nHThvR2QiOcY7YI0AOsvcf13DBliQ==
+	bh=kmvVy3b0hncVxkSS/LqgWlHdeySI2nTLzerY3WlEH1I=;
+	b=xvnhD25tSf/gOsvt+owv2RvRlR28KHMavlXk0Jnrl58Mb/Qc8S5dbrWHkUtWphyDRYjm
+	 AUJzTxyMmHQhPB9oYZGvQiGdYyqLvCkYsAqzPZc7PjdRTxiSyQi1RN2yuTbuG1EwhC4wt
+	 eTe4mx7uGuWyhYJ8qEeGc3BOlaaA+AR7zD/EFiADaGDsSdN1cRUk4cRTzqYalloNOu8N3
+	 5IK+b5ds56EyBIzngPnjRAfzqaesRVFLaaZCagteDjIvc+v6rcecgj5nlC5YY0DnZG8Tm
+	 ef2la0iV+v5OkC5qTS2140Fbu5d7/dld6VgxCgRkHVWxxllbqyBnB+0U9y6C14g7CDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Otp6Gk6F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2moO1SC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E35606A339;
-	Thu, 26 Nov 2026 15:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDE1606A321;
+	Thu, 26 Nov 2026 15:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Otp6Gk6F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D811F00A19;
-	Thu, 26 Nov 2026 15:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2moO1SC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95891F000D4;
+	Thu, 26 Nov 2026 15:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705530;
-	bh=eCHCbkzBb5dsN3PCVdK996mtZvG9RH2etaTke5eheE8=;
+	s=korg; t=1795705533;
+	bh=kmvVy3b0hncVxkSS/LqgWlHdeySI2nTLzerY3WlEH1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Otp6Gk6FO7OEbYEwEmuAkV6MWlSM/CEOIYGlg1C1eb9jrARad0pPSOBkIn/7zVQh9
-	 G1dfDvfWjC6ULJLtoJV3aGQsin8/AdvX2Vyc68jheBrYYfFw2r/Fle1O4Q2Cjna9WQ
-	 UTrrdpJPWGZz8xFE0lbk5RY8jYOB/rQMaXHwj9Xw=
+	b=D2moO1SCC54Qvwch87mHvhds3P2wlotcGAgWUY+GeEmJRBXRjerEonlB/w8Hm99RJ
+	 Wazr4L0yzFeLAaLGU+XvXrXcu2u9chFvL2R0G2aib9+ZsRVCrlONUZKZoCz0cf27+p
+	 UG1WIvFA/KnDypYfg40J0FFIMgp+s0OpuKY6EAd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Wahid Khan <wahidzk0091@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 230/319] wifi: cfg80211: release rejected nontransmitted BSS reference
-Date: Thu, 26 Nov 2026 15:39:58 +0100
-Message-ID: <20261126144011.940922699@linuxfoundation.org>
+Subject: [PATCH 5.15 231/319] wifi: cfg80211: dont truncate the merged MBSSID profile length
+Date: Thu, 26 Nov 2026 15:39:59 +0100
+Message-ID: <20261126144011.963248527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,40 +67,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Wahid Khan <wahidzk0091@gmail.com>
 
-commit f3c45d5b741a7d7586e639c2f55d2557029f2e1a upstream.
+commit 3ea152f3f77eeffc37b2f4423688b4df9136f90c upstream.
 
-Repeated MBSSID reports without an SSID can leak BSS entries outside the
-scan cache, where the BSS entry limit cannot account for them.
+cfg80211_parse_mbssid_data() keeps the length of a non-transmitted BSSID
+profile in a u8. cfg80211_merge_profile() returns a size_t, and it
+concatenates a profile that is split over several Multiple BSSID
+elements, so the merged length can be well above 255 even though every
+single sub-element is at most 255 bytes long.
 
-__cfg80211_bss_update() returns a referenced BSS. If adding it to the
-transmitting BSS list fails, unlinking drops the cache reference, but the
-caller reference is lost when res is cleared.
+The value is then cut to its low 8 bits. A 300 byte profile is handled
+as a 44 byte one: the elements after the cut are lost from the generated
+non-transmitted BSS, and if the Multiple BSSID-Index element lies past
+the cut the BSS is dropped altogether. Any AP in range can send such a
+profile.
 
-Release the caller reference before discarding the unlinked BSS.
+The multi-link code further down in the same file already uses a signed
+size type for the profile length. Do the same here, cfg80211_find_ie()
+and cfg80211_gen_new_ie() take a size_t anyway.
 
-LLM assistance was used to find the bug and review.
-
-Fixes: 0b7808818cb9 ("wifi: cfg80211: fix BSS refcounting bugs")
+Fixes: fe806e4992c9 ("cfg80211: support profile split between elements")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028141731.6185-1-enderaoelyther@gmail.com
+Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
+Link: https://patch.msgid.link/20261104211451.693451-1-wahidzk0091@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/scan.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/scan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/net/wireless/scan.c
 +++ b/net/wireless/scan.c
-@@ -2109,6 +2109,7 @@ cfg80211_inform_single_bss_data(struct w
- 					       &res->pub)) {
- 			if (__cfg80211_unlink_bss(rdev, res)) {
- 				rdev->bss_generation++;
-+				bss_ref_put(rdev, res);
- 				res = NULL;
- 			}
- 		}
+@@ -2241,7 +2241,7 @@ static void cfg80211_parse_mbssid_data(s
+ 		if (elem->data[0] < 1 || (int)elem->data[0] > 8)
+ 			continue;
+ 		for_each_element(sub, elem->data + 1, elem->datalen - 1) {
+-			u8 profile_len;
++			size_t profile_len;
+ 
+ 			if (sub->id != 0 || sub->datalen < 4) {
+ 				/* not a valid BSS profile */
 
 
