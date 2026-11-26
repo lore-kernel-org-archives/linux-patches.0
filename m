@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704748;
-	b=l1fkk2A5OJC8DLnQLqJA+Dv0gYpkChw1f7Mypl3eMe2ZnA2yNJiSQ/McQea8iU8xLsbP
-	 c+fjSxut58VL08+SpzO/rDgVkT0B4BDDXtzWyT2Fa/dg+MIZhHxMsEVmn2s/zI1npv6Is
-	 xfdaGmrHHL9uqlE6LXy/s+CRMc/gfVKJeAhNmdgvRCVCoQVtK9PPKq/yqHIcJ4NTFyJXJ
-	 dlqaCxDsRVcolLCSVNnFXklViillU/1E+HQlu6LFcb16aPubibN9k5Xt1ga4awzebOV83
-	 lEghnKdpXM8z7qv3TXErwb43XjK1xjh7/ByKwMFRWHUpOZF/075Ywcngn1c6dTVkG1w==
+	t=1795704755;
+	b=urHfNJQ0Ts2EObW6rN77ukcoPQG89jwXCMBqP8Q4KQV0OiFZvWZeqC5if04vAwCr8XIz
+	 azgktVwsRvFMegzcc0TMjcaBJ+6hXpONkis8HL/ByExDskTjs1mmwNffMTW4w+QpLJE+M
+	 G2krt4qHgx0ZFub8irXcxs5Ii0YDAXjsfdpOF3D9mf2FcqGLGx3RJ2vs15myXCO7NHLpY
+	 zj1OqqrL80i/2YPm3RSeMyU026hdJYxfPt6HS4LVLOC/a8yae9T1vmTCt1z8zMm5nTZQ7
+	 C2VjC5tMZqp94fngU6DaKIv7/lua4Cpn9flXof5ckaNeKDrem5Qg1AV7is6Iu391GbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P8GFfA1+QsFBYBpCpcu/HVOjzf93gtbbaS/56wh0qS8=;
-	b=1FkdyKOZuSV4ajwtaITEfzDwKS55Jq5fardXEv/eyk3ihJt1A7CxKp851ev7b+scfKQ7
-	 X3kjBWeP5H42o6wW+MCpPB15zwr2ZJhdEYm1PFmN24BmvAw28q4KZ3n6EDmf0D0YYLLZ5
-	 BOpaOrzCWmFjBf4ePbwgsdGSvwRAZX48MmYpSK3rEb3xoTfiaFiA+R72Ew8fxGj60Uen8
-	 mKSFEzH7qe0tyfP7AgqRt47b1qHMrFeeB1LjUpM9b4vbpqLFgW66NR9n4969btKVTEQ7d
-	 /chlxzlW+tZy8ippPlB15pve/O9GCSIh/0oQsipxXiT9ftfO6rZstg+NHjSZ/LQ04vg==
+	bh=yJh9y03hWl7f+jqL7HQ/LIZYCA/nAvNFmvMvPebVAC0=;
+	b=31KENqukuagRIgcHCRuzaSlJHHRPOYs4uiXKHwA2JfRnX1zEJXnUvUIW0SIfY9eGeZSk
+	 7kC2PH++XRw/D+Y3BVal8gOVIY/FhsqGdl9uYLcW2wKK77DO5s9RlMIlJcgOTnDTUbPOk
+	 kt85WRenPmPZb1CEATB3FXru9xCPBQhHmO0Jt2I+rUX9dwFES2+NiFDEKmyT8GnfLvUuW
+	 oohaOJQb18C+H4LG3kLL5MdCLd3DCbzhf/79OkFVZ+Wf5kt1ejBpGcOxMcb/19nGEclzr
+	 rqK0cgiKDo12P9IyeHW7hXzTv76IQifgCuQB/oU4yai9L96GqDfKu3WqK2EEk4uQ3SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDLMOKCK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNIsejDh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67B6606A323;
-	Thu, 26 Nov 2026 14:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6AA606A31C;
+	Thu, 26 Nov 2026 14:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDLMOKCK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33F41F000D1;
-	Thu, 26 Nov 2026 14:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNIsejDh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC341F000C6;
+	Thu, 26 Nov 2026 14:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704748;
-	bh=P8GFfA1+QsFBYBpCpcu/HVOjzf93gtbbaS/56wh0qS8=;
+	s=korg; t=1795704754;
+	bh=yJh9y03hWl7f+jqL7HQ/LIZYCA/nAvNFmvMvPebVAC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDLMOKCKnXIvFwhsSuK7kc/kEhjASA+tZP/OUHUtLbVFDDeF5ABxKGbl+a8RxhjiX
-	 gvTSNuQY4kVqVwKoFZVCJQAjGIFc72ROXH9TOSjuBOuW9Y3sWtWbQpElWaDsJwIGHd
-	 3cmQXL9bLTq2DStA8ShLp+xo9wN5EiVXN1cUKowQ=
+	b=YNIsejDhyzBRSWn3rY5yDhw3CRTSIcqAdrqEmNrNlJHTB0plcBBMS51Rn5X/u6+mF
+	 WTUCTJYzTRmY6qvIRS5NtOTL06L7cOybEIBC0QCX6p/DLAjRmMW1an3VmzfFSsvRBL
+	 32cntu5junWwOSjaqqaDbNkY+x0ZvdStQHBgHDeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 193/265] wifi: mac80211: recheck the OCB station limit before insertion
-Date: Thu, 26 Nov 2026 15:38:43 +0100
-Message-ID: <20261126143618.683109742@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH 5.10 230/265] w1: ds28e04: use the bus mutex to talk on the bus
+Date: Thu, 26 Nov 2026 15:39:20 +0100
+Message-ID: <20261126143621.338799028@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,49 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 27e29a077b4887d0e0a813337f8b7e06bd020c81 upstream.
+commit 5bc51235d0ad4a4991e38f4e9dc3440738296850 upstream.
 
-Frames from successive unknown OCB peers can make the deferred worker
-install more than 128 stations.
+Since commit b02f8bede217 ("W1: split master mutex to avoid deadlocks.")
+the slave drivers serialise their accesses to the bus with bus_mutex.
+This driver, which was merged shortly afterwards, takes the mutex of the
+master in the callbacks of its eeprom and pio files instead.
 
-The receive path checks local->num_sta before allocating each station,
-but pending stations are not included in that count. Several allocations
-can therefore pass before the worker inserts any of them, and the worker
-then drains the list without rechecking the limit.
+That mutex is held while a slave which has disappeared from the bus is
+removed, which waits for the sysfs callbacks of the slave to return.  A
+callback which is waiting for the mutex at that moment never does: both
+tasks are stuck, and with them the thread of the bus master.
 
-Recheck the installed-station limit in the worker under the wiphy mutex
-and free entries that no longer fit.
+Besides, it does not keep the other slave drivers off the bus, so that two
+transactions can get mixed up on the wire.
 
-LLM assistance was used to find the bug and review.
-
-Fixes: 239281f803e2 ("mac80211: 802.11p OCB mode support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142302.16634-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: fbf7f7b4e2ae ("w1: Add 1-wire slave device driver for DS28E04-100")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-4-d2e6bfafb6a4@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ocb.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/w1/slaves/w1_ds28e04.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/net/mac80211/ocb.c
-+++ b/net/mac80211/ocb.c
-@@ -138,8 +138,12 @@ void ieee80211_ocb_work(struct ieee80211
- 		list_del(&sta->list);
- 		spin_unlock_bh(&ifocb->incomplete_lock);
+--- a/drivers/w1/slaves/w1_ds28e04.c
++++ b/drivers/w1/slaves/w1_ds28e04.c
+@@ -123,7 +123,7 @@ static ssize_t eeprom_read(struct file *
+ 	if (count == 0)
+ 		return 0;
  
--		ieee80211_ocb_finish_sta(sta);
--		rcu_read_unlock();
-+		if (sdata->local->num_sta >= IEEE80211_OCB_MAX_STA_ENTRIES) {
-+			sta_info_free(sdata->local, sta);
-+		} else {
-+			ieee80211_ocb_finish_sta(sta);
-+			rcu_read_unlock();
-+		}
- 		spin_lock_bh(&ifocb->incomplete_lock);
+-	mutex_lock(&sl->master->mutex);
++	mutex_lock(&sl->master->bus_mutex);
+ 
+ 	if (w1_enable_crccheck) {
+ 		min_page = (off >> W1_PAGE_BITS);
+@@ -140,7 +140,7 @@ static ssize_t eeprom_read(struct file *
  	}
- 	spin_unlock_bh(&ifocb->incomplete_lock);
+ 
+ out_up:
+-	mutex_unlock(&sl->master->mutex);
++	mutex_unlock(&sl->master->bus_mutex);
+ 
+ 	return count;
+ }
+@@ -250,7 +250,7 @@ static ssize_t eeprom_write(struct file
+ 		}
+ 	}
+ 
+-	mutex_lock(&sl->master->mutex);
++	mutex_lock(&sl->master->bus_mutex);
+ 
+ 	/* Can only write data to one page at a time */
+ 	idx = 0;
+@@ -268,7 +268,7 @@ static ssize_t eeprom_write(struct file
+ 	}
+ 
+ out_up:
+-	mutex_unlock(&sl->master->mutex);
++	mutex_unlock(&sl->master->bus_mutex);
+ 
+ 	return count;
+ }
+@@ -287,9 +287,9 @@ static ssize_t pio_read(struct file *fil
+ 	if (off != 0 || count != 1 || buf == NULL)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&sl->master->mutex);
++	mutex_lock(&sl->master->bus_mutex);
+ 	ret = w1_f1C_read(sl, W1_1C_REG_LOGIC_STATE, count, buf);
+-	mutex_unlock(&sl->master->mutex);
++	mutex_unlock(&sl->master->bus_mutex);
+ 
+ 	return ret;
+ }
+@@ -307,11 +307,11 @@ static ssize_t pio_write(struct file *fi
+ 	if (off != 0 || count != 1 || buf == NULL)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&sl->master->mutex);
++	mutex_lock(&sl->master->bus_mutex);
+ 
+ 	/* Write the PIO data */
+ 	if (w1_reset_select_slave(sl)) {
+-		mutex_unlock(&sl->master->mutex);
++		mutex_unlock(&sl->master->bus_mutex);
+ 		return -1;
+ 	}
+ 
+@@ -325,7 +325,7 @@ static ssize_t pio_write(struct file *fi
+ 
+ 	w1_read_block(sl->master, &ack, sizeof(ack));
+ 
+-	mutex_unlock(&sl->master->mutex);
++	mutex_unlock(&sl->master->bus_mutex);
+ 
+ 	/* check for acknowledgement */
+ 	if (ack != 0xAA)
 
 
