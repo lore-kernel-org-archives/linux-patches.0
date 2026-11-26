@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705044;
-	b=2gsm+l5G1secJYjdMpsvHGeJytBomKOQ3bTB84V0jMei7LocVDunVpJkcsUU1kptOpgP
-	 7Zk3xJmBhIYMajtV7rQY4gCwFZkZcxfkU1OGFmOY9ybDocnsVi+aUoaRxRl7Uw753wizH
-	 c4T+ul5iTWGHRx0OysidFjZXEUPMcTJnscILr8i8nM8WaGEtB2UrNpOuvRD4mbRXUE10m
-	 zCwhcaa+3y3wHLlZOJHjKbPJp4xqY5BvOLxPfEwTzqaur9Rt3soVfyucvhoCnTT5Vh1rR
-	 4CQA6V10kUgh9HCEmW8rMvV0A7nqAYLUb8mY2y1uUCJ0Xe8DbMCHk3Z1eULZREq5sfA==
+	t=1795705047;
+	b=c5yh8y0ACSswFWdXRH85XSG6Sgz6I3TsQt3PIjZEwML61OmpS1HHU1sTlXCON6Z/m10c
+	 r2gzwWpGTgAtCC83wzqR0QpQ4RXlIENR9X4lCwSle2H5j8aclvO+bU3vUpvyaaxL6LwRv
+	 3VrW8+W7Mhgzm0/IpY4PdaBrY8ZIlBwovnVuRO2Pyry5BynUFE0zG5tJXbI+7Z2LabYBN
+	 jzFlbgUPHU9scuwmQmfadCZfWv/GCCUZKHh++DqIzirse7WNJF2e25PZukTWEY1JEEzSa
+	 Lh7Dnbna08D4lt5BCEyy5Ze6FaSbUozpYRogbW58MFAtlU81jVi8Foe+zeM3MNEPDNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t6ySXHNzZPp08Tl1haRmBGLsaAeJoCMxp0vG8IW8o3o=;
-	b=D8pijA+cSdk4qU92v3mwQpbwBCUds+/yaycLPav237DROEvaVo986nTS3XNSy6Yql3fi
-	 zdYIK3F0+A6Ws14kMuTqNC42PL0kQhN9jSsfWVbMk3/MLG1Iv1KHTFg8XptxgtdxY3NX5
-	 pd/FKva8NMFCNp3IMbY1zI1H0YGlM8gnwx/XJKQg3iXLjdeawWgq72+g7Rtmfoy+E2ryo
-	 XPdkrn9lWv2JCv93wESzwU6eKCw4ehTI7SZfOyU6sK8mRhl/R933gqN1EzTTA0wsboZWQ
-	 PQQrbOsRoWEzLcv09CzVUHUrFsGtfWuA/6SPyiNsQYE0UnXhj7TPAYkD1BZHcRpAvCQ==
+	bh=9GgSlj1+2Cj7Kb3P1dUHwPZf0GrxwIb8CEgahJjnvkI=;
+	b=wfaofufQkokdhS/Z7DTlBEha7ICbWrh36ASnu0KyLdMsVaWNEebOBZtErdnqaMo8kwN+
+	 JzIQIIKmMhi8TIzjRiFSk7muuTt03YkuC9T/32Fuymhy8+v+Gq8Q+4Id26meZpaPNNd/V
+	 vT+qY86jxo+xhg+pWB9+7gp4Dp5Sn3FcdeEfchAv9/uIvxC8yhp/s05o4m0ThCrja4sYL
+	 tOSqgwLl/ZgvZeCvVcB8QoLh8/nBpoZ5avgKim+ICt2nBJBP+h81gat0kn+ocjzzlMVRN
+	 mabDIoOqeB9NJY5HCa4Gnz2m8Be7iiANYaZ4h8uXsGzUeFdIhBsZwWEtk3vdEt9guyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4ZXvZd9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T106dF+M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80421606A339;
-	Thu, 26 Nov 2026 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A0B606A31E;
+	Thu, 26 Nov 2026 14:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4ZXvZd9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFADB1F000E1;
-	Thu, 26 Nov 2026 14:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T106dF+M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D725F1F000F4;
+	Thu, 26 Nov 2026 14:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705044;
-	bh=t6ySXHNzZPp08Tl1haRmBGLsaAeJoCMxp0vG8IW8o3o=;
+	s=korg; t=1795705047;
+	bh=9GgSlj1+2Cj7Kb3P1dUHwPZf0GrxwIb8CEgahJjnvkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4ZXvZd9RpDgTf2laGS7p93+YOKofIzhc7FE/lAaPiywmSMWbBbiExmop9+fx3qhX
-	 YRCetUY98UnkcEpX83eMxWFmSyZYxc4irdBwiFbrNpv1KFNKdKOdxg29MIn1d4L61D
-	 sbxhI6/o/HZip+itisor/meUacTt+H1Ui/pPMWK4=
+	b=T106dF+MwfXjY1yUmA/eQXWJqrVUBPFTMHg/nznmxqQWM/NCDR4/Gmj1Genb+zB8V
+	 MAwYw5bcE9IT/t69VoRjpBir7EoiYbD3T+Lt3r0d+plI6hhv8BjWmOkLtThslq4nq0
+	 xOyW1UdMr9b+deGviBkClTLBpsk+XjqC8ToxOO1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 063/319] net/iucv: take a private, writable frame before rewriting it in place
-Date: Thu, 26 Nov 2026 15:37:11 +0100
-Message-ID: <20261126144008.160733982@linuxfoundation.org>
+Subject: [PATCH 5.15 064/319] ASoC: meson: axg-fifo: request the irq with the clock enabled
+Date: Thu, 26 Nov 2026 15:37:12 +0100
+Message-ID: <20261126144008.183416536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,62 +69,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit f38bce9af9e2a3cced7d303a1476f21c1f42bcb7 ]
+[ Upstream commit 82fa7bfab6b961a03d6575348334e0ec15fdc712 ]
 
-afiucv_hs_rcv() rewrites the frame in place -- EBCASC() on four name
-fields, then afiucv_swap_src_dest() swaps them and pushes an Ethernet
-header -- and can hand the same skb to dev_queue_xmit(), without making
-it private first, so a packet socket that also gets the frame reads the
-rewritten names. An ETH_P_ALL tap runs first and leaves af_iucv a
-cloned skb; a socket opened for ETH_P_AF_IUCV sits on a ptype_specific
-list, walked after ptype_base[], so deliver_skb() takes a reference and
-af_iucv runs on an skb that is shared but not cloned.
+The fifo irq handler accesses registers which need pclk, but the irq is
+requested before pclk is enabled on open and freed after it is disabled
+on close.
 
-Unshare, then cow, in that order: skb_cow() can reach
-pskb_expand_head(), which has BUG_ON(skb_shared()). skb_cow() tests
-skb_cloned(), which is what a rewrite of the data needs; skb_cow_head()
-tests only the header. Asking for ETH_HLEN also covers the unchecked
-push in afiucv_swap_src_dest(); on the ordinary path eth_type_trans()
-has already pulled that much, so it only compares.
+Request the irq after enabling pclk and masking the fifo irqs.
+Free it before disabling pclk.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Closes: https://sashiko.dev/#/patchset/20260813-b4-disp-60433a46-v1-1-509e1200533e@proton.me?part=1
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261028-b4-disp-1edbbc34-v3-1-13495411f5b9@proton.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6dc4fa179fb8 ("ASoC: meson: add axg fifo base driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-30e88a8a-f33a-40f0-92aa-9ea62c5b7299
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20261030-asoc-axg-fifo-irq-clock-v1-1-f8c170ac8b0d@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/meson/axg-fifo.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index 8247f1f6c20b4..b4238fbac2d1a 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2067,11 +2067,20 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 	int err = NET_RX_SUCCESS;
- 	char nullstring[8];
+diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
+index 5218e40aeb1bb..4a81aa3f384f0 100644
+--- a/sound/soc/meson/axg-fifo.c
++++ b/sound/soc/meson/axg-fifo.c
+@@ -244,17 +244,10 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
+ 	if (ret)
+ 		return ret;
  
-+	skb = skb_share_check(skb, GFP_ATOMIC);
-+	if (!skb)
-+		return NET_RX_SUCCESS;
-+
- 	if (!pskb_may_pull(skb, sizeof(*trans_hdr))) {
- 		kfree_skb(skb);
- 		return NET_RX_SUCCESS;
- 	}
+-	/* Use the threaded irq handler only with non-atomic links */
+-	ret = request_threaded_irq(fifo->irq, NULL,
+-				   axg_fifo_pcm_irq_block,
+-				   IRQF_ONESHOT, dev_name(dev), ss);
+-	if (ret)
+-		return ret;
+-
+ 	/* Enable pclk to access registers and clock the fifo ip */
+ 	ret = clk_prepare_enable(fifo->pclk);
+ 	if (ret)
+-		goto free_irq;
++		return ret;
  
-+	if (skb_cow(skb, ETH_HLEN)) {
-+		kfree_skb(skb);
-+		return NET_RX_SUCCESS;
-+	}
+ 	/* Setup status2 so it reports the memory pointer */
+ 	regmap_update_bits(fifo->map, FIFO_CTRL1,
+@@ -271,17 +264,24 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
+ 	/* Clear any pending interrupt */
+ 	axg_fifo_ack_irq(fifo, FIFO_INT_MASK);
+ 
++	/* Use the threaded irq handler only with non-atomic links */
++	ret = request_threaded_irq(fifo->irq, NULL,
++				   axg_fifo_pcm_irq_block,
++				   IRQF_ONESHOT, dev_name(dev), ss);
++	if (ret)
++		goto free_clk;
 +
- 	trans_hdr = iucv_trans_hdr(skb);
- 	EBCASC(trans_hdr->destAppName, sizeof(trans_hdr->destAppName));
- 	EBCASC(trans_hdr->destUserID, sizeof(trans_hdr->destUserID));
+ 	/* Take memory arbitror out of reset */
+ 	ret = reset_control_deassert(fifo->arb);
+ 	if (ret)
+-		goto free_clk;
++		goto free_irq;
+ 
+ 	return 0;
+ 
+-free_clk:
+-	clk_disable_unprepare(fifo->pclk);
+ free_irq:
+ 	free_irq(fifo->irq, ss);
++free_clk:
++	clk_disable_unprepare(fifo->pclk);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(axg_fifo_pcm_open);
+@@ -295,12 +295,12 @@ int axg_fifo_pcm_close(struct snd_soc_component *component,
+ 	/* Put the memory arbitror back in reset */
+ 	ret = reset_control_assert(fifo->arb);
+ 
+-	/* Disable fifo ip and register access */
+-	clk_disable_unprepare(fifo->pclk);
+-
+ 	/* remove IRQ */
+ 	free_irq(fifo->irq, ss);
+ 
++	/* Disable fifo ip and register access */
++	clk_disable_unprepare(fifo->pclk);
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(axg_fifo_pcm_close);
 -- 
 2.53.0
 
