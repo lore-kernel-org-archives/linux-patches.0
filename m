@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704673;
-	b=GgFTwvS2b4oRnlvgEHwNuqmT15zoVbEKOdKvysBR7kof5W+0hSVGjjyQeNv2fl0p6bfb
-	 cHyL2SdRaX8rfjT75pAnv+HfoN8v6nKMYaCK0eiykVTH20wA1rAVCkyIdBGjnm7fgufSb
-	 wx1Sy+vAFPeR308QCQbAlV+ZtAamszzAhQpAffyRRCFfORiee+4hV50UN/ozCsOACkV1+
-	 fEU4bhdLqzJp8hnwtZwCwY/a764O1KYgawAWUA6oTFcVBBqNMg1Lj3U4Jv3b5G6VTBS0W
-	 k8SkDug39eAmgAJXoIQXZK9e6ZD9nm9/8Z2/G5qhf9KkBz0sxS4jbmCc9PNdIjp7ODQ==
+	t=1795704677;
+	b=tCg5mclSyA+3bFphSW80OqScTNOMiwlpV7Yp8Jujry3h7pFFZ3fgVthgqmndBkfJ52T5
+	 X8//VmltTEqUXpkhSIXW/7g1jJkAWz0MFfaZO85uWoZqvfF7cC+JJAACGzRaOxJxmWMVn
+	 EULN6BFT4PAhS4uDiGCho1WOpGZJ/GnL9xt+L5Ox7Y/tVDEN7QhvGM/81C1KBFCU0/bRa
+	 G/lxsQk9G2fyQwtdVdH5EW9CghhDXVzmdDw3rhOBopy5oS0a/JJlGZ50iflsmNd3dClyM
+	 vRgpEXHLFcFjol/9K2buGRw4q9hMNlhp0GA1SvwVmEfXDc5+rW+rdUBilYmRy9G/2ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NuzZCZPs5KNXaXeY2guLgurdN+VvXbuL6Gi1E5I0iK8=;
-	b=vjivE+d6H36Oj7K2SK58xJ4lW9IFAqj7GQsgoixoCJHksPraez46FobpMcJ6mXFlnMXg
-	 I4qHKgYT9Ntd0P0gxDiysLCRDOipzrw/ot8BNJtyWGjKRzXrc1kN+j4hnfkh1KuTMifzj
-	 IMgfMfAh6+FqJ88TmJqtjqh3pnJoSAB8KoZPDXTTRKxJ7eNPyjABc1uNlT7voE5CgHmVf
-	 Vggq6eZQYRtvKy7vr2h7pzo5XHZJzEbJPEr48v1Ts317tvDvVteeVJU3rpFUWHxxlOShG
-	 NnRTnwagD1PIW8xjsqb/DM/r5d9pkXPfAS5CsbyeqmcF/CfYJtrsp5rauQwKrYoATqA==
+	bh=XA49V0sIqK1dQEMblUKVkgURCkkb/S2t1ldE3K0jAFU=;
+	b=wnNqsSDsdtxk+/HWyAAslHLVOv4RQjMTuFRb5VCCLq3GAk/uxBWD3BYdlANl0JkacUFL
+	 CXV2D/5XyJcqasob66cDRhWqc5hjeEEgp+BN5u9T5saA2C9ia/I2IWSTKUIgPp9FpTYBk
+	 V2pbOjWP+wzUb4egh6kZbiOC9M9yjLE2Ggb52kfLQb35Qs07xueDItno6bBftma3wb24o
+	 INWR/DAhQNVRu2Tts/dpnsqNBXb0fXQvzX/64xvDXUrMKiPhRBZjzFml2eD5OFPoD+Xk7
+	 BGPZYXFFn7/zWOpylypS4/0qVzdJfiwadYT+aULSndghQS6BeHoF5xpZJaoofu2yz5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0tbZGfz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mp5nySJh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95335606A31C;
-	Thu, 26 Nov 2026 14:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE67606A31C;
+	Thu, 26 Nov 2026 14:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0tbZGfz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AA91F000C4;
-	Thu, 26 Nov 2026 14:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mp5nySJh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAE01F000C4;
+	Thu, 26 Nov 2026 14:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704673;
-	bh=NuzZCZPs5KNXaXeY2guLgurdN+VvXbuL6Gi1E5I0iK8=;
+	s=korg; t=1795704676;
+	bh=XA49V0sIqK1dQEMblUKVkgURCkkb/S2t1ldE3K0jAFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0tbZGfzk3rWfvElIQHbVMrKuOurQPA28mR4+dPdXvdWE+tlbyL/l2qirfhTf9yP9
-	 Scj4Is3RCIEOFys5sr+1ygsvP01lfWmIqcENacOAwKXp/tMue65H8gU6ZIF0clq24j
-	 ddDWdbme/F068JKlisqoFHgvfzc3q2F64ETfYu0o=
+	b=mp5nySJhn80NaNRAbn+c6Tkb+tzC5YkGBnxdl2BJe7DOSOJC5uwA4BOnoLXOzNmVe
+	 wTue0nEkzVJN+RPsQtVHRPItFtTJ4NUxSjvN/qFsv5sgmK6aYzkhfH2rmqr/Rn8FRD
+	 Z2nstgz925QMfjH4Ar6uetLxiFP5joMb9++gJ/9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 206/265] dm snapshot: fix discard writing into the next COW chunk
-Date: Thu, 26 Nov 2026 15:38:56 +0100
-Message-ID: <20261126143619.603769569@linuxfoundation.org>
+Subject: [PATCH 5.10 207/265] dm zoned: back off when reclaim cannot make progress
+Date: Thu, 26 Nov 2026 15:38:57 +0100
+Message-ID: <20261126143619.673450658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,99 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Kyrylo Biryuk <illofspeed@gmail.com>
 
-commit 73174b4bb6fcd0e6cf973c9402a0fae2e567ad9f upstream.
+commit 9bb1d14877f4929be17f7fdbeb4cfdf5025d464b upstream.
 
-zero_exception() zeroes one chunk of the COW device and takes the start
-sector from bio->bi_iter.bi_sector.  remap_exception() has already set
-that to the COW chunk start plus the offset inside the chunk.  That
-offset is needed for reads and writes, but for a discard it is wrong:
-the zeroing window is shifted, so the head of the target chunk keeps
-its old data and the tail lands in the next COW chunk, which holds a
-different exception.
+When a reclaim pass cannot make progress, dmz_reclaim_work() still ends
+with dmz_schedule_reclaim(). If the target is idle, dmz_should_reclaim()
+keeps returning true, the work is queued again with no delay and the
+worker spins on the same failing pass. This patch handles two such
+cases:
 
-io_overlaps_chunk() should have caught this, but it only compares the
-length.  "maps to entire chunks" in snapshot.rst also means the discard
-has to start on a chunk boundary.
+  - dmz_do_reclaim() fails with -ENOSPC because no free zone is
+    available to copy the data into, for example on a target without
+    cache zones that has no free sequential zone left. The next patch
+    also makes this the expected result when an idle target with cache
+    zones has random zones but no free sequential zone.
+  - dmz_do_reclaim() finds no zone it can lock for reclaim and returns
+    -EBUSY. Since commit 90a9b8693f1b ("dm zoned: reclaim random zones
+    when idle"), dmz_should_reclaim() returns true on an idle target
+    whenever the total number of random (and cache) zones is non-zero,
+    whether or not any of them holds data. Each pass then also runs
+    dmz_check_dev(), which checks every device for media events (a TEST
+    UNIT READY on SCSI disks).
 
-A discard that is not a full chunk has a second problem: after
-remap_exception() it is sent to the COW device, where it hits a chunk
-that still backs a live exception.  After a discard the contents are
-undefined, but the exception stays in the table and keeps pointing at
-that chunk, so a later read returns whatever the discard left instead
-of the snapshot's data.
+The -EBUSY loop lasts as long as the target stays idle; it ends when a
+pass finishes while the target is busy and has enough free zones. On
+three 27 TB host-managed SATA drives used as md RAID5 members (7.2.10
+with the module built out of tree, all random zones free, target idle
+for 300 seconds, kprobes attached, two other drives on the controller
+being zero-filled), each member's SCSI device counted about 108,000
+requests per second with the stock module and the system used about
+915 s of CPU time, against about 46 s with this series. libata completes
+TEST UNIT READY in software, so these counters do not measure commands
+sent to the drives; the cost is CPU time.
 
-Reproducer:
+When a pass fails with -ENOSPC or -EBUSY, retrying at once is unlikely
+to make progress: re-arm the idle poll instead, so that reclaim is
+retried after DMZ_IDLE_PERIOD unless a zone allocation or a "reclaim"
+message queues it earlier. On a busy target, zone allocations can
+restart reclaim immediately when free space is low enough to require
+reclaim. Re-arming also keeps the poll running after a complete idle
+drain. The poll can still stop after a pass that ends while reclaim is
+not needed; that is unchanged.
 
-	truncate -s 4M o.img c.img
-	o=$(losetup -f --show o.img)
-	c=$(losetup -f --show c.img)
-	dmsetup create snap --table \
-		"0 8192 snapshot $o $c P 512 1 discard_zeroes_cow"
+Skip the device check for these two results: they normally mean that
+there is no zone to copy into or no zone to reclaim, not that a device
+failed, and the I/O paths check the devices themselves. Use
+queue_delayed_work() so that work an allocation has already queued is
+not postponed.
 
-	# write two chunks, this creates two exceptions
-	head -c 256K /dev/zero | tr '\000' '\252' > pat
-	dd if=pat of=/dev/mapper/snap bs=256K seek=1 count=1 conv=notrunc
-	dd if=pat of=/dev/mapper/snap bs=256K seek=2 count=1 conv=notrunc
+A pass that fails with an I/O error, for example on an unreadable block
+of a device that stays online, is still retried at once while the
+target is idle; this patch does not change that.
 
-	# shift the snapshot by 8 sectors, so a discard that is aligned on
-	# top is unaligned inside the snapshot
-	dmsetup create top --table "0 8184 linear /dev/mapper/snap 8"
-	blkdiscard -o 262144 -l 262144 /dev/mapper/top
-	sync
-	echo 3 > /proc/sys/vm/drop_caches
+Tested on 7.4-rc1 with this patch and the next one, on three emulated
+host-managed drives (scsi_debug, 1 GiB, 32 MiB zones) each under
+dm-zoned as md RAID5 members, all random zones free and the target idle
+for 300 seconds. With the stock module each member's SCSI device counted
+about 70.2 million requests and the reclaim workers used 726 s of CPU.
+With this series: 75 requests per member, 30 passes per worker (one per
+DMZ_IDLE_PERIOD) and 0.08 s of CPU. Data written during the tests read
+back with matching checksums, and no kernel warnings were logged.
 
-	# chunk 1
-	dd if=/dev/mapper/snap bs=512 skip=512 count=8 | od -An -tx1 -N1
-	# chunk 2
-	dd if=/dev/mapper/snap bs=512 skip=1024 count=8 | od -An -tx1 -N1
-
-Before: aa 00  <- chunk 2 was zeroed although it was not discarded
-After:  aa aa  <- nothing written, a discard is only a hint
-
-Fix it by requiring the discard to start on a chunk boundary in
-io_overlaps_chunk(), and by finishing a discard that is not a full
-chunk with bio_endio() instead of passing it down to the COW device.
-
-Fixes: 2e6023850e17 ("dm snapshot: add optional discard support features")
+Fixes: 3b1a94c88b79 ("dm zoned: drive-managed zoned block device target")
+Fixes: 90a9b8693f1b ("dm zoned: reclaim random zones when idle")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-snap.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/md/dm-zoned-reclaim.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -1975,8 +1975,8 @@ static void zero_exception(struct dm_sna
+--- a/drivers/md/dm-zoned-reclaim.c
++++ b/drivers/md/dm-zoned-reclaim.c
+@@ -539,6 +539,16 @@ static void dmz_reclaim_work(struct work
+ 		dmz_nr_rnd_zones(zmd, zrc->dev_idx));
  
- static bool io_overlaps_chunk(struct dm_snapshot *s, struct bio *bio)
- {
--	return bio->bi_iter.bi_size ==
--		(s->store->chunk_size << SECTOR_SHIFT);
-+	return bio->bi_iter.bi_size == (s->store->chunk_size << SECTOR_SHIFT) &&
-+	       !(bio->bi_iter.bi_sector & s->store->chunk_mask);
- }
- 
- static int snapshot_map(struct dm_target *ti, struct bio *bio)
-@@ -2036,11 +2036,13 @@ static int snapshot_map(struct dm_target
- 	e = dm_lookup_exception(&s->complete, chunk);
- 	if (e) {
- 		remap_exception(s, e, bio, chunk);
--		if (unlikely(bio_op(bio) == REQ_OP_DISCARD) &&
--		    io_overlaps_chunk(s, bio)) {
-+		if (unlikely(bio_op(bio) == REQ_OP_DISCARD)) {
- 			dm_exception_table_unlock(&lock);
- 			up_read(&s->lock);
--			zero_exception(s, e, bio, chunk);
-+			if (io_overlaps_chunk(s, bio))
-+				zero_exception(s, e, bio, chunk);
-+			else
-+				bio_endio(bio);
- 			r = DM_MAPIO_SUBMITTED; /* discard is not issued */
- 			goto out;
- 		}
+ 	ret = dmz_do_reclaim(zrc);
++	if (ret == -ENOSPC || ret == -EBUSY) {
++		/*
++		 * No zone to copy into (-ENOSPC) or no zone to reclaim
++		 * (-EBUSY): retrying at once cannot make progress and would
++		 * spin. Poll again after the idle period instead, without
++		 * postponing work that an allocation has already queued.
++		 */
++		queue_delayed_work(zrc->wq, &zrc->work, DMZ_IDLE_PERIOD);
++		return;
++	}
+ 	if (ret && ret != -EINTR) {
+ 		if (!dmz_check_dev(zmd))
+ 			return;
 
 
