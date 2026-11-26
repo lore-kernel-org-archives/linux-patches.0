@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704570;
-	b=Jw/KXsysXGi1iBtts1Fz6EWEX/gMkEmMYnHUbjAZWD+QIAj7/yBp8hg77byvB4kU/hh6
-	 zxAzcdPTtlvPb+8lCOvPF3GvAg3zTEWr7meqrWT12rwlpFh1GIKrxr2Zcp1uEACIE4rCc
-	 bcn/EntsU13+g2YSQuOdks+AOUHUus1iUXU0sRJ1moWBEpvkai2npgxxGjMhHwzbuWcnC
-	 3RUraWV3dHUcOKnpFvtPAl3/IlszYLFV1BFoa2FCIzh+wTNVY0XwBrP+MgR9K47tjbiKi
-	 RUcXNZgytPEwr/K7YI3r4rWNC6p0G8w8lJW9XNAoZQke5lIBPxC8zdg8yn3SQ8dQI6Q==
+	t=1795704572;
+	b=o8yI8r2AOcmGplcpFogKFOhDgzvgp6mNP+JGDFQpQ28SYHwB40SrwF8tEqp07GGrLDXF
+	 LRZgRMh3St6tft/6hBIXnhU6L+AoU6ffFxpQsN1tsTtj08csu+hR5c7L2e4K1I83Xd5Mp
+	 WrXQrAsA2kdwBTZFnMUVwuL4nMu6EiCXdI8N5SVvo3issTHxui4MTFj4v1UuqtiyHCiEi
+	 1LF2BscCYDabWvOQSNJkXWPK9/yMXRIYewA1H9FutPGoJF+2EpbBQlqgAahS11lZ3x/Z0
+	 MQOMkCJtRsUhQLZxUPq2wOZAmqNuEs+Qi0FD716cqu513Oz0WiIuVpsg/lbdI5J7/FA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+6zMCtymXeep0Jr4oU+qX2Djay8Cfrio/53gLVJMFgo=;
-	b=Fu/VIhe6NNHyrBRZwPsCvOHc7k/TP7thavZot4SkA27FEKOlqJh7NEUBDeEvG6Ibu2qC
-	 hrIGRpLFTno55hZeHapiZX28p1XvzLb6ervN6CExnKG+tkSVsgTGE0xU2yRqF/O7KeYmH
-	 E5nnwGaYDrrhwBxi0m51etpQ6m7ijptPbaVE6mGfdsxsqfCjBHL9LkiYrYh0Twa7YY5w7
-	 7kpS1/ZHA26b5++xocTDWt4jhTIqsyCimCYeGKdbU2hC8Yn18TF6r0hx9hpDz5ZNIT56l
-	 WB/W6GTXfgGFtBcbEeSNnfsl1jHEe6+YDWTFsHnHAM1Gb9IxAZnhuUSvm8CfgBNBZ5A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=pHuIK+UHRjcgCJqfNu7baYxRf9XILCS2ln2CbAw3BUg=;
+	b=akvGnv9NNINByQXEqtuLYKgiGKmz6guqD0L0d0nNmR8lnRxXkmj5C3qy7qeOTbnwbw/e
+	 WcmmUjhDLZrtrP2H6o7ujVNzGZqIJ4fKMNVjHhJ94k04+/baxMSg1AbQNjLMiB+3imz28
+	 h9rthwWCPitKEvC4LQnCBsU8qbpNdLyQeXjFojJ1AFviWPzATwbetHRHwyUVtcMIZjoFM
+	 h1KciIj76Z5d0FSIYXQa43GBXyxxqVAMhgFVfZ52m23d/G2xcwugju0LfSz6zwX2AblFP
+	 3SAEbHArL/JjBKR4ZW7PESXwK6jfKHfkE8RM7uLyNH37TXHppgNUMd+IaIRXBzQE2Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnSNi+bG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v0LI2+xv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DBF606A321;
-	Thu, 26 Nov 2026 14:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23ED606A31C;
+	Thu, 26 Nov 2026 14:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnSNi+bG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2A41F000C6;
-	Thu, 26 Nov 2026 14:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v0LI2+xv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F6C1F000D1;
+	Thu, 26 Nov 2026 14:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704569;
-	bh=+6zMCtymXeep0Jr4oU+qX2Djay8Cfrio/53gLVJMFgo=;
+	s=korg; t=1795704572;
+	bh=pHuIK+UHRjcgCJqfNu7baYxRf9XILCS2ln2CbAw3BUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LnSNi+bG8/B3mDFmCRAKJH2GrE22AVikGgiWhdp23bY4QTYOvUefoxRXza2bIym87
-	 5QYRbn030o3ayx1xcxH3eugbjTbhuL5HCmAIgRKc9+GM9gsdf44NFjxuevw2yA1y8D
-	 eII8muxbllOFUNbQaNTiMBBr0/vQLjg3gNyaTAoM=
+	b=v0LI2+xvZKcf+Nu5AXGMvIQ+NfQSbAd1VLVR4CU8sGvtx7Za7ihCQI3DMtnNIh4sv
+	 0ER0uue037P0cyhy06G67OxpPh/sHXn7yfYtyTa+EDWwsUkWouiaWk4PR0SccxdG12
+	 juO6FYlxikWOq3ED0IDVA2SbOTUZ3TK7KKmv9Vlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergei Nizovtsev <snizovtsev@cloudlinux.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 143/265] ALSA: caiaq: Kill EP1 URB before unregistering the input device
-Date: Thu, 26 Nov 2026 15:37:53 +0100
-Message-ID: <20261126143615.019927452@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 170/265] crypto: essiv - fix use-after-free in AEAD path
+Date: Thu, 26 Nov 2026 15:38:20 +0100
+Message-ID: <20261126143617.058645577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -61,130 +61,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 5d325345185015024a86abca4cc5fa6a3f75294e upstream.
+commit e9ce64dce975a14700e835003847415e29918474 upstream.
 
-snd_disconnect() unregisters the input device via
-snd_usb_caiaq_input_disconnect() and only afterwards kills the EP1
-command URB (cdev->ep1_in_urb). The EP1 completion handler
-usb_ep1_command_reply_dispatch() feeds snd_usb_caiaq_input_dispatch()
-for EP1_CMD_READ_{ERP,ANALOG,IO} replies, which report into
-cdev->input_dev. Since commit b04dcbb7f7b1 ("ALSA: caiaq: Use
-snd_card_free_when_closed() at disconnection") the input device is
-unregistered from snd_usb_caiaq_input_disconnect() but cdev->input_dev
-is cleared only later, in snd_usb_caiaq_input_free() from the card
-destructor. As the dispatch guard only tests cdev->input_dev for NULL,
-an EP1 reply that completes after input_unregister_device() but before
-cdev->ep1_in_urb is killed reports into an input device that has
-already been unregistered and, with no evdev client holding it open,
-freed.
+The request that ESSIV submits to its wrapped AEAD transform may
+finish before crypto_aead_encrypt() or crypto_aead_decrypt() returns.
+In case this happens, essiv_aead_done() calls aead_request_complete()
+on the original ESSIV request, which can end up freeing the request
+before essiv_aead_crypt() resumes, creating a UAF:
 
-Normally the window is closed by the USB core: usb_unbind_interface()
-calls usb_disable_interface() before ->disconnect(), which flushes the
-EP1 URB as long as endpoint 0x81 belongs to the interface being
-unbound. But caiaq addresses EP1 through the device-wide pipe
-usb_rcvbulkpipe(usb_dev, 0x1) without checking which interface owns
-the endpoint. If a device declares it in another interface, the URB
-stays live across snd_disconnect() of the interface that owns the card.
+  BUG: KASAN: slab-use-after-free in essiv_aead_crypt+0x8e6/0x950
+  Read of size 8 at addr ffff888102af1360 by task init/66
 
-This needs a crafted device descriptor; a device that has EP1 in the
-interface caiaq is bound to is not affected.
+Check the return status before dereferencing rctx after submitting that
+request. If the operation did not return -EINPROGRESS or -EBUSY, then
+the request cannot have been freed yet.
 
-Kill cdev->ep1_in_urb (and the paired midi_out_urb) before the input
-and audio disconnect helpers, so no EP1 completion can run once the
-input device has been unregistered.
-
-Reproduced under KASAN with raw-gadget + dummy_hcd emulating an Audio
-Kontrol 1 (17cc:0815) with the EP1 bulk pair in interface 1: only
-interface 0 was bound to snd-usb-caiaq and then unbound through sysfs
-while the gadget flooded EP1 with EP1_CMD_READ_ERP replies. With no PCM
-stream running the window is very short and was only hit by stalling
-the unbinding CPU with a kgdb breakpoint at
-snd_usb_caiaq_audio_disconnect(). With the fix applied, the same test
-runs clean.
-
-  BUG: KASAN: slab-use-after-free in input_event+0x3a/0xc0
-  Read of size 8 at addr ffff8880151a4028 by task sh/118
-
-  Call Trace:
-   <IRQ>
-   input_event+0x3a/0xc0
-   snd_usb_caiaq_input_dispatch+0xab2/0xf00
-   usb_ep1_command_reply_dispatch+0x1f3/0x580
-   __usb_hcd_giveback_urb+0x246/0x400
-   dummy_timer+0x1415/0x3380
-   __hrtimer_run_queues+0x39d/0x800
-   hrtimer_run_softirq+0x187/0x2d0
-   handle_softirqs+0x1ff/0x930
-   __irq_exit_rcu+0x15b/0x210
-   irq_exit_rcu+0xe/0x20
-   sysvec_apic_timer_interrupt+0x81/0xb0
-   </IRQ>
-   <TASK>
-   asm_sysvec_apic_timer_interrupt+0x1a/0x20
-  RIP: 0010:snd_usb_caiaq_audio_disconnect+0x0/0x70
-   snd_disconnect+0x81/0x110
-   usb_unbind_interface+0x1a0/0x860
-   device_release_driver_internal+0x2c5/0x470
-   unbind_store+0xde/0x100
-   </TASK>
-
-  Allocated by task 80:
-   input_allocate_device+0x47/0x340
-   snd_usb_caiaq_input_init+0x4c/0x1ac0
-   snd_probe+0xab3/0x1160
-   usb_probe_interface+0x2ea/0x810
-
-  Freed by task 118:
-   kfree+0x1ea/0x5c0
-   input_dev_release+0xab/0xd0
-   device_release+0xcf/0x250
-   kobject_put+0x169/0x320
-   snd_disconnect+0x79/0x110
-   usb_unbind_interface+0x1a0/0x860
-
-Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
+Fixes: be1eb7f78aa8 ("crypto: essiv - create wrapper template for ESSIV generation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
-Assisted-by: Claude:claude-opus-4-8
-Link: https://patch.msgid.link/20261112094904.2430318-1-snizovtsev@cloudlinux.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: LLM
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ crypto/essiv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -601,14 +601,19 @@ static void snd_disconnect(struct usb_in
+--- a/crypto/essiv.c
++++ b/crypto/essiv.c
+@@ -249,7 +249,7 @@ static int essiv_aead_crypt(struct aead_
+ 	err = enc ? crypto_aead_encrypt(subreq) :
+ 		    crypto_aead_decrypt(subreq);
  
- 	snd_card_disconnect(card);
- 
-+	/*
-+	 * Kill the EP1 URB before disconnecting the input device: its
-+	 * completion reports into cdev->input_dev, which input_disconnect()
-+	 * frees without clearing the pointer.
-+	 */
-+	usb_kill_urb(cdev->ep1_in_urb);
-+	usb_kill_urb(cdev->midi_out_urb);
-+
- #ifdef CONFIG_SND_USB_CAIAQ_INPUT
- 	snd_usb_caiaq_input_disconnect(cdev);
- #endif
- 	snd_usb_caiaq_audio_disconnect(cdev);
- 
--	usb_kill_urb(cdev->ep1_in_urb);
--	usb_kill_urb(cdev->midi_out_urb);
--
- 	snd_card_free_when_closed(card);
+-	if (rctx->assoc && err != -EINPROGRESS && err != -EBUSY)
++	if (err != -EINPROGRESS && err != -EBUSY)
+ 		kfree(rctx->assoc);
+ 	return err;
  }
- 
 
 
