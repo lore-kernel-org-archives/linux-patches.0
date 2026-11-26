@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704190;
-	b=N7om1RrVXkx1QZKC2HNw7UsuqKMzTdVz3F4X/u6mV2P3cAI7Ht6hrF7JJifHhfLOfirC
-	 MbV0q4w7jJji0hZ/zY3GuTc01z3eCIVQVblM5e6aNvcRgrX8i/kjcMjm8qoJZfx0TjxeN
-	 xqIbgW4quEOnmqTS6kYi3HhDzYIZPrqDe5YBd87fPHwH3WbytPiBrJOvRyG9CQdnA4tQr
-	 bgIrvBaTPaDyTzn72BU4WIAj6qPxC6BMTNOo6o95GJpdDnXw022s8L5k8kWT8A5HZhIS0
-	 FMyqyo9qrhby3YQ++ROOaMbS1bVTum+lwoj/44wutdrRK6xeExkJMnferOpp2arli7w==
+	t=1795704193;
+	b=Wy+79kR6fP8Byl4jEdaCwI/d0BqEiitarWCiB6B7aanJoze9gwyXCRl17d77hyURbvNs
+	 CkgGhRvINoBV694g0FdA3IhCnW1b2SUjQi/S6ObZ+OKRKgIQ3m7NjveeonGMZ88B//A6U
+	 aNOmTL/bhvw9Ts5v0f6KyCP6slHmNx2fe5nujM517U9v8gHJD4KJnbFwTYCJhk/nIYVqT
+	 VlWlqidmOJg2FSYEzIsS+6x0BdiyWthnhghTgu4m7WYfmEnb9E/U14/y+izWlcF7lFFia
+	 AwHQM1eVBkbGOKTMAJrNEAOGLvBjDBbt59CMcGdILY9nCX3lDqnip35we17RKsetzbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xuvWUHXKj9b4s/GN9The3MUDuW8p9emxo/FBrQUca24=;
-	b=sajNfOBh0WHCyP0ls0tcWIXxc5ZTiX3aXy1R5z6nq/Q7V7p2Mo3jyL7KCO+DAH/QRebQ
-	 FrInnCQybKP3MaT620L21/3CipFA7/Cx4KNiFN0EONQllyuOyc0VpV6re6HV6LKBkPIbV
-	 aGr7YxWEqIqdQ18/zjbf3dfEoFH6mmNG3iKK5i5qYXUdGP7eWCcZ1Iey5HvjtxpnunN92
-	 vu2W/dOLytjVVzNlRFNNU033nOqrng8DaNvbFgoICGrWH0j1nfZAkxNQ51s0qEmFKz9Rj
-	 Rk66+9McIu0w6rlfRXPmnHBwzZu8UrrhpQ7q1F9jJkLsHHF4OKhfJF88wWeQfXYkciA==
+	bh=ZIxIeE2REYUDdnT+sWRk0f9ylDZYQSZjqUV5VDJUbWs=;
+	b=oB0u/6LLI6VoOuYtgM7pQDunrzG9uVQVSwo301rii+xmQGDhoRdyuNvKgdQQrLeUI6fp
+	 7yPpgW0sLK17jZ8DuSXQJxHmSOyGQgXeYQxfXKEXkC5X1dwFJrt2eMNFXPKiTV1Z2rdGx
+	 rvHDdlTjWqs/9TW4A1EGMgFfVp4UDmpg5NreMZ19KX84zhHOAVDh+BDKWCrCc4dzs1zAS
+	 wGtmF9CCt7W0ah1wCjWeapsgNIFvQgEaFX596hjqK3UXr8YzrllCpY600xzaRVYkrcaPP
+	 AAkepPbOu00U72N0D55MaHy8tLm6vzr3vtSVCQr0RpzusVtJlmdi6y+m/+54Oa3spuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAtBv32l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfWenlNY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C257606A326;
-	Thu, 26 Nov 2026 14:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E34E606A326;
+	Thu, 26 Nov 2026 14:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAtBv32l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D54B1F000D3;
-	Thu, 26 Nov 2026 14:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfWenlNY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0091F000C0;
+	Thu, 26 Nov 2026 14:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704190;
-	bh=xuvWUHXKj9b4s/GN9The3MUDuW8p9emxo/FBrQUca24=;
+	s=korg; t=1795704193;
+	bh=ZIxIeE2REYUDdnT+sWRk0f9ylDZYQSZjqUV5VDJUbWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAtBv32lps7o/e2l1heWELy0IzDyF+rMjRbD6XgLKykmToafRxw2J8h5BXkIGZpzT
-	 sJbxybnza5XxYoWvu66YuTI0nFuMJoXozmVoSJ/3TdxLj73uymXVCcRTwQ6otZKBwu
-	 /wPYpzmL9Shnu/TOmPv+hA/LbyejVzuaHIZMXFII=
+	b=xfWenlNYBd988NFdCkLl24E6OKVtUybM9Q1A4fNZ2ULvoHIH9AB0+yHfyXWUChSJY
+	 wMYItzw5yLjKtnzFIEuEjF3mgLo3fGmilQ+UGjrUBcaqNqHusbInBc7DKvnGZcreDL
+	 rpj4HNTIpAE8e49hc2Wntnbgq3DmxU6MgoEHml3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/265] bpf: Reject non-IPv6 packets in BPF_LWT_ENCAP_SEG6
-Date: Thu, 26 Nov 2026 15:36:06 +0100
-Message-ID: <20261126143607.650938327@linuxfoundation.org>
+Subject: [PATCH 5.10 037/265] bpf: Limit the SRH length in bpf_lwt_seg6_adjust_srh()
+Date: Thu, 26 Nov 2026 15:36:07 +0100
+Message-ID: <20261126143607.719478365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,57 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 58e39f8d58b141b96c030008a20dde9d625ec997 ]
+[ Upstream commit ac159f39b252971141c49b68a27de0b637debfad ]
 
-The mode BPF_LWT_ENCAP_SEG6 of bpf_lwt_push_encap() pushes an IPv6 header
-and an SRH, and it replaces the dst. The SRH says that IPv6 follows, and
-skb->protocol does not change. Thus the mode assumes an IPv6 packet, but an
-lwt_in prog also runs for IPv4 packets. After the prog, bpf_input() calls
-orig_input() of the old dst. This IPv4 handler reads the pushed headers as
-IPv4. It can write after the packet data, and the kernel crashes.
+bpf_lwt_seg6_adjust_srh() lets an End.BPF prog change the size of the TLVs
+in the SRH. The helper keeps the SRH length in srh_state->hdrlen, in bytes
+and without the first 8 bytes. Later seg6_bpf_has_valid_srh() writes it to
+srh->hdrlen, an 8-bit field in units of 8 bytes. But srh_state->hdrlen has
+no upper limit, and the cast to u8 can truncate it. After that,
+seg6_validate_srh() gets the SRH length from srh->hdrlen, and thus it can
+accept the SRH. Then srh->hdrlen is too small, and a parser reads TLVs as
+the subsequent header.
 
-                 after the push         orig_input() expects
-                 ---------------------  --------------------
-  skb->protocol  ETH_P_IP               ETH_P_IP
-  dst            rt6_info               rtable
-  packet         | IPv6 | SRH | IPv4 |  | IPv4 |
-
-The mode BPF_LWT_ENCAP_SEG6_INLINE returns -EBADMSG for non-IPv6 packets.
-Apply this check to both modes. End.BPF does not change, because
-seg6_local_input() drops non-IPv6 packets.
+Return -EFAULT when the new srh_state->hdrlen is larger than 2040, the
+largest length that srh->hdrlen can hold. To replace a TLV in the largest
+SRH, a prog can no longer add bytes first. It must remove bytes first.
 
 Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-17-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-19-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/core/filter.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index da6cf7ef22976..c58b4f8aa57c1 100644
+index c58b4f8aa57c1..2cb67c6f24e62 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -5738,11 +5738,15 @@ static int bpf_push_seg6_encap(struct sk_buff *skb, u32 type, void *hdr, u32 len
- 	if (!seg6_validate_srh(srh, len, false))
- 		return -EINVAL;
+@@ -5982,6 +5982,9 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
+ 		return -EFAULT;
+ 	if (unlikely(len < 0 && (void *)((char *)ptr - len) > srh_end))
+ 		return -EFAULT;
++	/* The length field of the SRH has 8 bits, in units of 8 bytes. */
++	if (unlikely(len > (U8_MAX << 3) - srh_state->hdrlen))
++		return -EFAULT;
  
-+	/*
-+	 * The encap mode names IPv6 as the inner protocol, and neither mode
-+	 * updates skb->protocol.
-+	 */
-+	if (skb->protocol != htons(ETH_P_IPV6))
-+		return -EBADMSG;
-+
- 	switch (type) {
- 	case BPF_LWT_ENCAP_SEG6_INLINE:
--		if (skb->protocol != htons(ETH_P_IPV6))
--			return -EBADMSG;
--
- 		err = seg6_do_srh_inline(skb, srh);
- 		break;
- 	case BPF_LWT_ENCAP_SEG6:
+ 	if (len > 0) {
+ 		ret = skb_cow_head(skb, len);
 -- 
 2.53.0
 
