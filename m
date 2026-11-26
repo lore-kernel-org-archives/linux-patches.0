@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705725;
-	b=0lSdTFARrkQxt3W7v+PUx6TcnlSWfhGWc2KNTX6bCAzuFssY67h6Y80VzJQ/8Fd6o+i6
-	 EuEkIx9hL8IhB2MQ6YHjgEWSeOwidNFyn7yuw6EQ5n9AuUyXs+t3BsmWsNOTePfkYbHb4
-	 Y4mSqFbQ89XDUPH3CAlWMlNkJWom6SIF8iynrSi/kAm9QfEmc/LQMYgOpDAjgTCtcQjVn
-	 ni60U/78/d6jpTNZT+x6Zf4YY1431Fh2ZJ/WGfcUceE/HWBoRUxAcZV740NWa2GFYrxUW
-	 d8cmj3qBCnAc5EukJSA9DUOUD3ASv8xQSEx+77hxlr4ezlvanCfpUpj2Tj+jofDmDrg==
+	t=1795705728;
+	b=b4MREjC7fRCX5EfiqfAU03oOZ7sjRJADukfnydNp/zhTmvWDjC4VgsercZlE3dAqXpsv
+	 2bBLkQU//e0gJ7L36XmlsanjOJJqpL+v0Z+Gr64iQizojISgRbqD0Rum9zEvv4texTg9O
+	 dDHnGPRuXobg8o+yQ44WOKjjglfXnYXoQzdEujSHrhzzHye++CLu3csIUl6qNVGbcDLYC
+	 5nma+yYG9otlbs9qnAzdx3WDRVka3fqN3gv6y8MivNF1AMueT7FexMs8JbfCly2Ye+CSo
+	 nCVjRKYek+3feM8Y8GMvgiURJu5+TxOQxugKVF25CXEWqrLlMc+mpTmnLs/H61vLO9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705728;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9jEtsx3/fiziUxMReeHgacVw9BsZv/6HV1T/uU+8QgI=;
-	b=B4UKX2pIxCb7xf9IvFkjQ5R3RAIWZeq1Pl5Q7L3JbnhwRxEAAhS60/+6ROjIScqbjb8D
-	 /cnZA/8rxN6j4RbjPkG8uOw5EBPUiIYDifWmYg/eZtkZv+nwNUPPSY1HjHysVw3rjdI6d
-	 IpPgNg6FsY78P/Gbqvt7GVGOJQKhXBmh1gTeL1+sOzbG0agoqz1rP5lsu9tfxfMpPeY1f
-	 U9zBriqaJJ1v0sj8yjJFPPwIK+QxizOMMuP9m+yLLFu6oC6S4XmUgLRXMMwMY6WetOpL0
-	 QEXjYD9z3DZDgsOwdx6nP9zeLgJL9fI3zhvsS0GnJPgY8LYRZStue4CL6UF9G339Neg==
+	bh=UHQiJfGzdKLXGDbiL2lV6dNaaVb3uvewthzrMlTrGsY=;
+	b=0Qi2Lz8wC8sNdc+0zFSd4oXPfDnbEP1V11Wr4cmgU3nbCBIhvutjFmk5OU3xw+L0aOQP
+	 uVsroLvEB06HZbH4GvFoXdah5dUzmociW5nJQQhlxcWqbGqxuU9REVO/oNIFg5nvL8YDl
+	 MCfs+V94K0GoK5CyQSB4IHcxE76+BIHcn4/Zf8/K7iGhg2klAsQUCy9+MBHwHDWtWqi3Y
+	 THQTlW5QClIuQRDthBEu3Qad6oT2fhdFVMmaJBn2A+6TpjinLlqCklxeiK3ZuN5F/2OUF
+	 KNLGmLQep96oN+v2PT9gQziCbzcYh1goBTE4VIAOP/MQO88tbwacEOFBuj/Me51Figw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQ3z1qKL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dajUcN36;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87144606A31C;
-	Thu, 26 Nov 2026 15:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914E2606A32D;
+	Thu, 26 Nov 2026 15:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQ3z1qKL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8268B1F000D3;
-	Thu, 26 Nov 2026 15:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dajUcN36
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD201F000D0;
+	Thu, 26 Nov 2026 15:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705725;
-	bh=9jEtsx3/fiziUxMReeHgacVw9BsZv/6HV1T/uU+8QgI=;
+	s=korg; t=1795705727;
+	bh=UHQiJfGzdKLXGDbiL2lV6dNaaVb3uvewthzrMlTrGsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQ3z1qKLmm7p0Do7SmjSrungkFO10oYA0Siz7aZ7h9zhmjSqc7B6c/Cai1BMxkkou
-	 6wO0iVKDmeIbATvnybaHoYeVcw1qc2l74d6YwFElaApHvZkT7CWdp2LMuhdFgo9g08
-	 E+FFrfN3FmjSPR4Uz2AU/q34pi0+QGBLi9AUHY44=
+	b=dajUcN368KvHjiwaNDw9SC6UKs8PuEQpHr2fmp8VPo9kOq6hOndAGE+UuuCqPsWH/
+	 OsXKDBBadkUuqZT+H/2bzl63fUGkz+Wa8zmPpAdx0zVA0aRfvBqnUmGEPxeFSr5NPH
+	 4WvJM2swo2WMAN6mW66A32t+HyFFWLdm9LwcV8oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 294/319] USB: serial: io_edgeport: fix potential use-after-free on disconnect
-Date: Thu, 26 Nov 2026 15:41:02 +0100
-Message-ID: <20261126144013.393976072@linuxfoundation.org>
+Subject: [PATCH 5.15 295/319] USB: serial: io_edgeport: serialise MCR accesses
+Date: Thu, 26 Nov 2026 15:41:03 +0100
+Message-ID: <20261126144013.416596762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,99 +68,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 50613e6380db7a904ef15c60ed0c436baf308f0a upstream.
+commit 6e4629504d7e5a22dd26f3b262f0a0f80e3cad6a upstream.
 
-The driver submits command URBs asynchronously but fails to stop them on
-disconnect, something which could lead to a use-after-free when
-accessing driver data in the completion handler after a port has been
-unbound.
+Add a mutex to serialise modem control register updates to prevent
+concurrent tasks from interfering with each other.
 
-Add an URB anchor to track and kill outstanding command URBs on
-disconnect.
+Note that the register updates are currently asynchronous so a task may
+read back a value which has not yet taken effect.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_edgeport.c |   19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ drivers/usb/serial/io_edgeport.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 --- a/drivers/usb/serial/io_edgeport.c
 +++ b/drivers/usb/serial/io_edgeport.c
-@@ -225,6 +225,7 @@ struct edgeport_serial {
- 	__u8			rxStatusParam;			/* the receive status paramater */
- 	__s16			rxBytesRemaining;		/* the number of port bytes left to read */
- 	struct usb_serial	*serial;			/* loop back to the owner of this object */
-+	struct usb_anchor	cmd_anchor;
- };
+@@ -168,6 +168,7 @@ struct edgeport_port {
+ 	struct urb		*write_urb;		/* write URB for this port */
+ 	bool			write_in_progress;	/* 'true' while a write URB is outstanding */
+ 	spinlock_t		ep_lock;
++	struct mutex		mutex;
  
- /* baud rate information */
-@@ -261,9 +262,6 @@ static const struct divisor_table_entry
- 	{   230400,	1},
- };
+ 	__u8			shadowLCR;		/* last LCR value received */
+ 	__u8			shadowMCR;		/* last MCR value received */
+@@ -878,7 +879,10 @@ static int edge_open(struct tty_struct *
+ 	spin_unlock_irq(&edge_port->ep_lock);
  
--/* Number of outstanding Command Write Urbs */
--static atomic_t CmdUrbs = ATOMIC_INIT(0);
--
+ 	/* Must always set this bit to enable ints! */
++	mutex_lock(&edge_port->mutex);
+ 	edge_port->shadowMCR = MCR_MASTER_IE;
++	mutex_unlock(&edge_port->mutex);
++
+ 	edge_port->chaseResponsePending = false;
  
- /* function prototypes */
+ 	/* send a open port command */
+@@ -1396,9 +1400,11 @@ static void edge_throttle(struct tty_str
  
-@@ -777,11 +775,6 @@ static void edge_bulk_out_cmd_callback(s
- 	struct device *dev = &urb->dev->dev;
- 	int status = urb->status;
+ 	/* if we are implementing RTS/CTS, toggle that line */
+ 	if (C_CRTSCTS(tty)) {
++		mutex_lock(&edge_port->mutex);
+ 		edge_port->shadowMCR &= ~MCR_RTS;
+ 		status = send_cmd_write_uart_register(edge_port, MCR,
+ 							edge_port->shadowMCR);
++		mutex_unlock(&edge_port->mutex);
+ 		if (status != 0)
+ 			return;
+ 	}
+@@ -1433,9 +1439,11 @@ static void edge_unthrottle(struct tty_s
+ 	}
+ 	/* if we are implementing RTS/CTS, toggle that line */
+ 	if (C_CRTSCTS(tty)) {
++		mutex_lock(&edge_port->mutex);
+ 		edge_port->shadowMCR |= MCR_RTS;
+ 		send_cmd_write_uart_register(edge_port, MCR,
+ 						edge_port->shadowMCR);
++		mutex_unlock(&edge_port->mutex);
+ 	}
+ }
  
--	atomic_dec(&CmdUrbs);
--	dev_dbg(dev, "%s - FREE URB %p (outstanding %d)\n", __func__, urb,
--		atomic_read(&CmdUrbs));
--
--
- 	/* clean up the transfer buffer */
- 	kfree(urb->transfer_buffer);
+@@ -1499,6 +1507,7 @@ static int edge_tiocmset(struct tty_stru
+ 	struct edgeport_port *edge_port = usb_get_serial_port_data(port);
+ 	unsigned int mcr;
  
-@@ -2156,24 +2149,21 @@ static int write_cmd_usb(struct edgeport
- 	if (!urb)
++	mutex_lock(&edge_port->mutex);
+ 	mcr = edge_port->shadowMCR;
+ 	if (set & TIOCM_RTS)
+ 		mcr |= MCR_RTS;
+@@ -1517,6 +1526,7 @@ static int edge_tiocmset(struct tty_stru
+ 	edge_port->shadowMCR = mcr;
+ 
+ 	send_cmd_write_uart_register(edge_port, MCR, edge_port->shadowMCR);
++	mutex_unlock(&edge_port->mutex);
+ 
+ 	return 0;
+ }
+@@ -1530,6 +1540,7 @@ static int edge_tiocmget(struct tty_stru
+ 	unsigned int mcr;
+ 
+ 	msr = edge_port->shadowMSR;
++	mutex_lock(&edge_port->mutex);
+ 	mcr = edge_port->shadowMCR;
+ 	result = ((mcr & MCR_DTR)	? TIOCM_DTR: 0)	  /* 0x002 */
+ 		  | ((mcr & MCR_RTS)	? TIOCM_RTS: 0)   /* 0x004 */
+@@ -1537,6 +1548,7 @@ static int edge_tiocmget(struct tty_stru
+ 		  | ((msr & EDGEPORT_MSR_CD)	? TIOCM_CAR: 0)   /* 0x040 */
+ 		  | ((msr & EDGEPORT_MSR_RI)	? TIOCM_RI:  0)   /* 0x080 */
+ 		  | ((msr & EDGEPORT_MSR_DSR)	? TIOCM_DSR: 0);  /* 0x100 */
++	mutex_unlock(&edge_port->mutex);
+ 
+ 	return result;
+ }
+@@ -2471,12 +2483,14 @@ static void change_port_settings(struct
+ 		return;
+ 
+ 	/* set up the MCR register and send it to the EdgePort */
++	mutex_lock(&edge_port->mutex);
+ 	edge_port->shadowMCR = MCR_MASTER_IE;
+ 	if (cflag & CBAUD)
+ 		edge_port->shadowMCR |= (MCR_DTR | MCR_RTS);
+ 
+ 	status = send_cmd_write_uart_register(edge_port, MCR,
+ 						edge_port->shadowMCR);
++	mutex_unlock(&edge_port->mutex);
+ 	if (status != 0)
+ 		return;
+ 
+@@ -2971,6 +2985,7 @@ static int edge_port_probe(struct usb_se
  		return -ENOMEM;
  
--	atomic_inc(&CmdUrbs);
--	dev_dbg(dev, "%s - ALLOCATE URB %p (outstanding %d)\n",
--		__func__, urb, atomic_read(&CmdUrbs));
--
- 	usb_fill_bulk_urb(urb, edge_serial->serial->dev,
- 			usb_sndbulkpipe(edge_serial->serial->dev,
- 					edge_serial->bulk_out_endpoint),
- 			buffer, length, edge_bulk_out_cmd_callback, edge_port);
+ 	spin_lock_init(&edge_port->ep_lock);
++	mutex_init(&edge_port->mutex);
  
- 	edge_port->commandPending = true;
-+	usb_anchor_urb(urb, &edge_serial->cmd_anchor);
- 	status = usb_submit_urb(urb, GFP_ATOMIC);
- 
- 	if (status) {
- 		/* something went wrong */
- 		dev_err(dev, "%s - usb_submit_urb(write command) failed, status = %d\n",
- 			__func__, status);
-+		usb_unanchor_urb(urb);
- 		usb_free_urb(urb);
--		atomic_dec(&CmdUrbs);
- 		return status;
- 	}
- 
-@@ -2737,6 +2727,7 @@ static int edge_startup(struct usb_seria
- 
- 	spin_lock_init(&edge_serial->es_lock);
- 	edge_serial->serial = serial;
-+	init_usb_anchor(&edge_serial->cmd_anchor);
- 	usb_set_serial_data(serial, edge_serial);
- 
- 	/* get the name for the device from the device */
-@@ -2941,6 +2932,8 @@ static void edge_disconnect(struct usb_s
- {
- 	struct edgeport_serial *edge_serial = usb_get_serial_data(serial);
- 
-+	usb_kill_anchored_urbs(&edge_serial->cmd_anchor);
-+
- 	if (edge_serial->is_epic) {
- 		usb_kill_urb(edge_serial->interrupt_read_urb);
- 		usb_kill_urb(edge_serial->read_urb);
+ 	init_waitqueue_head(&edge_port->wait_open);
+ 	init_waitqueue_head(&edge_port->wait_chase);
 
 
