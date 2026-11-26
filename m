@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704763;
-	b=mCst+hAB9oOcY9+A1VYTfl0vYd2NoZuwhLHzexC5XxoJKvu/s0HqMSgs3ifKk5y6uJoo
-	 cmunwLWzisKC7GXq/5EQGMzlVJtw+4+AcDNI4Y2yghx7kW932dGsm6G0Xf9iAjNM4tcEw
-	 QyGmumdtAKuKuix5fNt1NL8N88CMcGBXr/h5BxzSHErIYpjwnwkBdfnz5jiZddOU3V5yz
-	 gJK06M08UGOHOj478Dy+3LK0Mv0D7tgtFI6qUAhgstm2R0vd3XRurb1AP9Mgl7Hg2fuZJ
-	 4vqijwmm4XldcykKwogzBZFoOThO5YM2uIinAgZSkQFbbc4fPoc+HYw37QO3cdPD36Q==
+	t=1795704766;
+	b=0ZvzVMppmJunWLyS1QonyzGMqx77aSq4Css3IBz16rmsDB3A1ZSOEcy3Pc5tR57/aaDb
+	 8bdcLq6+YV0u0BtmF7NlYY5Naxg+SdgMb2xiW3p2P3heBMOuqVxFBaOe/rU0F4R7IgOGZ
+	 wxfRWKqQghz97ZOLcBdcPtTTuiwvP4gWW8mXUqQEEZbtkgllfl5ot87rPHhagqSxbj1rL
+	 g+HSvc/zQMbZCGJ85TrURhG34uX6zw3Y95a+Z3gTNxP2sYt2YGRkQ4aFQDh0ErhmKT0Hx
+	 WyJsu4tIG1FHn54M4fHgFdtPxWrj996pH+A7pCdq0/xts56Bt3vX/XUT4aYgvVGmdvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9KbVYD1tVvRjqxC0D8py8wPK3GAtaVCCxAy0LC9+UAc=;
-	b=a16l24ii9UsVgN3f964ggLZ7kB4KHghjP2EBbqcfOioN1ZrhqdXnB6xg55L/4ErbNFH3
-	 z0/wY3413oGClaCmExr93/Dwrm8sgZgmaK8okvnoPgIFMRt1eNe69vXbKpeS76wQsQ4i7
-	 WsUmHIucxJdQRz5X+k60kSJAB/jOh/Cir/6xldiy8/Cctn/EFRUrbXcTNJt7fd9U5yW+R
-	 yzxwkSuNbqSwpr1ZgeNrYGkvHZOdnMgGYt4KFK4fGF2TK/U9IpSduTxoyd58BPWuFLsJM
-	 Lw5DrDbd45nNX2LWL5lgBdC86ZhGMbRXjHx08M44VFZ5YSNk6HxQwWYX9X0kJy79zNw==
+	bh=TQzsrG1TRwZjr7zaKoZM8qH8moQJqMelWUx1D2trjBk=;
+	b=y/2hyCrLXJSOm7IvMxwfYRqJWpD8WUUQ5USg8MCOv5IG0F1O0kLfauKL1Yribhjqb9x6
+	 LtgMCKkjGKKtVjyCjrC1ORNkUAxahFd9XIGwJaw0HgI4+KsNHe+7LX2CIWDj1KtMDjRNT
+	 Tw3QnSRvOahrF+Vtxw5wlhFHUGd1aptaXw0vWCeUWANCegtJUVNZ83ObwM2xfEkBaxXtG
+	 mfBQgEo8lQ3aB8goAs35LOy1+agvFJDdCdOFRJwUh2qmhIfwOSiYNJf0M2hsP8cFUCkru
+	 i2sjRQAM9YL/eap7/TTtnG5Qu/OQgX5lw3PDn0Gru0fNXkkBTOIbji2Z5WLWnAiB+/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPo79KBS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPvz2yHf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B749E606A321;
-	Thu, 26 Nov 2026 14:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7906E606A31C;
+	Thu, 26 Nov 2026 14:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPo79KBS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E461C1F0093E;
-	Thu, 26 Nov 2026 14:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPvz2yHf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F221F000C0;
+	Thu, 26 Nov 2026 14:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704763;
-	bh=9KbVYD1tVvRjqxC0D8py8wPK3GAtaVCCxAy0LC9+UAc=;
+	s=korg; t=1795704766;
+	bh=TQzsrG1TRwZjr7zaKoZM8qH8moQJqMelWUx1D2trjBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FPo79KBS7kdTms5xZLen9kPEOuDr8l0/4oO5Ln3aRqTjRkAt8HUsvE+/iuskAmZ1f
-	 AC4Qb7wySWwmnGE2vTBVq9SkKlltP2dI73LJILsUawH5kkVB2+Bi5ULEYOdYTLEXFd
-	 TkDWzu7vNOopLss+gmd0lAK/zYhBBjrmeM8jSMYY=
+	b=lPvz2yHfeQ8D20rXJZuOLEhEyPxnaa0dMULszE7Imq8D3tVDVgSZeFrBrR6NaSRJ1
+	 SJAhbHw9ZSQhnWPRqeFKp/RkcF77w0dvCOg5pMS51EpGc6loViWKXk+eNNgNfLqGSm
+	 1n6QgDwwS401iM/uYM+Su00tfYb1CGhFJQS77PaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 5.10 233/265] w1: use the bus mutex for the "rw" file
-Date: Thu, 26 Nov 2026 15:39:23 +0100
-Message-ID: <20261126143621.545366615@linuxfoundation.org>
+Subject: [PATCH 5.10 234/265] w1: w1_therm: leave the slaves of other families alone
+Date: Thu, 26 Nov 2026 15:39:24 +0100
+Message-ID: <20261126143621.613041135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,78 +70,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 8599e08648c0b4913ea7b202511f1294d176e793 upstream.
+commit c0eadd2e06e52563cae2b80491e56eb9712eb727 upstream.
 
-Commit b02f8bede217 ("W1: split master mutex to avoid deadlocks.") gave
-the bus a mutex of its own, because the lock which protects the list of
-slaves is held while a slave is removed, which waits for the sysfs
-callbacks of the slave, so these must not take it.  It converted all the
-slave drivers, but not the "rw" file of the default family in w1.c,
-which still takes the mutex of the master to talk on the bus.  That has
-two consequences:
+The file therm_bulk_read belongs to the bus master.  Its callbacks walk
+all the slaves of the bus and look at sl->family_data as if every slave
+were a temperature sensor.  A 1-wire bus can carry other devices too:
 
-- A deadlock.  w1_process() holds the mutex of the master while it
-  searches the bus and detaches the slaves which have gone:
+- The family data of a slave which is driven by another driver, such as
+  w1_ds2433, w1_ds250x, w1_ds28e04 or w1_ds28e17, is a structure of that
+  driver.  bulk_read_support() takes whatever is at the offset of
+  specific_functions for a pointer and dereferences it, and if the
+  result happens not to be 0, the callbacks write the state of the
+  conversion into that foreign structure.
 
-    w1_process()                        read() of .../rw
-      mutex_lock(&dev->mutex)             kernfs active reference
-      w1_search_process()                 rw_read()
-        w1_slave_detach()                   mutex_lock(&master->mutex)
-          w1_unref_slave()                    waits
-            device_unregister()
-              waits for the reference
+- For a slave without family data, which is the case for most of the
+  other drivers and for the default family, trigger_bulk_read() gives up
+  with -ENODEV.  A single serial number chip on the bus is enough to
+  make the bulk read unusable for all the sensors.
 
-  The file is readable for everybody.
+Only look at the slaves whose family is one of ours.  A bulk conversion
+now works on a bus with other devices.
 
-- The accesses through this file are not serialised with those of the
-  slave drivers, which take bus_mutex, so that two transactions can get
-  mixed up on the wire.
-
-Take bus_mutex here as well.  It also excludes the search, which takes it
-for every pass.
-
-Fixes: b02f8bede217 ("W1: split master mutex to avoid deadlocks.")
+Fixes: 57c76221d5af ("w1_therm: adding bulk read support to trigger multiple conversion on bus")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-1-d2e6bfafb6a4@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-9-d2e6bfafb6a4@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/w1.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/w1/slaves/w1_therm.c |   37 +++++++++++++++++++++++--------------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -119,7 +119,7 @@ static ssize_t rw_write(struct file *fil
- {
- 	struct w1_slave *sl = kobj_to_w1_slave(kobj);
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 	if (w1_reset_select_slave(sl)) {
- 		count = 0;
- 		goto out_up;
-@@ -128,7 +128,7 @@ static ssize_t rw_write(struct file *fil
- 	w1_write_block(sl->master, buf, count);
- 
- out_up:
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 	return count;
+--- a/drivers/w1/slaves/w1_therm.c
++++ b/drivers/w1/slaves/w1_therm.c
+@@ -851,6 +851,19 @@ static inline bool bulk_read_support(str
  }
  
-@@ -138,9 +138,9 @@ static ssize_t rw_read(struct file *filp
- {
- 	struct w1_slave *sl = kobj_to_w1_slave(kobj);
+ /**
++ * bulk_read_slave() - check if a slave of the bus takes part in a bulk read
++ * @sl: any slave on the list of the master
++ *
++ * The family data of the slaves of other families is none of our business.
++ *
++ * Return: true if it is one of our devices and supports bulk read
++ */
++static bool bulk_read_slave(struct w1_slave *sl)
++{
++	return device_family(sl) && sl->family_data && bulk_read_support(sl);
++}
++
++/**
+  * conversion_time() - get the Tconv for the slave
+  * @sl: device to get the conversion time
+  *
+@@ -1442,9 +1455,7 @@ static int trigger_bulk_read(struct w1_m
+ 	 * so we can apply a strong pullup if required
+ 	 */
+ 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
+-		if (!sl->family_data)
+-			goto error;
+-		if (bulk_read_support(sl)) {
++		if (bulk_read_slave(sl)) {
+ 			int t_cur = conversion_time(sl);
  
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 	w1_read_block(sl->master, buf, count);
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 	return count;
- }
+ 			t_conv = t_cur > t_conv ? t_cur : t_conv;
+@@ -1482,7 +1493,7 @@ static int trigger_bulk_read(struct w1_m
+ 			/* set a flag to instruct that converT pending */
+ 			list_for_each_entry(sl,
+ 				&dev_master->slist, w1_slave_entry) {
+-				if (bulk_read_support(sl))
++				if (bulk_read_slave(sl))
+ 					SLAVE_CONVERT_TRIGGERED(sl) = -1;
+ 			}
  
+@@ -1511,7 +1522,7 @@ mt_unlock:
+ set_flag:
+ 	/* set a flag to register convsersion is done */
+ 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
+-		if (bulk_read_support(sl))
++		if (bulk_read_slave(sl))
+ 			SLAVE_CONVERT_TRIGGERED(sl) = 1;
+ 	}
+ error:
+@@ -1879,16 +1890,14 @@ static ssize_t therm_bulk_read_show(stru
+ 	int ret = 0;
+ 
+ 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
+-		if (sl->family_data) {
+-			if (bulk_read_support(sl)) {
+-				if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
+-					ret = -1;
+-					goto show_result;
+-				}
+-				if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
+-					/* continue to check other slaves */
+-					ret = 1;
++		if (bulk_read_slave(sl)) {
++			if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
++				ret = -1;
++				goto show_result;
+ 			}
++			if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
++				/* continue to check other slaves */
++				ret = 1;
+ 		}
+ 	}
+ show_result:
 
 
