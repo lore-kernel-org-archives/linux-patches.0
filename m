@@ -1,86 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704100;
-	b=TS+m6uJjnx105FdGEapY1WxBsCFkcj4K6i9gxYSYbtT51+gqk5KTsYkG6aiOewhxsC8N
-	 zwz3eHsD20YMBMsaMSjhmNNIJXcEpyAwoUX45+sEsDzbeflJCoJyvhTioY2ZeK0OYRjdF
-	 1magW1ftmjljtss4iFjLSHCGcgNl+Qt4VRgUHaDj1Lxh+QrBwrSXH3xATfR2gH89iE7Kl
-	 221dXCbCKB1a7yRZ9URX9C327Y1GlUtQ/wXcGl7wO7JwCs1zd63Lnya0gW+qJ5h3Qpuw0
-	 gYB4qeTjzCwUsA6uedRu2lVkH4LMOC1XdS0Rp2GScC2cI5G2wziz88aMDvMX60tixew==
+	t=1795704107;
+	b=teiODgkJ27vAnE8NKXrWBvJbJGDrRgxBTmag+14lNsM01VS4qM4ndbAwlqf20dw4WmKh
+	 1x9DP4sC7FVWNLpTSuOyjGJOaKhDFGntIVYmzpIgDKj1HoTbp9bmAIRz3yalk1um7uxN7
+	 /2e1tH4HYhpW5KR83+WUYCj0+fOi6RH03NTI3Ye6bP0Zm6HijDbE3f2oHqhiMdC6tJc+k
+	 k4DTLTHfyueuc/U1YXCRAy3XeQzs+gJh54vT+xrUXl7oWLo1XeYtSJSkxlBhkXIMsRSbq
+	 IWFZSoo+T3LNlFzNdzTbwgingi8z17BLFQzzSTzwoNPKy/NO9g05OSQRdfPaAGQ7WQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704100;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=LpdDH3GEwcUlVHPK2yBSFsZGWkbH52RFZRnAmaJgBf8=;
-	b=kvBCbl8lW3eYeG/ePV7+jbwqIeKcHRrwhgeMf6Z51iGWYFlbGN/KHqZrEApPSpnKbxQ8
-	 VlBPHFNTC7MVv5NJg+5/N2jkt7LlyQ2AH6sbi4QsG7/dRnzr2nxICRvrD77bwTUzrxU03
-	 CqgbisWBYAe92NqUREGyTkPX7y4zBOCqZrDPgz+6DyxbWClgXsvFwFybRvclhbXDgVc3b
-	 8nFBm0N2yK1Xkg2ir/YiNlDfoE3MjrObn/UgfRcwkrchiulXFI+C7PagJBvbuS11YwULh
-	 jh9RcWpA6o4pMBUMetRhomycF7lQOVAdhmuequXVEav3iW4ine8MZDXOds702xN5ffg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704107;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YbhPHeMJkakLAN/jwTUjp8gBLGfmcCcX6qgtmah+Lu0=;
+	b=QRQ44RSlkN7cfRgnDhL+sCVYeJnUlrTjbzFhHk77f6PFP0cUgojU7i4V3VsI/UdWq6Mk
+	 rocwhAMNahODqI0vebBm8E1ocHNZlLFJTWmcDUzDQB9coTE7mkDNRWo81UEpwgDOYJJQN
+	 qGmo2qWEFQ2PBXVW3+Bjb6vL6CS1iUuLjpx7RPwFx4Nsf/uNUvy0+mfLoFuzzjJI5/juk
+	 WMqs6MfVccD9GICmK4Fwkrqbf407sk5Hu+RxV94R/3Bw97h1qQth7CwHyRfgNYt41z8rj
+	 t8owwnxGLWegU3eVH8/fYYnTVRh59orXOyxTdC5XBHPzTcCw7O8ZtweMsO097YuW7Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="uA6QYu//";
-	arc=none smtp.remote-ip=209.85.214.180
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SlHQKxxF;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4051606A321
-	for <patches@lists.linux.dev>; Thu, 26 Nov 2026 14:41:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B4051606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B32606A31C;
+	Thu, 26 Nov 2026 14:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uA6QYu//
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2f04b676219so39610405ad.0
-        for <patches@lists.linux.dev>; Thu, 26 Nov 2026 06:41:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795704099; x=1796308899; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LpdDH3GEwcUlVHPK2yBSFsZGWkbH52RFZRnAmaJgBf8=;
-        b=uA6QYu//+KcQHnID8rXC5me/BrFUEMH5ztvtM1DKLJ4wnqqjFCRfD/WvqZ9SL4JZEj
-         kiKQWhrUGg7gBjS+SoYWhPUJZJv5UXyClCN6G8B3nhlv2tWfVrz0MPG+WwCMNPuROC7G
-         zEo/8wwM1iXCLBmGP164+1/Oq/PDnLC4ZUfDp+na3JXmZ5yIKTOmxoQDOwOHzj+SCjNB
-         3wFYs2THbWPNuX1fOx27aymLAV0MM9CQU5r3KSqcd6Ul/q460G2jUWzqam0UnZnq/7XM
-         oG6tLF4nCdd7CPx83OArVcWB0DvPNH1r3YL3CZXAO/4Y1ZzaGUPRlT/Jc16mpESA6dER
-         3Bgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795704099; x=1796308899;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LpdDH3GEwcUlVHPK2yBSFsZGWkbH52RFZRnAmaJgBf8=;
-        b=2T8O029aR5lWN79xSjKSMVjsD5kRO43jsmxMULqQsZEgtdVE/HetQZFVxvXuNvPOCK
-         ZXROSyvZbPneQG7xsqOP2bo6NGnB83I0zbf89oDpIXHnQ7LkFc7RAQblYS7gxTBL43/Y
-         cExWwSzJ21eYSwMLk5hefoN+ZsExvQoGc6mcMLUnwbZmjAwc4nEkY6lUixMyKhJYqyUV
-         gCGwPJq9+V0rYnXSkYS5LgTxifEGRpAsQGFPexQfj2hx5+IvW6OXx5bXURA5ftYQeHDf
-         BMZZfwcmc77Pj/B2GvQ24/ZdkdZV/ZNfHzM1lQSEhJRjsRG6EN8zZXiRtgU2l3sD6pgT
-         gzcA==
-X-Gm-Message-State: APuU4Z8tEshg2slRVrZw9e2UQjggPB0OR36SvtBwKD12vnxPKU7xR7Z6
-	owH4WRYU5syUhwWwK2R0Yx2YotAY8ldCwsd+tHIPmTa7XxAXJjbQkvkw
-X-Gm-Gg: AZFdTZcmMIF40rS4Q6XuCdBfhUMSJFOir7UGY8YQya5PeDMZraj33u7d5EThQMs+Hux
-	U9s5VQIPw+hFivn81emCT3GBLTUnRlx5uqi8Eiz7ziqFWLJtYKo3bFgBFaKFBCdTowyv+tRniIM
-	N1ciJ+NXwJJZdoeAbYOULE02cNFcpcyvoCwa1wpyA+vuDVZmdu7Q6YH4+fh2k4u1pz0ROsw268O
-	YDqCVQ1M6OJ8LFtWbQMLfiHGTvhFxNYxtafK/G3639Xm0BxJoz4KBRR4W9ldMyEPNsCfhaCfWfx
-	JoPjjhytEA6l/RHOk/Q870HE/h0KIOa02UEns/w2ppWu5hpm4va2KVgiX0rmdg/h506NkKB6QG5
-	eC4rcxaSyLuHGbrGNTp6eCH2sS3AgduzWKuA4gvSmqb3vl/MQMrx62OeTODUxhhrJb1CH6fJhjF
-	MB33YUhTsGx0Z/m2WNruSNZHk0RHg/ROVnvI+jeJATghwuonUjNxlh6tgO/et50j8JsMd07Runl
-	850qIWt0eDAU2hrBvoj3U1bLZAHIKOcDg1j00HvXCCU5Wy2gIC1McbKUCAAHotF2AqCm+Gi4emU
-	FwQiQDBMsRlSCtlCw7/nC8oq6SS7oNs4vg==
-X-Received: by 2002:a17:903:1a0e:b0:2ed:38c0:332d with SMTP id d9443c01a7336-2f03f16eabamr208027145ad.23.1795704098961;
-        Thu, 26 Nov 2026 06:41:38 -0800 (PST)
-Received: from [192.168.100.6] ([121.144.254.242])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2f03f10e67csm104457755ad.53.2026.11.26.06.41.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Nov 2026 06:41:38 -0800 (PST)
-Message-ID: <b8ed68cd-4d8b-486d-b933-b1e093a403cf@gmail.com>
-Date: Thu, 26 Nov 2026 23:41:33 +0900
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SlHQKxxF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACD01F000C0;
+	Thu, 26 Nov 2026 14:41:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795704106;
+	bh=YbhPHeMJkakLAN/jwTUjp8gBLGfmcCcX6qgtmah+Lu0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=SlHQKxxF/BpZ/jkUWn1vUFsIvohYIZWhZmeLFwdqcJ+g+XEhaa3lF/bNTZnbn6nwp
+	 aZODKhkZ+l4I9Zp+R5QTFNozUzl48D9W8cYIBLNHlsKnIs+xPSd6/BZUiPvpzEYY61
+	 ACKtHyPtfKmppA1uBZDqTqHwHQ/DBbLrGLI8jBv4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/265] media: uvcvideo: Undup use uvc_endpoint_max_bpi() code
+Date: Thu, 26 Nov 2026 15:35:31 +0100
+Message-ID: <20261126143605.176171329@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
+References: <20261126143605.076581697@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,70 +63,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0000/1002] 7.3.7-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261126105729.110697432@linuxfoundation.org>
-Content-Language: en-US
-From: Joungmin Lee <leejm516@gmail.com>
-In-Reply-To: <20261126105729.110697432@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 26. 11. 26. 19:58, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.3.7 release.
-> There are 1002 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 28 Nov 2026 10:55:59 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.7-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+5.10-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Ricardo Ribalda <ribalda@chromium.org>
+
+[ Upstream commit 5b9c75c794ce041e6e00789efef75d71915c4f4c ]
+
+Replace manual decoding of psize in uvc_parse_streaming(), with the code
+from uvc_endpoint_max_bpi(). It also handles usb3 devices.
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/media/usb/uvc/uvc_driver.c | 4 +---
+ drivers/media/usb/uvc/uvc_video.c  | 3 +--
+ drivers/media/usb/uvc/uvcvideo.h   | 1 +
+ 3 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index e9fe09ed6968a..d3c87ce87f0e4 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1016,9 +1016,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 				streaming->header.bEndpointAddress);
+ 		if (ep == NULL)
+ 			continue;
+-
+-		psize = le16_to_cpu(ep->desc.wMaxPacketSize);
+-		psize = (psize & 0x07ff) * (1 + ((psize >> 11) & 3));
++		psize = uvc_endpoint_max_bpi(dev->udev, ep);
+ 		if (psize > streaming->maxpsize)
+ 			streaming->maxpsize = psize;
+ 	}
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 909e158a017a2..a33b99cecd390 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1788,8 +1788,7 @@ static void uvc_video_stop_transfer(struct uvc_streaming *stream,
+ /*
+  * Compute the maximum number of bytes per interval for an endpoint.
+  */
+-static unsigned int uvc_endpoint_max_bpi(struct usb_device *dev,
+-					 struct usb_host_endpoint *ep)
++u16 uvc_endpoint_max_bpi(struct usb_device *dev, struct usb_host_endpoint *ep)
+ {
+ 	u16 psize;
+ 	u16 mult;
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 184ff2c10560a..14ebb78d7e004 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -894,6 +894,7 @@ void uvc_simplify_fraction(u32 *numerator, u32 *denominator,
+ u32 uvc_fraction_to_interval(u32 numerator, u32 denominator);
+ struct usb_host_endpoint *uvc_find_endpoint(struct usb_host_interface *alts,
+ 					    u8 epaddr);
++u16 uvc_endpoint_max_bpi(struct usb_device *dev, struct usb_host_endpoint *ep);
+ 
+ /* Quirks support */
+ void uvc_video_decode_isight(struct uvc_urb *uvc_urb,
+-- 
+2.53.0
 
 
-Hi, Greg:
-
-7.3.7-rc2 built and booted successfully on my system with no regressions
-observed when compared to 7.3.6.
-
-Note that the kernel was marked as dirty due to two
-distribution-specific patches, which are required to build with
-OpenMandriva's modified LLVM toolchain.
-https://github.com/OpenMandrivaAssociation/kernel/blob/master/linux-6.18-clang.patch
-https://github.com/OpenMandrivaAssociation/kernel/blob/master/linux-6.19-acpi-clang.patch
-
-Distribution: OpenMandriva Lx Rome
-Architecture: x86_64 (ASUS Zenbook UM3504DA)
-CPU: AMD Ryzen 7 7735U
-iGPU: AMD Radeon 680M
-
-[    0.000000] Linux version 7.3.7-rc2-myllvm-gce73b94700e6-dirty
-(user1@omv-zenbook) (OpenMandriva 23.1.5-1 clang version 23.1.5
-(/builddir/build/BUILD/llvm-23.1.5-build/llvm-project-llvmorg-23.1.5/clang
-0b5f47964323614ae2dc227f0b267ba43892bf06), OpenMandriva 23.1.5-1 LLD
-23.1.5
-(/builddir/build/BUILD/llvm-23.1.5-build/llvm-project-llvmorg-23.1.5/llvm
-0b5f47964323614ae2dc227f0b267ba43892bf06)) #1 SMP PREEMPT_DYNAMIC Thu
-Nov 26 23:29:00 KST 2026
-
-Tested-by: Joungmin Lee <leejm516@gmail.com>
-
-Best,
-Joungmin
 
