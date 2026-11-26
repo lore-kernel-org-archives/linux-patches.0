@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704210;
-	b=B9Pjri98+fQ6OFXmmllrlCLnR3fyPqOn7AgA5iea1PjQw5P/Zl+1R4i8u/G4TuZlfhYh
-	 wSpcKQtGAveOzO8wN6bXvh24KC9X1VRmJFP96/JHLXiCmxHbjkSvLltM8irL7nGh3LtJ/
-	 WdQScvSQhN6aZVCpQJegJNpj5Ba4CjHg5vlWblZwxcZRH3UEELNTvnxlBUkQhuxmo/SUT
-	 1xGTU3BBq4cn28YI/XLoIeRS0j2+j1OI7whZOB2P4mIxoCmoNKsssiURkIhYkBoQJlKAT
-	 mZpCiX8MA9F9Fqs1wvAhGOCvN4Rb3hZC3PNmpyNetN/imczPH/yLbbkWfN9VLMI27mQ==
+	t=1795704213;
+	b=s9hdgRHQNIAF8uhd+Z9C9/rLunkaY9VFd0mbL6p0Lu2OuZHE08FEAiUjxJlCTYWTP2Sj
+	 MfZqwBA3YIwEG/d2t/P0jt/JvaD7RsrwPtbAnp2aeA9Dsd4eM5enWAPFLFmLpxuWpcE1Y
+	 a0cOlBexqB5jlztACnHdQpJ63IBQt35CKp2mQqkTJfFdqkR9pzMksvRyCPfdQR5fV5TLg
+	 QmFHeAZcljlTQt1P2FuTxXPo0lcVs9pQ8jKx/0uaixIHbAg2YDkEOUDghfcEU0HNbFzxd
+	 tZtu317PwRH8jOxtS0dmtuKDSugpcawDDxFObTTnnL863ZhZqnXUlcbavky6P9vVY/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/tVlBPgyHWXHQ4LPafuBuZwi4fuYJ30nJahhGbHoiok=;
-	b=Ox1K4C1X/VVvYpNTZYC6q1Phq3iC9OlltPv72NImoua6T3Cs5snCjP4e5NHvSS2MYj5s
-	 S64KwwKiDrxEo1qX1kIjzSD90ke/0VGnDSKOKTR4SpuqLA8+VeDp89gCGKR6EB9Qk3aUA
-	 ORKN3W8dl5lMnXQCqrVIlPMaCOxG6ZS+N0V7/6lXkAm8C7PD9QzkjQhxvGLgW1DnX+3cI
-	 QtYWGpduCQ4osQMxI90h5J1Fdat/aE3lY+JjuLwuDmEoGZutRFGMPXSNV0VhpxbTkEBAf
-	 1znlz97AUmcfzHpmBdVDf2zi/NQHXnm2fmcCSdMSOEFnG8LwAkhyiI2TmDq4IWyiMig==
+	bh=upic8Ap0hJzpO4GMTWaHm4F7DGmvkkqpy1RgKFt/o5c=;
+	b=fIbsz86aPWdsaTpj0Gz4qqzNLn3R3GBXPITO2tDD2Fx3SSDqvZZf8doIrgVF2WLOe1G2
+	 wA7vi3PTq+BC47lcobJ3I1n10yTqsHIfx3hIAn1KJgqGGnsCAkry+5io2baapx0QNr6K0
+	 H+pkJvbIRw3W/aCecA40tlNLHTFLXA9ZX6HYwj/q+ZFok7+V87IiFtmbrGMetAmGL/aQt
+	 EAjY/YQ7+slNQYUZBsdX9B/GP7hktTaYPVtkdWqG9rrXnnb3fY+53CmZEpkWuVWTkZII5
+	 zzN4Nsj1J/q+tY9EcFr6asBbtUygcWh0Bu2uEuCux9rzhIeoTxGN+4dO+vpJ7kzu3Vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RvLtPpoY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAdKux72;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAC3606A31C;
-	Thu, 26 Nov 2026 14:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F787606A31C;
+	Thu, 26 Nov 2026 14:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RvLtPpoY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3231F000C0;
-	Thu, 26 Nov 2026 14:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAdKux72
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25241F000C0;
+	Thu, 26 Nov 2026 14:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704210;
-	bh=/tVlBPgyHWXHQ4LPafuBuZwi4fuYJ30nJahhGbHoiok=;
+	s=korg; t=1795704213;
+	bh=upic8Ap0hJzpO4GMTWaHm4F7DGmvkkqpy1RgKFt/o5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RvLtPpoYsrD2777rUUzKdpiannqcdqyLdDQtBS8YFVTAPayxumnorpK4TgxM5Sxpf
-	 C0xSs9JU6gwbwVlSrY5V+665KlygP28FXwtJQAWLM2kUlrLQ4vRC/eIAx5sdQHWbXF
-	 cMaQNnaTHX57YJ/kN2nd9Q47ZyM21bNDE86La7PU=
+	b=aAdKux72kjQUDRwpZTSCZapgVljwFPgoxGA+kGjESbC0fd0bN78oralllRyar6vcN
+	 /VQ10UQtf2cTomDBpbasWE1ktmUtBFgXJF0+MZUva8l8gzh3NQ7/Qt0jdvwrd/D+N0
+	 SokWlWG96Dyfv8EduelbgXoVhiY5L8VIR6r/s/vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alex Austin <alex.austin@amd.com>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Edward Cree <ecree.xilinx@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/265] sfc: ptp: drop the stale frequency reset in efx_ptp_start()
-Date: Thu, 26 Nov 2026 15:36:12 +0100
-Message-ID: <20261126143608.053310765@linuxfoundation.org>
+Subject: [PATCH 5.10 043/265] sfc: ptp: serialize host and MC synchronization transactions
+Date: Thu, 26 Nov 2026 15:36:13 +0100
+Message-ID: <20261126143608.120365295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,48 +73,220 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Austin <alex.austin@amd.com>
 
-[ Upstream commit 21d4917cfc8b6837c44d8aa186941a6a16ec17a0 ]
+[ Upstream commit f707347b33feebdd67633bccea52f96807c18d6e ]
 
-FW does not touch the clock frequency state on MC_CMD_PTP_OP_DISABLE or
-MC_CMD_PTP_OP_ENABLE, so the driver doesn't need to either. Doing so
-just desyncs the driver's cached current_adjfreq from what FW still has
-programmed.
+efx_ptp_synchronize() clears the MC-ready DMA flag before
+efx_mcdi_rpc_start() acquires the MCDI interface, and processes results
+into ptp->timeset[] after efx_mcdi_rpc_finish() has released it. The PPS
+worker and the hwtstamp enable path can therefore clobber each other's
+handshake flag and timesets.
 
-Resetting current_adjfreq to 0 here means the first efx_phc_adjtime()
-call after efx_ptp_start() reprograms the NIC's clock frequency to 0,
-since efx_phc_adjtime() always sends current_adjfreq to FW alongside
-the time step. efx_ptp_start() runs on every SIOCSHWTSTAMP mode change,
-on ifup, and on the reset_required path in efx_ptp_worker(), so each of
-those silently drops any frequency correction the PTP servo had already
-applied.
-
-efx_ptp_start() is also reached from reset recovery, but that is fine:
-on an FLR or PCIe reset FW does not touch the NIC clock, and on a full
-MC reboot the clock is reset to 1970, so a stale current_adjfreq from
-before the reset is hardly consequential - especially as it is bound to
-MAX_PPB, 1000000 ppb.
+Hold a PHC mutex across the whole transaction and over the clock
+operations, so efx_phc_settime() reads and adjusts atomically and
+current_adjfreq is consistently read and written under one lock. Also
+bail out when efx_mcdi_rpc_start() fails rather than finishing an RPC
+that was never acquired.
 
 Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
 Signed-off-by: Alex Austin <alex.austin@amd.com>
-Link: https://patch.msgid.link/20261026123023.3566549-2-alex.austin@amd.com
+Reviewed-by: Alejandro Lucero <alucerop@amd.com>
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Acked-by: Edward Cree <ecree.xilinx@gmail.com>
+Link: https://patch.msgid.link/20261026123023.3566549-3-alex.austin@amd.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ptp.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/sfc/ptp.c | 81 +++++++++++++++++++++++-----------
+ 1 file changed, 55 insertions(+), 26 deletions(-)
 
 diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
-index a2b4e3befa591..4505e0ca018c3 100644
+index 4505e0ca018c3..801a28cb00ad1 100644
 --- a/drivers/net/ethernet/sfc/ptp.c
 +++ b/drivers/net/ethernet/sfc/ptp.c
-@@ -1364,7 +1364,6 @@ static int efx_ptp_start(struct efx_nic *efx)
- 		goto fail;
- 
- 	ptp->evt_frag_idx = 0;
--	ptp->current_adjfreq = 0;
- 
+@@ -35,6 +35,7 @@
+ #include <linux/time.h>
+ #include <linux/ktime.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/pps_kernel.h>
+ #include <linux/ptp_clock_kernel.h>
+ #include "net_driver.h"
+@@ -264,6 +265,8 @@ struct efx_ptp_timeset {
+  * frequency adjustment into a fixed point fractional nanosecond format.
+  * @current_adjfreq: Current ppb adjustment.
+  * @phc_clock: Pointer to registered phc device (if primary function)
++ * @phc_lock: Serializes PHC commands and synchronization, and protects
++ *	      @current_adjfreq
+  * @phc_clock_info: Registration structure for phc device
+  * @pps_work: pps work task for handling pps events
+  * @pps_workwq: pps work queue
+@@ -328,6 +331,7 @@ struct efx_ptp_data {
+ 	unsigned int adjfreq_ppb_shift;
+ 	s64 current_adjfreq;
+ 	struct ptp_clock *phc_clock;
++	struct mutex phc_lock;
+ 	struct ptp_clock_info phc_clock_info;
+ 	struct work_struct pps_work;
+ 	struct workqueue_struct *pps_workwq;
+@@ -1028,7 +1032,14 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
  	return 0;
+ }
  
+-/* Synchronize times between the host and the MC */
++/* Synchronize times between the host and the MC.
++ *
++ * The MC serializes PTP requests, so MC_CMD_PTP_OP_ADJUST cannot be applied
++ * while MC_CMD_PTP_OP_SYNCHRONIZE is collecting timesets. This holds across
++ * functions of a controller, which share the clock but adjust it only through
++ * the function that registered it, so a secondary function can capture here
++ * without serializing against the primary.
++ */
+ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
+ {
+ 	struct efx_ptp_data *ptp = efx->ptp_data;
+@@ -1047,11 +1058,14 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
+ 	MCDI_SET_QWORD(synch_buf, PTP_IN_SYNCHRONIZE_START_ADDR,
+ 		       ptp->start.dma_addr);
+ 
++	mutex_lock(&ptp->phc_lock);
++
+ 	/* Clear flag that signals MC ready */
+ 	WRITE_ONCE(*start, 0);
+ 	rc = efx_mcdi_rpc_start(efx, MC_CMD_PTP, synch_buf,
+ 				MC_CMD_PTP_IN_SYNCHRONIZE_LEN);
+-	EFX_WARN_ON_ONCE_PARANOID(rc);
++	if (rc)
++		goto out;
+ 
+ 	/* Wait for start from MCDI (or timeout) */
+ 	timeout = jiffies + msecs_to_jiffies(MAX_SYNCHRONISE_WAIT_MS);
+@@ -1082,11 +1096,13 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
+ 			++ptp->no_time_syncs;
+ 	}
+ 
++out:
+ 	/* Increment the bad syncs counter if the synchronize fails, whatever
+ 	 * the reason.
+ 	 */
+ 	if (rc != 0)
+ 		++ptp->bad_syncs;
++	mutex_unlock(&ptp->phc_lock);
+ 
+ 	return rc;
+ }
+@@ -1481,6 +1497,7 @@ int efx_ptp_probe(struct efx_nic *efx, struct efx_channel *channel)
+ 	if (!efx->ptp_data)
+ 		return -ENOMEM;
+ 
++	mutex_init(&ptp->phc_lock);
+ 	ptp->efx = efx;
+ 	ptp->channel = channel;
+ 	ptp->rx_ts_inline = efx_nic_rev(efx) >= EFX_REV_HUNT_A0;
+@@ -1555,6 +1572,7 @@ int efx_ptp_probe(struct efx_nic *efx, struct efx_channel *channel)
+ 	efx_nic_free_buffer(efx, &ptp->start);
+ 
+ fail1:
++	mutex_destroy(&ptp->phc_lock);
+ 	kfree(efx->ptp_data);
+ 	efx->ptp_data = NULL;
+ 
+@@ -1608,6 +1626,7 @@ void efx_ptp_remove(struct efx_nic *efx)
+ 	destroy_workqueue(efx->ptp_data->workwq);
+ 
+ 	efx_nic_free_buffer(efx, &efx->ptp_data->start);
++	mutex_destroy(&efx->ptp_data->phc_lock);
+ 	kfree(efx->ptp_data);
+ 	efx->ptp_data = NULL;
+ }
+@@ -2114,23 +2133,23 @@ static int efx_phc_adjfreq(struct ptp_clock_info *ptp, s32 delta)
+ 	MCDI_SET_QWORD(inadj, PTP_IN_ADJUST_FREQ, adjustment_ns);
+ 	MCDI_SET_DWORD(inadj, PTP_IN_ADJUST_SECONDS, 0);
+ 	MCDI_SET_DWORD(inadj, PTP_IN_ADJUST_NANOSECONDS, 0);
++	mutex_lock(&ptp_data->phc_lock);
+ 	rc = efx_mcdi_rpc(efx, MC_CMD_PTP, inadj, sizeof(inadj),
+ 			  NULL, 0, NULL);
+-	if (rc != 0)
+-		return rc;
+-
+-	ptp_data->current_adjfreq = adjustment_ns;
+-	return 0;
++	if (!rc)
++		ptp_data->current_adjfreq = adjustment_ns;
++	mutex_unlock(&ptp_data->phc_lock);
++	return rc;
+ }
+ 
+-static int efx_phc_adjtime(struct ptp_clock_info *ptp, s64 delta)
++static int _efx_phc_adjtime(struct efx_ptp_data *ptp_data, s64 delta)
++	__must_hold(&ptp_data->phc_lock)
+ {
+-	u32 nic_major, nic_minor;
+-	struct efx_ptp_data *ptp_data = container_of(ptp,
+-						     struct efx_ptp_data,
+-						     phc_clock_info);
+-	struct efx_nic *efx = ptp_data->efx;
+ 	MCDI_DECLARE_BUF(inbuf, MC_CMD_PTP_IN_ADJUST_LEN);
++	struct efx_nic *efx = ptp_data->efx;
++	u32 nic_major, nic_minor;
++
++	lockdep_assert_held(&ptp_data->phc_lock);
+ 
+ 	efx->ptp_data->ns_to_nic_time(delta, &nic_major, &nic_minor);
+ 
+@@ -2143,6 +2162,18 @@ static int efx_phc_adjtime(struct ptp_clock_info *ptp, s64 delta)
+ 			    NULL, 0, NULL);
+ }
+ 
++static int efx_phc_adjtime(struct ptp_clock_info *ptp, s64 delta)
++{
++	struct efx_ptp_data *ptp_data = container_of(ptp, struct efx_ptp_data,
++						  phc_clock_info);
++	int rc;
++
++	mutex_lock(&ptp_data->phc_lock);
++	rc = _efx_phc_adjtime(ptp_data, delta);
++	mutex_unlock(&ptp_data->phc_lock);
++	return rc;
++}
++
+ static int efx_phc_gettime(struct ptp_clock_info *ptp, struct timespec64 *ts)
+ {
+ 	struct efx_ptp_data *ptp_data = container_of(ptp,
+@@ -2174,23 +2205,21 @@ static int efx_phc_settime(struct ptp_clock_info *ptp,
+ {
+ 	/* Get the current NIC time, efx_phc_gettime.
+ 	 * Subtract from the desired time to get the offset
+-	 * call efx_phc_adjtime with the offset
++	 * call _efx_phc_adjtime with the offset
+ 	 */
++	struct efx_ptp_data *ptp_data = container_of(ptp, struct efx_ptp_data,
++						  phc_clock_info);
++	struct timespec64 time_now, delta;
+ 	int rc;
+-	struct timespec64 time_now;
+-	struct timespec64 delta;
+ 
++	mutex_lock(&ptp_data->phc_lock);
+ 	rc = efx_phc_gettime(ptp, &time_now);
+-	if (rc != 0)
+-		return rc;
+-
+-	delta = timespec64_sub(*e_ts, time_now);
+-
+-	rc = efx_phc_adjtime(ptp, timespec64_to_ns(&delta));
+-	if (rc != 0)
+-		return rc;
+-
+-	return 0;
++	if (!rc) {
++		delta = timespec64_sub(*e_ts, time_now);
++		rc = _efx_phc_adjtime(ptp_data, timespec64_to_ns(&delta));
++	}
++	mutex_unlock(&ptp_data->phc_lock);
++	return rc;
+ }
+ 
+ static int efx_phc_enable(struct ptp_clock_info *ptp,
 -- 
 2.53.0
 
