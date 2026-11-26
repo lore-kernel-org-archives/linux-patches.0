@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705184;
-	b=kwos48OECu+wcSnEH+JBRg4LlzHfxqS1VSLrTskexz2jwQU6+yN1yYNtUlYRkCMNAZDc
-	 /YmoFC5LWO24/xvYQK+a41Dsk5cZsTKrnZhmy2MPB/UJT0hm8gwBaas7vbBy+bcVTjBns
-	 3ogznvH3peTuCwh2zP+pHLozbnRj6csuCwUPlxlSjBOiAtoJRAE/7QPZhUYNi0mq2itrp
-	 yyn59/gGYC25Nq1jIef+HgU3P5Cxy5ujVdmxyb8Tf2WcCmO5m5Uc427u2gc7940dFxluH
-	 O9j0RiZLR/LAG1eN4BM4MmwuApkyjH/Jux0QdXhAc60z4D+8IxAPaHSvBXmUJTvKXDQ==
+	t=1795705187;
+	b=eVM/oBavDSEbdzRC1i8ybb89pL9u4AvbnI4GE1hjDrrQbFk/YTZjyiyE4Uxh5/u32Niz
+	 5aAFP613RfsToiY8BltRamVhP5y9JIMt5ueL08rsooofTY9TzuLQZjNDQ6xId/WXU6eB6
+	 fwAHJJS2nwO7mh0Gib0nP5c2t42oTUV/t+qv0YM5UaI+0H555RBChj589SH+5N29Q6S6Y
+	 eRrddBjcw2/mpleftCYdNUmkGP/C5ZvZnoZypvrKSRMIT6cj6fTRAs8qveEHjJSC4waYF
+	 TzGthfVVLcuwWYcY88gs3uFeAB6H2+3b7IpOZyvVol6wIniOUtAd/Jlw4TsSoFxmh3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705187;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LaqRjDX/LlHpbeCLF03EJhNHBvUVGRrz+ymLQNXsmGk=;
-	b=O9fI5p5qFLb+xqZeqw7wokRoZdlaHBbTUUSrhrUUsOFqWiFdoHm/xFDPXgKSOWE6DgdU
-	 9bcUKNSAMPBDjvooBbcDzKFuqZokjJH8jaF/K4CM+7hIg1BOCLnQjV4lgtbPGTirnmKCk
-	 03JCjiPDVGZ+Yy9M7PPnlP3ond3EhjR8uEMEncSn7Cb9Fd4DriMmK9ABRWKX+J88Fgiob
-	 bxFLmiZu2wyg8VIW4sY842sVH9y/44/qYlnYCvVKr0bopvSP0It3yyvEPa4Q1SaVpsg0c
-	 gRwlVVakCM7EzvPP1EIfa3TXBb0gWm1DT1yyay9BusOf+TEsgJ5QMy1ZZIZk4XIiHng==
+	bh=5ciU+eX9Mi7ZvXqyz9Dl+aDM8oZaDPXhlWQ5paRrw3I=;
+	b=LC3EzBBMLiyAs3yM/DLHy5fv4EyIu1KMowQJclMVOhP67Tv8BxhVzkAHuiwhh4eX3P2K
+	 /xDrIH7av0ltsniWIX/WLF01gakuIwdzKosF/Pz00zBQq/t/G5vh+TohbSALuGAf7lp+6
+	 XZaQjD8iMjsjXdlvH9tnSGSLJRK6Z7wxGlG7G+j8uyUu4CsLksfuqdq2iTmHmY8NyJ8vS
+	 cP1MCUF0DU7V0UyqdKWLAuhOXeHiBn7XUdvXYV+hr3C7IiBpX9WMp4Cy+ccwLbZ9dtn1M
+	 3pWLOOLBeYGuXD05ApO0vePvOUXRlSS5gVu8+bik2ERtrLjxgJadlDh8Ioe+SwzPY8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvZYB42Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gFGyF4ty;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C371606A31E;
-	Thu, 26 Nov 2026 14:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3217606A321;
+	Thu, 26 Nov 2026 14:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvZYB42Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FCF1F000C0;
-	Thu, 26 Nov 2026 14:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gFGyF4ty
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276001F000C4;
+	Thu, 26 Nov 2026 14:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705183;
-	bh=LaqRjDX/LlHpbeCLF03EJhNHBvUVGRrz+ymLQNXsmGk=;
+	s=korg; t=1795705186;
+	bh=5ciU+eX9Mi7ZvXqyz9Dl+aDM8oZaDPXhlWQ5paRrw3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VvZYB42YRLtqJVEd7i0RAgP4V7O0EyA+qp1VZ1ZS7r/71gTyyipo0NYfsASkrmJtR
-	 A0nye5+WX0HlpFcLTE4io/r87pBBdJqcMVDNQKnht/pwqgMGKGb9mTBvRQspqbzR3g
-	 St0FE4GRr8BoslVzYAuMXJ0pOJFws2TW41sNvnOw=
+	b=gFGyF4tyeom7ziZ5eXeYhhKWnE9dylz+Sy+Zj5Y9APWSGRbo+LR5JU0mbDyX20Ha1
+	 7BdikDQ7vhFW78MShzKYHtH/eISvy2fxa1YpCMGauglamyhc8hx8pE/TQTCxey0VBT
+	 SDDo63Qlz2kNpKkYwxYNxyMjxH8EHBAoUUFVFfaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <f.fainelli@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/319] MIPS: Alchemy: Save the Ethernet address before reusing PROM memory
-Date: Thu, 26 Nov 2026 15:37:59 +0100
-Message-ID: <20261126144009.248712322@linuxfoundation.org>
+Subject: [PATCH 5.15 112/319] MIPS: SB1250: Validate and update IRQ affinity
+Date: Thu, 26 Nov 2026 15:38:00 +0100
+Message-ID: <20261126144009.271403438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,91 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 792ac17faa0503448f3ef85b49f16456ac54ab84 ]
+[ Upstream commit 456c965ca46c59a4a241c755e6565fd883a522f4 ]
 
-Alchemy keeps pointers into the firmware environment and looks up ethaddr
-when initializing the Ethernet devices. By that point, memory allocation
-can have overwritten the environment, causing prom_getenv() to pass an
-invalid pointer to strchr() and panic during boot.
+sb1250_set_affinity() selects the first online CPU in the requested
+affinity mask without checking whether such a CPU exists. If the
+intersection is empty, the resulting CPU index is invalid and must
+not be passed to cpu_logical_map().
 
-On the MTX-1, the struct page layout change in 9ddb3c14afba reduces struct
-page from 40 to 32 bytes and exposes this unreserved firmware memory.
-Bisection and boot tests confirmed that the parent boots while the change
-reproduces the panic.
+Reject affinity masks containing no online CPU with -EINVAL before
+accessing the CPU mapping or interrupt mapper registers.
 
-Parse the Ethernet address during prom_init(), before registering RAM
-with memblock, and keep the six bytes in kernel-owned init data. Return
-the saved address during device initialization, preserving the existing
-YAMON formats and command-line fallback without reserving a fixed
-low-memory region.
+Also update the effective affinity mask to reflect the single logical
+CPU selected as the interrupt target.
 
-Fixes: b93ddc4f9156 ("mips: Reserve memory for the kernel image resources")
+Fixes: 421d1563c662 ("mips: Validate online cpus in irq_set_affinity() callbacks")
 Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/common/prom.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ arch/mips/sibyte/sb1250/irq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/mips/alchemy/common/prom.c b/arch/mips/alchemy/common/prom.c
-index b13d8adf3be47..11dc800f75663 100644
---- a/arch/mips/alchemy/common/prom.c
-+++ b/arch/mips/alchemy/common/prom.c
-@@ -45,6 +45,11 @@ int prom_argc;
- char **prom_argv;
- char **prom_envp;
+diff --git a/arch/mips/sibyte/sb1250/irq.c b/arch/mips/sibyte/sb1250/irq.c
+index 86f49c48fc34d..6859a0c4ca558 100644
+--- a/arch/mips/sibyte/sb1250/irq.c
++++ b/arch/mips/sibyte/sb1250/irq.c
+@@ -76,6 +76,8 @@ static int sb1250_set_affinity(struct irq_data *d, const struct cpumask *mask,
+ 	unsigned long flags;
  
-+static char prom_ethaddr[6] __initdata;
-+static bool prom_ethaddr_valid __initdata;
-+
-+static void __init prom_init_ethernet_addr(void);
-+
- void __init prom_init_cmdline(void)
- {
- 	int i;
-@@ -94,6 +99,9 @@ void __init prom_init(void)
- 	if (!memsize_str || kstrtoul(memsize_str, 0, &memsize))
- 		memsize = SZ_64M; /* minimum memsize is 64MB RAM */
+ 	i = cpumask_first_and(mask, cpu_online_mask);
++	if (i >= nr_cpu_ids)
++		return -EINVAL;
  
-+	/* Save the MAC before the allocator can reuse the PROM environment. */
-+	prom_init_ethernet_addr();
-+
- 	memblock_add(0, memsize);
- }
- 
-@@ -124,7 +132,7 @@ static inline void str2eaddr(unsigned char *ea, unsigned char *str)
+ 	/* Convert logical CPU to physical CPU */
+ 	cpu = cpu_logical_map(i);
+@@ -103,6 +105,7 @@ static int sb1250_set_affinity(struct irq_data *d, const struct cpumask *mask,
+ 		____raw_writeq(cur_ints, IOADDR(A_IMR_MAPPER(cpu) +
+ 					R_IMR_INTERRUPT_MASK));
  	}
- }
- 
--int __init prom_get_ethernet_addr(char *ethernet_addr)
-+static void __init prom_init_ethernet_addr(void)
- {
- 	char *ethaddr_str;
- 
-@@ -134,12 +142,21 @@ int __init prom_get_ethernet_addr(char *ethernet_addr)
- 		/* Check command line */
- 		ethaddr_str = strstr(arcs_cmdline, "ethaddr=");
- 		if (!ethaddr_str)
--			return -1;
-+			return;
- 
- 		ethaddr_str += strlen("ethaddr=");
- 	}
- 
--	str2eaddr(ethernet_addr, ethaddr_str);
-+	str2eaddr(prom_ethaddr, ethaddr_str);
-+	prom_ethaddr_valid = true;
-+}
-+
-+int __init prom_get_ethernet_addr(char *ethernet_addr)
-+{
-+	if (!prom_ethaddr_valid)
-+		return -1;
-+
-+	memcpy(ethernet_addr, prom_ethaddr, sizeof(prom_ethaddr));
++	irq_data_update_effective_affinity(d, cpumask_of(i));
+ 	raw_spin_unlock_irqrestore(&sb1250_imr_lock, flags);
  
  	return 0;
- }
 -- 
 2.53.0
 
