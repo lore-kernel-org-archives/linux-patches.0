@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704664;
-	b=lrrnuRbs+zNwXw6Buy5WycpanCSsRcTM2ngv0i6wfh+4YC4tsLprhzzh7uly2jEBnHch
-	 //E0zqJkwlcf2GY5HaHwR5T5AyB/sawF+LvhXXBevgiUlWG+yM1Y0jphZyCaFGJlct4dd
-	 HBYANcyQogw2Gb0s0TC1P7Nhsqi2TEmIMx+iCl/wYQOQms6aMGTwuNh+yprRNCf0ufdAK
-	 muH12Tzv5L3JmovlicELOfExGCCW16WKUK8HGKMvi58kEvM2ymtxOajnaHSjntiHrykb+
-	 rR6Q4/5kjsJijJhlhgPn+118Li2HsyhZtm5Vr5yVWle0/I+ZGvmFqJZtJie/xWysCoA==
+	t=1795704668;
+	b=VvFc2+JXmxigucAFyF41QVs8YW+7e4BdTFNkpzr05np4tP9QX+N9tAMguK3mCDnDKfdD
+	 l4E+Nzr+RDiHmGqDmL1EFIQT1kx8Cly6eyEoPsooB+D6sVRVpC88kvGrzPghhxZ8N44cz
+	 nCc+8g8nlZwlUua6A44YImM6l5maQFrzsfSkcyDoxgBFmO1nNMTjt47V/kogrpP7YaXM3
+	 Oxya0emuuu7xjUJ3BjD7tf5oRll/zMvFQOxIvEowx/KmR28J4tvQlFoOGfsIjWbXV1RLe
+	 opf3czpbnoXs3Pn9C29XYe4gVdhKSX5hMQNcWSZZkS4CVaCcGr1D+NxzDJcGkFKO/dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P1DkMhtSvEEBvrbWLb/fxzF8Z3TMG7uNFdpu0Cpqha8=;
-	b=L9rDM+d8xDsHqZiGVE8/E2YUNR8GU1blxfY5g4C3t9cGvJ2viQrR/m4cOhrjjsqXE5ZR
-	 CxLWOyi3p3K77ArHoN2BRGjYbOc/QDRfkH9xDYEH/1F2aSxc2Dig78TaWqRqHf/aACTjo
-	 EBXI+Ea+ac8vlfufw0XMmaCldAbAK432psCIclrTfKY28G+PumT5FJsvNY3XT9IFWGrRu
-	 w+Sk5sQ0vz5ot32ilkHfHuunFQHU88WikA3XSXP+8TyHRBayqnYi2nO+0K8wg4sqPbJcG
-	 uVgjjYp2tN+R4fUntceW8v55N9wTRuBUHVLJZq0nBG8AkZQGwvnckuDzisfYkjCSYjA==
+	bh=TLT8szEwQ2cV/PV1MKxJcwc4vG2dI9e76HRiJAjpcdE=;
+	b=lllcpwe88qPrcSOueQxbVrrqJcd3joq2ifRdcKmm3m2JSFflcMNdOQBvUGTYvPJWprYY
+	 Vyl+0nIr37nYTLKb7UKICB0NkWGtNn8FR/d3rYpO1UK38ab4VdSQALR5tqz36MtPl4NHo
+	 7nnGdD9wATmvRad28DaF+LGTTvLq+4LD0jSFdhwVpGSlKmbwWfRhDKzp8QQ+QGCZlhA06
+	 7x3F2lucqvQbI3b5NaC+U+pNNmj8yCBcRhkExNapvVlsr+xXkIfD6j1QJ04PtcMQSu4n1
+	 F9NV8tZV8kvo77m7F+XeB6QD+emgKQW/hQiR8Xv6VeckDW50FXLN1lPKOUT6Wk5Bbug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrU68Cy+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPm7b0wh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626A6606A31C;
-	Thu, 26 Nov 2026 14:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0889606A31C;
+	Thu, 26 Nov 2026 14:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrU68Cy+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD05D1F000D4;
-	Thu, 26 Nov 2026 14:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPm7b0wh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C08741F000C4;
+	Thu, 26 Nov 2026 14:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704664;
-	bh=P1DkMhtSvEEBvrbWLb/fxzF8Z3TMG7uNFdpu0Cpqha8=;
+	s=korg; t=1795704667;
+	bh=TLT8szEwQ2cV/PV1MKxJcwc4vG2dI9e76HRiJAjpcdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mrU68Cy+kAJjgpZ2PK32XJHw7CQvibsh+cN+GwubmQ9gl6h40w5dkjXzmuHmDZzWd
-	 FKLM2whlMpVcbtZdK3Qn2CVwUPuX8NpL18jWYIRmGo+CrG08IBIU2Qty0eYnxq8AMo
-	 zy7D975gBRA9yvTHFDhtPnXV2WbKzCFZvjv4si90=
+	b=wPm7b0whSW0OFibYJaacW8G+QgdUaGQne6QtJJiR3DZNEO8jcqiv/Wdo3qFA8hrTT
+	 m/OK7MajF0bULRiTi+DUNX3ppSf5h3wTHxR97cqvxdES9oT8j9MsHTfxl/QIgH7MmZ
+	 gBfLmN+CNyQDjWVbS7dn/PAE75JWoAgt/R1kbuD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <1075151112@qq.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 203/265] dm thin: avoid wrapping no_space_timeout
-Date: Thu, 26 Nov 2026 15:38:53 +0100
-Message-ID: <20261126143619.408168602@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Wentao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH 5.10 204/265] dm-sysfs: fix misbehavior if kobject_init_and_add fails
+Date: Thu, 26 Nov 2026 15:38:54 +0100
+Message-ID: <20261126143619.475618976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,46 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit bcb78d49620f666b4a9d62997691e8d031fd4ebc upstream.
+commit 406d576cc457203cf86eac7f17839b2efec81db4 upstream.
 
-set_pool_mode() converts the no_space_timeout module parameter with
-READ_ONCE(no_space_timeout_secs) * HZ. The usual arithmetic conversions
-evaluate the product as unsigned int, so it can wrap before being stored
-in the unsigned long delay. With HZ=1000, 4294968 seconds becomes 704
-jiffies: a pool that runs out of data space switches to
-error_if_no_space and fails queued writes with -ENOSPC after about 0.7
-seconds.
+If kobject_init_and_add fails, we must call kobject_put (see the comment
+at kobject_init_and_add).
 
-Widen the value before the multiplication and cap it at
-MAX_JIFFY_OFFSET / HZ, so large timeouts no longer wrap into short
-delays. On 32-bit kernels, values beyond the supported jiffies range
-saturate at the largest whole-second delay not exceeding
-MAX_JIFFY_OFFSET. The timer wheel's existing handling of very long
-delays is unchanged.
+Before calling kobject_init_and_add, we must zero the kobject (see
+https://lwn.net/Articles/52085/). If the first call to dm_sysfs_init
+failed, it may be called again, and that second call would see an
+uninitialized kobject.
 
-Fixes: 80c578930ce7 ("dm thin: add 'no_space_timeout' dm-thin-pool module param")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Fixes: 784aae735d9b ("dm: add name and uuid to sysfs")
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-sysfs.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -2531,7 +2531,9 @@ static void set_pool_mode(struct pool *p
- 	struct pool_c *pt = pool->ti->private;
- 	bool needs_check = dm_pool_metadata_needs_check(pool->pmd);
- 	enum pool_mode old_mode = get_pool_mode(pool);
--	unsigned long no_space_timeout = READ_ONCE(no_space_timeout_secs) * HZ;
-+	unsigned long no_space_timeout =
-+		min_t(unsigned long, READ_ONCE(no_space_timeout_secs),
-+		      MAX_JIFFY_OFFSET / HZ) * HZ;
+--- a/drivers/md/dm-sysfs.c
++++ b/drivers/md/dm-sysfs.c
+@@ -130,9 +130,20 @@ static struct kobj_type dm_ktype = {
+  */
+ int dm_sysfs_init(struct mapped_device *md)
+ {
+-	return kobject_init_and_add(dm_kobject(md), &dm_ktype,
+-				    &disk_to_dev(dm_disk(md))->kobj,
+-				    "%s", "dm");
++	struct kobject *kobj = dm_kobject(md);
++	int r;
++
++	/* The kobject must be zeroed before calling kobject_init */
++	memset(kobj, 0, sizeof(struct kobject));
++	r = kobject_init_and_add(kobj, &dm_ktype,
++				 &disk_to_dev(dm_disk(md))->kobj,
++				 "%s", "dm");
++	if (unlikely(r)) {
++		/* Weird semantics - we must call kobject_put on failure */
++		dm_sysfs_exit(md);
++		return r;
++	}
++	return 0;
+ }
  
- 	/*
- 	 * Never allow the pool to transition to PM_WRITE mode if user
+ /*
 
 
