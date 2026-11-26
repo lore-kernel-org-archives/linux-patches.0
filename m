@@ -1,51 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705522;
-	b=dKGqGBKB5s+Mu5NX6jJQEk8xzThb7Whc/9K3ajJDDsMRoYxYsze2jemh8YWMdOHKgVrg
-	 75+lUewaFfNu14UeknwMOEhZ/N/L1TAwLf7ukt1/442QENzXBmKaAJ80HM8ZNggJvzNDG
-	 WUXGkfIeUg/WpwukifoHg92gpH83cuLqA3UZhL7p44PEVnGP+A29GASHgO8e3UbedZ54S
-	 CZfFCCpibB2ybf/g2IfTcz+UIWeLPlOiDqW7I3JrVx8gTFXlUVGckTJ54Ug1qGBKaXl/C
-	 ttwcuKeNlCx1p2/Qtsfmlwn5wqkwejYuj6jApPbIIEqZSv5eSt4xAKYUTXlUKCl5VCA==
+	t=1795705524;
+	b=Xp77p6BuW8dlE7mLiSHx2su075oqFIt5mILxc5EfPA8S3sRV5N6+Z2YKnzPBdDb2cDqw
+	 VytFeBw/Gpe8ZPfJT5k6chrJYIgSOI5x8NOSbAAXtkII4YGAfH1LitpVJvsy8iS39DDJh
+	 55HCPzsrwHver2xWCEFma08xqxoOKKajEdUeEPS1YLD2GcJCOY+g03PsgidFxPg1gVxsy
+	 oIgQLp0VaoE3xSloSHNO5YlefEgH+AktlQX18K5LguWiRFmAS3w7FVfJ3Sa6U5u0yrujJ
+	 TXs2aW+aZ3N7Qs/hsl/XI4yj7PwQJXZoVAfVNO4CVavBj4pWDzwcZKTaWdhPIwHrAaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QcPnue0gdK2Lp54/x18I/9v5VjcWb4/0kt5VH4fCs1A=;
-	b=LbOMvpl2gnxZ/Hv0IWyPLjBY9KzA5TdxMMndF825mQL/K5HTye8jP1Ewcz3LGbNV/69Z
-	 dPIZq3OWHQTVDdnoxWcgU6jNJUHEsHhy+2pkSEJ60cccsTnnGiP/tGyv3TogLAe8h2nc6
-	 82gPrPLEjM40G2DgQ4rShnkgNSeTsmRStvKV+8xFPzLzh/wZbva37uBYy9o6lLtmm4MIO
-	 mkikKM2WnL6LPIAwG3DpB4vMTahPIAfjvt07D0tifbcgsPZAbYEsxtLbCXWWgyo7uJiTO
-	 UsogRK965V1+0xX2kM2m/BaHuQemdfoWA4LigH+DIiUDQyahuj3Khnb+JWu8/k16/DQ==
+	bh=dPY24d8JmL9Dxegu0y1C8MCyotlEnbL9FS1K6b7DBCo=;
+	b=xexfyuurbMLFQjLOXeDX0TYiNpVuivR8OE8oWAEUk8iforrCfdEySvVJo2NTCi8YRDS4
+	 xJsiy1RWY/YjZh7qBJWGDMAad4XmlXnwzzfKKjldPQaqUI/K5EXJajDnUfhhjtQKRW7S6
+	 XlvYy+ohkGKcL+JHpK8xdq+QbfwGlEgmaTjh+7uooW21YRUyfPSw0mMNmwNlDu4e1FCeE
+	 ORuT9yv9pK1deUqNJUrd7HidoqE9BLRsnbFwZmxJV8YSzKdOwXz+LddaRrezl6r4Ji2yA
+	 qzz/Z2iKvBq7Y3L6tBNOyLWFKCULaXE6rLQGD6yxyGTKgHUisr1OU8Wf0+HTwyDtKZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdxC3k7t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XeFjdn7R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52557606A332;
-	Thu, 26 Nov 2026 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C201A606A336;
+	Thu, 26 Nov 2026 15:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdxC3k7t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9D71F000C0;
-	Thu, 26 Nov 2026 15:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XeFjdn7R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A621F000D1;
+	Thu, 26 Nov 2026 15:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705521;
-	bh=QcPnue0gdK2Lp54/x18I/9v5VjcWb4/0kt5VH4fCs1A=;
+	s=korg; t=1795705524;
+	bh=dPY24d8JmL9Dxegu0y1C8MCyotlEnbL9FS1K6b7DBCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BdxC3k7t7xRBsdyJVD9x8HwkRh9agjKeioH9vX5AEsOWeZuygvI3cdst5yc0q1hVG
-	 /Lmik0jwvPY1zbUBF2iJIZvG+pfW+9z04PatLVh207RCP5usTSaHWYWoIuqL5nHPgJ
-	 y+H1s6YoD4jSge1qyrD/4zl/6wGvhda0WdyXtB8Y=
+	b=XeFjdn7RWpftInhslC/Tj2mqAVMhTWiv+TOF/Q0/RqENwe0FwxpfNjFWTh+Xa/gyG
+	 COc+uzK1tytlrC5ce8pNULS8sAl4koibEymUsq5eVKaeEoAPKU5gJe1/P+MKLPW58E
+	 97iLhR6uz9T9V6IULeu3a/44c5BfdE4ggp7mjVlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rupesh Majhi <zoone.rupert@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 219/319] hwmon: (aht10) Fix update_interval overflow on 64-bit
-Date: Thu, 26 Nov 2026 15:39:47 +0100
-Message-ID: <20261126144011.689796706@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 228/319] tracing/eprobe: Fix 1-byte signed field fetch in get_event_field()
+Date: Thu, 26 Nov 2026 15:39:56 +0100
+Message-ID: <20261126144011.894972264@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,37 +66,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rupesh Majhi <zoone.rupert@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit b5c5b67e02406fb48acf57cf2c30a570230fd6aa upstream.
+commit a0f836eea463d4c468edb58eedb03911c9c0791d upstream.
 
-On 64-bit, update_interval writes are clamped to LONG_MAX ms, but
-ms_to_ktime() overflows above 9223372036854 ms and the interval wraps.
-LONG_MAX becomes -1 ms, so every read starts a new measurement and
-update_interval reads back -1.
+Because the kernel is built with -funsigned-char, plain 'char' is
+unsigned on all architectures. Reading 1-byte signed trace event fields
+via *(char *)addr in get_event_field() therefore zero-extends instead of
+sign-extending negative s8 values.
 
-Clamp to INT_MAX like sht4x, so the limit is the same on all platforms.
+Use explicit fixed-width integer types (s8/u8, s16/u16, s32/u32) when
+reading event fields.
 
-Fixes: 8c78f0dee437 ("hwmon: Add AHT10 Temperature and Humidity Sensor Driver")
+Link: https://lore.kernel.org/all/179455852542.403392.15666310371702309464.stgit@devnote2/
+
+Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
-Link: https://patch.msgid.link/20261108172651.220121-1-zoone.rupert@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/aht10.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_eprobe.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/hwmon/aht10.c
-+++ b/drivers/hwmon/aht10.c
-@@ -182,7 +182,7 @@ static int aht10_read_values(struct aht1
- static ssize_t aht10_interval_write(struct aht10_data *data,
- 				    long val)
- {
--	data->min_poll_interval = ms_to_ktime(clamp_val(val, 2000, LONG_MAX));
-+	data->min_poll_interval = ms_to_ktime(clamp_val(val, 2000, INT_MAX));
- 	return 0;
- }
- 
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -343,21 +343,21 @@ static unsigned long get_event_field(str
+ 	switch (field->size) {
+ 	case 1:
+ 		if (field->is_signed)
+-			val = *(char *)addr;
++			val = *(s8 *)addr;
+ 		else
+-			val = *(unsigned char *)addr;
++			val = *(u8 *)addr;
+ 		break;
+ 	case 2:
+ 		if (field->is_signed)
+-			val = *(short *)addr;
++			val = *(s16 *)addr;
+ 		else
+-			val = *(unsigned short *)addr;
++			val = *(u16 *)addr;
+ 		break;
+ 	case 4:
+ 		if (field->is_signed)
+-			val = *(int *)addr;
++			val = *(s32 *)addr;
+ 		else
+-			val = *(unsigned int *)addr;
++			val = *(u32 *)addr;
+ 		break;
+ 	default:
+ 		if (field->is_signed)
 
 
