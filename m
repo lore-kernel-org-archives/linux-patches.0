@@ -1,59 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705824;
-	b=VLCICgBOKTL52SX5xKA550BhZpYfnuciC1xtj6Evnkrs1gdcxrtwJLeQfmX8tCVxUL8K
-	 +Wn6RCYpSMAwqbCeznnY75itJ3TXeJVTXbdAZXpeBSExInj0UMRd4y7HeKeVrbmqDCa4F
-	 P3TPe2olffDPT4T3pR6g4z63RgQ/5uADoIQBIvhg0DNR2SS5/slO101tNfkbHfBNQet9i
-	 Gzbquv/FFxkD/o8HEQqZfJVJ6pYFYU2c1XAbz2XygcxjF2z6MrCjxw+komZdGPkT0/a51
-	 vag1lRA3kIqplEKfMPD5LEb534r0K4VIGjoqDdr1+eShd06MSV5vfhyr6E136tnpZiA==
+	t=1795706091;
+	b=D/xai4durVAHGnfmxPLcjfSMM9sjHNq4BRwSK5mEQjhtYqGp4Kp70ZA4UgiLK0uXiFPW
+	 z/6ZY9DpYIoaqk5rtJlWYe5M75GHkZkx47WdvMLVSxgcsqpFzAf5l1QiZ0JasOVEXjuZt
+	 rfKTin8hVfEjkRtgRe1oYlXgMtBYEh77RIuooYSC+MdBr+pyY7Jaj3FfCT56PrvvpjAyV
+	 PAusohHxgBQqsCf6mlkr6yhRyLT2r2+hPbjPt6rLJc1EIlbO2e/y1gdjon7nxocOl9MG7
+	 iUz3H7faCOCES48HlJ4ptVogYJl0PENlVCjso85GSOPefIXvFfj9/RcY4hxHth8qD1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705824;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=MF27jd7seLZCgf93bDYZXbUVLEr2yJgomb9OeN6znYo=;
-	b=g+SnyFs/kvNrZgMSxTyuftF9FWFMiWm+TGd05/OEI9OdfLOxQDoSXuO02RVYE9wYBkCn
-	 uCenFgzAZUxrYYvBJiT5ON7mQAl2h6I8xCPxaGu4eVxxxkNjjcNK8kPH5UHb9bZCJgTRD
-	 fPq+TXqydSulsRnm7PauD8rjzFBqwVVDUTMuPnZizDuRTnQgSoiP8lqxghp/G/8we6CC7
-	 tJrMqU63nwIVG06WvF0DHSKFrocLHv4O6cDFcJMnzs0bz+vplQFaTP3spXIpVSSnXTPBn
-	 Id7Rx1nYUedMeIDUHT9bYQhnNIA4ri+d5IFjB5n4CoKsuqDXyCWpUHbt1t2ybL+kYuQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795706091;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=Fmk7KvplZu8IqXCFaSm0h6pjbCmnVJRD63HoP6Br6hc=;
+	b=DeRoi7U1jup4UkiuCMstnIqE4OZDQqmk/a12rpdFBosZ1fYrTWVHGOmJcVPDegQaBhNx
+	 cxbdp42819zk3mfJnRVrdx8a3rRrEwelsphMhbU3GE2mp0wwuUKK8QgPbHj8bylkfsEgV
+	 o9nhrlJSo91VcrW8gmYLPDD8WRK4BDLAkKdLTKh8/S8QHqSmH41ot2nyg56f2TMfrM7xB
+	 pVReyIdiaW71Jff1HerFQCB5oXRUrSiVmp9IeyKS4rytYWcUQbYKzCfwl7mXROPi1q1+k
+	 u1/sAt4iOO4s86gA4m6lHzsLsrrupO2UUkJTmedS4Jws5qK6FFUWe7rFkIkp7A+AI2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEnnf3gM;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=ziepe.ca;
+	spf=pass smtp.mailfrom=ziepe.ca;
+	arc=none smtp.remote-ip=209.85.217.44
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80011606A32A;
-	Thu, 26 Nov 2026 15:10:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEnnf3gM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B851F000CA;
-	Thu, 26 Nov 2026 15:10:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705823;
-	bh=MF27jd7seLZCgf93bDYZXbUVLEr2yJgomb9OeN6znYo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YEnnf3gMldIImYB/t0WHHuIM1CZde1SqWMJpf/A+V1ok1uJn26WPiEPKQtqnW4vIe
-	 oLoikYCMGp5RbKTMShHKpBfrUgzwFtmJpASWdQttb5VIUH91pofzQth4ovruVljTWz
-	 MRGACaub0mTh60uoSPfUzaC0ffAuxN+vJpeCu0UM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Mike Rapoport <rppt@linux.ibm.com>,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 314/319] ARM: 9359/1: flush: check if the folio is reserved for no-mapping addresses
-Date: Thu, 26 Nov 2026 15:41:22 +0100
-Message-ID: <20261126144013.848172936@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
-References: <20261126144006.732901931@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3136606A31C
+	for <patches@lists.linux.dev>; Thu, 26 Nov 2026 15:14:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D3136606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-7d2c8141dc6so3773805137.1
+        for <patches@lists.linux.dev>; Thu, 26 Nov 2026 07:14:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1795706090; x=1796310890; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Fmk7KvplZu8IqXCFaSm0h6pjbCmnVJRD63HoP6Br6hc=;
+        b=CjppQh2P+eyPwIOGQ+UmQnp0d/uhx6KyOfYxZ1uLohZRS058XnYrvmbv+/Qjv0ukqG
+         7Dy32TqKPbXN3l5CktAYXcA/UFbUztNlVw0g4hpjysx71DuwNS/rQgyqmnMeqStBLiVN
+         AWF5vEYXxIVCAala3lN01DcnrvhPE7AhqtWZ8r9+ZN6HhvaqoMJvSOh3FCVwJYetpVIS
+         IprLpA4BzdiNSI2M3rULDrqLTHtM/YPQJ3B/4yt5dj+SkNPuHWCQ/t/3FNV3xEGfDggu
+         qHNelrHPWJs3IpeOG1j/TNm9qczucuOdVDsmRQMQSMq6r7isSg+lmOcHQhAAsfPl47yE
+         1nYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795706090; x=1796310890;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Fmk7KvplZu8IqXCFaSm0h6pjbCmnVJRD63HoP6Br6hc=;
+        b=ul6G/AkjbKOE8s+k+40Ue6xjzcTm9JReSgEEfbouTEJr1WCgFjRlbLLE1+8V2ZsL7f
+         0wciPCs6/i71AZUKgJmnVmGdcPWZa/9QX4GP+aV9WMajq06B1iIDObtSxJ08LULTMblo
+         DD3fQ/urIlxwCL/8GcPFvfFYzh4keKyy/MkrQEb3Y2eWZKxLTZTLSBJmZnoyRMOSnnp6
+         4mWiHeFt3dn4YV9y4oEHbN/tYuSs3jFCgA2Nc2EueWTIp/T2bOKT/ONPTSHqzcaM4zhD
+         8T6Rhbn6eVcuXA1gTSLzO5wIVNvQWYURNEZryflgPr25vU0yxftv2SNsNjrhfAVlqR6J
+         7i9A==
+X-Forwarded-Encrypted: i=1; AL+hErEIy3t2hr5ht3aCHjr/BUTgGWHPUjEinhsDuTm4eNHgK0lhbLbLHYgx/RXYBXznHdAZfeN3aEZd@lists.linux.dev
+X-Gm-Message-State: APuU4Z/5nn+P8DUsUyXWAwF0QrlAxATAwdBslfDm0hUCUaWjtaCMKFIN
+	uJZQZR1avO+XZXPEJOOXigmw33HN+DbhLVim8r1s3rw4nyMpR1oLE5thBYtt2nj6Z0Q=
+X-Gm-Gg: AZFdTZelc23FGepVdrTd4uFk3uXFHmXPESV2kZEP0yEG5vpwCYK21ELSoUWlvBXPA2M
+	wwujlA4C3nX0MpxMcirNUd1QV44UhYlRKG87IMu3GElj1r1lEKGeYZWmAt/OAGsBHHjK3UFzDsW
+	QVRGGkbiuHK9FmmNjVDZA47Nzz9RV99y4932Mr60l8uUpDUtKhKuETRnC1RLKGZIejSAU10i/lX
+	UEpG14pzI1pOqj5avEpEKcSRDnALnzOAfmBf+aIr7wh8tVMS1VDnOeeufJNTl3d1lGps0HG80Zm
+	TMjlB+PllSqpa39QHtaF8FO1jgy/RySyKITTuc+VYtyoJncHpW8qGYAoRX5VU72mUKNpe6v+vow
+	95DfSDPzKVtrP64FV0GnqfxTdwzxPmHCXU2n+GxLIfcJlOuQuPB8GHyWXhEK2SODJ+VAxIEdNS0
+	6/Lw/IImxoss6eIME22yZOHToaI4xHf555LnwWWrz4DGMCAEPiLHS+MxNy68m2wdnyc9gA7IcnM
+	wradGbAwwHL0Sa5ULnKjxnYT81fc/tCf6cnmfH0PgbgYieQVNxbDtfhO1HG9hORn7JfeGuOo6Qf
+	t6U15L4=
+X-Received: by 2002:a05:6102:84c8:b0:7c3:2168:d603 with SMTP id ada2fe7eead31-7d71e329ce9mr10299312137.0.1795706089640;
+        Thu, 26 Nov 2026 07:14:49 -0800 (PST)
+Received: from ziepe.ca ([142.177.118.84])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921349cdfbasm193141456d6.17.2026.11.26.07.14.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2026 07:14:49 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1xWbBQ-00000004NdO-2PDc;
+	Thu, 26 Nov 2026 11:14:48 -0400
+Date: Thu, 26 Nov 2026 11:14:48 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: Alexey Kardashevskiy <aik@amd.com>, linux-coco@lists.linux.dev,
+	Dan Williams <djbw@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Lukas Wunner <lukas@wunner.de>, Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	driver-core@lists.linux.dev, linux-pci@vger.kernel.org,
+	kvm@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v1 04/10] PCI/TSM: Defer TSM vDEVICE allocation until
+ device setup completes
+Message-ID: <20261126151448.GO246011@ziepe.ca>
+References: <20261123083337.2731019-1-aneesh.kumar@kernel.org>
+ <20261123083337.2731019-5-aneesh.kumar@kernel.org>
+ <5e04323f-dfdc-4956-acee-bcc09926726d@amd.com>
+ <yq5aqzg99uio.fsf@kernel.org>
+ <20261125141947.GD246011@ziepe.ca>
+ <yq5ald6gul7q.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -63,78 +115,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <yq5ald6gul7q.fsf@kernel.org>
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Nov 26, 2026 at 12:34:57PM +0530, Aneesh Kumar K.V wrote:
+> Jason Gunthorpe <jgg@ziepe.ca> writes:
+> 
+> > On Wed, Nov 25, 2026 at 02:07:19PM +0530, Aneesh Kumar K.V wrote:
+> >
+> >> That is what this patch does. If IDE setup is not complete but the
+> >> device already has tsm0 attached and connected, pci_tsm_context_get()
+> >> returns an error from cca_vdevice_init(), preventing the device from
+> >> being assigned to the VM.
+> >
+> > If the device has not been fully accepted on the SPDM side then you
+> > should not be able to create an iommufd vdevice for it, nothing else.
+> 
+> That is what this patch does.
 
-------------------
+Well, it doesn't exactly. It adds some code without any users and
+doesn't explain why we need to export a lock or add more core code for
+this activity.
 
-From: Yongqiang Liu <liuyongqiang13@huawei.com>
+Nor does any of the naming imply it is only to be used for iommufd
+vdevices.
 
-commit 0c66c6f4e21cb22220cbd8821c5c73fc157d20dc upstream.
+It is problematic to be hacking the core code without any drivers, I
+know we are kind of stuck with this, but lets try to limit changes to
+supporting stuff that is potentially about to be merged. viommu is
+fairly down the road still due to all the dependencies.
 
-Since commit a4d5613c4dc6 ("arm: extend pfn_valid to take into account
-freed memory map alignment") changes the semantics of pfn_valid() to check
-presence of the memory map for a PFN. A valid page for an address which
-is reserved but not mapped by the kernel[1], the system crashed during
-some uio test with the following memory layout:
-
- node   0: [mem 0x00000000c0a00000-0x00000000cc8fffff]
- node   0: [mem 0x00000000d0000000-0x00000000da1fffff]
- the uio layout is：0xc0900000, 0x100000
-
-the crash backtrace like:
-
-  Unable to handle kernel paging request at virtual address bff00000
-  [...]
-  CPU: 1 PID: 465 Comm: startapp.bin Tainted: G           O      5.10.0 #1
-  Hardware name: Generic DT based system
-  PC is at b15_flush_kern_dcache_area+0x24/0x3c
-  LR is at __sync_icache_dcache+0x6c/0x98
-  [...]
-   (b15_flush_kern_dcache_area) from (__sync_icache_dcache+0x6c/0x98)
-   (__sync_icache_dcache) from (set_pte_at+0x28/0x54)
-   (set_pte_at) from (remap_pfn_range+0x1a0/0x274)
-   (remap_pfn_range) from (uio_mmap+0x184/0x1b8 [uio])
-   (uio_mmap [uio]) from (__mmap_region+0x264/0x5f4)
-   (__mmap_region) from (__do_mmap_mm+0x3ec/0x440)
-   (__do_mmap_mm) from (do_mmap+0x50/0x58)
-   (do_mmap) from (vm_mmap_pgoff+0xfc/0x188)
-   (vm_mmap_pgoff) from (ksys_mmap_pgoff+0xac/0xc4)
-   (ksys_mmap_pgoff) from (ret_fast_syscall+0x0/0x5c)
-  Code: e0801001 e2423001 e1c00003 f57ff04f (ee070f3e)
-  ---[ end trace 09cf0734c3805d52 ]---
-  Kernel panic - not syncing: Fatal exception
-
-So check if PG_reserved was set to solve this issue.
-
-[1]: https://lore.kernel.org/lkml/Zbtdue57RO0QScJM@linux.ibm.com/
-
-Fixes: a4d5613c4dc6 ("arm: extend pfn_valid to take into account freed memory map alignment")
-Suggested-by: Mike Rapoport <rppt@linux.ibm.com>
-Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-[ Roman: folio_test_reserved() replaced by PageReserved() because
-commit 8b5989f33337 ("arm: implement the new page table range API") and
-folio infrastructure are not backported to this branch. ]
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/arm/mm/flush.c |    3 +++
- 1 file changed, 3 insertions(+)
-
---- a/arch/arm/mm/flush.c
-+++ b/arch/arm/mm/flush.c
-@@ -280,6 +280,9 @@ void __sync_icache_dcache(pte_t pteval)
- 		return;
- 
- 	page = pfn_to_page(pfn);
-+	if (PageReserved(page))
-+		return;
-+
- 	if (cache_is_vipt_aliasing())
- 		mapping = page_mapping_file(page);
- 	else
-
-
+Jason
