@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704564;
-	b=Ow1In81LS70kKubYImx9grko+m2gG/njClg2rt7ksxYq69RX9GJHEjeRo/HL3zeCrQtI
-	 /+/xdFMQ5IHIQ4AGG+bWRpNtzT3PQ12AHO04d/P/pZWlJmubW2Vnpm1PZ6Q4YEidlYTbH
-	 24DRxrs1L+y1ywZrnSwhqQxcMScSdbDGMBF+Hzmo/tfS25RHp0l3ANReVKvcbIKKwbsQG
-	 ZhIHklxrR9wXJbr65sI36Z1zhFbg4Z8yb7Tn0W8bTNtdOpgPmnApCFyg0alVyz+l9S2MM
-	 FIidtrgP7MXbMDps7cfy8sDm96YsSt5r1dZXlzkcB5+B//rCyI6QRroS7vVPQVdoWCQ==
+	t=1795704567;
+	b=KoghYU5pBKlA9jtYf0PXNoUcxqEHNPWGQ/yeEeSyFvwc6JcUWE24pVo2Q4auWFJNwUeP
+	 q6NWgzQBFP7iquu7d5DwhFI/Hwv9J9wcEccQrX5HnHiAuna6A6m/8HVKc1xeB2O3r9otX
+	 Y+MqhDMWWs3+gxf5hPxLgDrD/ydYCWJsYeAhiLHjOu9ORiSK888A2tELdHJ1ve++sUI/G
+	 TQuRPxbixQZKt5sLfex+XKw9X+8w9fQ1yDmmfz8e5RFLD5X8s3IO6jg81688oXjSrL1QS
+	 eBMSNVgiyPK3b8CE1SrQi8D8tukcLz+Ze1hFQA4bKMGrqY6D2VLktPPAZqquiTjm7Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3KKy07UIbERZzGNrxQyx816+ExyAOjemnaVcZRJuGdo=;
-	b=zhLVgwqP40AfzID/ejQolnvSFmUXb/EZh4wzy91lpWjY+b6yEpUYchx1sDzAfvROyO2E
-	 fhBXlCJ5/wQDk7MOPyNGgfsAGa66L9jr//XJxC5LWBKMBKH8RaS7gfpYg0CKMBNZpnkEl
-	 BaO+gsfYAmA0mzPJUPwSB+iJ5yK5JnGvIYM9poGY9Q+RAk4GandOaMeGdvt+ypwGG1ZpQ
-	 p3nBPD0OCpCOFgmsAGakijXMhhaOqf6qAPXc2u+4Fbs8iFfjydp8Dk9NAZpRuUI21bm3w
-	 R0bRFs43ysLw2bhbs3YsWc2wviF4AbYgRQAkJ/zPt0Jm21wV9plylrhs7OdnD6WkJ7w==
+	bh=2eRT/WdqDBtaqfkXRYt0u3iHNSQcooYzlkT4RVcUZoE=;
+	b=QmL68hizoEGbvVGSe15++FZmFEaSuJDjWhFuOhOg/x8uOH+WH09OAVLEgzrtnklDzEzr
+	 Jwvdj57JnFl2k4UcXmbpyqDdOj01nk5SLT/wtNfiUXC26LnKK/XDUQ/e2eJ3AtrIyVk6s
+	 NjB7/Py6MuDSzcwbl4selTPVZDHAmqDI1a6jH7lhtWv21NGfNWxsCgfTL8zdVf8zXgiVg
+	 +Jl/u+A8ij3YFbn3NRPt0vQy8PmeTE8mKxD/noXQrOyUCofVo4B3l9NX/rOtufU/niWeA
+	 hxyaXCFolbxJU5olYhsSI2eEs3/eUBvMz+y7p3FOaLLwqkEa/LomBBNzSi7xe6J1IBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEXOUNbN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iks4kCXH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D2A606A326;
-	Thu, 26 Nov 2026 14:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B35606A32D;
+	Thu, 26 Nov 2026 14:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEXOUNbN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0901F000CA;
-	Thu, 26 Nov 2026 14:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iks4kCXH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF801F000C6;
+	Thu, 26 Nov 2026 14:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704563;
-	bh=3KKy07UIbERZzGNrxQyx816+ExyAOjemnaVcZRJuGdo=;
+	s=korg; t=1795704566;
+	bh=2eRT/WdqDBtaqfkXRYt0u3iHNSQcooYzlkT4RVcUZoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEXOUNbNlicO8/IltFF0OzqLVmQ5uyu437gmSL9oLR+6EzTX80dv3gWxU+yg7/K5W
-	 Mag+6yWW3gXwp4ConuIVWhf9ti8cVR7wvZjIIR+hRtFwUkdVvxFnog3ngv4Pvua+h3
-	 7795/lL2ES16va/NIp4ByJoQWahlj7RgTQR1HeXo=
+	b=Iks4kCXH4E/n5RhgGlHGajuDdlvWHTniqDS1Joo0N7FSuB+mGecMZ9x4D+cQppnzc
+	 ZKA9YXmZyLPIxSEUC5Rl6rbvSKFlnA78x18sqMtJ2uje2R9lAODbJJUBU8a1r6x9PA
+	 mBxnBC8N3U4l+rTGw9AYzLubuXVqD6WqM8DrIaYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 168/265] PM: runtime: Update last_busy in rpm_resume() for active devices
-Date: Thu, 26 Nov 2026 15:38:18 +0100
-Message-ID: <20261126143616.914685431@linuxfoundation.org>
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 169/265] Bluetooth: hci_qca: fix use-after-free in ibs debugfs files
+Date: Thu, 26 Nov 2026 15:38:19 +0100
+Message-ID: <20261126143616.984204097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,56 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit 55b2b8af704f845e01fa2f31ee259b07641ce3a9 upstream.
+commit eeca795cec6d9c6c193c2c1bd0cb26cde44f9fc3 upstream.
 
-Setting an autosuspend delay for a device can be expected to cause a
-runtime suspend of the device after calling, say, pm_runtime_put() to
-be deferred, so the time between the last successful attempt to resume
-the device and its subsequent suspend is at least equal to the
-autosuspend delay.
+qca_debugfs_init() creates an "ibs" directory under hdev->debugfs and
+stores pointers to fields of struct qca_data in the debugfs files.
+qca_close() frees qca_data without removing that directory, while
+hdev->debugfs is only removed when the HCI device is released. The HCI
+device can outlive the driver data, for example when an HCI socket still
+references it, so reading or writing one of the ibs files then
+dereferences freed memory.
 
-However, that expectation is only met after the device has been actually
-resumed in rpm_resume() by invoking its runtime resume callback.  If the
-runtime PM status of the device is already "active" when rpm_resume()
-runs for it, the device's last_busy timestamp is not updated which may
-allow a subsequent pm_runtime_put() invocation (or similar) to suspend
-it right away.
+Store the directory dentry in struct qca_data and remove the directory
+with debugfs_remove_recursive() before qca_data is freed.
+debugfs_remove() waits for callers that are already inside the file
+operations, and any later access fails with -EIO instead of reaching the
+debugfs helpers. This covers the two writable files as well.
 
-This is arguably inconsistent and confusing, so make rpm_resume() also
-update the device's last_busy timestamp when it finds that the device is
-already "active" and it is about to return 1 early.
-
-Fixes: 56f487c78015 ("PM / Runtime: Update last_busy in rpm_resume")
-Link: https://lore.kernel.org/linux-pm/CAJZ5v0jTX1FgeS9FCV=+V4uacSgLQBVsSPnU27ybgUGg57GUOA@mail.gmail.com/
-Reported-by: Brian Norris <briannorris@chromium.org>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Brian Norris <briannorris@chromium.org>
-Tested-by: Brian Norris <briannorris@chromium.org>
-Link: https://patch.msgid.link/13032301.O9o76ZdvQC@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261102113654.8724-1-25031212351%40stu.xidian.edu.cn
+Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
+Cc: stable@vger.kernel.org
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/bluetooth/hci_qca.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -793,6 +793,12 @@ static int rpm_resume(struct device *dev
- 		pm_runtime_deactivate_timer(dev);
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -161,6 +161,7 @@ struct qca_data {
+ 	struct delayed_work ctrl_memdump_timeout;
+ 	struct qca_memdump_data *qca_memdump;
+ 	unsigned long flags;
++	struct dentry *debugfs_ibs_dir;
+ 	struct completion drop_ev_comp;
+ 	wait_queue_head_t suspend_wait_q;
+ 	enum qca_memdump_states memdump_state;
+@@ -637,6 +638,7 @@ static void qca_debugfs_init(struct hci_
+ 		return;
  
- 	if (dev->power.runtime_status == RPM_ACTIVE) {
-+		/*
-+		 * The attempt to resume the device means that it is needed for
-+		 * something, so update its last_busy timestamp as in the case
-+		 * in which it actually resumes below.
-+		 */
-+		pm_runtime_mark_last_busy(dev);
- 		retval = 1;
- 		goto out;
- 	}
+ 	ibs_dir = debugfs_create_dir("ibs", hdev->debugfs);
++	qca->debugfs_ibs_dir = ibs_dir;
+ 
+ 	/* read only */
+ 	mode = S_IRUGO;
+@@ -706,6 +708,9 @@ static int qca_close(struct hci_uart *hu
+ 
+ 	hu->priv = NULL;
+ 
++	debugfs_remove_recursive(qca->debugfs_ibs_dir);
++	qca->debugfs_ibs_dir = NULL;
++
+ 	kfree(qca);
+ 
+ 	return 0;
 
 
