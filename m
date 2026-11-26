@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704932;
-	b=mqAhzBgQcXqiYw6kK/9N8f6KNBXrXUeWwDwwNkeTDAQt6eO7BESy4x4JEmVpLDcoakkE
-	 miUaaA71RwGGumMrB3n7FVQDxqNdUEp06ZjU0DJO/DU8mUgztJmTC+XGog0+H7Iw2Hi7B
-	 WoFGAxkSmAf9/arXczMuLu9UCJiHAG8vrA/NE/GTWBJFkXIJuyM89Ld/u0UGF0ArK+IXp
-	 jGHNdKiW2Vq6hxWF0ScvdyWCsUfT+izdunv7CZNutt95wVgUUQdRXnsNykDUKtZN+5qyw
-	 0x+IIQZtruitax9Gbh+vQMsEVHqIM0GEtFOTGJOK1FNY6kIT8tDgsOmlDirNKaGK9fw==
+	t=1795704936;
+	b=SK5jVWeFE+mMMqXxuhgG5sdPVIKEGV7bcjylAgjSOVm0lGK0iAaHKpmuwd1ERoS7GS7o
+	 zDRU1KpdIIqgkiUV1BPcnZRoqc1kb7YJhnZm2fJmTLP8pFPBous+hVNFzCDFBXJrEvFFl
+	 blOopY9/XuU3HL9vkr7PSMlgvi9a3PLVy5r7cXt6kll0IXjmdOiD2R5KQrm0Z8VNE5dk5
+	 0DxqdhKzCf69HrxKgSLy2lITM8HbaHzFZjN/BsEXINy46bsv8ScnPZVVZakqr209b8vfl
+	 WNyu71YgrZuEMtdlC6Q9H8vXIaNjuG5gpsVzQMcRp60/vDyNkhcEmiccMdBAtxupaBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704936;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/unZPiZyth6QJJCpkL+4HkxJQK4/VRfZlEzu03RcRt0=;
-	b=4mLm1EzWQYZ/RWjbStTeuN6trFmLPMZYYRjt+67sUDImrQwzxKy2F18LHU4/THYBRcLh
-	 yKV+2ziOtCYIF/M6sl1Cm2zAJBTLASVtiA1VzvapRZPk3G4cWr8lfrvFbbWnp1qgsTIpw
-	 nw5QjwAMAWw2tk9W9cbYI/ilGh86OAVOTEJxxeznneP63Z/onIn4GfyVRD7ZLQI+1klxf
-	 mhuwuLvgN3noTWG4+o2mwoeMNm2mvnSryfK65oIPXZSfEXi39XGgpwt/4duBP3zrwuLEU
-	 FSGcA6E6Rtl0UHE1Z1jQXpQDfQLa0eC/U6wI9vWaNH9CInyQ8iQyDGyFrtF8rx8GjAQ==
+	bh=obE62LCx6fhzbRfk0vLJdXOAcLxPKQMLWrHnkglEB/E=;
+	b=ut88yzO5wMU44rPtyHaqFz6FtkAhm9joBmBBqobvO78UaMR8V+ZHYM1ypfN9SYTcwe8e
+	 nTg0iySPhckZtPNrO0dQNyvETgkBiIG0XjK0L9GoQB95wLjhYo2ZkomzXUeEZkuq4vTg1
+	 296wHcNIN0pUJwRuItQHCUEdkh1O7tdR23ESNaqhurYtbH4f322Np/wxBJ2G12YkCLLSF
+	 zT7cJiI07QVzU8qpgAYxGcf4j6/+zyuYbjhjTZZq+Z8AOYT3JCQ+EbHmwZbB2yCgN/CSm
+	 8juMh0cehheSQXzlycnOSYVnNZOUAH079BNE8j3loORT/cwu9lRyxqO/JXI9iUQ8f/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJi6Ny2Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JOA7CbGA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3F9606A31C;
-	Thu, 26 Nov 2026 14:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABD7606A321;
+	Thu, 26 Nov 2026 14:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJi6Ny2Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE111F000C0;
-	Thu, 26 Nov 2026 14:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JOA7CbGA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEBA1F000C0;
+	Thu, 26 Nov 2026 14:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704932;
-	bh=/unZPiZyth6QJJCpkL+4HkxJQK4/VRfZlEzu03RcRt0=;
+	s=korg; t=1795704935;
+	bh=obE62LCx6fhzbRfk0vLJdXOAcLxPKQMLWrHnkglEB/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SJi6Ny2YbANwtagH1LHsCINKPDbz84EnGKlv7bLrV6MADxBgujnwDny3Xm/6Yynpp
-	 U8RYiZgbM/q9iYz4xOB53kCSGRcqgfEHYWz8/haxGVZcmRgUgr6XnNaA6aaCdT++PJ
-	 NaW+yRB9uSafU/R6ETVH41uu9HhlWZHkVPpsXmA0=
+	b=JOA7CbGAHmcJNHmMZnCECrCaAb/IsjSGT63nq5ItkMsHMWf+mxJ8RrP/6xh7ajIJ7
+	 iOIjeIHHUiAMOq1fWs2cJoEJ3zUmBCMqITvdSM+L/C0GSMlb6glkz6kMBu1Eclap17
+	 Hd2Tre47BXuIDvVZAZIeWaMuh/aIMJSUe1JVsuhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jaeyeong Lee <iostreampy@proton.me>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mark Bundschuh <mkbund@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/319] ath10k: turn rawmode into frame_mode
-Date: Thu, 26 Nov 2026 15:36:33 +0100
-Message-ID: <20261126144007.309066984@linuxfoundation.org>
+Subject: [PATCH 5.15 003/319] netfilter: nft_ct: move custom expectation support to helper
+Date: Thu, 26 Nov 2026 15:36:11 +0100
+Message-ID: <20261126144006.815710161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,85 +69,293 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a09740548275a74b897654b3aca5af589289b57a ]
+[ Upstream commit 3679da4ad8be84cddaf40bc307fef1fe13e051ff ]
 
-Turn boolean rawmode module param into integer frame_mode param that
-contains value from ath10k_hw_txrx_mode enum. As earlier the default
-param value is non-RAW (native Wi-Fi) encapsulation. The param name
-is selected to be consistent with the similar ath11k param.
+Originally, the ct expectation support called nf_ct_helper_ext_add() for
+confirmed conntracks, which is invalid, triggering a splat. This was
+fixed by commit 1710eb913bdc ("netfilter: nft_ct: skip expectations for
+confirmed conntrack") which restricted it to unconfirmed conntracks.
 
-This is a preparation step for upcoming encapsulation offloading
-support.
+However, early insertion of expectations into the expectations list when
+the conntrack is unconfirmed leads to stale entries pointing to the
+wrong hlist_head through .pprev due to ct extension reallocation.
 
-Signed-off-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20220516032519.29831-4-ryazanov.s.a@gmail.com
-Stable-dep-of: 2a87e367c628 ("wifi: ath10k: Stop unanswered temperature reads")
+Commit 7c9664351980 ("netfilter: move nat hlist_head to nf_conn") moved
+the nat hlist_head to nf_conn for this reason:
+
+     1. ...
+     2. When reallocation of extension area occurs we need to fixup the
+        bysource hash head via hlist_replace_rcu.
+
+I'd rather not increase the size of the struct nf_conn for this feature
+has very limited scope: only one expectation can be created at a time
+given expect_clash() will make nf_ct_expect_related() reports EBUSY.
+For this reason, relax nf_ct_expect_related() not to drop packets in
+case expectation creation fails, therefore, expectation creation becomes
+best effort.
+
+To address this issue, add an internal ct helper and attach it to the
+conntrack entry to streamline the custom ct expectation support with
+existing ct helpers.
+
+Expose a new nf_conntrack_helper_release() function to release the
+internal helper that is allocated and attached to the conntrack entry to
+create the custom expectations. The nft_ct module removal always waits
+for rcu grace period, then the NULL helper callback is observed after
+this.
+
+This patch also restricts the creation of expectations to different
+helpers other than this custom helper that is created for this type of
+expectations.
+
+Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
+Reported-by: Jaeyeong Lee <iostreampy@proton.me>
+Link: https://patch.msgid.link/20260715144755.00ea7dfcd9f@proton.me
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ - ac46f3f35b6e ("netfilter: nf_conntrack_helper: add refcounting from
+    datapath") is not backported because it reworks helper lifetime
+    around a datapath ct_refcnt in 9 files, so one static nft_ct_expect
+    helper is unhelped at nft_ct module exit.
+  - d4beefc90a66 ("netfilter: nft_ct: support expectation creation for
+    natted flows") is not backported because it adds expectation support
+    for NATed flows, so the moved expectation code has no NAT
+    follow-master part.
+  - b8b09dc2bf35 ("netfilter: nf_conntrack_expect: use conntrack GC to
+    reap expectations") is not backported because it replaces the
+    expectation timer with GC reaping in 9 files, so timer_list expires
+    is set, and mod_timer_pending() after insert.
+  - ace53fdc262f ("netfilter: conntrack: remove
+    __nf_ct_unconfirmed_destroy") is not backported because it reworks
+    unconfirmed conntrack teardown in conntrack core, so the release
+    helper keeps this branch's final synchronize_rcu().
+  - Context differs due to commit: 6031487d4e27 ]
+Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/core.c | 11 +++++++----
- drivers/net/wireless/ath/ath10k/core.h |  1 +
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_conntrack_helper.h |   1 +
+ net/netfilter/nf_conntrack_helper.c         |  20 ++--
+ net/netfilter/nft_ct.c                      | 107 +++++++++++++++-----
+ 3 files changed, 96 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 4a93c415db07b..0a8fc3cd74038 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -32,9 +32,11 @@ EXPORT_SYMBOL(ath10k_debug_mask);
- static unsigned int ath10k_cryptmode_param;
- static bool uart_print;
- static bool skip_otp;
--static bool rawmode;
- static bool fw_diag_log;
+diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
+index 9939c366f720d..53d957ffbaa66 100644
+--- a/include/net/netfilter/nf_conntrack_helper.h
++++ b/include/net/netfilter/nf_conntrack_helper.h
+@@ -105,6 +105,7 @@ void nf_ct_helper_init(struct nf_conntrack_helper *helper,
  
-+/* frame mode values are mapped as per enum ath10k_hw_txrx_mode */
-+unsigned int ath10k_frame_mode = ATH10K_HW_TXRX_NATIVE_WIFI;
-+
- unsigned long ath10k_coredump_mask = BIT(ATH10K_FW_CRASH_DUMP_REGISTERS) |
- 				     BIT(ATH10K_FW_CRASH_DUMP_CE_DATA);
+ int nf_conntrack_helper_register(struct nf_conntrack_helper *);
+ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *);
++void nf_conntrack_helper_release(struct nf_conntrack_helper *);
  
-@@ -43,15 +45,16 @@ module_param_named(debug_mask, ath10k_debug_mask, uint, 0644);
- module_param_named(cryptmode, ath10k_cryptmode_param, uint, 0644);
- module_param(uart_print, bool, 0644);
- module_param(skip_otp, bool, 0644);
--module_param(rawmode, bool, 0644);
- module_param(fw_diag_log, bool, 0644);
-+module_param_named(frame_mode, ath10k_frame_mode, uint, 0644);
- module_param_named(coredump_mask, ath10k_coredump_mask, ulong, 0444);
- 
- MODULE_PARM_DESC(debug_mask, "Debugging mask");
- MODULE_PARM_DESC(uart_print, "Uart target debugging");
- MODULE_PARM_DESC(skip_otp, "Skip otp failure for calibration in testmode");
- MODULE_PARM_DESC(cryptmode, "Crypto mode: 0-hardware, 1-software");
--MODULE_PARM_DESC(rawmode, "Use raw 802.11 frame datapath");
-+MODULE_PARM_DESC(frame_mode,
-+		 "Datapath frame mode (0: raw, 1: native wifi (default))");
- MODULE_PARM_DESC(coredump_mask, "Bitfield of what to include in firmware crash file");
- MODULE_PARM_DESC(fw_diag_log, "Diag based fw log debugging");
- 
-@@ -2490,7 +2493,7 @@ static int ath10k_core_init_firmware_features(struct ath10k *ar)
- 	ar->htt.max_num_amsdu = ATH10K_HTT_MAX_NUM_AMSDU_DEFAULT;
- 	ar->htt.max_num_ampdu = ATH10K_HTT_MAX_NUM_AMPDU_DEFAULT;
- 
--	if (rawmode) {
-+	if (ath10k_frame_mode == ATH10K_HW_TXRX_RAW) {
- 		if (!test_bit(ATH10K_FW_FEATURE_RAW_MODE_SUPPORT,
- 			      fw_file->fw_features)) {
- 			ath10k_err(ar, "rawmode = 1 requires support from firmware");
-diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
-index 5aeff2d9f6cf7..f5b00f55bd5fd 100644
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -1311,6 +1311,7 @@ static inline bool ath10k_peer_stats_enabled(struct ath10k *ar)
- 	return false;
+ int nf_conntrack_helpers_register(struct nf_conntrack_helper *, unsigned int);
+ void nf_conntrack_helpers_unregister(struct nf_conntrack_helper *,
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index b5f4bfc60f897..0688428f4d2b2 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -457,6 +457,18 @@ static bool expect_iter_me(struct nf_conntrack_expect *exp, void *data)
+ 	return this == me;
  }
  
-+extern unsigned int ath10k_frame_mode;
- extern unsigned long ath10k_coredump_mask;
++void nf_conntrack_helper_release(struct nf_conntrack_helper *me)
++{
++	nf_ct_expect_iterate_destroy(expect_iter_me, me);
++	nf_ct_iterate_destroy(unhelp, me);
++
++	/* Maybe someone has gotten the helper already when unhelp above.
++	 * So need to wait it.
++	 */
++	synchronize_rcu();
++}
++EXPORT_SYMBOL_GPL(nf_conntrack_helper_release);
++
+ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
+ {
+ 	mutex_lock(&nf_ct_helper_mutex);
+@@ -469,13 +481,7 @@ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
+ 	 */
+ 	synchronize_rcu();
  
- void ath10k_core_napi_sync_disable(struct ath10k *ar);
+-	nf_ct_expect_iterate_destroy(expect_iter_me, me);
+-	nf_ct_iterate_destroy(unhelp, me);
+-
+-	/* Maybe someone has gotten the helper already when unhelp above.
+-	 * So need to wait it.
+-	 */
+-	synchronize_rcu();
++	nf_conntrack_helper_release(me);
+ }
+ EXPORT_SYMBOL_GPL(nf_conntrack_helper_unregister);
+ 
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index af58d86b07838..4a130c45d4f2c 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -1195,6 +1195,72 @@ static int nft_ct_expect_timeout_get(const struct nlattr *attr, u32 *val)
+ 	return 0;
+ }
+ 
++struct nft_ct_expect_data {
++	struct nft_ct_expect_obj	obj;
++	enum ip_conntrack_dir		dir;
++};
++
++static int ct_expect_help(struct sk_buff *skb, unsigned int protoff,
++			  struct nf_conn *ct, enum ip_conntrack_info ctinfo)
++{
++	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
++	struct nft_ct_expect_data *expect_data;
++	struct nf_conntrack_expect *exp;
++	int ret = NF_ACCEPT;
++	u16 l3num;
++
++	if (nf_ct_is_confirmed(ct))
++		return NF_ACCEPT;
++
++	expect_data = nfct_help_data(ct);
++	if (!expect_data)
++		return NF_ACCEPT;
++
++	if (expect_data->dir != dir)
++		return NF_ACCEPT;
++
++	exp = nf_ct_expect_alloc(ct);
++	if (!exp)
++		return NF_DROP;
++
++	if (expect_data->obj.l3num == NFPROTO_INET)
++		l3num = nf_ct_l3num(ct);
++	else
++		l3num = expect_data->obj.l3num;
++
++	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, l3num,
++			  &ct->tuplehash[!dir].tuple.src.u3,
++			  &ct->tuplehash[!dir].tuple.dst.u3,
++			  expect_data->obj.l4proto, NULL, &expect_data->obj.dport);
++	/* nf_ct_expect_insert() arms the timer from the helper policy,
++	 * whose timeout is zero. Set the object's timeout once inserted,
++	 * with BH off so the timer cannot fire on this CPU in between.
++	 */
++	local_bh_disable();
++	if (nf_ct_expect_related(exp, 0) != 0)
++		ret = NF_ACCEPT;
++	else
++		mod_timer_pending(&exp->timeout,
++				  jiffies + expect_data->obj.timeout);
++	local_bh_enable();
++
++	nf_ct_expect_put(exp);
++
++	return ret;
++}
++
++static const struct nf_conntrack_expect_policy nft_ct_expect_helper_policy = {
++	.max_expected	= NF_CT_EXPECT_MAX_CNT,
++};
++
++/* No need to register this helper, this is internal. */
++static struct nf_conntrack_helper nft_ct_expect_helper = {
++	.name		= "nft_ct_expect",
++	.me		= THIS_MODULE,
++	.expect_policy	= &nft_ct_expect_helper_policy,
++	.help		= ct_expect_help,
++};
++
+ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
+ 				  const struct nlattr * const tb[],
+ 				  struct nft_object *obj)
+@@ -1202,6 +1268,8 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
+ 	struct nft_ct_expect_obj *priv = nft_obj_data(obj);
+ 	int err;
+ 
++	NF_CT_HELPER_BUILD_BUG_ON(sizeof(struct nft_ct_expect_data));
++
+ 	if (!tb[NFTA_CT_EXPECT_L4PROTO] ||
+ 	    !tb[NFTA_CT_EXPECT_DPORT] ||
+ 	    !tb[NFTA_CT_EXPECT_TIMEOUT] ||
+@@ -1247,7 +1315,7 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
+ }
+ 
+ static void nft_ct_expect_obj_destroy(const struct nft_ctx *ctx,
+-				       struct nft_object *obj)
++				      struct nft_object *obj)
+ {
+ 	nf_ct_netns_put(ctx->net, ctx->family);
+ }
+@@ -1272,11 +1340,9 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
+ 				   const struct nft_pktinfo *pkt)
+ {
+ 	const struct nft_ct_expect_obj *priv = nft_obj_data(obj);
+-	struct nf_conntrack_expect *exp;
++	struct nft_ct_expect_data *expect_data;
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn_help *help;
+-	enum ip_conntrack_dir dir;
+-	u16 l3num = priv->l3num;
+ 	struct nf_conn *ct;
+ 
+ 	ct = nf_ct_get(pkt->skb, &ctinfo);
+@@ -1284,38 +1350,28 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
+ 		regs->verdict.code = NFT_BREAK;
+ 		return;
+ 	}
+-	dir = CTINFO2DIR(ctinfo);
+ 
+ 	help = nfct_help(ct);
+-	if (!help)
+-		help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
+-	if (!help) {
+-		regs->verdict.code = NF_DROP;
+-		return;
+-	}
+-
+-	if (help->expecting[NF_CT_EXPECT_CLASS_DEFAULT] >= priv->size) {
++	if (help) {
+ 		regs->verdict.code = NFT_BREAK;
+ 		return;
+ 	}
+-	if (l3num == NFPROTO_INET)
+-		l3num = nf_ct_l3num(ct);
+ 
+-	exp = nf_ct_expect_alloc(ct);
+-	if (exp == NULL) {
++	help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
++	if (!help) {
+ 		regs->verdict.code = NF_DROP;
+ 		return;
+ 	}
+-	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, l3num,
+-		          &ct->tuplehash[!dir].tuple.src.u3,
+-		          &ct->tuplehash[!dir].tuple.dst.u3,
+-		          priv->l4proto, NULL, &priv->dport);
+-	exp->timeout.expires = jiffies + priv->timeout;
+ 
+-	if (nf_ct_expect_related(exp, 0) != 0)
+-		regs->verdict.code = NF_DROP;
++	expect_data = nfct_help_data(ct);
++	if (!expect_data) {
++		regs->verdict.code = NFT_BREAK;
++		return;
++	}
++	expect_data->obj = *priv;
++	expect_data->dir = CTINFO2DIR(ctinfo);
+ 
+-	nf_ct_expect_put(exp);
++	rcu_assign_pointer(help->helper, &nft_ct_expect_helper);
+ }
+ 
+ static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
+@@ -1395,6 +1451,7 @@ static void __exit nft_ct_module_exit(void)
+ 	nft_unregister_obj(&nft_ct_helper_obj_type);
+ 	nft_unregister_expr(&nft_notrack_type);
+ 	nft_unregister_expr(&nft_ct_type);
++	nf_conntrack_helper_release(&nft_ct_expect_helper);
+ }
+ 
+ module_init(nft_ct_module_init);
 -- 
 2.53.0
 
