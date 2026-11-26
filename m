@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705767;
-	b=wQd0O7n+kHa9BQHqBUX3IW017M8IGNd61ImBKjuURyGjUyOXmaFNhIs6EbMHvZUJDhc2
-	 INsM2YgQv/5M3Dk8CjRwwgZ9XJAJpP9pykzZZK0v0/emIJk4TAskV8dNXMzgbzTwqipK/
-	 AdHJUHQ6NIUuZM0xbL7cMhoJtxiUAXWm3z4pbMLGA9d9Jp0WTYAP3bmaqQZ+C0MTClTM8
-	 yAOuLBEiTYr7MUqhPz6nI0kiq3MXsPog4MijZdoAgnKRc53md3Rs7C2owUF95BwqDwjAt
-	 dJ8D3juz/2gITBTS+geC6L/ZP5twspOZcwt+PiF5WnrEWe2am2QaW461X3DPatHmxdA==
+	t=1795705770;
+	b=jr1M5pgqW6zKNXsz0w6XZUALUbuyLPvOSpV5AQ+mM/lla3nLHcjRGxJsGQJM8WEOJRKD
+	 iP2kbDvDHv1MlnwBBzdy9tpsC5fU5iYBZe3Smu7X0mgr+rtDt29R9PTVlVKIRnW0Gdyl3
+	 En3gSHBwBBJie+Xas4Ii3pmDE0hSQ2cgeDblnBRax3fYhFP4bd6LzXwGiZTQkhkgJscmc
+	 itMpLXPA5hYXhQZRaFZGi9Z7b23aB+iC9IReZR4LFWHqDAQF5BH5+9ygPZoldZe0edL1p
+	 vPQwAXd+hhta8OlV5eR63F/qTN9Y8tqRk4KBaqXu6uuYDxDKBwIzdtaEXmjJnzdjiug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705767;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=YzNQZMop4gSfDC+7f86ddAxjs2qDM+pAKpTeuvwayqc=;
-	b=qv1orYlCjcYqhIg7YgrmeVAVU9zyJ6x2i74Bt/SPh35H75P9QokvR8o82YUyo8UP4sa9
-	 RNhfsWLXPZsKxsOr1SWWeLkucqBEAQQArmQ3RSqTz12HEgLesMG3vUlWVubpAH7/2X9m9
-	 KM7I+Lne2OupkOLFVT6bvIQleEzdB/loR2uDAz+AxRIFcPD61vPNEemmB37JHlC9M3Q7q
-	 VBUUy/spMwZnIu6WLbAOW8StHRc6sJsDm4DYIDkZQDu5Pzk+FtmyV+AYtMxxcEPhGvX1/
-	 5INOgq21ea7NkU/R5U4IFhglcyBKIK5rmyzpk7iYrTfxg+ekTgDaVhl0dS5zkfKOzaA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+h4cobPJWWqBYYUSxjCLSWOWaL1KAZ4K8cTWf81XG3k=;
+	b=MiXnd9RzYmJVc4kxbdYaYW5zb0FiNDIvrEBRy5H3wFaVz04jBHBWlPS5fKWWGdAQThQF
+	 dwg1do/4YCqm5Ut0R6xU3fj6s0OAuFC2VODKdhwiUnqYYI0S9YfbX4d6u6jGX2g8yC2Er
+	 Cqdmv/o6kefZJRss7s6Ez2SS0wY9J8P9gjLJQwsaqhQelRij2jsgaEuDLrFNw6/RCvyPu
+	 AA+SsgCoDVSO3lZYcGkMyDryciurjpjf2gSClW1ULQdPHf/PaYq++hc40/IW3C7IEX82J
+	 D7afWGMpsl1oOMgUo/jeURgO8pl92VhyI0nvgDeQCiCOIhQdhznZy5EWlpxX+Z9NTRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wMHOGNGU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfpW2Kw0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813E4606A31E;
-	Thu, 26 Nov 2026 15:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E583606A32D;
+	Thu, 26 Nov 2026 15:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wMHOGNGU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A6D1F000C4;
-	Thu, 26 Nov 2026 15:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfpW2Kw0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CADE1F000D8;
+	Thu, 26 Nov 2026 15:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705767;
-	bh=YzNQZMop4gSfDC+7f86ddAxjs2qDM+pAKpTeuvwayqc=;
+	s=korg; t=1795705770;
+	bh=+h4cobPJWWqBYYUSxjCLSWOWaL1KAZ4K8cTWf81XG3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wMHOGNGUbO9//nyuAzNvrmuGmdnpMOmZuERNejys9eGFlqXU7G5/BRmKo+nZEoNuV
-	 b7/3VBLhbYAoUhf6y1YLterv4aHWMDlG/pP+rir7PfAwh4FMHlR2Dszncy7pcUpkyq
-	 SAK4d4OTPqIe3Lky0LvdojV6fTNeAR/rZljS98vA=
+	b=lfpW2Kw0HXyaoDPqof7FyVdPKSaJ7vMgfih5hQ1xB0QUpBSWmPKsI19zPaAqemZyY
+	 ZjdjSH8V9OX89HCjP/5Ou3LDtSfseUNVopW41kkz8M0IaXZLOeC7/tMcuC1w8DPgHC
+	 8wiCDfq9ZfFUuFOi5ZeReFBU/g6CacJim85iEwik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Triska <martin.triska@mycroftmind.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jan Remes <jan.remes@mycroftmind.com>,
+	Alexander Sarmanow <as@discnull.de>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 306/319] iio: light: tsl2591: dont divide by zero
-Date: Thu, 26 Nov 2026 15:41:14 +0100
-Message-ID: <20261126144013.663605149@linuxfoundation.org>
+Subject: [PATCH 5.15 307/319] iio: light: vcnl4035: Fix reversed ALS mode bit
+Date: Thu, 26 Nov 2026 15:41:15 +0100
+Message-ID: <20261126144013.686293090@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -63,114 +62,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Remes <jan.remes@mycroftmind.com>
+From: Alexander Sarmanow <as@discnull.de>
 
-commit bd63c89aac5672f40cdc123a856493b628fc1abb upstream.
+commit 6bcabc30b89f31e2925647d1ffa5a0e4b7919829 upstream.
 
-The TSL2591 has two raw light channels - CH0 and CH1. The algorithm for
-calculating illumination from the raw channels requires division by CH0
-(which can be zero) and by "counts per lux" (CPL) value which is also zero
-for (gain = LOW, integration time <= 400 ms).
+According to the datasheet (table 2) the ALS_SD bit behaves the opposite
+way the current ALS mode defines are set, writing 0 powers the sensor
+and writing 1 shuts it down.
 
-Furthermore, the algorithm assumes CH0 > CH1, which can be violated in
-almost complete darkness.
+The current driver thinks the ALS is up while it's actually shut down
+and it's down when the systems powers it up.
 
-As a result, reading from 'in_illuminance_input' results in
-division-by-zero whenever CH0 is 0 (complete darkness) or whenever the
-parameters result in CPL being zero. This results in kernel oops on
-x86_64 and in reading the value as 0 on arm64.
-
-Fix that by:
-- reporting CH0 <= CH1 as zero (catches also CH0 = 0)
-- updating the lux algorithm to only do the division at the end
-
-Fixes: 2335f0d7c790 ("iio: light: Added AMS tsl2591 driver implementation")
+Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
 Cc: stable@vger.kernel.org
-Reported-by: Martin Triska <martin.triska@mycroftmind.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jan Remes <jan.remes@mycroftmind.com>
+Signed-off-by: Alexander Sarmanow <as@discnull.de>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/tsl2591.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/iio/light/vcnl4035.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/light/tsl2591.c
-+++ b/drivers/iio/light/tsl2591.c
-@@ -16,6 +16,7 @@
- #include <linux/interrupt.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-+#include <linux/math64.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/pm_runtime.h>
-@@ -425,6 +426,10 @@ static int tsl2591_wait_adc_complete(str
-  * Scale values to get more representative value of lux i.e.
-  * lux = ((C0DATA - C1DATA) * (1000 - ((C1DATA * 1000) / C0DATA))) / CPL
-  *
-+ * CPL is not computed on its own: at 1x gain it is below 1 for integration
-+ * times under 500 ms, so the division by LUX DF is folded into the final
-+ * division instead.
-+ *
-  * Channel 0 = IR + Visible
-  * Channel 1 = IR only
-  */
-@@ -436,8 +441,10 @@ static int tsl2591_read_channel_data(str
- 	struct tsl2591_als_settings *settings = &chip->als_settings;
- 	struct i2c_client *client = chip->client;
- 	u8 als_data[TSL2591_NUM_DATA_REGISTERS];
--	int counts_per_lux, int_time_fval, gain_multi, lux;
-+	int int_time_fval, gain_multi;
- 	u16 als_ch0, als_ch1;
-+	u64 lux;
-+	u32 rem;
- 	int ret;
+--- a/drivers/iio/light/vcnl4035.c
++++ b/drivers/iio/light/vcnl4035.c
+@@ -46,8 +46,8 @@
+ #define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
  
- 	ret = tsl2591_wait_adc_complete(chip);
-@@ -473,23 +480,28 @@ static int tsl2591_read_channel_data(str
- 			return gain_multi;
- 		}
- 
--		int_time_fval = TSL2591_FVAL_TO_MSEC(settings->als_int_time);
--		/* Calculate counts per lux value */
--		counts_per_lux = (int_time_fval * gain_multi) / TSL2591_LUX_COEFFICIENT;
-+		/* No visible light, this also catches C0DATA == 0 */
-+		if (als_ch0 <= als_ch1) {
-+			*val = 0;
-+			*val2 = 0;
-+			break;
-+		}
- 
--		dev_dbg(&client->dev, "Counts Per Lux: %d\n", counts_per_lux);
-+		int_time_fval = TSL2591_FVAL_TO_MSEC(settings->als_int_time);
- 
- 		/* Calculate lux value */
--		lux = ((als_ch0 - als_ch1) *
--		       (1000 - ((als_ch1 * 1000) / als_ch0))) / counts_per_lux;
-+		lux = (u64)(als_ch0 - als_ch1) *
-+		      (1000 - ((als_ch1 * 1000) / als_ch0)) *
-+		      TSL2591_LUX_COEFFICIENT;
-+		lux = div_u64(lux, int_time_fval * gain_multi);
- 
--		dev_dbg(&client->dev, "Raw lux calculation: %d\n", lux);
-+		dev_dbg(&client->dev, "Raw lux calculation: %llu\n", lux);
- 
- 		/* Divide by 1000 to get real lux value before scaling */
--		*val = lux / 1000;
-+		*val = div_u64_rem(lux, 1000, &rem);
- 
- 		/* Get the decimal part of lux reading */
--		*val2 = (lux - (*val * 1000)) * 1000;
-+		*val2 = rem * 1000;
- 
- 		break;
- 	default:
+ /* Default values */
+-#define VCNL4035_MODE_ALS_ENABLE	BIT(0)
+-#define VCNL4035_MODE_ALS_DISABLE	0x00
++#define VCNL4035_MODE_ALS_ENABLE	0x00
++#define VCNL4035_MODE_ALS_DISABLE	BIT(0)
+ #define VCNL4035_MODE_ALS_INT_ENABLE	BIT(1)
+ #define VCNL4035_MODE_ALS_INT_DISABLE	0
+ #define VCNL4035_DEV_ID_VAL		0x80
 
 
