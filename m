@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705796;
-	b=He5GsDRrMGJF09l3gLBFVaqrrC4Ab3Cv1BRPTu0QNt2QXwt+WyofyRrfdshfcGmgwkC0
-	 GWARSSANPfJFGopMGNY+jMwcByeCtR4Mz0Pg1oKaZ1iDa+BXda5IYgbAaTzEHsy0cO/G9
-	 +UUtxsjPqosB1tGHAYXGk6nLf3ax2l0QusriO5pvV+xFLkdL3S3UZDOZjtSk8IHnqIpMv
-	 qS9ZjpmmA4xwCSLGnuNeBWnEpO2yviqVzb68XYg8ISpwwve/X2YLy26w9iV+ziJ8mR5ml
-	 bhsqCGGMjOaqAtQ5PpYBQR8c2kn1htMqYjLBu64jDWafnFTNBcKMXzPaQ9H8kA9Lxsw==
+	t=1795705800;
+	b=rE6Twkcu89IvzK7fL1iEar1gX5b6BW1VM/eHv2v7Wa4krSIgL2Qrxc8zfhGMtDBximMv
+	 aHhTrWo2EdknLFTVHAGvdXs+nPNQuFa7+zQHuBeM7cfZoqnz5dkSIiwd42DfS9pnjsQbZ
+	 HuebLJpF1K1Fm9IaP4IWnn9MrGfYkuvLbIZI7oGCSO6XsIuc98Mmv/fnmlU1KpqmbeIXd
+	 AqnQlpXfO+jiBikdZPKB31GTSIA5c39i2du/Z+nIsnDlANTEpby7x77w1kv00ochpRCDO
+	 dtJw/k1zqTufr3NAd+LIfS+Qbp0QoZOzWaCbOs/BYvt3ardTP8Tj0dozT8c012py0VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X39GGht1N+yPlmpfl4RwjU5I1M3zw+H+n8PVCrLc8QQ=;
-	b=eQzPJfGb1b+VRKsUZWiY8OKtF23Ag5ITzXXS8DeQ8JrfcoHL8Yj8fCzpmzAOBiJqqq+z
-	 5c8wZawv5o3LRb4UZmXPeZ25PmPmZRQYCvwz2s1rFh4I5F7bTRRWQ+j9jAILkiOxcvSdb
-	 1Z6o3Zg4fqVKJAnFNy6C9+11HB30Ye3cmMQTWUFavqGjGtEjIA59FB3YTeEKM+lg2ews5
-	 w061lQR4/xSgoynqVmrFINIXANyhFlXxd5j+dmcW/aro10vomTGdWIbPIhZCaqgd1rf53
-	 /LmnEaxCzzP3uyyKYr1LHwVn22xaLl/NJBWonLXzuJ5w+Je6BkKZuP4EMZbamgNel8g==
+	bh=I1jqHEcEoHLZJmI1k64+Pj/a/yeZ3pAWHCd8Abf9bvA=;
+	b=1KRrd0mMYxqpP5FUE574LPuRT4tXgWVMTmUIpBAaoIiTe3yFwrbbnmqqHb03VMlLn5Y+
+	 GA4sT/GPK/jl/v1hhAKDxeYQyfNndgdYJ+3k9j1pC0daMUTWzBQkOLtlzUmQgaD7itTT8
+	 lFNlVJgKMHZ6Qzs6IuM3CPMhVTjCarXBUe6PtOo+vfd1SGsP/EIPev/z8bUlg8wk4R4Tx
+	 UDgBICzmRMhqntM89i4veviztHChQpO2xTZAvD5PpKeWixAgkRApcWlM3ONiXkJDAT5wL
+	 pcFvHdpQrBJovegCvAFJxUWnMGeeMA9aaUCZw7NsnBp5HYT5MV/QjbjPEQmD2OGhg8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkMR+pX7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FM/3gXlp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA283606A335;
-	Thu, 26 Nov 2026 15:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D44D606A329;
+	Thu, 26 Nov 2026 15:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZkMR+pX7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9BE1F000E6;
-	Thu, 26 Nov 2026 15:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FM/3gXlp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD951F000D3;
+	Thu, 26 Nov 2026 15:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705796;
-	bh=X39GGht1N+yPlmpfl4RwjU5I1M3zw+H+n8PVCrLc8QQ=;
+	s=korg; t=1795705799;
+	bh=I1jqHEcEoHLZJmI1k64+Pj/a/yeZ3pAWHCd8Abf9bvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZkMR+pX7TB295DsIH3LH4OpnBDGhCaW1+eBTg0BLz+9SzdaM20Z/4tg71A+x+xpvD
-	 VbCQ2GrCorN+EIkqFoeb02VIUJbLrTBPkVg+ZVsooj6pDxHkgjBfeToh/UoybXfVv6
-	 +RJ86F5Uv/6dh98nqfyByoqY25shKCok9crmU9+4=
+	b=FM/3gXlpEpYd3H0AxUl0syHDFnl0UpjSsKweZQeCXnUhdWYko9j46hU5MYN3J0G0e
+	 Td1XZcZAYiXRkP2qN7VCt+9R+yy62d6PD8vojEzrMlY8bnYewcK9z60hTeiS1qi0R/
+	 +x7Pm2gUruCQAzZwxLedFL/O7lbXWHxUqUh2bVLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Yu Zhang <yuz08559@gmail.com>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.15 273/319] usb: usbtest: prevent divide by zero in simple_io() with zero length
-Date: Thu, 26 Nov 2026 15:40:41 +0100
-Message-ID: <20261126144012.914306410@linuxfoundation.org>
+Subject: [PATCH 5.15 274/319] usb: gadget: f_mass_storage: take filesem in nofua store to fix backing-file UAF
+Date: Thu, 26 Nov 2026 15:40:42 +0100
+Message-ID: <20261126144012.937731407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,58 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Yu Zhang <yuz08559@gmail.com>
 
-commit fdaca138694111153f96c7d76877734b9dbf0e01 upstream.
+commit 450fa94d7ae9fc91c3df525f5d1322bf8fecf7b2 upstream.
 
-A divide error oops was observed in simple_io():
+fsg_store_nofua() syncs the LUN's backing file when switching from async
+to sync mode:
 
-	usbtest 1-1:1.0: TEST 3:  write/1 0..0 bytes 16307 times
-	Oops: divide error: 0000 [#1] SMP KASAN
-	RIP: 0010:simple_io+0x2c4/0x540 drivers/usb/misc/usbtest.c:497
+	if (!nofua && curlun->nofua)
+		fsg_lun_fsync_sub(curlun);
 
-The variable-length tests (test 3 and test 4) compute the next URB
-size with "len %= max", where max is the original
-urb->transfer_buffer_length. However, when a zero-length transfer is
-requested (param->length == 0), simple_alloc_urb() still returns a valid
-URB with transfer_buffer_length set to 0. On the first vary update,
-"len %= max" divides by zero and the kernel oopses.
+fsg_lun_fsync_sub() dereferences curlun->filp (vfs_fsync(filp)). Unlike
+every other store that touches the backing file -- fsg_store_ro() and
+fsg_store_cdrom() (down_read), fsg_store_file() (down_write) --
+fsg_store_nofua() holds no filesem while doing so.
 
-Commit 564e69893c63 ("USB: usbtest: prevent a divide by zero bug") added
-the equivalent zero check to alloc_sglist(), which covers the
-scatterlist tests (test 7/8), but the single-URB variable-length path in
-simple_io() was left unprotected.
+A concurrent close of the backing file runs under down_write(filesem) and
+does fput(curlun->filp) in fsg_lun_close() (fsg_store_file() with an empty
+path, the SCSI START_STOP eject in do_start_stop(), or forced_eject), so
+it can free the file while fsg_store_nofua() is dereferencing it:
 
-Fix this by returning -EINVAL early from simple_io() when vary is
-requested but max is zero, so the divide by zero never occurs.
-Zero-length transfers without vary remain valid for the other callers of
-simple_io().
+	BUG: KASAN: slab-use-after-free in vfs_fsync+0x20/0xe0
+	 vfs_fsync+0x20/0xe0
+	 fsg_lun_fsync_sub+0xa0/0xd0
+	 fsg_store_nofua+0x138/0x160
+	 configfs_write_iter+0x1a7/0x250
+	 vfs_write+0x5df/0x940
+	Allocated by task 3459:
+	 fsg_store_file+0x150/0x1f0
+	 configfs_write_iter+0x1a7/0x250
+	Freed by task 3459:
+	 __fput+0x456/0x6c0
+	 __fput_deferred+0x10d/0x330
+	 fsg_store_file+0x9e/0x1f0
+	 configfs_write_iter+0x1a7/0x250
+
+Hold filesem for read around the fsync in fsg_store_nofua() so the backing
+file cannot be closed underneath it. The lock is only needed when the
+fsync actually runs, so it is taken only in that branch.
+
+Reproduced on a mass_storage gadget over dummy_hcd by writing lun.N/nofua
+(1 then 0) from one task while another task rewrites and clears lun.N/file.
 
 Cc: stable <stable@kernel.org>
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20261016072750.34256-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20261020023050.87701-1-yuz08559@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/usbtest.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/function/f_mass_storage.c |    8 ++++++--
+ drivers/usb/gadget/function/storage_common.c |    7 +++++--
+ drivers/usb/gadget/function/storage_common.h |    3 ++-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/misc/usbtest.c
-+++ b/drivers/usb/misc/usbtest.c
-@@ -466,6 +466,9 @@ static int simple_io(
- 	int			retval = 0;
- 	unsigned long		expire;
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -2528,8 +2528,9 @@ static ssize_t nofua_store(struct device
+ 			   const char *buf, size_t count)
+ {
+ 	struct fsg_lun		*curlun = fsg_lun_from_dev(dev);
++	struct rw_semaphore	*filesem = dev_get_drvdata(dev);
  
-+	if (vary && !max)
-+		return -EINVAL;
+-	return fsg_store_nofua(curlun, buf, count);
++	return fsg_store_nofua(curlun, filesem, buf, count);
+ }
+ 
+ static ssize_t file_store(struct device *dev, struct device_attribute *attr,
+@@ -3095,7 +3096,10 @@ static ssize_t fsg_lun_opts_nofua_show(s
+ static ssize_t fsg_lun_opts_nofua_store(struct config_item *item,
+ 				       const char *page, size_t len)
+ {
+-	return fsg_store_nofua(to_fsg_lun_opts(item)->lun, page, len);
++	struct fsg_lun_opts *opts = to_fsg_lun_opts(item);
++	struct fsg_opts *fsg_opts = to_fsg_opts(opts->group.cg_item.ci_parent);
 +
- 	urb->context = &completion;
- 	while (retval == 0 && iterations-- > 0) {
- 		init_completion(&completion);
++	return fsg_store_nofua(opts->lun, &fsg_opts->common->filesem, page, len);
+ }
+ 
+ CONFIGFS_ATTR(fsg_lun_opts_, nofua);
+--- a/drivers/usb/gadget/function/storage_common.c
++++ b/drivers/usb/gadget/function/storage_common.c
+@@ -414,7 +414,8 @@ ssize_t fsg_store_ro(struct fsg_lun *cur
+ }
+ EXPORT_SYMBOL_GPL(fsg_store_ro);
+ 
+-ssize_t fsg_store_nofua(struct fsg_lun *curlun, const char *buf, size_t count)
++ssize_t fsg_store_nofua(struct fsg_lun *curlun, struct rw_semaphore *filesem,
++			const char *buf, size_t count)
+ {
+ 	bool		nofua;
+ 	int		ret;
+@@ -424,8 +425,10 @@ ssize_t fsg_store_nofua(struct fsg_lun *
+ 		return ret;
+ 
+ 	/* Sync data when switching from async mode to sync */
+-	if (!nofua && curlun->nofua)
++	if (!nofua && curlun->nofua) {
++		guard(rwsem_read)(filesem);
+ 		fsg_lun_fsync_sub(curlun);
++	}
+ 
+ 	curlun->nofua = nofua;
+ 
+--- a/drivers/usb/gadget/function/storage_common.h
++++ b/drivers/usb/gadget/function/storage_common.h
+@@ -210,7 +210,8 @@ ssize_t fsg_show_cdrom(struct fsg_lun *c
+ ssize_t fsg_show_removable(struct fsg_lun *curlun, char *buf);
+ ssize_t fsg_store_ro(struct fsg_lun *curlun, struct rw_semaphore *filesem,
+ 		     const char *buf, size_t count);
+-ssize_t fsg_store_nofua(struct fsg_lun *curlun, const char *buf, size_t count);
++ssize_t fsg_store_nofua(struct fsg_lun *curlun, struct rw_semaphore *filesem,
++			const char *buf, size_t count);
+ ssize_t fsg_store_file(struct fsg_lun *curlun, struct rw_semaphore *filesem,
+ 		       const char *buf, size_t count);
+ ssize_t fsg_store_cdrom(struct fsg_lun *curlun, struct rw_semaphore *filesem,
 
 
