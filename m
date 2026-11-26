@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795673991;
-	b=J4kClOeRcQep7ZKV1xReMzCJNvrDawhzJjph6fReylnZjXuFteOaIAxLgN5KpItIlNpS
-	 2CPf9yTQtK236nKgQ7zRRLXjeEVt1uz2hQczmTAbv/jl8rM2S+M/Z2n2T7V8WEMjaauFD
-	 OSrtKw8dlqs4sn4vVK/E1CunFLbOMhWEjRZnhfJdQZKCK+M1cFkIb1p7q33zvS+d5cpHV
-	 C+4oqAugpzuxj/N82MR8MDpu/1Lop+DcFe2b5T6JgZF6IPdINVhKjxnK+UxZeFsja3up5
-	 t3FrSsIlLGLrR+xzevRvDGiFXQnxSr9PjSmtVtZ4/bhmRzk4ijj+VWJ0TQRMvltfVGw==
+	t=1795674184;
+	b=d6E9Ikh00WMX5YMey4Yt2Tdd3vZCRfB6/4vBsUQ6PZPsTvSkLNvlLbdYg28B0w0yHbYe
+	 nYL0A7EHncsf+HTH3le1nDaq1kw3d5CrAvF3Gp72vRy1t3IxC+dj5syY8ng4mPo/n8jBd
+	 vnUzylz9c8z56PMQqjoEusFerQ2tKb3XGTlcBzKfVKuV0PrxVK8opFjNQMDZ+RKV+zl0k
+	 tfK/CCtHD3cea+S6Xu10uhohHuEnG6z1Z2UjsWj/DQUSP68ZYdCHVf+vCqAsYLXq/16Aj
+	 eo8deGTHuECfKBLbAJbhTJSxJDjg6vpI/i0ZJvpds9e0GPOPc2Ul0CvzPFUMCXWAyuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795673991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795674184;
 	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
 	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=blLPPs0Dr95UlcGzssFbmiXCBdXBEUBorM0KhGn8BDA=;
-	b=My/eoQXhKV7//P4Wb62MHaW+6+lB2j1EoAr+/J85XDin23JrP+iBvj445OUAWZKfwl3d
-	 a18d453D6gH8lsmoU950ewG9W29N89bHTzxMEUtuCyZ0bmIaDzBImZy+PRXQdxqYmdvkD
-	 /0MHX4AOjbW8c8GkVDuo09RD5yOlon/QUgMgRcXJxaMheTmz60InpSFd8h6JbJYIGDRIT
-	 jXqDxEcJ7Aiin9N0k4afnUMZDxT68Jx5ObSGTTtvNlzAj8cgDPavxG4woVRq2wXCym6fQ
-	 rSaNh2r9O3h8wkUfBr0USNvaDN4xf20XI60BZGKXW5JqxRCX1v62lb6YDrf7EaOHiMw==
+	bh=i/PfyZgiIqxuCgtYIpFB5PotbGJbDdTpV+ed0bHaEPg=;
+	b=gc9EYVN5jLtAim38rmE92MkCgVSertRoykU/auT96jW2Ih5HATGKldSB2lHWT4dNzPrr
+	 ryp+BXP4suxifNGG0DoUzCWzc/jSTtevh2rF7CnxcTrNwUmBrbf5B6g/w1KZ/vdAp7hPJ
+	 CONroQWeQAznVBTL+hHUd5Lx3Uq2HHlW0F/t4iGtBofqG+RKZw088tM6nwG6BjMo4vKf5
+	 dLcaPJqU6wMR4/6HKC3t8fg1fxkpzgzU4QXbBI799b+5t/LSxX5zdaYw1+OmWElurGDEF
+	 DA1kUL7W/xu3MBcat8WXP3gUrsMTz9LqVT3WFmjXXAoOmcJmH8sVoaXYeTNAIMbDsdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gv8VRVYm;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ote95j5p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7E4606A32C;
-	Thu, 26 Nov 2026 06:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08FB606A31C;
+	Thu, 26 Nov 2026 06:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gv8VRVYm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9A51F000D0;
-	Thu, 26 Nov 2026 06:19:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ote95j5p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47AF1F000C4;
+	Thu, 26 Nov 2026 06:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795673990;
-	bh=blLPPs0Dr95UlcGzssFbmiXCBdXBEUBorM0KhGn8BDA=;
+	s=k20260515; t=1795674184;
+	bh=i/PfyZgiIqxuCgtYIpFB5PotbGJbDdTpV+ed0bHaEPg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=gv8VRVYm7oVDx5FcsIdkO2qfmuUM6xnz9tnAM0JyVSOWeAfPxZ0As/1JkUsw1gg7d
-	 aaECfFfuNbzr2C7fXXYFIk6aMiwKxwLnhqMmAVFtkuZTSD8CEI9RKhnE7tAyvYq+LV
-	 RdofnQ9tjf75SjLLgwNv0p1h9NGkRSquT6mmKMM0QeqDdO1+EgFPkVqG+JWYpadsVA
-	 JBTVLIHG1v8ui3t5LKMWXomrH+7DD7FjJEyjGPZDOUKFioH7SnRRWZqu8c6ed897pF
-	 23gRmmxHYFcrtt9yfAMk/hHXxSnJaWO5b4QBc7iTLuCUKzifurAk8fwW0z1bmV74Ko
-	 /bo8T1yrcn+yQ==
-Message-ID: <0782adf7-20af-45a3-a09b-2a34c76afbac@kernel.org>
-Date: Thu, 26 Nov 2026 07:19:47 +0100
+	b=ote95j5pr3JMR0akV5+X2v4K8EFClOHD4MNcnS6qrEdyp+/8SlJLShY0nMyPRNq7C
+	 Uj/qh37DCL+WJXSUS1VWv/LgG11uSl7Cn+qqzjDEJ+PRcuFNp98nepIweKsP8xD4Be
+	 I37cf+c0lJ/gnyJU36C65oKacsbOLakjk3ev83H8JYGKix1+Y6VGr7yQ1rbb7bNcB5
+	 WYEUw/QljjFBGYiWbGCI5aU0qaCMpSS7m7g+2iN94zXkbW0wM6nEGpBCFF1ixv4969
+	 yke/woS5/AbV+LCeiTkZXg7ysZejiUnAf1Xi25rXdgIQt3UqByHNrvkbrv3tL0ECie
+	 3mI7m/Tvw60gQ==
+Message-ID: <6e2e92cb-6663-457b-8225-0809917f4332@kernel.org>
+Date: Thu, 26 Nov 2026 07:23:01 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -52,13 +52,13 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0361/1005] sched_ext: Reset task fields on exit of an
- SCX_TASK_READY task
+Subject: Re: [PATCH 7.3 0478/1005] sched_ext: Add scx_bpf_dsq_reenq_task() to
+ re-enqueue single tasks from a DSQ iteration
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Rahad Bhuiya <rahadbhuiya2021@gmail.com>,
- Tejun Heo <tj@kernel.org>, Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, Tejun Heo <tj@kernel.org>,
+ Andrea Righi <arighi@nvidia.com>, Sasha Levin <sashal@kernel.org>
 References: <20261125143821.729802100@linuxfoundation.org>
- <20261125143830.189554233@linuxfoundation.org>
+ <20261125143832.945376806@linuxfoundation.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -103,34 +103,96 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20261125143830.189554233@linuxfoundation.org>
+In-Reply-To: <20261125143832.945376806@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 25. 11. 26, 15:28, Greg Kroah-Hartman wrote:
+On 25. 11. 26, 15:30, Greg Kroah-Hartman wrote:
 > 7.3-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Rahad Bhuiya <rahadbhuiya2021@gmail.com>
+> From: Tejun Heo <tj@kernel.org>
 > 
-> [ Upstream commit 564405c424f49d70b13debe7fe5b550234ad6b84 ]
+> [ Upstream commit b3768d058c98d4e8114a246d3267d7dae1c123fb ]
 ...
 > --- a/kernel/sched/ext/ext.c
 > +++ b/kernel/sched/ext/ext.c
-> @@ -4198,6 +4198,7 @@ void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
->   		args.cancelled = true;
->   		break;
->   	case SCX_TASK_READY:
-> +		scx_reset_task_fields(task_rq(p), p);
+...
+> @@ -10340,6 +10358,64 @@ __bpf_kfunc void scx_bpf_dsq_reenq(u64 dsq_id, u64 reenq_flags,
+>   	schedule_dsq_reenq(sch, dsq, reenq_flags, locked_rq);
+>   }
+>   
+> +/**
+> + * scx_bpf_dsq_reenq_task - Re-enqueue a task from a DSQ iteration
+> + * @it__iter: DSQ iterator in progress
+> + * @p: task to re-enqueue
+> + *
+> + * Mark @p, which is on the DSQ iterated by @it__iter and was queued before the
+> + * iteration started, for re-enqueue. When the iteration ends, the DSQ's marked
+> + * tasks go through ops.enqueue() with %SCX_ENQ_REENQ in DSQ order and the other
+> + * tasks on the DSQ keep their positions. A marked task that leaves the DSQ in
+> + * the meantime is not re-enqueued. The mark belongs to @p, so a re-enqueue
+> + * scheduled by another iteration of the DSQ may re-enqueue @p before this
+> + * iteration ends. @p must be on the DSQ's scheduler.
+> + *
+> + * Re-enqueues are performed asynchronously. Can be called from ops.dispatch()
+> + * or any BPF context which doesn't hold a rq lock (e.g. BPF timers or SYSCALL
+> + * programs).
+> + *
+> + * Return %true if @p was marked, %false if @p left the DSQ or was queued after
+> + * the iteration started, @p is on another scheduler, or the iterator holds no
+> + * DSQ.
+> + */
+> +__bpf_kfunc bool scx_bpf_dsq_reenq_task(struct bpf_iter_scx_dsq *it__iter,
+> +					struct task_struct *p)
+> +{
+> +	struct bpf_iter_scx_dsq_kern *kit = (void *)it__iter;
+> +	struct scx_dispatch_q *dsq = kit->dsq;
+> +	struct rq *src_rq, *entry_rq;
+> +	unsigned long flags;
+> +	bool marked = false;
+> +
+> +	/* NULL after a failed bpf_iter_scx_dsq_new(), see scx_dsq_move() */
+> +	if (unlikely(!dsq))
+> +		return false;
+> +
+> +	/* the cursor check needs @p's rq locked */
+> +	src_rq = task_rq(p);
+> +	entry_rq = kf_switch_rq_lock(src_rq, &flags);
 
-This fails to build:
-../kernel/sched/ext/ext.c:4223:17: error: implicit declaration of 
-function ‘scx_reset_task_fields’; did you mean ‘scx_set_task_sched’?
+This also fails to build:
+error: implicit declaration of function ‘kf_switch_rq_lock’
 
->   		break;
->   	case SCX_TASK_ENABLED:
->   		scx_disable_task(sch, p);
+> +
+> +	scoped_guard (raw_spinlock, &dsq->lock) {
+> +		if (nldsq_cursor_lost_task(&kit->cursor, src_rq, dsq, p))
+> +			break;
+> +
+> +		if (unlikely(!scx_task_on_sched(dsq->sched, p))) {
+> +			scx_error(dsq->sched, "scx_bpf_dsq_reenq_task() on %s[%d] but the task belongs to a different scheduler",
+> +				  p->comm, p->pid);
+> +			break;
+> +		}
+> +
+> +		p->scx.dsq_flags |= SCX_TASK_DSQ_REENQ;
+> +		/* the walk is scheduled once, by bpf_iter_scx_dsq_destroy() */
+> +		kit->cursor.flags |= __SCX_DSQ_ITER_HAS_REENQ;
+> +		marked = true;
+> +	}
+> +
+> +	kf_restore_rq_lock(src_rq, entry_rq, flags);
+
+And here:
+error: implicit declaration of function ‘kf_restore_rq_lock’
+
+> +	return marked;
+> +}
+> +
+>   /**
+>    * scx_bpf_reenqueue_local___v2 - Re-enqueue tasks on a local DSQ
+>    * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+
 
 -- 
 js
