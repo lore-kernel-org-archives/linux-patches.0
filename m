@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705512;
-	b=0vMqM8R9Kb0vTGA43Jpkv/H78OeFExoYg0QY3IXlBZrzVldDg21tKnrbcCJUs7JVjBMX
-	 Imn2qWGhrGw5krvQMoXsLFAcfMLVUCoYKS28X1zGnvNTinKWI1Xv+ctKwCWmuBO4Iem94
-	 ecP9aEzDNRRSGnaApExN96Ro3brzzB/qj8vtArAXNBl8MZjWdpIOhtuvOM6BPwodWGIQu
-	 Dy8s/fkwuqhY05QSQD/SdbNjRDAT2YMp66BUbiqJS6iIyzo/yWM6k22mo1UC5lJmEnvSi
-	 WqPnLqXcc6SVUaIEXFItwNakwOC6SHU6SqgNPVItT0HLlaq1TPNDNUokQFiM7I+IO6w==
+	t=1795705515;
+	b=OuPhAlq3x0Qfw7Th8clHIcSgesktJVbTQjQy8SbjHmiCO7gqG9ws75DKKdSUa6nNo/Gc
+	 0NUjEJG5bvj7SibgCn4lk2W++amPK4S7UGFGX8QDs/CgIsmwnUTfiyzygARdUoAAmaSon
+	 +fSCB7g3WQHrgGPMT6XyLHVAXwmEzTeuNvWcN4UcnTVq90dKdAZ0vV2nsT8Iv5iRGte1L
+	 fyxAW/aG+jVouweQW90DDP5/uYQWx8u7fLGtMkGY4RlmnpjzylCRUOau5jHt97TYefwUG
+	 yNFlrbap2sE6chaXRxYrqtKQ9PG9zsiWdG/0tSMHeJ/tHY6ejHdrJRkHaEBqkEdHvKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VqQAkbmYevU9qKu6Ms4j4CD1ePIf0Ci51O8l9wqdrgQ=;
-	b=yNfFb96Bto/iNZ9CXFgCTZd9UIGp7tRJNSeqLLtkUqwGhi0xvNK0YZUPfaTw/KFD0XYp
-	 NMjafHwVx4qZqB+uAkT11WGLxaYx6gth9tDAXL4UKBOZHC7HGzCEIzclPi1p7PggJm0Aq
-	 FWG1l/DreEBVRevlNzeVdtYufbfFXcn1q0jjRtA/M3JMvvI9K2+p/Aabrkradt8sIxw4R
-	 42Ei9vCMkAvgwSjo7f9seuT5A+wokFlRwBKno6mbQ+XRR83fusgcuqK1t1jd62VbgEBYZ
-	 QsgFIFVNPahP5MrTXDQC/bCF8Aj/fJzhVSaqfnrJWaw7yIMBf6bWi5VSRU00TDSDl2w==
+	bh=DTSuniK8UTMdInItQ90+eQPX9cJwCqDwyacHYAoandY=;
+	b=ALyvIqzRC+eO1Oddfec1VK+2aTKZk/whr4lAoKH2DAvh9H4W4+R+pv0dm8SSsFI9AgQp
+	 980F8D3ggpLSYSKv6XhxWOnXX8Unb4bMdNrMbzAKHvDANNk+Cz3RD5Y8dFAVXiDaEgudS
+	 ZEQHHiXmrCtnFTlxfkRSPRmPf0xNYHwQbPcZ4tfVG6Ej17u337obM9KKUnI7/MpX6B+kg
+	 SYN6V8lTfRgccSnvj1afJM/C5pl0VBfuX7N8zZjyUZmFZO7FLgumXfl5L/0MBqNLXGk8W
+	 DPhx6LazXsC6MGNRoqLZUACx2OjDZ4xsliWDEpiPSp15Pn360fi1Ssww/NsFX/sVpvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VHf4ryKw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJQLPsgk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A1B606A68D;
-	Thu, 26 Nov 2026 15:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01389606A33E;
+	Thu, 26 Nov 2026 15:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VHf4ryKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DA61F000D1;
-	Thu, 26 Nov 2026 15:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJQLPsgk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619161F0180E;
+	Thu, 26 Nov 2026 15:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705511;
-	bh=VqQAkbmYevU9qKu6Ms4j4CD1ePIf0Ci51O8l9wqdrgQ=;
+	s=korg; t=1795705514;
+	bh=DTSuniK8UTMdInItQ90+eQPX9cJwCqDwyacHYAoandY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VHf4ryKwx6Mdrz1B0Zgwr3vasD9qTlLhntpQ0puij/4FRfWjVkNf/uDW8c7vXKQsx
-	 +kkkDOnUuEuFIGSNEKXsGeqhbDNf+7SRQGQeO+Bk7ksdxUo9PUE3BaKz6I6G+/huyK
-	 dGMLl5HPFU11uYhEin40RW9Au0Jw68PhBtTdv3l4=
+	b=JJQLPsgkZ5kEHCsEr86NdgSfZItrtEsamEp866wgPY9bWSt8skqSOKeSn5TAd5q4X
+	 0e/aw7P8SeP7XhMtNlf9RSdSvAa+MxUKZEQktnSg0jCK7qFLd0AL2LjyVRS+8GMjvS
+	 UU52UgZBA2pkP9Czu14ig/D55Ypuc9834tyQywJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 178/319] aio: dont let exit_aio() return before complete() is done
-Date: Thu, 26 Nov 2026 15:39:06 +0100
-Message-ID: <20261126144010.765124452@linuxfoundation.org>
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Zi Yan <ziy@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 5.15 179/319] mm/mmzone: read the zoneref slot once in zonelist_zone()
+Date: Thu, 26 Nov 2026 15:39:07 +0100
+Message-ID: <20261126144010.787250560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,65 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-commit ac4b449b39e605123c12ea10042cafc9b6f39603 upstream.
+commit 9c52ebe9c89d41c56fcb5d94efe9e539414175a9 upstream.
 
-exit_aio() kills all contexts in one go and waits for them with a
-single on-stack struct ctx_rq_wait. The count starts at table->nr, each
-killed context drops one count in free_ioctx_reqs() and exit_aio()
-subtracts the empty slots afterwards. Whoever drops the last count
-either calls complete() or, if it is exit_aio(), skips the wait.
+Memory hotplug rebuilds zonelists in place while allocations walk them,
+so a zoneref slot can change between two loads of it.
 
-With a full table skipped is zero and atomic_sub_and_test(0, ...) only
-tells us whether the count already hit zero. free_ioctx_reqs() runs from
-the percpu_ref RCU callback, so if exit_aio() is off the CPU long enough
-the last callback can have done its atomic_dec_and_test() but not yet
-called complete():
+zonelist_zone() loads the slot with a plain access.  The compiler may
+load it again later instead of keeping the zone it already read, so a
+caller can check one zone and then use another, or the NULL terminator.
 
-    free_ioctx_reqs()                    exit_aio()
-    atomic_dec_and_test() // 1 -> 0
-                                         atomic_sub_and_test(0) // true
-                                         kfree(table)
-                                         return
-    complete(&wait.comp)
+Use READ_ONCE().  Callers that take a zone from a slot and keep using
+it, such as get_page_from_freelist() with ac->preferred_zoneref, need
+that single load.
 
-complete() then locks and writes a completion on a stack frame that is
-gone. So hold an extra count for exit_aio() itself. Then the last count
-is always dropped by exit_aio() after it waited, or by a callback while
-exit_aio() waits for it. An unprivileged user gets there with four
-io_setup() calls and an exit without io_destroy().
-
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Fixes: dc48e56d7616 ("aio: fix serial draining in exit_aio()")
+Fixes: 11cd8638c37f ("mm, page_alloc: remove stop_machine from build_all_zonelists")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261030-work-aio-exit_aio-v1-1-83942022a4c4@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://patch.msgid.link/20261101021340.2251928-6-gourry@gourry.net
+Acked-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/mmzone.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -893,7 +893,7 @@ void exit_aio(struct mm_struct *mm)
- 	if (!table)
- 		return;
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -1127,7 +1127,8 @@ extern struct zone *next_zone(struct zon
  
--	atomic_set(&wait.count, table->nr);
-+	atomic_set(&wait.count, table->nr + 1);
- 	init_completion(&wait.comp);
+ static inline struct zone *zonelist_zone(struct zoneref *zoneref)
+ {
+-	return zoneref->zone;
++	/* Memory hotplug rewrites zonelists in place. */
++	return READ_ONCE(zoneref->zone);
+ }
  
- 	skipped = 0;
-@@ -917,7 +917,7 @@ void exit_aio(struct mm_struct *mm)
- 		kill_ioctx(mm, ctx, &wait);
- 	}
- 
--	if (!atomic_sub_and_test(skipped, &wait.count)) {
-+	if (!atomic_sub_and_test(skipped + 1, &wait.count)) {
- 		/* Wait until all IO for the context are done. */
- 		wait_for_completion(&wait.comp);
- 	}
+ static inline int zonelist_zone_idx(struct zoneref *zoneref)
 
 
