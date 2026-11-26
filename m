@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704388;
-	b=CH+lTIlxJAwI3v20373KE7Iuho84ouwoR/03KgiGuIsWPAVvGgBXdsRWG7J2GO0WZyzO
-	 TvTfOXRWtwW7//0jny57c3Y+xNaoSAurzaQd6TNbWw6M8WlYMAXqE9TPz61Zc97/2SIqN
-	 5f7rYI+U2oeX+ZfxrjkLPa8sTMAKSMNOaL4VcKFCJEm2upxmFkN3cuwVPlHCzh3dPlN0E
-	 lXfuv2L0h7LZ2MtWPC1+m1pmVdVXlz/qKa/03ikbMJtdGsucnqqEusM45cIAAY8Babiks
-	 62haPxERPcRgpUfBErdOuxPk79zePcI1nZt0U63l/ZofeJwx/KPU8i8eHmVq2RuFuLA==
+	t=1795704391;
+	b=utk1J9f9mfslAA7M5u9iWp6SBJmr+yZF7dSbeoV4EhygwH0rq0Qd9PQUj6F3jeSd9Mck
+	 3CsTcHpr42D2qbaU6Q1P1/vlNT8NLKO2yED2O2SPJxuN79GhFlqXDUMeewFCKanlLsiRs
+	 OLnMVWDj/QK515tiNzL7lLt2pT8DWgkZkKPPYB9+kObzjxqxwjA2/bdXMGUYC7Slwi/B1
+	 qQMMWHMnPxNMLjWG66JCHHKKBmaOtj41UbvEvQHsAw6R2WcyLf4GM1He4t2kxO7fipqd6
+	 2GCMYE6sOEZhYRIctxRNM6LF9SXRY6YAuQn4a8TX6BmSBVHBxNL3i78S5NiHEwV0ZuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6ax6kPILKqMYr9cxAzL9u7uKQer5WP0MIgFNGSf1s9c=;
-	b=WaNUQ9ez87DUvb1bVZDujqJL7jlVHL6zPv1W0T2Bg+fLZdZKPqqCMXlRsqIHAb5OM01s
-	 7lBfzsffZba7+mgHgrn9rMGJMuLq6o172OtwQAj78ltsazjH86hmEJRETG8tjNCVXfaSX
-	 HhpVOZF+j0RaMuyXCOnfPd7tE8rLQ9rwfnMozGU9KA2Utv9Uana6TpWHY5dKkDeg3uI4t
-	 gLiOZJupkv8CY5eElOMyAAWYf3ot5TX206YC4UqNwTgqGJNplTkvTFHtry24ry/YXhxaa
-	 KvNqbAO5xHQSykqQK+hzHrFmigmQBApXqeXqYKzx9ipCPdWSTGYR+mPJHU8XmbsE7Xg==
+	bh=Tjmp/htOyy4oVHLtyBxPUFOrHjPdMM180Js9jVX8uJs=;
+	b=slmMhQt0SmtTaeRa3P7pNflmMI0SIpu2l1CXVA16fX81UtRjweUUgRmiEwA9Y4Gtnhht
+	 sud8bQghl/8Tj/DG5cvMO9Jfz9SokV1eePdmd5+cNBoIYFZG1meYsQ+ca5dXHbu/6dKZi
+	 3Bu7y4pDeRPpBlivanYRNB/Wsansu5yiZQ135xNZG7A7RHDxRw4sLlnliDznMk4csDsrw
+	 MgabqcVIXhAJPdPo9Sy0bSDBluyLNxbbws7fkKEhKuTAR/RMcvHkY/SLkTDl94gHJIo5C
+	 BjvNpyvzhJwg68A2ZbLy2ECNkRDnmChsDOhha5iX2aM5A/IZan4gnKZ8hclQ8Rmz6ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shORgacB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WttkaDSg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45DD606A329;
-	Thu, 26 Nov 2026 14:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877CF606A327;
+	Thu, 26 Nov 2026 14:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shORgacB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172A01F000C6;
-	Thu, 26 Nov 2026 14:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WttkaDSg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1341F000C6;
+	Thu, 26 Nov 2026 14:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704388;
-	bh=6ax6kPILKqMYr9cxAzL9u7uKQer5WP0MIgFNGSf1s9c=;
+	s=korg; t=1795704391;
+	bh=Tjmp/htOyy4oVHLtyBxPUFOrHjPdMM180Js9jVX8uJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shORgacBAP2Gls6ElZNWPttFcNU4ou8hmK/wLlNXS1hTVIqhtDfiFx1wZlgWB14pp
-	 AsWgCRRXc6Y9/1Vv5qoFqha/SMecEoqISZAOj4MUpZiCfIXMNHo2pZgAiU5kclKQyL
-	 fEDULzfsAFgXdYuxePWEsiyEjkX7161MDu1Y2ip8=
+	b=WttkaDSgERJK/R39eVQue6rpazN8F08GDnKDAFwdbi0u2lAQSxlZj5rNq3pUyfVfY
+	 QTX9o1VYIddFzxhLB/+konXslEq6PTKyiYbJeA8GDSY18A21vVTOKcTTNj5bZmjvly
+	 1JXyUScvcLANiO178RmnOOpsb8g/Otb/3wltpaU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/265] calipso: do not charge request socket options to the listener
-Date: Thu, 26 Nov 2026 15:37:18 +0100
-Message-ID: <20261126143612.592123378@linuxfoundation.org>
+Subject: [PATCH 5.10 109/265] ipv6: ICMPV6: Use swap() instead of open coding it
+Date: Thu, 26 Nov 2026 15:37:19 +0100
+Message-ID: <20261126143612.660885560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -71,119 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-[ Upstream commit b4a2cc6d748d3056a25812dcf5f5377a59afd02f ]
+[ Upstream commit bc61761394ce0f0cc35c6fc60426f08d83d0d488 ]
 
-calipso_req_setattr() and calipso_req_delattr() allocate ireq->ipv6_opt
-with ipv6_renew_options(), which charges the listener sk_omem_alloc
-through sock_kmalloc().
+Swap is a function interface that provides exchange function. To avoid
+code duplication, we can use swap function.
 
-tcp_v6_reqsk_destructor() frees ireq->ipv6_opt without uncharging it,
-so each request socket leaks its options size from the listener
-budget. Once sysctl_optmem_max is reached, sock_kmalloc() fails,
-calipso_req_setattr() returns -ENOBUFS, and tcp_v6_route_req() drops
-all subsequent SYN packets. __sk_destruct() also reports an optmem
-leakage when the listener is destroyed.
+./net/ipv6/icmp.c:344:25-26: WARNING opportunity for swap().
 
-Uncharging in tcp_v6_reqsk_destructor() would not be correct: after a
-migration, req->rsk_listener is no longer the socket that was charged.
-
-These options belong to the request socket, there is no reason to
-charge them to the listener. Change ipv6_renew_options() to use
-kmalloc() when its sk argument is NULL, and use this from
-calipso_req_setattr() and calipso_req_delattr(),
-like cipso_v4_req_setattr() which uses kzalloc().
-
-Note:
-
-After this patch, calipso_req_setattr() and calipso_req_delattr()
-no longer need the listener. Commit 10876da918fa ("calipso: Fix
-null-ptr-deref in calipso_req_{set,del}attr().") could be reverted
-in net-next (also removing the then unused sk variables), so that
-CALIPSO works with SYN cookies.
-
-Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/179378292255.488856.6917577451813010963@kernel.org/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Kuniyuki Iwashima <kuniyu@google.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20261104150318.1156620-1-edumazet@kernel.org
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3896
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20230131063456.76302-1-jiapeng.chong@linux.alibaba.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 30c71476d842 ("ipv6: Check the Home Address option again before its address is used")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 12 ++++--------
- net/ipv6/exthdrs.c |  5 +++--
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ net/ipv6/icmp.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index 2aeccea1ec196..0d7183183181b 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -1223,7 +1223,7 @@ static int calipso_req_setattr(struct request_sock *req,
- 	if (IS_ERR(new))
- 		return PTR_ERR(new);
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index e8325d9780e99..714a7792c97f0 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -335,7 +335,6 @@ static void mip6_addr_swap(struct sk_buff *skb, const struct inet6_skb_parm *opt
+ {
+ 	struct ipv6hdr *iph = ipv6_hdr(skb);
+ 	struct ipv6_destopt_hao *hao;
+-	struct in6_addr tmp;
+ 	int off;
  
--	txopts = ipv6_renew_options(sk, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
-+	txopts = ipv6_renew_options(NULL, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
- 
- 	kfree(new);
- 
-@@ -1231,10 +1231,8 @@ static int calipso_req_setattr(struct request_sock *req,
- 		return PTR_ERR(txopts);
- 
- 	txopts = xchg(&req_inet->ipv6_opt, txopts);
--	if (txopts) {
--		atomic_sub(txopts->tot_len, &sk->sk_omem_alloc);
-+	if (txopts)
- 		txopt_put(txopts);
--	}
- 
- 	return 0;
- }
-@@ -1264,14 +1262,12 @@ static void calipso_req_delattr(struct request_sock *req)
- 	if (calipso_opt_del(req_inet->ipv6_opt->hopopt, &new))
- 		return; /* Nothing to do */
- 
--	txopts = ipv6_renew_options(sk, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
-+	txopts = ipv6_renew_options(NULL, req_inet->ipv6_opt, IPV6_HOPOPTS, new);
- 
- 	if (!IS_ERR(txopts)) {
- 		txopts = xchg(&req_inet->ipv6_opt, txopts);
--		if (txopts) {
--			atomic_sub(txopts->tot_len, &sk->sk_omem_alloc);
-+		if (txopts)
- 			txopt_put(txopts);
--		}
+ 	if (opt->dsthao) {
+@@ -343,9 +342,7 @@ static void mip6_addr_swap(struct sk_buff *skb, const struct inet6_skb_parm *opt
+ 		if (likely(off >= 0)) {
+ 			hao = (struct ipv6_destopt_hao *)
+ 					(skb_network_header(skb) + off);
+-			tmp = iph->saddr;
+-			iph->saddr = hao->addr;
+-			hao->addr = tmp;
++			swap(iph->saddr, hao->addr);
+ 		}
  	}
- 	kfree(new);
  }
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index 53b79a83e0e53..3dc1f57650436 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -1244,7 +1244,7 @@ static void ipv6_renew_option(int renewtype,
-  * not copied into the new set of options.
-  *
-  * The new set of options is allocated from the socket option memory
-- * buffer of @sk.
-+ * buffer of @sk, or with kmalloc() if @sk is NULL.
-  */
- struct ipv6_txoptions *
- ipv6_renew_options(struct sock *sk, struct ipv6_txoptions *opt,
-@@ -1272,7 +1272,8 @@ ipv6_renew_options(struct sock *sk, struct ipv6_txoptions *opt,
- 		return NULL;
- 
- 	tot_len += sizeof(*opt2);
--	opt2 = sock_kmalloc(sk, tot_len, GFP_ATOMIC);
-+	opt2 = sk ? sock_kmalloc(sk, tot_len, GFP_ATOMIC) :
-+		    kmalloc(tot_len, GFP_ATOMIC);
- 	if (!opt2)
- 		return ERR_PTR(-ENOBUFS);
- 
 -- 
 2.53.0
 
