@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704107;
-	b=teiODgkJ27vAnE8NKXrWBvJbJGDrRgxBTmag+14lNsM01VS4qM4ndbAwlqf20dw4WmKh
-	 1x9DP4sC7FVWNLpTSuOyjGJOaKhDFGntIVYmzpIgDKj1HoTbp9bmAIRz3yalk1um7uxN7
-	 /2e1tH4HYhpW5KR83+WUYCj0+fOi6RH03NTI3Ye6bP0Zm6HijDbE3f2oHqhiMdC6tJc+k
-	 k4DTLTHfyueuc/U1YXCRAy3XeQzs+gJh54vT+xrUXl7oWLo1XeYtSJSkxlBhkXIMsRSbq
-	 IWFZSoo+T3LNlFzNdzTbwgingi8z17BLFQzzSTzwoNPKy/NO9g05OSQRdfPaAGQ7WQg==
+	t=1795704109;
+	b=g1RAjbjwLu7+iBUta7ywJBG6z9tXnKC4zHfIS2B6l0IGxAP63P7byDiNJOItAeH4+Mf/
+	 vQX+NJyGSaG7y1rPWDVIvt61y3CFlOkwVl2SSs3+tSrJtUCalQXUil5x+x8FrFxKMd3fq
+	 sl/TTu/2B55hdjzavbH8VVMzeB6xX6JMz1Fp03ZWUmbIyalKVueq50nynHabSeJAE2hvF
+	 RH1veo/nFWUYdNjAbqir2IzXtowK20gMWg2CooWe9+ZOe3V2apJWVFxaw0JcpAPc4xeTk
+	 VWz0TGN8MeDB2zQ1Pzr9pWX1IQiBtMKJwoO9Qr1+OOSi9RWTd7pfoHNh4ZjwBX4u7WA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704109;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YbhPHeMJkakLAN/jwTUjp8gBLGfmcCcX6qgtmah+Lu0=;
-	b=QRQ44RSlkN7cfRgnDhL+sCVYeJnUlrTjbzFhHk77f6PFP0cUgojU7i4V3VsI/UdWq6Mk
-	 rocwhAMNahODqI0vebBm8E1ocHNZlLFJTWmcDUzDQB9coTE7mkDNRWo81UEpwgDOYJJQN
-	 qGmo2qWEFQ2PBXVW3+Bjb6vL6CS1iUuLjpx7RPwFx4Nsf/uNUvy0+mfLoFuzzjJI5/juk
-	 WMqs6MfVccD9GICmK4Fwkrqbf407sk5Hu+RxV94R/3Bw97h1qQth7CwHyRfgNYt41z8rj
-	 t8owwnxGLWegU3eVH8/fYYnTVRh59orXOyxTdC5XBHPzTcCw7O8ZtweMsO097YuW7Vg==
+	bh=CiAVki+thDWmxbAHdOBuxFsn7meLfucpGgUkwAIAonE=;
+	b=tA+Qdb/i5StfLMRfxfLnz8HrVPbhhP+FRv4HxNMSbiyT6niELdsyfUCpXz4YW1cT7O0k
+	 ZFtpOC3acoFbn+sCRo9aF8b+sXAYsbPceocLwCrR8+hflqkWJZLb3D+Bd0pn/nwFoII3N
+	 PSUlYnwAB/G7Npc+goxMud5siRwNaRw8oVobmECPQFFIjEMoodrQUYtICx9D2+4QIbZq2
+	 X98C3RmaYKkFtE06m7WEMds92fBnCBFLH5xFAubLrYsk+gemfY25bzGoTh0TkUie8a0Em
+	 xZPejavax+nWVjG1uG1bik5dJPeuVKaLN6dQIOvmwCTdj4lnRrMhZ3niV7c7Zrru3uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SlHQKxxF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLtJ5qUl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B32606A31C;
-	Thu, 26 Nov 2026 14:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA23E606A31C;
+	Thu, 26 Nov 2026 14:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SlHQKxxF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACD01F000C0;
-	Thu, 26 Nov 2026 14:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLtJ5qUl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21731F000C0;
+	Thu, 26 Nov 2026 14:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704106;
-	bh=YbhPHeMJkakLAN/jwTUjp8gBLGfmcCcX6qgtmah+Lu0=;
+	s=korg; t=1795704109;
+	bh=CiAVki+thDWmxbAHdOBuxFsn7meLfucpGgUkwAIAonE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SlHQKxxF/BpZ/jkUWn1vUFsIvohYIZWhZmeLFwdqcJ+g+XEhaa3lF/bNTZnbn6nwp
-	 aZODKhkZ+l4I9Zp+R5QTFNozUzl48D9W8cYIBLNHlsKnIs+xPSd6/BZUiPvpzEYY61
-	 ACKtHyPtfKmppA1uBZDqTqHwHQ/DBbLrGLI8jBv4=
+	b=cLtJ5qUlyqjx+SQPDvahOs6QRgSAV5mAwADkvOR1xCN78TvhQOv7EQJJ0A64scqXj
+	 SdeBiL2yWs9dT41dFOYRMFrN9/hIM6ffptEFyQTU6Ky1e97aW2ux9huHwAuyEZ/wdK
+	 SMhKS2pbA/92jNVE0+Jrq42gVjaw8aMIVjNKji+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/265] media: uvcvideo: Undup use uvc_endpoint_max_bpi() code
-Date: Thu, 26 Nov 2026 15:35:31 +0100
-Message-ID: <20261126143605.176171329@linuxfoundation.org>
+Subject: [PATCH 5.10 010/265] vhost/vdpa: reject overflowing PA map page counts on 32-bit
+Date: Thu, 26 Nov 2026 15:35:40 +0100
+Message-ID: <20261126143605.786440588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,64 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 5b9c75c794ce041e6e00789efef75d71915c4f4c ]
+[ Upstream commit 0619aaa34c0c2a2dcb07f0e9c8a34e7efb8c4cdf ]
 
-Replace manual decoding of psize in uvc_parse_streaming(), with the code
-from uvc_endpoint_max_bpi(). It also handles usb3 devices.
+vhost_vdpa_pa_map() adds the IOVA page offset to the user-controlled map
+size before computing the number of pages to pin. On 32-bit systems,
+where unsigned long is narrower than u64, that addition can overflow and
+the code can pin and map fewer pages than the requested IOTLB range.
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reject sizes that overflow the unsigned long page-count calculation.
+
+Fixes: 22af48cf91aa ("vdpa: factor out vhost_vdpa_pa_map() and vhost_vdpa_pa_unmap()")
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <CAMuQ4bX-iDvcUOPPY+NLz95tkRJYwWqvzAr=U48uNaub_HZLGw@mail.gmail.com>
+Stable-dep-of: fd1462c96baf ("vhost-vdpa: fix pinned page leak in vhost_vdpa_pa_map() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 4 +---
- drivers/media/usb/uvc/uvc_video.c  | 3 +--
- drivers/media/usb/uvc/uvcvideo.h   | 1 +
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ drivers/vhost/vdpa.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index e9fe09ed6968a..d3c87ce87f0e4 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -1016,9 +1016,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
- 				streaming->header.bEndpointAddress);
- 		if (ep == NULL)
- 			continue;
--
--		psize = le16_to_cpu(ep->desc.wMaxPacketSize);
--		psize = (psize & 0x07ff) * (1 + ((psize >> 11) & 3));
-+		psize = uvc_endpoint_max_bpi(dev->udev, ep);
- 		if (psize > streaming->maxpsize)
- 			streaming->maxpsize = psize;
- 	}
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 909e158a017a2..a33b99cecd390 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1788,8 +1788,7 @@ static void uvc_video_stop_transfer(struct uvc_streaming *stream,
- /*
-  * Compute the maximum number of bytes per interval for an endpoint.
-  */
--static unsigned int uvc_endpoint_max_bpi(struct usb_device *dev,
--					 struct usb_host_endpoint *ep)
-+u16 uvc_endpoint_max_bpi(struct usb_device *dev, struct usb_host_endpoint *ep)
- {
- 	u16 psize;
- 	u16 mult;
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 184ff2c10560a..14ebb78d7e004 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -894,6 +894,7 @@ void uvc_simplify_fraction(u32 *numerator, u32 *denominator,
- u32 uvc_fraction_to_interval(u32 numerator, u32 denominator);
- struct usb_host_endpoint *uvc_find_endpoint(struct usb_host_interface *alts,
- 					    u8 epaddr);
-+u16 uvc_endpoint_max_bpi(struct usb_device *dev, struct usb_host_endpoint *ep);
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 43e7528b8fa03..32dde456a181a 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -633,6 +633,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	unsigned int gup_flags = FOLL_LONGTERM;
+ 	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
+ 	unsigned long lock_limit, sz2pin, nchunks, i;
++	unsigned long page_offset;
+ 	u64 start = iova;
+ 	long pinned;
+ 	int ret = 0;
+@@ -645,7 +646,13 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	if (perm & VHOST_ACCESS_WO)
+ 		gup_flags |= FOLL_WRITE;
  
- /* Quirks support */
- void uvc_video_decode_isight(struct uvc_urb *uvc_urb,
+-	npages = PFN_UP(size + (iova & ~PAGE_MASK));
++	page_offset = iova & ~PAGE_MASK;
++	if (size > ULONG_MAX - page_offset) {
++		ret = -EINVAL;
++		goto free;
++	}
++
++	npages = PFN_UP(size + page_offset);
+ 	if (!npages) {
+ 		ret = -EINVAL;
+ 		goto free;
 -- 
 2.53.0
 
