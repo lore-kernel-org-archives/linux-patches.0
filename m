@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704709;
-	b=u3d1zew+054JB8oxoAwk6DWx/N8pKvuKfXqxiKYWEHWrXdu5GY9XnFUBWv83sqbg8Xyl
-	 rbPT7vKDs8X0ImVx+82VEHAgxR8QTiuejLOAPOQpAccEKfp1EBwvpP2wxs51UcLUTaFOs
-	 F4JvKnWXS/Kyn+oVuVlXWKU4559Mk2NktfKjv3cuvYvATwuAxAzl+K9cHIowC385si93w
-	 ujC472+6nD+V1crRzDWoB4aFz0WAAJlDwWj1N/TGaWPp6b7NGVFpyQTUI9eAEwSsNP+c3
-	 dg/YXOCjWFhFiYr1M4EvWc1zelae5knCtlvnZqJ3uTX4hpFqOibaU0KgLa03gpvr5bA==
+	t=1795704712;
+	b=fy7FHudLhQu2Jm5/VRENkjGlBuepTLqVDPY9lOZxy700oSdnPUZvxyCwpmZIzD63QNR9
+	 /Labr1vMlIvOqCm+tyCnFM6MkKeYidXuFaw6wDEMthgwiiybwVMzK/IwqHHcxaBCRN5J7
+	 VfZoOLkGxgSnznfOOLiw5PWYGYEbj/6d59bzRSbrz6ozFTs3Ryx0O+J9Ic4+4XM4LV62a
+	 Eq9A5WQtiJOzCpM/EZwcJMnx0cSIPZdQZ4Y0TB0VrYO8xK8tH5X+fzWI+tmK6aqdyWbmT
+	 r/v8vQYrJfo+FpWXSWhglnVV4OFPU3n+aHlX3ugwdK3stQ3MdZ1HW2LBMcEvLDI7WGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704709;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704712;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=VrYLBQsNtlLAKyKY6VuGIWokRXCPXS+eSh/GeH5pK0Q=;
-	b=mYj/7n964hj0t3cT1hLVog3dKScbwB5kwQALyynglquGnhXQMPpwB72BymVokEGsl5m4
-	 /dE2E537L7ZFEbe0m6e7Z3cghWY/SYMSlN181JzMlQu1ZbYCVyfvdhiHHOtZMhxz7Ea0O
-	 F218+75VKZqW3+ITlvYj6zRy9daWPRdpuiCSKxUge9Rneo2g2iLkdgOR07qctcZ5/OqPt
-	 9e3D1JQTbQReYOSvXFvwHE8lncfZaeAITbDDBe3seC0a1aMzP2lRBtpgwIETPLkQQG1Bm
-	 uGNQtFDc0i9/Z/IYELwSLt0IQwAUmelWphDfr0lQHvmfonJqIjDNUlITjivA7hKl+3Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yTSuhjz5ocCPgtsDCZuLGZM3TLOKBdUbuFjzxDcIuE8=;
+	b=yTGRmLg26vN5+UfAb5IWPYtmZcixMNh36NvXEcqtvm11Fej8fkEf85WUsk5ykhK/euq6
+	 uo7iVeaf+gt718aaDxtlnC/tP/xTqHertfABTuP43vFoeFCWc14Ef1tt091XU5BHOl69m
+	 m7h4w9GJm7E39Z7/555og/ZFmWrUAUmsn7HFEexwRb+ySMtMc9S0W3/UD5Q/0S8XvMOAI
+	 34d+KCmiIv/i2TotZYpFWJ0aM/bGRErOcKMJZBbwbDq7YAaeESzEX/S+9+L2bBVe3hGhZ
+	 wXUqoBHbrKGMWjt+MeHXX3YgrR1gLIzw1FlFfDBQiBNHgIuoJgbGfcvTXgMLe7O2Hlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1AXOKisK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PkoCB4j0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D8E606A32A;
-	Thu, 26 Nov 2026 14:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABB8606A31E;
+	Thu, 26 Nov 2026 14:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1AXOKisK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5233F1F0093C;
-	Thu, 26 Nov 2026 14:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PkoCB4j0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F2E1F000C4;
+	Thu, 26 Nov 2026 14:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704708;
-	bh=VrYLBQsNtlLAKyKY6VuGIWokRXCPXS+eSh/GeH5pK0Q=;
+	s=korg; t=1795704712;
+	bh=yTSuhjz5ocCPgtsDCZuLGZM3TLOKBdUbuFjzxDcIuE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1AXOKisKSi9YSxwGVoW5Q60T8GJclK6pbMUFbgqSiq7ejdcQCc1ti7pa2hyXyrr02
-	 GHm+0pFSb64Ykro4KEMlbvA+gQ1QBmn7RxU0RDmQvoV2yRpCGm4RLqn2z/1WKqWWLN
-	 LBP2+PJlCiZnyIa4sfOMgOPuCegOmYG1oZUqSsfM=
+	b=PkoCB4j0e0nPyz0/PqkJCamgQxv5MnakVw9Qb88qBEkYcnPoA9Jh+vBlNpQI5eAv8
+	 lAFX8V2CODN27Z6l5wo7D0q5ZyU8okRf82WdRzIHgD+wouNyBZjcYR9rBiLkB2XChJ
+	 Tos7ExZ8SU8hkwx5w6Im8tncbiHeS3Dr0Ti045bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
 	Jiri Slaby <jirislaby@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Peter Hurley <peter@hurleysoftware.com>,
+	Kukjin Kim <kgene.kim@samsung.com>,
+	Thomas Abraham <thomas.abraham@linaro.org>,
 	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 5.10 217/265] serial: 8250_lpss: dont divide by 0 above 6.25 Mbaud
-Date: Thu, 26 Nov 2026 15:39:07 +0100
-Message-ID: <20261126143620.410757289@linuxfoundation.org>
+Subject: [PATCH 5.10 218/265] serial: samsung: put the previous baud clock
+Date: Thu, 26 Nov 2026 15:39:08 +0100
+Message-ID: <20261126143620.494149866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -66,7 +67,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
@@ -75,58 +75,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 08daebfd63e9054e097eb2653eff9381de43a422 upstream.
+commit eedf2cf3505c1562a2fb24f8b997056f023d242b upstream.
 
-byt_set_termios() derives the clock of the UART from the baud rate in
-the termios, which nobody has looked at yet:
+s3c24xx_serial_getclk() returns the best baud clock with the reference
+which clk_get() has taken.  s3c24xx_serial_set_termios() stores it in
+ourport->baudclk and disables the clock which was there before, but does
+not put it.
 
-	fuart = baud * 16;
-	...
-	fuart *= rounddown_pow_of_two(fref / fuart);
-	...
-	p->uartclk = fuart;
+clk_get() hands out a new handle on every call, so the new clock never
+equals the old one, and every call of ->set_termios() leaks a handle: a
+struct clk and a copy of the connection name.  Whoever has the port open
+can repeat that at will with tcsetattr().
 
-fref is 100 MHz. For a baud rate above 6250000, which BOTHER allows,
-fref / fuart is 0, and rounddown_pow_of_two(0) shifts 1UL by -1. On x86
-that is 1UL << 63, the product with a multiple of 16 is 0, and so is
-uartclk. serial8250_get_baud_rate() then passes 0 for both limits,
-uart_get_baud_rate() finds no rate which fits, WARNs and returns 0, and
-uart_get_divisor() or dw8250_get_divisor() divide by 16 * 0.
+Put the old clock when it is replaced, and the new one in case it is not
+stored.
 
-Everybody who may open the tty can oops the kernel with one TCSETS2.
-
-Don't ask for more than fref. The limits are those of a 100 MHz clock
-then, and uart_get_baud_rate() falls back to the old rate as for any
-other rate that the port cannot do. 8250_mid, which has the same
-formula, treats this case separately.
-
-Fixes: 21947ba654a6 ("serial: 8250_pci: replace switch-case by formula")
+Fixes: 5f5a7a5578c5 ("serial: samsung: switch to clkdev based clock lookup")
 Cc: stable <stable@kernel.org>
-Cc: "Ilpo Järvinen" <ilpo.jarvinen@linux.intel.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Peter Griffin <peter.griffin@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
 Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Peter Hurley <peter@hurleysoftware.com>
+Cc: Kukjin Kim <kgene.kim@samsung.com>
+Cc: Thomas Abraham <thomas.abraham@linaro.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-16-99b0202ae546@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-tty-llm-v1-22-99b0202ae546@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_lpss.c |    3 +++
+ drivers/tty/serial/samsung_tty.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_lpss.c
-+++ b/drivers/tty/serial/8250/8250_lpss.c
-@@ -82,6 +82,9 @@ static void byt_set_termios(struct uart_
- 	/* Gracefully handle the B0 case: fall back to B9600 */
- 	fuart = fuart ? fuart : 9600 * 16;
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -1418,11 +1418,14 @@ static void s3c24xx_serial_set_termios(s
  
-+	/* Fuart <= Fref: leave it to the core to refuse a higher baud rate */
-+	fuart = min(fuart, fref);
-+
- 	/* Get Fuart closer to Fref */
- 	fuart *= rounddown_pow_of_two(fref / fuart);
+ 		if (!IS_ERR(ourport->baudclk)) {
+ 			clk_disable_unprepare(ourport->baudclk);
++			clk_put(ourport->baudclk);
+ 			ourport->baudclk = ERR_PTR(-EINVAL);
+ 		}
  
+ 		ourport->baudclk = clk;
+ 		ourport->baudclk_rate = clk ? clk_get_rate(clk) : 0;
++	} else {
++		clk_put(clk);
+ 	}
+ 
+ 	if (ourport->info->has_divslot) {
 
 
