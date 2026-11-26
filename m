@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705410;
-	b=YUG1PYKv4Wxy2zpdYo8v2geJ0FmGfSb5XlV04/vqrm34Jsd1R0uCS0xl02gVYrmkweOo
-	 8V1FEgbbTV9kAz7uG6ToIsBDOF8p5errZGvhGMVV46EE1nycJyqFHCf8vrFDqLPHmjCwp
-	 MweEXWmxhpPq7GgMi8GOXFrNvCbEMXTi7a1cGPNsk5gf7+dGgtHFT7WA22edKWisFB1+g
-	 oDnjWa1uK66hqHPedx5Ht/UrZQLIPx41BYfP03mE3yqYvqlYJStts1ep81GUFhGmDS1p6
-	 ZfkX9/gGZCziI5csghJj9y+tCAGq7kPf2YuhSdTMOlWREgn7WAy7prmcDN9RiRR+nRw==
+	t=1795705413;
+	b=2JwK1jMEQ2tKnutHXLSji0fENkXELUStzYa+NFJeknJS4NtbxZ+NXLItnNc34aft4fOk
+	 OdrT5c8P6razd/UYJoxoKafAQQWkTxUwmQO+BWGEl2vaJeiMWP5jc0ICutBiG+F12ymoJ
+	 zq2JavFkV59abVYGOp/nlQv0HX130ZavAvefT/IA5TTIUUJPRP4lo3YYzVBM9LgoNzSt7
+	 FahQ8SRC8m3x3hBTLqZgFKy3t4+5OiVAUmqBz3A/Nhh6ozX4XHgbdFqVXfXCpciy4oFDi
+	 /ybArfTub4rUUamSUIg7a9YYyP0zaUte6/23hekwC8S+QoWlsxa+7kyBx8a5yG9p5MA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r/hEWaUi0LVp1ybZ0QgHmmGuIT8sCVvnpBGGW7Ow72E=;
-	b=M+k2LifRU8GuxphWJXYDfuKCV3MoO4cLrS+ttKZB6081sNZgaqApuObEcoLIAsyKe6sU
-	 Au7DBg7+ptpY137BvafeoDYby5KCz6HLb0Sx+g4XWKY/0v+vt6Noh6W4/m/xxCcITPvG/
-	 iSVheZMSO+ql4q6ZBRMGe/s9WyVLHX8P3L+FLzdUiaJqHzFXIrCqAo8mo42G8lhrjvTlB
-	 wxEAiWy/36adRTWXZCWNQpESLnkkJbMaKI2TmfpQ9MMGAZ0FSmagbIBpqhobrk3XlHN8m
-	 8wqUn5FL1JQ3Kg330eAKi/w8e1pUKVfQGH+6frZXmsDlk5KZ9IHPSw559Pv9J+4ICpA==
+	bh=wIUy7Wg+N5k0c4lN0cPz2MgdapzgDTGp1jH6W+jFMg0=;
+	b=ab6v3g8uGg7fq3RAwv5+9kRag6mTROlQLDbK3MEdATmvoa7guJlil72DzMNP6kuqpOE8
+	 QKojXjCF+WE56G97fZ2txcYpdbV7jKNc5HkGdOJf0z63F6Z9YVZbK8A3peJWTuRAPNvoL
+	 MGWKQtUj38vlb2xmIUh4K5TPqlGBEoYBq9dGAbmrga3N6zyjvIsWkmtDkSZltcRx0ig6W
+	 omzLV21ZCLJi2uAPy4tb2kTAPmqPTkaEQA0oBl1OAZ23NoGGxLrD0dygaYNS8YaeWTPSG
+	 BwHQo5gTxl9woxODIwuZp4X1VPmQNUdRuG81KXd8veiQSXuxMKlewUdWQd42qoOGqtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ce3Wx7cv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIG9+gPq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFBC606A321;
-	Thu, 26 Nov 2026 15:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD8606A323;
+	Thu, 26 Nov 2026 15:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ce3Wx7cv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9631F000C6;
-	Thu, 26 Nov 2026 15:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIG9+gPq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1E21F000D1;
+	Thu, 26 Nov 2026 15:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705409;
-	bh=r/hEWaUi0LVp1ybZ0QgHmmGuIT8sCVvnpBGGW7Ow72E=;
+	s=korg; t=1795705412;
+	bh=wIUy7Wg+N5k0c4lN0cPz2MgdapzgDTGp1jH6W+jFMg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ce3Wx7cvXYYHPhWPJq9RZcIYKog4x5oTZX23cEHBSJHzeeNzmM8x+0SRCJeMmhPVm
-	 VVHp6FgN3vZHfAyhia+Q0Lyl7MZVjkCWQ3XJXVgEi6naAGBqpd0bKD6hX3avCC1kgI
-	 5C995h3C7zzp7HC6+z3vJkXVwBNEkFM7SEN8EIOY=
+	b=UIG9+gPqBQfH5eNAzKD+PnD2GPBs7XTiqhu6SKloHTgVKBz0ymX1qgglvhohHcUVt
+	 HX3Yr2B5Yi7Qd4r/RuL6Up7ryHfdB719z7O3agZryybDo2d/6qYGBX0K3R+Htd4fyI
+	 iQaHJs8OQWVB7j/zFF1YRjuxbZXdYfbI8xb3san8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gichoon Han <gichoon.han@samsung.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 172/319] ALSA: usb-audio: Drop capture packets with bogus actual_length
-Date: Thu, 26 Nov 2026 15:39:00 +0100
-Message-ID: <20261126144010.628109693@linuxfoundation.org>
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 190/319] tls: only install push_pending_record for a TX context
+Date: Thu, 26 Nov 2026 15:39:18 +0100
+Message-ID: <20261126144011.035000459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,61 +67,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gichoon Han <gichoon.han@samsung.com>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-commit eed0e9583a290e6adbe3a8480bdae911f31e1ed9 upstream.
+commit c47e766c5307c06a78304582b2b5b5ab01ee1358 upstream.
 
-retire_capture_urb() copies urb->iso_frame_desc[i].actual_length bytes
-out of urb->transfer_buffer at the packet's offset, but never checks
-that value against the requested packet length.  A host controller
-reporting more data than requested makes memcpy() read past the end
-of the URB transfer buffer.
+tls_set_sw_offload() assigns ctx->push_pending_record for both
+directions, but the hook is a TX-side dispatcher. On a socket whose TX
+side is HW offloaded, tls_set_device_offload() installs
+tls_device_push_pending_record(); any later TLS_RX setsockopt
+overwrites it with tls_sw_push_pending_record(), because
+tls_set_device_offload_rx() itself calls tls_set_sw_offload(sk, 0, NULL)
+for the software half of a successful HW RX offload, and so does the
+fallback when the RX offload is declined (NIC with TX-only offload,
+tls_dev_add() failure).
 
-Commit 06be918062ad ("ALSA: usb-audio: Bound packet copies by the PCM
-buffer size") clamps the count to the PCM ring buffer size, which
-protects the destination.  The source slot is only ep->curpacksize
-bytes per packet, though, so the over-read remains.
+>From then on tls_handle_open_record() (a TLS_SET_RECORD_TYPE cmsg after
+a MSG_MORE send, or the close path with a pending writer) runs
+tls_sw_push_pending_record() against priv_ctx_tx, which is a
+struct tls_offload_context_tx, not a struct tls_sw_context_tx, and
+reads open_rec from inside the offload context. On x86_64 without lock
+debugging that field overlays sg_tx_data[2].dma_address, which is never
+set, so the push is silently skipped and the data buffered by the
+MSG_MORE send is later sent under the cmsg's record type, e.g.
+application data in a handshake or alert record. Enabling
+CONFIG_DEBUG_SPINLOCK, CONFIG_DEBUG_LOCK_ALLOC and CONFIG_LOCKDEP, but
+not CONFIG_LOCK_STAT, in the tested x86_64 configuration moves open_rec
+over sg_tx_data[5].page_link. Once populated, its page pointer and
+scatterlist flags are interpreted as a tls_rec pointer and dereferenced
+while reading msg_plaintext.sg.size.
 
-This was hit on an ARM32 system (vendor 5.4 kernel; the code path is
-unchanged in mainline) with a full-speed UAC1 microphone behind a
-high-speed hub, i.e. the EHCI siTD path.  sitd_complete() computes
-actual_length as desc->length - SITD_LENGTH(t); the controller
-reported a remaining length larger than the programmed one, the value
-wrapped to ~4G, and the capture copy faulted on the first unmapped
-page after the URB buffer:
+Only set the hook when initialising the TX side.
 
-  Unable to handle kernel paging request at virtual address e8756000
-  Internal error: Oops: 7 [#1] PREEMPT SMP ARM
-  r3 : 00000000  r2 : 0001e700  r1 : e8756000  r0 : e878fc80
-  Code: ba000002 f5d1f03c f5d1f05c f5d1f07c (e8b151f8)
+Found by code review while developing TLS 1.3 HW offload rekey support.
 
-A packet can never legitimately carry more than its requested length,
-so warn and skip it instead of copying.
+Tested with HW TLS TX and RX offload on Mellanox ConnectX-6 Dx (Crypto
+Enabled): after setting TLS_RX, send() "AAAA" with MSG_MORE, then
+sendmsg() "BBBB" with a TLS_SET_RECORD_TYPE cmsg for a handshake
+record. Without this patch the peer receives a single handshake record
+"AAAABBBB"; with it, an application data record "AAAA" followed by a
+handshake record "BBBB".
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gichoon Han <gichoon.han@samsung.com>
-Link: https://patch.msgid.link/20261110060021.2146383-1-gichoon.han@samsung.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Link: https://patch.msgid.link/20261102213011.4191020-1-rjethwani@purestorage.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/pcm.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/tls/tls_sw.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1222,6 +1222,12 @@ static void retire_capture_urb(struct sn
- 			// continue;
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2567,7 +2567,8 @@ int tls_set_sw_offload(struct sock *sk,
  		}
- 		bytes = urb->iso_frame_desc[i].actual_length;
-+		if (unlikely(bytes > urb->iso_frame_desc[i].length)) {
-+			dev_warn_ratelimited(&subs->dev->dev,
-+					     "packet %d: actual_length %u exceeds length %u, dropping\n",
-+					     i, bytes, urb->iso_frame_desc[i].length);
-+			continue;
-+		}
- 		if (subs->stream_offset_adj > 0) {
- 			unsigned int adj = min(subs->stream_offset_adj, bytes);
- 			cp += adj;
+ 	}
+ 
+-	ctx->push_pending_record = tls_sw_push_pending_record;
++	if (tx)
++		ctx->push_pending_record = tls_sw_push_pending_record;
+ 
+ 	rc = crypto_aead_setkey(*aead, key, keysize);
+ 
 
 
