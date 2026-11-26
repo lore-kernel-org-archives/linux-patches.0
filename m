@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704349;
-	b=ejZT8BE9oB8ucxB8kGxre3vZtbm70a0+GUquJRVYqtmouVX5/p7189Sob9IDDq1aYhpP
-	 QNMZ8YX5+v9nLMGD+vhbeJ6AQwdpHNV35aKSCOqngEHOogXsNQR3iXzAwjpuK1xWY/CEp
-	 3a2a0p905rPRrM5jMWzmjrDeqSL2ct/OT/ejfkie7yXeIk55Ib6+eGdHhU8o3U8fPiJnV
-	 8wmhzUBeM0SJukXr8cpG2vmQR6hvbY3VQ0h/R3dEMjS3O84+9Z8hmUpgqXqClIZ+p7AOw
-	 LAlt3dmy3Jz4Q3Q7J3jj2dbCx7GyINsiQQGkXlTkSQPDxbYv+mO8j63biE+OcBlI4jw==
+	t=1795704351;
+	b=qQO5zT0jUkJIwvwvo1FtNXSXkTZ6jpoCzorescOpwjuMVwlk3cdbNgiMQBZLeULnGxDT
+	 U0Iiu8u9dOFiv21r22ODYXx3vUpeXvLApAaGPbiKVt3lyjI/jtJzvGZapSHO2O+eXL51G
+	 WEBzA7UZMcxFgWD0MGvF/97dlmK/EZrplSDHzZo0TznAHIHlDXas2uZZDwyjkchxV3MK9
+	 0eDF7H1As6pgr/QOF2mMiasQ89lNpJ0kbYxgR3p3gVMsVDkfvQcnNQTsQjbKkBDgHe2RF
+	 4GhPM8EET/Lr3eYzsXhCOwrPZKqv+VbVDDnhS9KKn5woKL+Fk46+GIpbAs76eCuS1Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/rYfmHDlqT463vmzjJHlPfAvFPbjsU6qG6dX77iPDLM=;
-	b=SNDdWaGjsmf+lAGCOwJofRym1hVJZa8GWOq049pRm7XC3iWNa8mpqdgb5eOkYU+7Xnmp
-	 xedaiRsLVefInEUxMJ+MMnwraQ6LiUYKHaJQmJyTuU3XayvYfHIRjBN91ocmkVdeqbWZY
-	 rBqsKMlt1Y8/79VBXJtJjEa3E+K9FGGseigbIvboAu3cbo7IYqJE8GiLHtPPNjbmr1p6i
-	 vL4PSsDFEPje8pfB/XrwG9/HJyGBta2O3tOxFWqX4wCpaznoNhcELzxSJ6oIvGumQlNCs
-	 1Lva23uLoSYt3xL6rro7p8nWKuxFU68kBAV4ywxFwpHDqszTgOT/zTETCH5IFHu8hrA==
+	bh=wYW4b8+vMzSix+75O19bF7iEcb+H2aRcwoC6RCO0LhU=;
+	b=g+GlXkZp3tecTUbPqjnKIsI0B/rf7ScfS3ZOzl0aGZwpjbd3Y+RiceclWiFErGNn7vTY
+	 7gPXI3hCj9gMhzHLeCA89/fDCz5cFtkRN8Heh8V/PBZo0FOKohT1+ILbBx/LcGLugNzN6
+	 i5JDeQY46RS+qn27+biBU1GgShrT7VUByGEusnqJ3xDqjjJtKIouGMbl/DpG94pu/R5Ec
+	 FHSzm+eCSBU7JQiueSr0GJQpKvm2XHVYFFJzOh+IerIYYqzhVkHfcPLi9eggpkBx5r0ez
+	 G3n/k0Ds6eaOcWbs0h56GBsA6Rh2ipwpIERvHz9t9MhnPfLRuui2LKQTqAeWMc/o9Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8T7O8Is;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNPw1lOM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CBD606A31C;
-	Thu, 26 Nov 2026 14:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7772606A32A;
+	Thu, 26 Nov 2026 14:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c8T7O8Is
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0AB1F000C0;
-	Thu, 26 Nov 2026 14:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNPw1lOM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C331F000C6;
+	Thu, 26 Nov 2026 14:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704348;
-	bh=/rYfmHDlqT463vmzjJHlPfAvFPbjsU6qG6dX77iPDLM=;
+	s=korg; t=1795704351;
+	bh=wYW4b8+vMzSix+75O19bF7iEcb+H2aRcwoC6RCO0LhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c8T7O8Is/MPhEbJ/FBDjj2Fdw3ZLT/Le7AIGTlRtd2/Dy3aLbS03+1gx0X3HmTRWR
-	 +t4kCgab0ouOq7fQDFPeDowTV6iX5XLv1R0fRlhjUxuuthdJQdFZuZfBGeNRc8I9a2
-	 7QUrVQv/A+BxeUezXb5W/VhyMoNaP/DVnrgjLzLc=
+	b=DNPw1lOMXQ1gA5T/neesOST1/FGwuk8uQDCRhS3vFWqiKJUJLnSuskpLWCvpDRcA+
+	 ncqWrRl82YrOiN1Ol9hqwfqxIGkYZ3YKH4ip+GwdvZMuKCelcWpa/HRBy5EUKWKnnW
+	 jbewMGV8G6N3lRCFSSaMojalMQMcU3c2pG2Au3DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/265] MIPS: Alchemy: Save the Ethernet address before reusing PROM memory
-Date: Thu, 26 Nov 2026 15:37:01 +0100
-Message-ID: <20261126143611.378139824@linuxfoundation.org>
+Subject: [PATCH 5.10 049/265] vhost: Allow null msg.size on VHOST_IOTLB_INVALIDATE
+Date: Thu, 26 Nov 2026 15:36:19 +0100
+Message-ID: <20261126143608.513377774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,93 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-[ Upstream commit 792ac17faa0503448f3ef85b49f16456ac54ab84 ]
+[ Upstream commit ca50ec377c2e94b0a9f8735de2856cd0f13beab4 ]
 
-Alchemy keeps pointers into the firmware environment and looks up ethaddr
-when initializing the Ethernet devices. By that point, memory allocation
-can have overwritten the environment, causing prom_getenv() to pass an
-invalid pointer to strchr() and panic during boot.
+Commit e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb
+entries") Forbade vhost iotlb msg with null size to prevent entries
+with size = start = 0 and last = ULONG_MAX to end up in the iotlb.
 
-On the MTX-1, the struct page layout change in 9ddb3c14afba reduces struct
-page from 40 to 32 bytes and exposes this unreserved firmware memory.
-Bisection and boot tests confirmed that the parent boots while the change
-reproduces the panic.
+Then commit 95932ab2ea07 ("vhost: allow batching hint without size")
+only applied the check for VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE
+message types to fix a regression observed with batching hit.
 
-Parse the Ethernet address during prom_init(), before registering RAM
-with memblock, and keep the six bytes in kernel-owned init data. Return
-the saved address during device initialization, preserving the existing
-YAMON formats and command-line fallback without reserving a fixed
-low-memory region.
+Still, the introduction of that check introduced a regression for
+some users attempting to invalidate the whole ULONG_MAX range by
+setting the size to 0. This is the case with qemu/smmuv3/vhost
+integration which does not work anymore. It Looks safe to partially
+revert the original commit and allow VHOST_IOTLB_INVALIDATE messages
+with null size. vhost_iotlb_del_range() will compute a correct end
+iova. Same for vhost_vdpa_iotlb_unmap().
 
-Fixes: b93ddc4f9156 ("mips: Reserve memory for the kernel image resources")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
+Cc: stable@vger.kernel.org # v5.17+
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20230927140544.205088-1-eric.auger@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: b179f21d2d8a ("vhost: reject invalid IOTLB update permissions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/alchemy/common/prom.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ drivers/vhost/vhost.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/mips/alchemy/common/prom.c b/arch/mips/alchemy/common/prom.c
-index d910c0a64de95..7033e680fe34c 100644
---- a/arch/mips/alchemy/common/prom.c
-+++ b/arch/mips/alchemy/common/prom.c
-@@ -45,6 +45,11 @@ int prom_argc;
- char **prom_argv;
- char **prom_envp;
- 
-+static char prom_ethaddr[6] __initdata;
-+static bool prom_ethaddr_valid __initdata;
-+
-+static void __init prom_init_ethernet_addr(void);
-+
- void __init prom_init_cmdline(void)
- {
- 	int i;
-@@ -94,6 +99,9 @@ void __init prom_init(void)
- 	if (!memsize_str || kstrtoul(memsize_str, 0, &memsize))
- 		memsize = SZ_64M; /* minimum memsize is 64MB RAM */
- 
-+	/* Save the MAC before the allocator can reuse the PROM environment. */
-+	prom_init_ethernet_addr();
-+
- 	memblock_add(0, memsize);
- }
- 
-@@ -124,7 +132,7 @@ static inline void str2eaddr(unsigned char *ea, unsigned char *str)
- 	}
- }
- 
--int __init prom_get_ethernet_addr(char *ethernet_addr)
-+static void __init prom_init_ethernet_addr(void)
- {
- 	char *ethaddr_str;
- 
-@@ -134,12 +142,21 @@ int __init prom_get_ethernet_addr(char *ethernet_addr)
- 		/* Check command line */
- 		ethaddr_str = strstr(arcs_cmdline, "ethaddr=");
- 		if (!ethaddr_str)
--			return -1;
-+			return;
- 
- 		ethaddr_str += strlen("ethaddr=");
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 7cf2b5a2cceeb..f1f35f239354d 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1171,9 +1171,7 @@ ssize_t vhost_chr_write_iter(struct vhost_dev *dev,
+ 		goto done;
  	}
  
--	str2eaddr(ethernet_addr, ethaddr_str);
-+	str2eaddr(prom_ethaddr, ethaddr_str);
-+	prom_ethaddr_valid = true;
-+}
-+
-+int __init prom_get_ethernet_addr(char *ethernet_addr)
-+{
-+	if (!prom_ethaddr_valid)
-+		return -1;
-+
-+	memcpy(ethernet_addr, prom_ethaddr, sizeof(prom_ethaddr));
- 
- 	return 0;
- }
+-	if ((msg.type == VHOST_IOTLB_UPDATE ||
+-	     msg.type == VHOST_IOTLB_INVALIDATE) &&
+-	     msg.size == 0) {
++	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
+ 		ret = -EINVAL;
+ 		goto done;
+ 	}
 -- 
 2.53.0
 
