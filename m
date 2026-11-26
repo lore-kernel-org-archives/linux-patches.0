@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705442;
-	b=t8pqeADDzHUAUuYdv5loKMtBdo65aq6GMp1MorzYlAPYmYmZhJAO7KdXKw3eObA4VTxE
-	 jhK0WVVZImMZZiydT5DMVbgIaulHESkWEN/9P5+WM5AJBjz4e5T3ixCFkm/gJFJCGwe+T
-	 8tr3Lud0Kzxp1XMXQYhBKbRwYRsPx07hTnIU3xAs6Wm3Qc2gt0QdCZOzars2dmqRdyFA8
-	 lXcltzePEs3ItYy1Er7zfyJnzh70Y/xRy5ZOQvJu0C9nQSGTjabCW8MqW013HWuZLaDb9
-	 dEIl6bSpJeSInFzKGUWGYHuSnL8VPoJzr8pP5qaeNf72bslKdIRJHldtChmh8MllBtQ==
+	t=1795705446;
+	b=aUYZz339/IM7o1n8bBzLkVWahXEbjLFEKGaelZechTO26YLal3tCGKOAVzmkbzMIeG7N
+	 BWiH/Y6c/74sisSZCe/hC//tWct7h+I1n6DWKAbINpIJTAjrQ0uWu5+bwdU854Nk5I52o
+	 4VXJyKrmuzm+leiAvI6CEKkQBOocPcFioiAzbE3mZBiJ+z8T4GIRksfyuYzGFlvrpFWLB
+	 aapaZTlElEjY0vX9k3tEtAaGVjyqnIKgFBabPxgRfHeeBlxafwoPwaxHs+Dm8qWHiMFQz
+	 +AEzZWWrpqX6EsSlwfoTSc2foJYsWhfDAxRwtWVH36cXfdy5tEE1TDFRZQSVHFQnlAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1rfCN+NHQEnoHRqUii0RSzzEGzzlGn0Obq5z9tzf/aM=;
-	b=z9f7HI03xL2DtvPD39FMSlZRdmIggC2qzEXviShRZF3wVlWACB01effDhZcf5N33wAsY
-	 WIWLppamz5x0SUQ5GnnDLeni/vFrrv82K6mTomvTxGDX2ic/yPj4rN2bO5JE8cj5Ix/40
-	 mIpPnEg17Dp1mqYsQ4e89ruC6Z0inh66G5w+WhOG3/Ml0KcDmnaQ1FC/hjVdAGS/T+zRa
-	 VGQJCwRwE5l+oLh8LlyLdLyjxb1vdVYdVhN7qwwwPb2IrZbqt8shJmQHDUYHA+do1ph2z
-	 q4fmSxam44MKwczDpjsqWgv+AUly8SBIv46I53i8wq3zXEUdnrNenYZvoF3hVHjb1ZQ==
+	bh=5Xy9N0ayN3JF5rzCw+5yREwiChWBhaz+fzVdgxAWCH8=;
+	b=z06/Z+4rrj0DOJf77cO/miZcfJWTdueRFYwuCyktuNtcn+hifs54TJsdANHreSzoIKAU
+	 bQjkGl8GSOewQLs+Z9Njd7sULqfIeDJnBlPI8yjVrc6214C0H7x+09/6ED3gSjM8vo9LP
+	 JEPvuws1r9F77YDwIhT2DEcjrftc5ePdzC39okExXh9TkmWYFjQ4vQXeTcbv0rBfXFVF2
+	 CkZPmU9y8OZp2EN1tEESsmn9/1tsO7gQDTTssM3RzWXa3r8tRV8VbRG3ynfnK+XvgoTLD
+	 IyJHh2HCbruFAWNvEBRKnVVmB8WMttsciz2Mmeq3oLU82N/JZqKyNmWLrSiEoSzcgLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhycOBQb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqt7OFLX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB192606A321;
-	Thu, 26 Nov 2026 15:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E49D606A32A;
+	Thu, 26 Nov 2026 15:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhycOBQb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5441F000D0;
-	Thu, 26 Nov 2026 15:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqt7OFLX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A3A1F000CF;
+	Thu, 26 Nov 2026 15:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705442;
-	bh=1rfCN+NHQEnoHRqUii0RSzzEGzzlGn0Obq5z9tzf/aM=;
+	s=korg; t=1795705445;
+	bh=5Xy9N0ayN3JF5rzCw+5yREwiChWBhaz+fzVdgxAWCH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhycOBQbA0nllRT5HXnpEB49iK05+BfpVk4HWQ4Vjp3mgQcsDS74DmgF9lNtUVBZK
-	 fZt3BAmXxYzUMep7XmAry39Dczi3ZHC2hwHX5r60IpInxoN96Wfail9SI2lE/iJzdj
-	 J5fRu55oQvFzyTq9YBGUuChD4it4gUWhLhs68TGM=
+	b=tqt7OFLXCThktADU0z/eJ1RjDytMEqsApgEjzBY0HnALS7BVBM1KYYi/WJo4segAC
+	 d160As8T9kHe7CJCacSKUaNQwvHJbq39g2ncMn/UNtMJvd6K4mirWZ5sMi2KUMSut7
+	 8daJHCroFNVOZJC8LueBD0VVzZmOwo7dwaszWVWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 5.15 173/319] tracing/selftests: Fix false bashism in kprobe_non_uniq_symbol.tc
-Date: Thu, 26 Nov 2026 15:39:01 +0100
-Message-ID: <20261126144010.651365746@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 200/319] netfilter: xt_recent: do not call remove_proc_entry() under recent_lock
+Date: Thu, 26 Nov 2026 15:39:28 +0100
+Message-ID: <20261126144011.259787313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,41 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-commit 88d5f8cb8a6276194ac8c1de44f3ed77d7e938ce upstream.
+commit 17c2e41736b62cfe444c64d67860b1fbc1e886ac upstream.
 
-The checkbashism is giving a false positive to the kprobe test of:
+recent_proc_net_exit() removes the /proc/net/xt_recent/<name> entries of
+a dying network namespace while holding spin_lock_bh(&recent_lock).
+remove_proc_entry() may sleep: proc_entry_rundown() waits until every
+task that is still inside the entry's file operations has left. A reader
+of such an entry is counted in by proc_reg_read() before
+recent_seq_start() takes recent_lock. So if a read is in flight when the
+namespace is torn down, cleanup_net() sleeps in atomic context holding
+the spinlock that the reader is spinning on, and neither side can ever
+make progress.
 
-  ($"foo" should be eval_gettext "foo"):
-  if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
+An unprivileged user can trigger this from a user namespace by adding a
+rule with the "recent" match and reading its proc file while the
+namespace is being destroyed. As recent_lock is global, every later
+attempt to take it spins forever too: the spinning can spread to all
+CPUs, and network namespace teardown stops system-wide.
 
-This is because it sees the $" at the end of the grep as a bash symbol.
-Instead, escape the '$' with a backslash as it is within quotes and that
-'$' is for grep to process an end of line character and not a bash
-variable.
+  BUG: sleeping function called from invalid context at
+    kernel/sched/completion.c:116
+   #3: (recent_lock){+...}-{3:3}, at: recent_net_exit+0x2b/0x140
+  Workqueue: netns cleanup_net
+  Call Trace:
+   proc_entry_rundown+0x185/0x1b0
+   remove_proc_entry+0x21a/0x520
+   recent_net_exit+0x7f/0x140
+   cleanup_net+0x414/0x8f0
+  ...
+  rcu: INFO: rcu_preempt self-detected stall on CPU
+  Call Trace:
+   queued_spin_lock_slowpath+0x313/0xc20
+   recent_seq_start+0x87/0x1b0
+   seq_read_iter+0x265/0x11e0
+   proc_reg_read+0x1ab/0x270
 
-Link: https://lore.kernel.org/r/20261029211218.3749963a@fedora
+Fix by taking recent_mutex instead of recent_lock. According to
+commit a0e889bb1bdc ("[NETFILTER]: recent match: fix "sleeping function
+called from invalid context""), recent_mutex is the lock to use here: it
+protects recent_net->tables and was introduced so that proc entries are
+created and removed without recent_lock held, because those calls may
+sleep. hashlimit_proc_net_exit() does the same for xt_hashlimit.
+
+Fixes: 665e205c16c1 ("netfilter: xt_recent: fix namespace destroy path")
 Cc: stable@vger.kernel.org
-Fixes: d22c3e0088e85 ("selftests/ftrace: Fix unique symbol check in kprobe_non_uniq_symbol.tc")
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Cc: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_recent.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-@@ -6,7 +6,7 @@
- SYMBOL='name_show'
+--- a/net/netfilter/xt_recent.c
++++ b/net/netfilter/xt_recent.c
+@@ -649,14 +649,15 @@ static void __net_exit recent_proc_net_e
  
- # We skip this test on kernel where SYMBOL is unique or does not exist.
--if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
-+if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}\$" /proc/kallsyms)" -le '1' ]; then
- 	exit_unsupported
- fi
+ 	/* recent_net_exit() is called before recent_mt_destroy(). Make sure
+ 	 * that the parent xt_recent proc entry is empty before trying to
+-	 * remove it.
++	 * remove it. Use recent_mutex instead of recent_lock since
++	 * remove_proc_entry() may sleep.
+ 	 */
+-	spin_lock_bh(&recent_lock);
++	mutex_lock(&recent_mutex);
+ 	list_for_each_entry(t, &recent_net->tables, list)
+ 	        remove_proc_entry(t->name, recent_net->xt_recent);
  
+ 	recent_net->xt_recent = NULL;
+-	spin_unlock_bh(&recent_lock);
++	mutex_unlock(&recent_mutex);
+ 
+ 	remove_proc_entry("xt_recent", net->proc_net);
+ }
 
 
