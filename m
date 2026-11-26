@@ -1,64 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704889;
-	b=VQB0s9fwNrzDOBIk/VC8ObnDtMlS83TcLfUk2ElrRS33GBEDq73sqE1h3xkqi+neWVLO
-	 /2PTArdrO8XyKx7Vuh3Zp1Gw+ljhuZzvOknWWvtW6o/fq7v2tiv+FElPm7bdhqDQDZmaI
-	 J+5HDNkGzgPvRBrdfHutiYsE8/gZogpQbZDbgY+2wlILImyFIJCWQ87Tah3IqmOdMGQey
-	 gWGum7KsG2aqI4qZbM3NOPnmYpK5jsHf4h0wDSqRZvJqkCZbJIs1ZkM4/odWd/34GMn0Z
-	 f/0b3kbY8WfAHiWPPzAR8FmeI/F42YWm6NQUVtuvEq/axnqGu8VAGjChBsrZo2Y6uUA==
+	t=1795704892;
+	b=S4jmjoqxNd618hv9lOPPqPfn/pTwWLXm1UDpAU6PytDqspvQOR45WE4172Xwv9H45eSd
+	 3GevMRl9p+Q6CIAhP23sRZ1JRv4ANbuIzubcrjbaN2ZbLS/qxRunwETfLm0Ux+Ajj9UfQ
+	 ubcXzcqSG5D/usjIWfY2RBFLUCZpa5VSHXj+CeiU3IQx90JjfDpgw/k5UA94nA3Xh4lwd
+	 1WyqnZaMiFTmRH1iQQmk0AYNvXZQGak/6HdjNG1kZCsJKNFCGSiwiNRqRfPUIdaX72zH3
+	 EFgNDSyMuIHsZ162O32jkz3GiK82X/+YBco/UTetsLpD22sv0qEV0b3e4Gdo4UtTvxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704892;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iFlawp6e+MyMY9c9mO2k9SYN9SZ1m/tZdioG3prUFLM=;
-	b=ZS+tbChKdR+/URQ/BdHELVbYCfa7eoBLlodN3tvjFvpMg4I7oKGIIYaP/6lJ6jW4lYoZ
-	 676N1VwAf18/RJiLlxxJuA4S7SE7lB+kIW7UlHKuvVbsGJMXgKMLjj1R67CPO/2PPBviJ
-	 Dh+ShJGl1C6tgu3ayHPVzDKhpBEV5I070ou6B/dGh225gqD4W/lU92EFoji/RmEk2go9k
-	 C1gSESJzIv7raRwqyocpTlefyTy8KFwwGJujmBVsDKNuA6NOt+h/KRPKnj/N8KREGHXjl
-	 mWWA1YZskxehhLS/xELvHx4JHwKvtv6PUaF9pfF/wUn5yGD5kDmZlRxMiZdLWoKYcCA==
+	bh=KO5NFWj01xgilf7zvYSeZYqfzVfQbc1Xd3ppGtDx1MU=;
+	b=vhNSAvQMUwIuczQPr5q4i1xZmNUMF8Rot5MjorIAqg381rjz45ryTNQo2AGIMRgDIMsM
+	 mbdqmv/4zP7jaJLXn0fEi6N4aqlsXLa8aB7gCdnUS1UhSAMl5h0b0AgDJ0SLg8YUjbp5s
+	 JpInGWoD1MKHSE0/82AzN4Qd9Gwp0Albl0BhSkxVKhklVfBiaksPlxiy3IUS2Np+SXTLP
+	 DL0zPwYftd2znV/Ay0fqNXgh0Ed3kArJd+uOZuzsKZsjZC0KfSzrka1akh8QwSgD+SfqW
+	 HOPZh1pcUvnmZldzja92A2xAoXEvPmKeuVquQ00Rt7F+IvsygDjRicLFmI3rJinnokg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=twhbULx3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YB29hSIc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD19C606A31E;
-	Thu, 26 Nov 2026 14:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB84606A32A;
+	Thu, 26 Nov 2026 14:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=twhbULx3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD5E1F000C0;
-	Thu, 26 Nov 2026 14:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YB29hSIc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA15A1F000C6;
+	Thu, 26 Nov 2026 14:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704889;
-	bh=iFlawp6e+MyMY9c9mO2k9SYN9SZ1m/tZdioG3prUFLM=;
+	s=korg; t=1795704892;
+	bh=KO5NFWj01xgilf7zvYSeZYqfzVfQbc1Xd3ppGtDx1MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=twhbULx3PAOlcWUDgOkjD7+zkktxszyQtDBDcKkxr+wAiA5sdAG1mWbvj2ZeFwjOw
-	 T1TX/3t1KU5hihB0eVaD5VKrSRaTBosRlb1MilQ2hXqx9quDvTvKj79zMqaLMrzN9D
-	 lZjGCwiFzGjBEOE92BbVxNTBpw6Ebc/Eb3mL83Vo=
+	b=YB29hSIcZEAS2fE7BkebT7//uI9l5HpjhWP0JB/ldpCwNrz1p929A/qLsd8JEpRdW
+	 m/x0CSpEXsg/9osxixbSrUDAEVnPEiF690WuUdzXiOocS1ViN2YS3bnZOO3/vQC1Wi
+	 E/iP42sIwUz+ua8mXGW0IsGfnZt4Qtut453a82YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Salvatore Dipietro <dipiets@amazon.it>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dgc@kernel.org>,
-	Matt Fleming <matt@readmodwrite.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/319] mm: page_alloc: remove ALLOC_NON_BLOCK from ALLOC_RESERVES
-Date: Thu, 26 Nov 2026 15:36:19 +0100
-Message-ID: <20261126144006.994965670@linuxfoundation.org>
+Subject: [PATCH 5.15 012/319] fs: aio: reject partial mremap to avoid Null-pointer-dereference error
+Date: Thu, 26 Nov 2026 15:36:20 +0100
+Message-ID: <20261126144007.017099860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -80,110 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit fe21f930d1e64d121191673076fc4ebe79fc82d5 ]
+[ Upstream commit 3adf7ae18bf42601246031002287c103a27df307 ]
 
-1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH
-non-blocking allocations accesses reserves") stopped handing out reserve
-access for ALLOC_NON_BLOCK on its own: the extra 25% below the min
-watermark is now only granted on top of ALLOC_MIN_RESERVE.  But the flag
-was left in ALLOC_RESERVES, which produces something odd:
+[BUG]
+Recently, our internal syzkaller testing uncovered a null pointer
+dereference issue:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+...
+[   51.111664]  filemap_read_folio+0x25/0xe0
+[   51.112410]  filemap_fault+0xad7/0x1250
+[   51.113112]  __do_fault+0x4b/0x460
+[   51.113699]  do_pte_missing+0x5bc/0x1db0
+[   51.114250]  ? __pte_offset_map+0x23/0x170
+[   51.114822]  __handle_mm_fault+0x9f8/0x1680
+...
+Crash analysis showed the file involved was an AIO ring file. The
+phenomenon triggered is the same as the issue described in [1].
 
-With the ALLOC_RESERVES match, __zone_watermark_unusable_free() doesn't
-subtract the free highatomic pages for them.  So in the slowpath, they get
-to consume regular blocks below the min watermark by the number of free
-highatomic pages.  The highatomic reserve is capped at 1% of the zone,
-which on any decently sized machine is a multiple of the min watermark:
-GFP_NOWAIT can drain regular memory to zero.
+[CAUSE]
+Consider the following scenario: userspace sets up an AIO context via
+io_setup(), which creates a VMA covering the entire ring buffer. Then
+userspace calls mremap() with the AIO ring address as the source, a smaller
+old_len (less than the full ring size), MREMAP_MAYMOVE set, and without
+MREMAP_DONTUNMAP. The kernel will relocate the requested portion to a new
+destination address.
 
-The user-visible result is brutal hiccups during bursts of GFP_NOWAIT
-allocations under memory pressure.  This was found in review and
-reproduced with a synthetic burst, not observed in production, but the
-sequence of events is a realistic one: On a 32G box with an anonymous
-working set, swap, and a filled 290M highatomic reserve, a GFP_NOWAIT
-burst drove regular free memory in the 28G Normal zone (min=60M) to 28M,
-0.8M and 0.6M in three runs.  Swapout failed to allocate its swap table,
-reclaim scanned 13M pages to reclaim 200k, page faults stalled for tens to
-hundreds of milliseconds.  The machine survives it, but not by design:
-direct reclaimers eventually fail and start unreserving highatomic blocks,
-until the allocation succeeds or the reserve is gone and the OOM killer
-runs.  That reserve exists for high-order atomic allocations; here it is
-destroyed to bail out a GFP_NOWAIT consumer that was never entitled to the
-memory.
+During this move, __split_vma() splits the original AIO ring VMA. The
+requested portion is unmapped from the source and re-established at the
+destination, while the remainder stays at the original source address as
+an orphan VMA. The aio_ring_mremap() callback fires on the new destination
+VMA, updating ctx->mmap_base to the destination address. But the callback
+is unaware that only a partial region was moved and that an orphan VMA
+still exists at the source:
 
-Remove ALLOC_NON_BLOCK from ALLOC_RESERVES.  With that, the GFP_NOWAIT
-burst is stopped short at the min watermark.  No direct reclaim, no
-stalls, no failed allocations, and the highatomic reserve stays intact for
-the requests it exists for.
+  source(AIO):
+  +-------------------+---------------------+
+  |  moved to dest    |  orphan VMA (AIO)   |
+  +-------------------+---------------------+
+  A                 A+partial_len        A+ctx->mmap_size
 
-__zone_watermark_ok() is unaffected, since everything it keys on
-ALLOC_NON_BLOCK is already nested under ALLOC_MIN_RESERVE.  Update the
-flag comments accordingly: ALLOC_NON_BLOCK just means the caller can't
-block; the reserve math belongs with ALLOC_MIN_RESERVE.
+  dest:
+  +-------------------+
+  |  moved VMA (AIO)  |
+  +-------------------+
+  B                 B+partial_len
 
-GFP_ATOMIC order-0 requests have a milder version of the same problem.
-Through ALLOC_MIN_RESERVE they also count the free highatomic pages in
-their watermark check, but rmqueue_buddy() serves them regular pages first
-and only falls back to the reserve once those are gone.  They can still
-push regular free memory to 37.5% of min minus the free highatomic pages
-before the reserve is touched.  Unlike GFP_NOWAIT they are entitled to the
-reserve, so this needs the watermark check and the freelist order reworked
-together, and is left to a separate patch.
+Later, io_destroy() calls vm_munmap(ctx->mmap_base, ctx->mmap_size), which
+unmaps the destination. This not only fails to unmap the orphan VMA at the
+source, but also overshoots the destination VMA and may unmap unrelated
+mappings adjacent to it! After put_aio_ring_file() calls truncate_setsize()
+to remove all pages from the pagecache, any subsequent access to the orphan
+VMA triggers filemap_fault(), which calls a_ops->read_folio(). Since aio
+does not implement read_folio, this results in a NULL pointer dereference.
 
-Link: https://lore.kernel.org/20261028171719.2043421-3-hannes@cmpxchg.org
-Fixes: 1ebbb21811b7 ("mm/page_alloc: explicitly define how __GFP_HIGH non-blocking allocations accesses reserves")
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Salvatore Dipietro <dipiets@amazon.it>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Dave Chinner <dgc@kernel.org>
-Cc: Matt Fleming <matt@readmodwrite.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adjusted context for allocation flags in the shared internal header, where ALLOC_NO_CODETAG is absent ]
+[FIX]
+Note that expanding mremap (new_len > old_len) is already rejected because
+AIO ring VMAs are created with VM_DONTEXPAND. The only problematic case is
+a partial move where "old_len == new_len" but both are smaller than the
+full ring size.
+
+Fix this by checking in aio_ring_mremap() that the new VMA covers the
+entire ring. This ensures the AIO ring is always moved as a whole,
+preventing orphan VMAs and the subsequent crash.
+
+[1]: https://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/
+
+Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Link: https://patch.msgid.link/20260418060634.3713620-1-wozizhi@huaweicloud.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/internal.h | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/aio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/internal.h b/mm/internal.h
-index fa8f43cdc39e2..85b9faf74eca2 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -611,12 +611,11 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- #define ALLOC_OOM		ALLOC_NO_WATERMARKS
- #endif
+diff --git a/fs/aio.c b/fs/aio.c
+index 86532d483a8ea..0e46867c43a56 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -342,7 +342,8 @@ static int aio_ring_mremap(struct vm_area_struct *vma)
  
--#define ALLOC_NON_BLOCK		 0x10 /* Caller cannot block. Allow access
--				       * to 25% of the min watermark or
--				       * 62.5% if __GFP_HIGH is set.
--				       */
-+#define ALLOC_NON_BLOCK		 0x10 /* Caller cannot block. */
- #define ALLOC_MIN_RESERVE	 0x20 /* __GFP_HIGH set. Allow access to 50%
--				       * of the min watermark.
-+				       * of the min watermark, or 62.5% if
-+				       * the caller cannot block either
-+				       * (ALLOC_NON_BLOCK).
- 				       */
- #define ALLOC_CPUSET		 0x40 /* check for correct cpuset */
- #define ALLOC_CMA		 0x80 /* allow allocations from CMA areas */
-@@ -629,7 +628,7 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- #define ALLOC_KSWAPD		0x800 /* allow waking of kswapd, __GFP_KSWAPD_RECLAIM set */
- 
- /* Flags that allow allocations below the min watermark. */
--#define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
-+#define ALLOC_RESERVES (ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
- 
- /* Flags that mean GFP_ATOMIC */
- #define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
+ 		ctx = rcu_dereference(table->table[i]);
+ 		if (ctx && ctx->aio_ring_file == file) {
+-			if (!atomic_read(&ctx->dead)) {
++			if (!atomic_read(&ctx->dead) &&
++			    (ctx->mmap_size == (vma->vm_end - vma->vm_start))) {
+ 				ctx->user_id = ctx->mmap_base = vma->vm_start;
+ 				res = 0;
+ 			}
 -- 
 2.53.0
 
