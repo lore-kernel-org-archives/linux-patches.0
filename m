@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704362;
-	b=c4SfdmMK7xX51D3ibIibJ9T6qgKXciwlR60Oft4q7bRdehdOCGGyO867DoRv7YoGGkLU
-	 Jg+Ydm5DxRzGvTRDnJH4wZfV9b2T5YZXTznCi0Al7indjWU8Axx4C7wv8iRMXZsoXRfuD
-	 Cq2b11JAMrMaT06mR/kMxD7mSI3VXXXNgXiPRjIhUjYO4/cmTF8v1uRrYCQJkafVcCX/n
-	 7FMiqNtoQlkTxiI52YxFmhSFj9ilj76p0PmWqt05kWubS2gZrbcY60jslmA8wjmbK6DN4
-	 2oIpVq6zApuq8QE/Ym1xg7ndVWdmD457sEqlXagENHyuuEJkjACpGolNgt7ItzqUfhg==
+	t=1795704365;
+	b=yr1m9c4WGnHA2PN06pQjIGExrWAIye1BYyJrgEFpVJMKElKO2czLefuBjFZ8x2dfrhli
+	 OewmBb7NZtKvD1OXUZuJG3ci2PQcBXxzPFjZBq3EXGBIMKPulD2KQaNvwK+5bAcOnp1GL
+	 IWZ9OKcJK2UwTNfOeRbvjOD+aDIDywTzEfZaNkBXGA3buRFL0J1l+BM4ZzzVeo3vaaguu
+	 s3Wj7sw9aQbYgItmfY4yKUaoxscaHaZuYTg9rnqRUarO3FkNp6Dit1Wnrf3py74Y8wctY
+	 eEISEoo7CkKd9KImxRY1d/VRubKUx/wIR/Se58X//KLvWbjHNW96hO+G+lXVrZwozSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uRGoxyf60NfXrvYdpRYVPUXryZuJPu9zoj5RbDq/tas=;
-	b=xYrZ3gjC/KEVabgpX8Gn7FTI0xJBmb4HkMc/R4l8tJVAKCFVQAYNj1cYT3ujikVzf/vC
-	 Dkgl7bmVfDG6YlmF5FsLgh3MHnI0V3aXXdxRf2nmttBkHH1Shjf2FlxXV022iDqWVObhT
-	 ee4wbOG+19At4IRAxIFUhxEfW028yIA+OZoGoVJrt4ZhHVKFhHd4qbnlZALk10DZ7C8xG
-	 a3sboXgEt8dG4jUBAIVE9J5EW+ik0pFJUP0chrZYEpakKeRhJ7FyGxhajvSH4GPPUGrpR
-	 udH+nOv0Fn/o3p6XA8QSDlkh8dMcKNZ1O8sAXhSslWRMi8mgJFCmirbpGyINBgMyqIw==
+	bh=3raW4usx6YsHA/EGxdMhG0RFP6zZyz4veY6XKVBqj9w=;
+	b=4yrvGq21hoYeavZywNppKGR2u33+rHT9v/QUpJiJPZtoxEam8+JU0GtnMvFiGz0H8I2C
+	 RiWQsO1arccw0pYprpADi1zAMLtEfplvK/DCyMLLMZ2xoCLYsmIHR6dHc6cBEBsufDsum
+	 LHWSX6gFJtCjJu+yNQUSUhnC+vA/S6KeW5vBDNrDAZvsr/9Dk9AuttzM4WrHtTtkilOIC
+	 oxlF1VXSJ5Taw2gFxBcu2G6x84b8jwAw3s/n8M3TngnnQTKA/Fmb9NuQ9bTmQZhmsbiWK
+	 z/XSCczZJr77U3YAL8kVmoM8KtT+Zivb0KA1+dkUrW75zFBIl6nvFw8qD3XpaQaclMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbtwJjc3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2JBcRIQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611F6606A32E;
-	Thu, 26 Nov 2026 14:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5F7606A339;
+	Thu, 26 Nov 2026 14:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbtwJjc3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5AA1F000D4;
-	Thu, 26 Nov 2026 14:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D2JBcRIQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4E91F000E6;
+	Thu, 26 Nov 2026 14:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704362;
-	bh=uRGoxyf60NfXrvYdpRYVPUXryZuJPu9zoj5RbDq/tas=;
+	s=korg; t=1795704365;
+	bh=3raW4usx6YsHA/EGxdMhG0RFP6zZyz4veY6XKVBqj9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JbtwJjc3A+Rkpm1EzJUvnsbb8ip9ErytZn6TXl6DIBeQehDOk4seOwt3VHRt7rgjV
-	 8NV/IQj93Gewm8ZjdmzCSI70bx8OJFRs1TfPFPKepKhMCCwPE77LYV17yvHgUrm7Vv
-	 UA7Nyyf60SFv/WU6yVPXQDFcCkBhQXjkICwBVX8Y=
+	b=D2JBcRIQ6ni4K8nD6FPYu3IJxG+9v3ANOQblFcJxroQWf78YVYzQqqKkWI+ISYvUK
+	 54nyQnHaQjECbOPhEY6sZvsgp6/OB4MFKA7y7wTE0gV1hwpFma+2au6/AMkb0/C9sW
+	 Ud7Ms7cJ5E3uEvyYxkbVJilATzD9SVCExgjYQIcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Austin <alex.austin@amd.com>,
+	Alejandro Lucero <alucerop@amd.com>,
+	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/265] regulator: qcom_spmi: dont take a sleeping lock in the SAW IPI
-Date: Thu, 26 Nov 2026 15:36:23 +0100
-Message-ID: <20261126143608.810826569@linuxfoundation.org>
+Subject: [PATCH 5.10 044/265] sfc: ptp: avoid racing PPS timestamp updates
+Date: Thu, 26 Nov 2026 15:36:14 +0100
+Message-ID: <20261126143608.182597572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,122 +70,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Alex Austin <alex.austin@amd.com>
 
-[ Upstream commit 053c50a7052549aab0d310ad505947db3e211592 ]
+[ Upstream commit 23d23e6c6517d0fea4f64340a23e33c89f82c03c ]
 
-The SAW voltage change runs on CPU 0 from an IPI, but it reaches the SAW
-registers through the syscon regmap, which is protected by a spinlock_t.
-That is a sleeping lock on PREEMPT_RT, and lockdep complains as soon as
-VDD_APCC actually changes voltage:
+efx_ptp_pps_worker() can race with SIOCHWTSTAMP via
+efx_ptp_change_mode(). After the worker completes synchronization, the
+ioctl can start another synchronization and update host_time_pps while
+the worker copies it into the PPS event. This can report a partially
+updated timestamp. Serializing synchronization transactions alone does
+not protect this copy, which happens after phc_lock is released.
 
-  BUG: Invalid wait context
-  ...
-  regmap_lock_spinlock+0x18/0x30
-  regmap_read+0x3c/0x78
-  spmi_saw_set_vdd+0x50/0x1ac
-  __flush_smp_call_function_queue+0x1ac/0x334
+Return the timestamp through the caller's own pps_event_time rather
+than the shared field in efx_ptp_data, so the worker reads storage no
+one else can write.
 
-Map the SAW with a regmap of our own that uses a raw spinlock, and fail
-the probe when that cannot be done instead of carrying an error pointer
-around as the SAW regmap.
-
-Fixes: 0caecaa87202 ("regulator: qcom_spmi: Add support for SAW")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261019-fix-qcom-saw-v1-3-9c7ba3fc2493@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
+Signed-off-by: Alex Austin <alex.austin@amd.com>
+Reviewed-by: Alejandro Lucero <alucerop@amd.com>
+Reviewed-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+Link: https://patch.msgid.link/20261026123023.3566549-4-alex.austin@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/Kconfig               |  1 +
- drivers/regulator/qcom_spmi-regulator.c | 35 +++++++++++++++++++------
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/sfc/ptp.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/regulator/Kconfig b/drivers/regulator/Kconfig
-index 020a00d6696bf..5d92bfede22d8 100644
---- a/drivers/regulator/Kconfig
-+++ b/drivers/regulator/Kconfig
-@@ -865,6 +865,7 @@ config REGULATOR_QCOM_SMD_RPM
- config REGULATOR_QCOM_SPMI
- 	tristate "Qualcomm SPMI regulator driver"
- 	depends on SPMI || COMPILE_TEST
-+	select REGMAP_MMIO
- 	help
- 	  If you say yes to this option, support will be included for the
- 	  regulators found in Qualcomm SPMI PMICs.
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index 47931ce19e439..69b840398f872 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -11,13 +11,13 @@
- #include <linux/bitops.h>
- #include <linux/slab.h>
- #include <linux/of.h>
-+#include <linux/of_address.h>
- #include <linux/of_device.h>
- #include <linux/platform_device.h>
- #include <linux/ktime.h>
- #include <linux/regulator/driver.h>
- #include <linux/regmap.h>
- #include <linux/list.h>
--#include <linux/mfd/syscon.h>
- #include <linux/io.h>
- 
- /* Pin control enable input pins. */
-@@ -1218,6 +1218,14 @@ static irqreturn_t spmi_regulator_vs_ocp_isr(int irq, void *data)
- 
- static struct regmap *saw_regmap;
- 
-+static const struct regmap_config saw_regmap_config = {
-+	.name = "saw",
-+	.reg_bits = 32,
-+	.val_bits = 32,
-+	.reg_stride = 4,
-+	.use_raw_spinlock = true,
-+};
-+
- static void spmi_saw_set_vdd(void *data)
+diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
+index 801a28cb00ad1..b720ee908cd70 100644
+--- a/drivers/net/ethernet/sfc/ptp.c
++++ b/drivers/net/ethernet/sfc/ptp.c
+@@ -260,7 +260,6 @@ struct efx_ptp_timeset {
+  * @evt_frag_idx: Current fragment number
+  * @evt_code: Last event code
+  * @start: Address at which MC indicates ready for synchronisation
+- * @host_time_pps: Host time at last PPS
+  * @adjfreq_ppb_shift: Shift required to convert scaled parts-per-billion
+  * frequency adjustment into a fixed point fractional nanosecond format.
+  * @current_adjfreq: Current ppb adjustment.
+@@ -327,7 +326,6 @@ struct efx_ptp_data {
+ 	int evt_frag_idx;
+ 	int evt_code;
+ 	struct efx_buffer start;
+-	struct pps_event_time host_time_pps;
+ 	unsigned int adjfreq_ppb_shift;
+ 	s64 current_adjfreq;
+ 	struct ptp_clock *phc_clock;
+@@ -932,7 +930,8 @@ static void efx_ptp_read_timeset(MCDI_DECLARE_STRUCT_PTR(data),
+ static int
+ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
+ 		      size_t response_length,
+-		      const struct pps_event_time *last_time)
++		      const struct pps_event_time *last_time,
++		      struct pps_event_time *host_time_pps)
  {
- 	u32 vctl, data3, avs_ctl, pmic_sts;
-@@ -2110,7 +2118,8 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 	const char *name;
- 	struct device *dev = &pdev->dev;
- 	struct device_node *node = pdev->dev.of_node;
--	struct device_node *syscon, *reg_node;
-+	struct device_node *saw, *reg_node;
-+	void __iomem *saw_base;
- 	struct property *reg_prop;
- 	int ret, lenp;
- 	struct list_head *vreg_list;
-@@ -2129,12 +2138,22 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 	if (!match)
- 		return -ENODEV;
- 
--	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
--	if (syscon) {
--		saw_regmap = syscon_node_to_regmap(syscon);
--		of_node_put(syscon);
--		if (IS_ERR(saw_regmap))
--			dev_err(dev, "ERROR reading SAW regmap\n");
-+	saw = of_parse_phandle(node, "qcom,saw-reg", 0);
-+	if (saw) {
-+		saw_base = devm_of_iomap(dev, saw, 0, NULL);
-+		of_node_put(saw);
-+		if (IS_ERR(saw_base))
-+			return dev_err_probe(dev, PTR_ERR(saw_base),
-+					     "failed to map the SAW\n");
-+
-+		saw_regmap = devm_regmap_init_mmio(dev, saw_base,
-+						   &saw_regmap_config);
-+		if (IS_ERR(saw_regmap)) {
-+			ret = PTR_ERR(saw_regmap);
-+			saw_regmap = NULL;
-+			return dev_err_probe(dev, ret,
-+					     "failed to set the SAW regmap up\n");
-+		}
+ 	unsigned number_readings =
+ 		MCDI_VAR_ARRAY_LEN(response_length,
+@@ -1010,6 +1009,10 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
+ 			   "PTP bad synchronisation seconds\n");
+ 		return -EAGAIN;
  	}
++
++	if (!host_time_pps)
++		return 0;
++
+ 	delta.tv_sec = (last_sec - start_sec) & 1;
+ 	delta.tv_nsec =
+ 		last_time->ts_real.tv_nsec -
+@@ -1026,8 +1029,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
+ 	delta.tv_nsec += ktime_to_timespec64(mc_time).tv_nsec;
  
- 	for (reg = match->data; reg->name; reg++) {
+ 	/* Set PPS timestamp to match NIC top of second */
+-	ptp->host_time_pps = *last_time;
+-	pps_sub_ts(&ptp->host_time_pps, delta);
++	*host_time_pps = *last_time;
++	pps_sub_ts(host_time_pps, delta);
+ 
+ 	return 0;
+ }
+@@ -1040,7 +1043,8 @@ efx_ptp_process_times(struct efx_nic *efx, MCDI_DECLARE_STRUCT_PTR(synch_buf),
+  * the function that registered it, so a secondary function can capture here
+  * without serializing against the primary.
+  */
+-static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
++static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings,
++			       struct pps_event_time *host_time_pps)
+ {
+ 	struct efx_ptp_data *ptp = efx->ptp_data;
+ 	MCDI_DECLARE_BUF(synch_buf, MC_CMD_PTP_OUT_SYNCHRONIZE_LENMAX);
+@@ -1089,7 +1093,7 @@ static int efx_ptp_synchronize(struct efx_nic *efx, unsigned int num_readings)
+ 				 &response_length);
+ 	if (rc == 0) {
+ 		rc = efx_ptp_process_times(efx, synch_buf, response_length,
+-					   &last_time);
++					   &last_time, host_time_pps);
+ 		if (rc == 0)
+ 			++ptp->good_syncs;
+ 		else
+@@ -1427,14 +1431,15 @@ static void efx_ptp_pps_worker(struct work_struct *work)
+ {
+ 	struct efx_ptp_data *ptp =
+ 		container_of(work, struct efx_ptp_data, pps_work);
++	struct pps_event_time host_time_pps = {};
+ 	struct efx_nic *efx = ptp->efx;
+ 	struct ptp_clock_event ptp_evt;
+ 
+-	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS))
++	if (efx_ptp_synchronize(efx, PTP_SYNC_ATTEMPTS, &host_time_pps))
+ 		return;
+ 
+ 	ptp_evt.type = PTP_CLOCK_PPSUSR;
+-	ptp_evt.pps_times = ptp->host_time_pps;
++	ptp_evt.pps_times = host_time_pps;
+ 	ptp_clock_event(ptp->phc_clock, &ptp_evt);
+ }
+ 
+@@ -1796,7 +1801,8 @@ int efx_ptp_change_mode(struct efx_nic *efx, bool enable_wanted,
+ 				rc = efx_ptp_start(efx);
+ 			if (rc == 0) {
+ 				rc = efx_ptp_synchronize(efx,
+-							 PTP_SYNC_ATTEMPTS * 2);
++							 PTP_SYNC_ATTEMPTS * 2,
++							 NULL);
+ 				if (rc != 0)
+ 					efx_ptp_stop(efx);
+ 			}
 -- 
 2.53.0
 
