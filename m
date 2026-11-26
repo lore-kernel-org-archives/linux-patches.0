@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705776;
-	b=Rrr0DhuabdWNp8SQLWi9D1g5hUHuUg/pbXv2DWbnO8FUl9X3X3jwl6VQidR/Qolz7ELH
-	 ne9GpCkFpScVyjejoFUSHBUPA7zvkPwm3q48dsDWfzHjsqGUT/gHGDgBfXGPC2cTWL6mu
-	 Uv9HW6w1OpO68Sb/Vijj7W0qqtG9JDfYCiCMxfG3JM6nQB2MvQKttmno8envXWHNC3u/Q
-	 3Ljsw9Mfh5KJ/L7h8/eAfujixbiduzDCxdL0xWA+tIlDvpYKPVh7Xz/6k4sg28pEbEQ39
-	 VEhRy4CRSdkYk0gP8ASMlxTJJ77ANq3fGJicH8JZC1lDmuaXAfW5QFboT5J0wx6N7Aw==
+	t=1795705778;
+	b=3RTg8sxZwLssdAmb6X3weTMLEZRv9WPmDLQDMCe+kgsywkFoW6qX06kygGPbka9YtawM
+	 3WW3kyoMGr1YOXBDLiiJIgcb8UZissd9Df/4gXv20fLh/vt3W0zd3+8aeYlx2K37iCO3M
+	 8QnfHlztFjrhpls1X8TpSqWQMH2bLxXZadiXd7BdD1dZOOBHYjGdzGDQ6Bp3mRuXR2MVj
+	 nAcMaNqn/t2Hix7K9YsYxpTAK9kA6MQvjMFsz9h7tlgFeBDZum4FxjgdGE35HU7UjbkgL
+	 qDwoBFXJT6mFbUJTa0ktQlGvRjpt8i1cIHmidkRDiZgzjliXQDAhozFHC+y2A1yTcqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705778;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s9hh1L3jbJbCixeSCmUUo5dMz+TZtj/CK1CXWjqmqi0=;
-	b=gJ4VDvuVfKWak7eaF+K2qbIsFZij2hRYw8anubEnYpb9gmN7SJpMxrB6RiWVvLXIzQBd
-	 V/uDyWrMyEz9SVhXsKWuMoUegx44MRVMoiFz0xU6XQRL7RBBoNWkWEE4z8/DnD8YVCUHK
-	 vlH8Xn6V9ZNCC3kG2CoDEJ17tFvTsip30bysN5yNuJdN/D4WWX1r+fAeqb4monhD3pCHC
-	 eZCzBLQpjwlw7ZAVKxwJf6M+Rn6aKJHmh+1lBjAYXZvMCy8cW6IdQTA1Ucy03Jcf6zV35
-	 1HeX6JGKrwptvaYsF6GHLpMhQdIu35I4Yk3qzmBVVdb1gU5FNGNlvQFjuCukR2LI6DA==
+	bh=J34EHfSk0El41+ALlThCStf/Cdor8uyz5rUN0hxcQbc=;
+	b=0J84qGVoWX0s4PP6m+yx/89vYef0YrLmVmtxpCL6/Jqmr2m/8vj7SyQNfSgsp2OtOZcV
+	 FWhcKu2N+pzp4w+e+Jd6PG0esVoJqNojAlChTyFAeP5oDQWocMOXTbdakSOFkmfo/XhUL
+	 VueCHFDExKT3OYNkxGM6WVYoSxmdh5pmMuB1j4fbWoh8rG3QnQLsrfttCpAf29wf1OMtH
+	 SagspfEekrLYWxwYEcYFvLjhmZryGYqdEmVvOwJ0IJD1ipb9oZ7GJwIxmdugNSITQw3N0
+	 uOdMq0Zwc9owwOiai5JVoD2iuKkBQ7th8QTuhoZOmwLX3MUE7Z6d3ApLBjN+tSryQRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TI9Tk0Il;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwKIiNeI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200EB606A331;
-	Thu, 26 Nov 2026 15:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F14606A326;
+	Thu, 26 Nov 2026 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TI9Tk0Il
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1029C1F000CF;
-	Thu, 26 Nov 2026 15:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OwKIiNeI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF7F1F000EE;
+	Thu, 26 Nov 2026 15:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705775;
-	bh=s9hh1L3jbJbCixeSCmUUo5dMz+TZtj/CK1CXWjqmqi0=;
+	s=korg; t=1795705778;
+	bh=J34EHfSk0El41+ALlThCStf/Cdor8uyz5rUN0hxcQbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TI9Tk0IlpSaKr99yCf7rLv+Ftkz6gu5oiORPtU2Cfq6VFvuY/OKRVZpPtT2kmd2l4
-	 2Y1/FOa4KMTAWkTU1Xdt2lefhsqKJKzk5c9s+yQnfTIMJcigFpiD8BFZPxFymgQc03
-	 x+stEk+X/pti/PgkDwQrD3hb0iN2uT8M0v5S4xjM=
+	b=OwKIiNeIE2pqwyMjZktr4wfS+Yy2Vl7B2eE5En4xDUCPTKyWleP4WJEkBXpNblTZI
+	 PNI55GRw9VLWVwm+3E0YjhTR2+iFdA3aY1/kZ4GPKXBv483cbln9e08gcRoaMlCg5B
+	 MD+0bOH7eciPNkp/mMan9gTbL72O+H1SHphNc02s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 309/319] iio: trigger: Return an error when the trigger has no free irq
-Date: Thu, 26 Nov 2026 15:41:17 +0100
-Message-ID: <20261126144013.731989223@linuxfoundation.org>
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 310/319] sctp: fix skb_over_panic when adding addresses with a pending delete of another family
+Date: Thu, 26 Nov 2026 15:41:18 +0100
+Message-ID: <20261126144013.755844135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,42 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-commit dff701806ab6252f6a0fccba880c47cd09602625 upstream.
+commit ce09d8c13a15fe881d0a04c91979dcdf45ed9543 upstream.
 
-iio_trigger_attach_poll_func() prints an error when all
-CONFIG_IIO_CONSUMERS_PER_TRIGGER irqs of the trigger are in use, but
-returns 0. The buffer of the extra consumer is enabled without a poll
-function.
+sctp_make_asconf_update_ip() accounts for a pending DEL_IP
+parameter by reusing the length of the address being added. The
+write-back side instead serializes the pending address itself,
+with its own address family. If the pending delete is IPv6
+(20-byte parameter) while the added addresses are IPv4 (8-byte),
+the chunk is allocated 12 bytes short and sctp_addto_chunk()
+writes past the end of the skb. E.g. on mainline (05441d697f7f):
 
-Disabling that buffer calls clear_bit() with a negative bit number and
-drops a module reference for the second time. On arm and arm64 the
-clear_bit() goes about 512 MB past the pool bitmap. That is an oops if
-the address is not mapped, and a bit cleared in unrelated memory if it
-is.
+    skbuff: skb_over_panic: text:ffffffff84859c77 len:392 put:20
+        tail:0x188 end:0x180 dev:<NULL>
+    kernel BUG at net/core/skbuff.c:215!
+    CPU: 0 UID: 1000 PID: 379 Comm: poc_sctp
+    Call Trace:
+     skb_panic
+     skb_put
+     sctp_addto_chunk
+     sctp_make_asconf_update_ip
+     sctp_send_asconf_add_ip
+     sctp_setsockopt_bindx
+     __x64_sys_setsockopt
 
-Return the error from iio_trigger_get_irq().
+Requires addip enabled on the endpoint (net.sctp.addip_enable=1).
 
-Fixes: 995438233579 ("iio: Fix error handling in iio_trigger_attach_poll_func")
+Account for the pending delete with its own address family, as the
+write-back side already does.
+
+This issue was discovered by an LLM code scanner.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261111082313.1606366-1-bsdhenrymartin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-trigger.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/sm_make_chunk.c |   28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
---- a/drivers/iio/industrialio-trigger.c
-+++ b/drivers/iio/industrialio-trigger.c
-@@ -290,6 +290,7 @@ int iio_trigger_attach_poll_func(struct
- 	if (pf->irq < 0) {
- 		pr_err("Could not find an available irq for trigger %s, CONFIG_IIO_CONSUMERS_PER_TRIGGER=%d limit might be exceeded\n",
- 			trig->name, CONFIG_IIO_CONSUMERS_PER_TRIGGER);
-+		ret = pf->irq;
- 		goto out_put_module;
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -2891,7 +2891,6 @@ struct sctp_chunk *sctp_make_asconf_upda
+ 	int addr_param_len = 0;
+ 	union sctp_addr *addr;
+ 	int totallen = 0, i;
+-	int del_pickup = 0;
+ 	struct sctp_af *af;
+ 	void *addr_buf;
+ 
+@@ -2906,16 +2905,21 @@ struct sctp_chunk *sctp_make_asconf_upda
+ 		totallen += addr_param_len;
+ 
+ 		addr_buf += af->sockaddr_len;
+-		if (asoc->asconf_addr_del_pending && !del_pickup) {
+-			/* reuse the parameter length from the same scope one */
+-			totallen += paramlen;
+-			totallen += addr_param_len;
+-			del_pickup = 1;
+-
+-			pr_debug("%s: picked same-scope del_pending addr, "
+-				 "totallen for all addresses is %d\n",
+-				 __func__, totallen);
+-		}
++	}
++
++	if (asoc->asconf_addr_del_pending) {
++		/* The DEL_IP parameter is serialized from the pending address
++		 * itself below; account for its own address family, which may
++		 * differ from the added ones.
++		 */
++		addr = asoc->asconf_addr_del_pending;
++		af = sctp_get_af_specific(addr->v4.sin_family);
++		totallen += paramlen;
++		totallen += af->to_addr_param(addr, &addr_param);
++
++		pr_debug("%s: picked del_pending addr, "
++			 "totallen for all addresses is %d\n",
++			 __func__, totallen);
  	}
  
+ 	/* Create an asconf chunk with the required length. */
+@@ -2938,7 +2942,7 @@ struct sctp_chunk *sctp_make_asconf_upda
+ 
+ 		addr_buf += af->sockaddr_len;
+ 	}
+-	if (flags == SCTP_PARAM_ADD_IP && del_pickup) {
++	if (flags == SCTP_PARAM_ADD_IP && asoc->asconf_addr_del_pending) {
+ 		addr = asoc->asconf_addr_del_pending;
+ 		af = sctp_get_af_specific(addr->v4.sin_family);
+ 		addr_param_len = af->to_addr_param(addr, &addr_param);
 
 
