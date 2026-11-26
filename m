@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704547;
-	b=xMLiZsZvTo96tcoGA59hG7W4/RkZBLXCKfLGSp82W+9Jp06OIh6fd/AqpBGN9SMe7Q8C
-	 g8NVgCHdP4VdfAL3yaTFeYtqH2uvMrxO/WoQMMeFZ1/K6woqU0cftQ8SO7gkcq4rCPwgJ
-	 9EeC7h9YatslmZpQF8NdHua+KgoHYRd7qZ742r7VwycHNnHEAU5ZsQULhm7HZWXUylTkC
-	 1NYWZTn3raLIiSeEiUZDTJybDZiElSaztzvOrZ9n4a/XEErHRuyMtbbVqlpRc7j5SCc/9
-	 wSCC5HFBrs75Wp6j6eNMWOETi9D6m2iCc4mKKaNC9r4ktmRpVno+pjnx9f4Dk262SzQ==
+	t=1795704550;
+	b=A/gP3LUw1gY8VSiDT3sxgTqMuJhMAWx4GrGlek2y5EQIXPUx80BE466iIKxmb8fO0qit
+	 chjUv5xcdxcaL1fX14Tr6m5+6+QCNkbxTy2XILkUmlMKqvxiVi8z7Mgaa1OaVSNKOgxEE
+	 NJo0ZPIPoT8GjxzKFTS520C07xJHw21OWy0DICQZTCl0EYrERv0ABHTBBmNOu43GRsfyj
+	 I2XLLehDYOy9N9ND49/fByDku2dLPDMfeCcdik67Vatm2TvnW51JxcclFRsYfTAIPRRuS
+	 ujLDCaVuSExyUFPZ7BHBra5+tXbyhdtAUfzX7bKJASYYg1/3FqE/WbLX/Qjly/KzoTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N0VDEND6TTKxz8BozEnTsHZ8fB4BHiDo3bJdfqy2c+0=;
-	b=PlXM4nEdP1CP5EgClWuBxJEJ4dYPM9iG+XJFe06D2jJjuIEs/IYtGwLuH36KqqS1KBoA
-	 omN2PaZK4QriubBQ1QvqNe1PIvhSXDGHXxOc1mMejRD5xJW7YfMc7u4HIKwQtf5UnI6OO
-	 F+YAOXJSGPCSP84QY9uC+AzGTbMpdWVAHEP/gYLWsiQlbTYvk5e79vRF4Ma2g6Ml/X8Ml
-	 kgpefOcqaM1wMFKGj2KO443hxKCizZVdlDf4426+udp58oDEWF/j5TKONv2pBotN1mQA/
-	 Trrv3zWl3xaGy33ns51NQFg4lZGd2KFvF4f3qCCcbUZBYWpr2HjI0O2Qi3ZRq9IqJ8Q==
+	bh=4booWn7ZQ+aQ4eWw9iAb8Egr49zCpvAfjca4rHCh9r8=;
+	b=X6AOSmYGAuNmTT8oXzVNgwLkoiwZhPmpa3GqlSQUDdsd4VJRHe1kRNbK27HfwRE1+bdq
+	 h+9U2gNmXRcEsnFCnK1d2WBoIuHoWxfrOhOyY1nZG0bDPpujjpewEB73zkvU/XvpNELed
+	 K8/6LT3uSGO6v2J+dZys45rceq8qmSlvn8b3xIXIqyg53dH0MJDupAXQalTMDwtXSuEit
+	 y7FhzEylM2kkgVkshDg2EktwCflKicWA2pwo5V6/cBfphaXJLdgrPorzlA724YkiQ+KBm
+	 Um1WypDtVc41E7HQh0chIGia0NOubz/UhlK7KVlWqP6obBEpVq/fObtvvvxzk0I4OIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nV8i/qum";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YynWhlEN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86538606A31C;
-	Thu, 26 Nov 2026 14:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C102606A31E;
+	Thu, 26 Nov 2026 14:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nV8i/qum
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71971F000CF;
-	Thu, 26 Nov 2026 14:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YynWhlEN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9801F000C6;
+	Thu, 26 Nov 2026 14:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704547;
-	bh=N0VDEND6TTKxz8BozEnTsHZ8fB4BHiDo3bJdfqy2c+0=;
+	s=korg; t=1795704550;
+	bh=4booWn7ZQ+aQ4eWw9iAb8Egr49zCpvAfjca4rHCh9r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nV8i/qumOW3/y9PwA72Fbyt0u9ZUEaq/XgZH4MOpURnRkBh3/Dj+UJgytpw28Ixwf
-	 /dw5ouldezzC0c6wIySS6iKXqaPlWTUj75zhPs94xatLi/MZyq8BuMNHhWIffhSx7I
-	 7F8/ASfkpIw6v2oQtQQMQIe8OjUgumuBgMuF7k90=
+	b=YynWhlENctIavjslfwcLO7wwJt56GzZlOfhpFSCExR47tlKsteT5cy6u+ITXC5XMv
+	 6943jLhP0HBHgK4GTN9e2L5LcxgwVYxLuFDWMgvQ3ql9uD5yAmqHTe2ZdSGbZjKiF0
+	 YIkKZHiZ20UP7/SIHBgHbv6LmZbOIKlfmqsIYRGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Yingjie Wang <1075151112@qq.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 162/265] ipv6: reject routes without an inet6_dev
-Date: Thu, 26 Nov 2026 15:38:12 +0100
-Message-ID: <20261126143616.466803700@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 163/265] ipvs: Defer application parent freeing until after RCU readers
+Date: Thu, 26 Nov 2026 15:38:13 +0100
+Message-ID: <20261126143616.540529136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,87 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 08a1eb7a634f665718ebe74e0960e242f597135e upstream.
+commit 1e0808008e44d736e57a897a51d14fa995099010 upstream.
 
-ip6_route_output() and ip6_route_lookup() can return an error-free route
-whose rt6i_idev is NULL.  Lowering an external nexthop device's MTU below
-IPV6_MIN_MTU tears down its inet6_dev, while fib6_ifdown() leaves routes
-using nexthop objects in the FIB.
+unregister_ip_vs_app() removes each incarnation from its protocol list and
+uses call_rcu() to defer freeing it, but frees the parent application
+immediately. An RCU reader that already found an incarnation can still
+access the parent through inc->app in ip_vs_app_inc_get().
 
-An unprivileged user with CAP_NET_ADMIN in a private user and network
-namespace can construct this state.  Consumers which treat a route without
-an error as usable can then dereference the NULL rt6i_idev.  This was
-reproduced as a KASAN NULL pointer dereference in ip6_tnl_xmit().
+During FTP helper module unload, the following interleaving is possible:
 
-An audit of IPv6 route and tunnel users found this unchecked
-ip6_dst_idev() dereference.
+  CPU 0 (RCU reader)                 CPU 1 (module unload)
+  tcp_app_conn_bind()
+    find inc in protocol list
+                                     unregister_ip_vs_app()
+                                       ip_vs_app_inc_release(inc)
+                                         list_del_rcu(&inc->p_list)
+                                         call_rcu(&inc->rcu_head, ...)
+                                       kfree(a)
+    ip_vs_app_inc_get(inc)
+      try_module_get(inc->app->module)
 
-A similar missing inet6_dev check was fixed in commit 1b9b5323725e
-("netfilter: ip6t_rpfilter: reject routes without inet6_dev").  However,
-the route construction path still marks routes without an inet6_dev as
-successful, leaving every consumer responsible for the same check.
+The helper module is already going away, so try_module_get() would fail,
+but evaluating its argument first reads the freed parent. The subsequent
+rcu_barrier() in pernet unregistration cannot protect this earlier free.
+KASAN reported:
 
-Acquire the inet6_dev reference before initializing the destination.  If a
-non-reject route has no inet6_dev, initialize it as RTN_UNREACHABLE instead
-of a successful route.  Explicit reject routes keep their original type and
-error.  This establishes that ordinary error-free IPv6 routes have an
-inet6_dev while retaining the existing defensive checks at callers.
+  BUG: KASAN: slab-use-after-free in ip_vs_app_inc_get+0x7c/0x90
+  Call Trace:
+   ip_vs_app_inc_get+0x7c/0x90
+   tcp_app_conn_bind+0x1bc/0x290
+   ip_vs_conn_new+0x1915/0x20d0
+   ip_vs_schedule+0x697/0xea0
+   tcp_conn_schedule+0x489/0x820
+   ip_vs_in_hook+0x7bf/0x1f40
+  Allocated by task 88:
+   kmemdup_noprof+0x20/0x50
+   register_ip_vs_app+0x12d/0x2c0
+   __ip_vs_ftp_init+0x56/0x160 [ip_vs_ftp]
+  Freed by task 104:
+   kfree+0x131/0x3c0
+   unregister_ip_vs_app+0x2f4/0x5b0
+   unregister_pernet_operations+0x232/0x490
+   unregister_pernet_subsys+0x1c/0x30
+   __do_sys_delete_module+0x346/0x510
 
-The modified route object builds cleanly with W=1.  A full x86_64 KASAN
-bzImage build completes; it reports two pre-existing kernel-doc warnings
-outside this change.
+Use kfree_rcu() with the existing rcu_head to keep the parent alive until
+these readers finish. Successful helper references already prevent normal
+module unload, and incarnation RCU callbacks do not access the parent.
 
-Tests:
-  - `make W=1 net/ipv6/route.o`
-  - full x86_64 KASAN `bzImage` build with `W=1`
-  - KASAN QEMU with an unprivileged user and network namespace: after
-    lowering the MTU, the stale route returned `No route to host`, a normal
-    route still resolved, and the collect_md trigger completed without
-    KASAN, oops, or panic
-  - `tools/testing/selftests/net/ip6_tunnel.sh` in the same KASAN QEMU
-
-Fixes: 5b98324ebe29 ("ipv6: Allow routes to use nexthop objects")
-Closes: https://lore.kernel.org/netdev/DMP4WRIOGMBX.3VW2KNLBGDZ0K@gmail.com/
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Fixes: 363c97d7435e ("ipvs: convert app locks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/tencent_91DA7FD8277B509C55906702D1E425FBC906@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_app.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1089,6 +1089,12 @@ static void ip6_rt_init_dst(struct rt6_i
- 		return;
- 	}
+--- a/net/netfilter/ipvs/ip_vs_app.c
++++ b/net/netfilter/ipvs/ip_vs_app.c
+@@ -243,7 +243,7 @@ void unregister_ip_vs_app(struct netns_i
+ 		}
  
-+	/* addrconf_ifdown() removed inet6_dev. The device can't do IPv6. */
-+	if (!rt->rt6i_idev) {
-+		ip6_rt_init_dst_reject(rt, RTN_UNREACHABLE);
-+		return;
-+	}
-+
- 	rt->dst.error = 0;
- 	rt->dst.output = ip6_output;
+ 		list_del(&a->a_list);
+-		kfree(a);
++		kfree_rcu(a, rcu_head);
  
-@@ -1123,10 +1129,10 @@ static void ip6_rt_copy_init(struct rt6_
- 	const struct net_device *dev = nh->fib_nh_dev;
- 	struct fib6_info *f6i = res->f6i;
- 
-+	rt->rt6i_idev = dev ? in6_dev_get(dev) : NULL;
- 	ip6_rt_init_dst(rt, res);
- 
- 	rt->rt6i_dst = f6i->fib6_dst;
--	rt->rt6i_idev = dev ? in6_dev_get(dev) : NULL;
- 	rt->rt6i_flags = res->fib6_flags;
- 	if (nh->fib_nh_gw_family) {
- 		rt->rt6i_gateway = nh->fib_nh_gw6;
+ 		/* decrease the module use count */
+ 		ip_vs_use_count_dec();
 
 
