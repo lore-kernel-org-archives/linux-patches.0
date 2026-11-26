@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705791;
-	b=QUy5AnN2Dnd6ck8oeUBf4/hu6HBiqLo4rI3PW0Ga1kisVBwXJ3xFWPpGT1IbOaUlMXaE
-	 L4Y9iUx0yegYLtTT4p6aT4LmSGkkq2R2mLShx8OawgpiK1aIq+24QbgC5e75oP8EKl3BD
-	 7RRR+rd4oO4icuM7IkPrswO79G0wu2UBog0uUEDA7hcWXRn+AT7oUtDMipnkSYAEnPCzn
-	 Hj0Ntie+bvhJxuXPOP95jhQWcvJBTomCw08ZS62jJTeJMjzREMmuc+/JebZR1+OZPzc6h
-	 JFf0TJB1WXeGn5qydzv+S0E8OTnVTgfVL+y4dTGkVccy9i1UZfiL8akyrs3wimZXsTA==
+	t=1795705794;
+	b=a4cf79kD45vJEXvB9eZIWtdqXpj21Jc1A1hQone6iOGvMAGKODEqBviuoC1Rqds/Gl+q
+	 8JY9NZiCfQE2rheP4a5ORtkkJj0m/AeS3qyY3kJnud8DvSynWAov5AeAtCSrKxSRQ6DMK
+	 W2nzPLxZvxasFuHS+prDAFy4uNGqy0upxP+9vrraAhmicuPpinqgkEjX69JHXIal7cED7
+	 8P10JP04ckouio9qxTBqwaXWuYw0D5gZ45xSycg/5RQZ4xRq8e7/p8VO73a31aCrlXore
+	 MBsYpWFhiwOmiSYtdxs1qL7NtqOmMNgr2b+3Nkx+GVO0f8qiJSdHaPTUjHwDCrTsk5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705794;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=DUT8lUTQg3gZlNZverr7iUx0WGQ0qIvbSzLxuVfc/OI=;
-	b=drcLjYsYv7lPBSMf/NaphC0bs5z6lQUKPP9kep8ENFOR3XUCSVdgvDCnzLWybhRtNYme
-	 qkM53bZ+7d9wOqp8zOeohay1/E1aB5AO2RfgEhccjgn/iXhYVledFfSMcErlXNxdz//oI
-	 wgrKYnWzcyDnG5bu+6Jxzz39JPpuqLA++xnPxU/CZs+/UYl3qUqLKRspqDtnto3msrlsL
-	 MLHdNqaY4YyfZyjjC5panGliIH/jkrThYbHJg/ehRpD7pJCTwsvNx5nmfqAMc6qS39yGh
-	 AY17ZDSQRTENe419ekDWr9k+HPdDAAuRWvplwo22LcAwr1856fNBUGr0vkb/82RYjzw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=m6dO61roQycHeXk5ZNt+PX9L1LyTCHQamK5GKztBahE=;
+	b=JSkab2Xo52EWyHBP/HrUhEB9yHNZ99krUlRhwqHQzLPGBm6L8xQ6p8Xamjy/RG/uXcGv
+	 eL6DpRvbODoyPmd/x6xrjIPAzkYRJ1lkZUu06hOMNr3R2sJezVfgqjQLi7aOvSlcaXklg
+	 sTSE1XZF02EvUshBhTCxqWF1lb8vdfHlYNLWaYTPKkInOJEc2wpQGx4CdeOU+EDOYofNa
+	 HvrIOEkcKrSUl5NyCC+AVAGqOheNnrWcg4Odz0VI2KCJKyXTqx+6pF/y1nnqbdI0TTUbG
+	 qQPp/i8C5PJpgKWHRKBwKGHA+cZGTu8DthY7XIxNhA2y9yO/biQsl64T5vIPoIrfX3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlIjaVpC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MParGnF+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6E8606A321;
-	Thu, 26 Nov 2026 15:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42669606A321;
+	Thu, 26 Nov 2026 15:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlIjaVpC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A661F000C6;
-	Thu, 26 Nov 2026 15:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MParGnF+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE3E1F000D0;
+	Thu, 26 Nov 2026 15:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705790;
-	bh=DUT8lUTQg3gZlNZverr7iUx0WGQ0qIvbSzLxuVfc/OI=;
+	s=korg; t=1795705794;
+	bh=m6dO61roQycHeXk5ZNt+PX9L1LyTCHQamK5GKztBahE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlIjaVpC7Ucf1u/a9dYso/Mz2G8XFL/ji/VIdfAQfeq84wiboBwJOyRQ2y7U6R/8Q
-	 F6TYeNWVduwsn5/6JcpwekQyJ61yR4zLD9E0PpL1sSAu5VdDQvz+3d7/hehgpzVgXh
-	 BnSzKTqVlPAB1E3gT+tVata1t23iDSwWcbCgrHFo=
+	b=MParGnF+yWxoH9K8zw/wbRK3uGnZGJIZltDIBmMVx6cISUIMHKNoTDPAy+tQkQf/l
+	 QvgqxOjQeC7vLHgH+NgeihSSEWQIl3lp3PQFubUcqfJyqp/iHqK8CEexokEyqq5q/9
+	 Fe0MuWlr6FLISWQPsvXlxl2PuLJjC3roSVCgzgzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 5.15 271/319] USB: serial: oti6858: fix the teardown order in close
-Date: Thu, 26 Nov 2026 15:40:39 +0100
-Message-ID: <20261126144012.866541213@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.15 272/319] usb: uas: ignore UAS for ASMT135x bridges (174c:55aa)
+Date: Thu, 26 Nov 2026 15:40:40 +0100
+Message-ID: <20261126144012.890327252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -62,108 +62,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-commit f184ae84a5d19554d980a918a9c8baaef87ac301 upstream.
+commit fafd23d61494461256d374f67c121f2712e1af2f upstream.
 
-The driver passes a baton around: the completion handler of the
-interrupt urb either resubmits the urb, submits the read urb or
-schedules one of the two delayed works, and the works and the bulk
-completion handlers submit the interrupt urb again.
+The ASMedia chip detection in uas_use_uas_driver() assumes that every
+device with idVendor/idProduct 174c:5106 or 174c:55aa reporting a
+config.MaxPower of 0 is an ASM1153 with working UAS.
 
-oti6858_close() cancels the works first and kills the urbs afterwards.
-An interrupt urb that completes in between schedules a work again:
+ASMT135x bridges (iProduct "ASMT135x") share the same 174c:55aa id and
+also report MaxPower == 0, so they take the "ASM1153, do nothing"
+path — but their UAS implementation is broken:
 
-	oti6858_close()
-	  cancel_delayed_work_sync(setup)
-	  cancel_delayed_work_sync(write)
-				oti6858_read_int_callback()
-				  schedule_delayed_work(setup)
-	  usb_kill_urb(interrupt_in_urb)	/* not in flight */
-				setup_line()
-				  usb_submit_urb(interrupt_in_urb)
+- The first READ(16) issued by sd probing times out after 30 s;
+  enumeration only completes after a uas_eh_abort_handler plus a full
+  uas_eh_host_reset_handler cycle:
 
-The port is now closed with the baton still going round. The next open
-fails because the interrupt urb is already submitted, and if the device
-is unplugged, oti6858_port_remove() frees the private data while a work
-may be pending or running.
+    scsi 3:0:0:0: Direct-Access  ASMT  ASMT135x  0  PQ: 0 ANSI: 6
+    sd 3:0:0:0: [sdb] tag#26 uas_eh_abort_handler 0 uas-tag 1 inflight: CMD IN
+    sd 3:0:0:0: [sdb] tag#26 CDB: Read(16) 88 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00
+    scsi host3: uas_eh_host_reset_handler start
+    usb 6-2: reset SuperSpeed USB device number 2 using xhci_hcd
+    scsi host3: uas_eh_host_reset_handler success
 
-Poison the interrupt urb first: that waits for the handler and makes all
-further submissions fail, so nothing schedules the works any more. Then
-cancel the works, after which only the bulk urbs are left, kill those,
-and make the interrupt urb usable again for the next open. Don't print
-an error for the submissions that fail with -EPERM in this window, as
-oti6858_read_bulk_callback() already does.
+- Under concurrent load the bridge stalls: all inflight commands (20+
+  UAS tags in the captured incident, mixed READ(16)/WRITE(16)) hit the
+  30 s UAS timeout in the same event, forcing repeated abort/reset
+  cycles and eventually a USB disconnect.  Writes dropped mid-flight
+  during these resets returned zeros to the filesystem (observed as
+  XFS metadata corruption on the mounted volume).
 
-Fixes: 49cdee0ed0fc ("USB: oti6858 usb-serial driver (in Nokia CA-42 cable)")
+- Sequential-write throughput is ~45 MiB/s under UAS versus ~136 MiB/s
+  after disabling UAS (usb-storage BOT mode), which is fully stable:
+  several tens of GiB written without a single error.
+
+- Bulk reads of healthy LBA ranges do work under UAS (~190 MiB/s, no
+  errors); the failure pattern is command-timeout at enumeration and
+  under queue depth / write load, not a broken transfer path.
+
+Since 174c:55aa is shared across several ASMedia bridges and enclosure
+rebrandings, distinguish the ASMT135x by its product string — the same
+approach used for the HIKSEMI MD202 check a few lines below.  The
+product strings of working bridges using the same id ("ASM1053E",
+"ASM1153", "ASM1153E", "ASM1351", vendor rebrands such as "YZWY_TECH")
+do not contain "ASMT135", so the match is safe.
+
+Verified on an ORICO enclosure (iManufacturer "ASMT", iProduct
+"ASMT135x", bcdDevice 1.00) attached through an Alpine Ridge TB3 dock:
+with the equivalent usb-storage quirks parameter (174c:55aa:u) the
+device is completely stable.
+
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 Cc: stable <stable@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20261014165741.35758-1-olivier.kaloudoff@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/oti6858.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/usb/storage/uas-detect.h |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/oti6858.c
-+++ b/drivers/usb/serial/oti6858.c
-@@ -251,7 +251,7 @@ static void setup_line(struct work_struc
- 
- 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
- 	result = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
--	if (result != 0) {
-+	if (result != 0 && result != -EPERM) {
- 		dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
- 			__func__, result);
- 	}
-@@ -303,7 +303,7 @@ static void send_data(struct work_struct
- 
- 		dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
- 		result = usb_submit_urb(port->interrupt_in_urb, GFP_NOIO);
--		if (result != 0) {
-+		if (result != 0 && result != -EPERM) {
- 			dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
- 				__func__, result);
- 		}
-@@ -564,6 +564,13 @@ static void oti6858_close(struct usb_ser
- 
- 	dev_dbg(&port->dev, "%s(): after buf_clear()\n", __func__);
- 
-+	/*
-+	 * The interrupt urb schedules the works, and the works and the bulk
-+	 * urbs resubmit the interrupt urb: keep it from being submitted until
-+	 * all of them are gone.
-+	 */
-+	usb_poison_urb(port->interrupt_in_urb);
-+
- 	/* cancel scheduled setup */
- 	cancel_delayed_work_sync(&priv->delayed_setup_work);
- 	cancel_delayed_work_sync(&priv->delayed_write_work);
-@@ -572,7 +579,8 @@ static void oti6858_close(struct usb_ser
- 	dev_dbg(&port->dev, "%s(): shutting down urbs\n", __func__);
- 	usb_kill_urb(port->write_urb);
- 	usb_kill_urb(port->read_urb);
--	usb_kill_urb(port->interrupt_in_urb);
-+
-+	usb_unpoison_urb(port->interrupt_in_urb);
- }
- 
- static int oti6858_tiocmset(struct tty_struct *tty,
-@@ -829,7 +837,7 @@ static void oti6858_write_bulk_callback(
- 	/* schedule the interrupt urb if we are still open */
- 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
- 	result = usb_submit_urb(port->interrupt_in_urb, GFP_ATOMIC);
--	if (result != 0) {
-+	if (result != 0 && result != -EPERM) {
- 		dev_err(&port->dev, "%s(): failed submitting int urb,"
- 					" error %d\n", __func__, result);
- 	}
+--- a/drivers/usb/storage/uas-detect.h
++++ b/drivers/usb/storage/uas-detect.h
+@@ -78,6 +78,8 @@ static int uas_use_uas_driver(struct usb
+ 	 * ASM1051 - with broken (*) uas support
+ 	 * ASM1053 - with working uas support, but problems with large xfers
+ 	 * ASM1153 - with working uas support
++	 * ASMT135x - broken uas support, shares the ASM1153 MaxPower == 0
++	 *            signature, identify it by its product string
+ 	 *
+ 	 * Devices with these chips re-use a number of device-ids over the
+ 	 * entire line, so the device-id is useless to determine if we're
+@@ -99,7 +101,11 @@ static int uas_use_uas_driver(struct usb
+ 			(le16_to_cpu(udev->descriptor.idProduct) == 0x5106 ||
+ 			 le16_to_cpu(udev->descriptor.idProduct) == 0x55aa)) {
+ 		if (udev->actconfig->desc.bMaxPower == 0) {
+-			/* ASM1153, do nothing */
++			if (udev->product && strstr(udev->product, "ASMT135")) {
++				/* ASMT135x, broken uas */
++				flags |= US_FL_IGNORE_UAS;
++			}
++			/* else ASM1153, do nothing */
+ 		} else if (udev->speed < USB_SPEED_SUPER) {
+ 			/* No streams info, assume ASM1051 */
+ 			flags |= US_FL_IGNORE_UAS;
 
 
