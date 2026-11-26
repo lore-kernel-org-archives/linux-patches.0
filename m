@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704736;
-	b=4ngSIWheKoocgJyA2S2VpYgf109b4GZpBL7pQuHXTNQWZsnwVHNZRuwT1gMyOO8AmkpP
-	 1KixdeYEmPd+ebyRw5V5m238pMdCk5fU3MfWFvLcvJKlciZKSqDCoEoh9EiVYYGlp+cRn
-	 fLbFXB9xP6g0Ie2LnT3mR+q/yBpA/Mik2R33CKXWQJh9O8eO/YOoR4omhcKoBMZMFmUjj
-	 1MA9tzdv1t8pZ+ZWR0SQZCnRPnCP8u7vNXnakAsvudTLypofUHNcUMVLlt0au6fa66KmM
-	 OMRBui2B/PmNJiZu2YYBinaqy45Gb7fdHETw5ot8WAoEEF1aBkVMuOP8IQY1fAZ3wag==
+	t=1795704739;
+	b=sEokRUhEUFbvItoBXtk/YfJKZQULHF6LuL3rDtT2cWLMTtlFTK5VDHFNHBdRANbcjWXF
+	 0A+SS6iEUtV9pmwn0tgCbsieyqNLzSnxOvEdTlbwD+duY46GT4/h8PYhLTq1JlVZPouZF
+	 OvsTn2SSxwJW15GnX4YSo5qIKq7aLUuB+UUGa8Dpc4hsLBNG7zJLwhFoY5uEYvDJMnIln
+	 9gGq11XxGfv3UjR6HeRSQAuNogWh0gPnToo4mV7AdEv9nx1qoPCo5yzDemklyXfIDqF8/
+	 XlWMsD2XGFZWit1BhdX4kH4xa+nViBAmNfpSAaX2ewry7uowm9ikVV2xt7CjNg0UQ8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xpW5gZ+TCqMY2/v8XQ71o6UWlw09hODsThLUrT2xf+4=;
-	b=DbXLIOtbz7U1yTE1fR3pXKFHeEV/Q932d+u+mrxgWaNOc+fGFSZoe/ILzOF/uLazwegP
-	 3xogeOLrMxO8VcGPZygFo1TmQrtMwPo9UP4O+PDUT3PFWfS00DDy/7Zmeq4VI+fRoo4DN
-	 /H742Ydjuu0PcTVxsW6p3mSnw9u5pKal061vO5KwcnHI4SuvJJm+yKmFgrJBeA0LJkoIv
-	 B/wLKmhw3bX7RbQN+jGF8XMYCAhfj5MTKqAkdE3NNd70ddZgXMIfUwxjtfA3o542VsbZN
-	 MPL0s0SO6kmsYB3/5/vzzSoELtl1DTwWhjjxL+8WZDm4YkBgcAB2kAGLt3zdLaKh2TA==
+	bh=WwWCL2ExirB3FRjDVJO5mE9tP39TqzW2Et05ibDdHfQ=;
+	b=Bb+K1iQFGPyUMPyUnmikba1VmoCo1gnB32cmyY/CG72xSlY2Zlcerpo2C7Vaq391xHpQ
+	 RLwQSncMkvObb2BHagfJXMm0AsuixGucxwIahpdwOfo/zIJHxRumWE8jq+ReFAWH5un+x
+	 g28hlM4tMC9lY9noNW0RkLxSUg5oqqvFN9pCohAWPApeJEl8d9ojdSC1m0Oa49qKgtbG7
+	 a34i9fawZCv4WdC5X8spn6s2u+MLvyd/2dBZTI25ARqBcreSdI7gIkWrgrOlM//KSHM5h
+	 SySVxbNYgY0H24yMoctABIZA+O5+ejVn7qDKwiSIy+2t5EE+6mZkhHQCmB/s8wtHqSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLNiXc1B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiNGge6T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94921606A323;
-	Thu, 26 Nov 2026 14:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E82606A32D;
+	Thu, 26 Nov 2026 14:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VLNiXc1B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F7B1F000C6;
-	Thu, 26 Nov 2026 14:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiNGge6T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB301F000D8;
+	Thu, 26 Nov 2026 14:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704736;
-	bh=xpW5gZ+TCqMY2/v8XQ71o6UWlw09hODsThLUrT2xf+4=;
+	s=korg; t=1795704739;
+	bh=WwWCL2ExirB3FRjDVJO5mE9tP39TqzW2Et05ibDdHfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VLNiXc1B2yf/qZ+q0B4TKKqXUL7JKmV5ZdPQ1C+MPMDJQzrKpkdXUvFPHZ1rPvuaW
-	 osSkFvWf67Qh8aHOpFD/6LyGBIze97frybl8xhr7oa/fK7cddZyKB8FutrZ7C5+mFI
-	 yffkM3vw9qVfxJzafJUNbWfok2Zngja6qS1aBjac=
+	b=KiNGge6TK030Dlt820BXwj3cl2Maq/mS0bzQqXFHzflTjkRQKuLm2d5MUfGqzVUp9
+	 c3wkWrtOfkE47PIzdZOvw0MAKbbo7mfMujWfmRs4qaYaealu7X+k+iBq4E/JaKLaJN
+	 vZN7/g1RBEAmdpaE7ScxORR6CEWYgOdEN1QQ8SDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+782b2f1063e38ba8fa6e@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Sonali Pradhan <sonalipradhan@google.com>
-Subject: [PATCH 5.10 225/265] usb: gadget: f_midi: fix UAF race during IN request handling
-Date: Thu, 26 Nov 2026 15:39:15 +0100
-Message-ID: <20261126143620.991634531@linuxfoundation.org>
+	Brian Ellis <brianellis@gotenna.com>
+Subject: [PATCH 5.10 226/265] usb: gadget: u_serial: fix NULL deref in gs_close() after failed open
+Date: Thu, 26 Nov 2026 15:39:16 +0100
+Message-ID: <20261126143621.061863472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,65 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Brian Ellis <brianellis@gotenna.com>
 
-commit 78a8d6537f1de34770e460edee360b556ef40427 upstream.
+commit ea6cf69ad03c8d85138830c0d2c3b946b5ae231d upstream.
 
-f_midi_disable() drains and frees pre-allocated IN requests from
-in_req_fifo without holding midi->transmit_lock. If f_midi_transmit()
-runs concurrently on the workqueue, f_midi_do_transmit() can peek a
-request from in_req_fifo and write into its buffer while
-f_midi_disable() frees it, leading to a use-after-free.
+gs_close() opens with
 
-Additionally, when usb_ep_queue() fails in f_midi_do_transmit() (such
-as with -ESHUTDOWN when the endpoint is disabled concurrently), it
-resets req->length = 0 and returns active instead of the error code,
-causing the do-while loop in f_midi_transmit() to keep spinning under
-midi->transmit_lock until the substream is drained.
+	struct gs_port *port = tty->driver_data;
+	...
+	spin_lock_irq(&port->port_lock);
 
-Fix this by acquiring midi->transmit_lock in f_midi_disable() while
-releasing IN requests from in_req_fifo, and returning the error code
-from f_midi_do_transmit() when usb_ep_queue() fails so f_midi_transmit()
-aborts immediately and drops active substreams.
+and never checks port.  gs_open() assigns tty->driver_data only on the
+port.count 0 -> 1 edge, so any failure earlier in gs_open() leaves it NULL,
+and tty_open() calls tty_release(), and hence ->close(), when ->open()
+fails.
 
-Fixes: e1e3d7ec5da3 ("usb: gadget: f_midi: pre-allocate IN requests")
+syzbot hit exactly this on arm64.  Fault injection failed the kfifo_alloc()
+of the write buffer in gs_open():
+
+   __kfifo_alloc_node+0x10c/0x208 lib/kfifo.c:44
+   gs_open+0x144/0x514 drivers/usb/gadget/function/u_serial.c:636
+   tty_open+0x404/0x89c drivers/tty/tty_io.c:2137
+
+and the tty core's close of the failed open then took port_lock through
+the NULL port:
+
+  BUG: unable to handle kernel paging request in gs_close
+  KASAN: null-ptr-deref in range [0x00000000000003a0-0x00000000000003a7]
+  Call trace:
+   spin_lock_irq include/linux/spinlock.h:372 [inline]
+   gs_close+0xac/0x65c drivers/usb/gadget/function/u_serial.c:698
+   tty_release+0x2c4/0xffc drivers/tty/tty_io.c:1745
+   tty_open+0x46c/0x89c drivers/tty/tty_io.c:2146
+
+Return early instead.  There is nothing to release when the open never got
+far enough to claim the port.
+
+Unlike the check reverted by commit f6c7bc4a6823 ("Revert "usb: gadget:
+u_serial: Add null pointer check in gs_start_io""), this is not hiding a
+race: the tty core calls ->close() for an ->open() that failed by design,
+so driver_data is legitimately unset on that path.
+
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Reported-by: syzbot+782b2f1063e38ba8fa6e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=782b2f1063e38ba8fa6e
 Cc: stable <stable@kernel.org>
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20261028074821.579450-1-sonalipradhan@google.com
+Assisted-by: LLM
+Signed-off-by: Brian Ellis <brianellis@gotenna.com>
+Link: https://patch.msgid.link/20261013-u_serial-gs-close-null-v4-1-9ea038501994@gotenna.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/function/u_serial.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -419,6 +419,7 @@ static void f_midi_disable(struct usb_fu
- 	struct f_midi *midi = func_to_midi(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
- 	struct usb_request *req = NULL;
-+	unsigned long flags;
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -680,6 +680,9 @@ static void gs_close(struct tty_struct *
+ 	struct gs_port *port = tty->driver_data;
+ 	struct gserial	*gser;
  
- 	DBG(cdev, "disable\n");
++	if (!port)
++		return;
++
+ 	spin_lock_irq(&port->port_lock);
  
-@@ -430,8 +431,10 @@ static void f_midi_disable(struct usb_fu
- 	usb_ep_disable(midi->out_ep);
- 
- 	/* release IN requests */
-+	spin_lock_irqsave(&midi->transmit_lock, flags);
- 	while (kfifo_get(&midi->in_req_fifo, &req))
- 		free_ep_req(midi->in_ep, req);
-+	spin_unlock_irqrestore(&midi->transmit_lock, flags);
- 
- 	f_midi_drop_out_substreams(midi);
- }
-@@ -660,6 +663,7 @@ static int f_midi_do_transmit(struct f_m
- 		ERROR(midi, "%s failed to queue req: %d\n",
- 		      midi->in_ep->name, err);
- 		req->length = 0; /* Re-use request next time. */
-+		return err;
- 	} else {
- 		/* Upon success, put request at the back of the queue. */
- 		kfifo_skip(&midi->in_req_fifo);
+ 	if (port->port.count != 1) {
 
 
