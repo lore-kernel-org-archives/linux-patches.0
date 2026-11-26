@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705005;
-	b=zNfKH1MhWscc059knXYkVqjPyYQaDbso/pgK3M2G30Y8G8UDSKfZQl874Tn/IUdz15Q8
-	 suyDbty8+E56JpItl7hnm2tOhrbSpnRRjT9F/ooJAJhdEYMpfAQn1JX62A9YsvbqMSx8L
-	 sx4GbVGsgHJXKRgnMXIEhNbIL+QpqQ5z/5zLPsgrcUgPB9cPC+kEq1gD8KbDK2USTPhwT
-	 bpMT8IAS5+OsMHtaepvgJkuotmIOiCUpOi7qNfiRQMLsplsirhwqID4/6o+vM3h6nVRb/
-	 gC1ZGnYlCBMB7VMM5FqIZ/Ws9NED9xCSHMsQheyc4AwKKho3kRXZSLSCACZlZEfI6xw==
+	t=1795705008;
+	b=wbdguDfsP+AOgTaxuuTu5mkyFYZ12vGTQkP5xOZCFwY4+ms7zP6CP/m/mravgtgupEtM
+	 O5oKuQHkHjmhwR62A81Xp0qxZs8smHj0j9E4Cq3GMmEy/WQ0YrJnaDoclAKQkhPaaVCOZ
+	 i3/EE8vJo3GyhcNKNoAqFlrAxnFQ7XTnbk7fga79smreBjefecy0BaBiUMpDWFR0KpjF2
+	 qUhx5tAe2mid8HchcldLDNkZVeIA7IQPflpxClJKiBPqMo2s1bG6+oUWMAoaRz3gE5nf1
+	 sJLiq1Mxe0ndkYHXFattvmO90GiSgRz0Ft4vgOC1RSt+LMPnHa+SGHO/o1EwcGUxCrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3x7mhhV0A8C8FXp6c32+GCBfaxzzeaf8iu6jJCp1XoA=;
-	b=Wh4eJOXMQzE711nYbwlk1Q72VwqFV3nc02lvBDsHVCkMVsH7aoFgaH8v2V7Z3yB8Z+el
-	 S3lt0sG46+6i1eGwR3JpVmEQl9AT1f5eQRkitwI5mPOEOp35PJ3CkhtiTiirMZOHwyscg
-	 aeVhBkYLD3OicKx2gYMiEMd1Jw/uum5d9ZhmGwGct1Bfd/McuikTPwT4jnGUazhko7MNF
-	 wO85PuJR3mF8YavhxQl5FFdEpjFubMQXl4EuIv0CeAZVlgzxAgBkTqNsAV92Zx2yElFRM
-	 e+MO6ose7eahZvCSfhKJTCIcf4RSiYOt5r7QTEqnMjcIeE72HGKIpZvRMyXP/7ywHKw==
+	bh=nb6BzDVCzXLV/Bu6gRF7MTmWEvX2NvU08anQTgs8lgg=;
+	b=5kWCYjHPmUeAxzRLGAuQxNX3NmZ+HYhssnCDm0ZVEiYKD9tX10eWPWtD6sb4+Vspxg8x
+	 F7T/4EQbtE81pBB5FmuOluRJwCMBkeWcAgVg9R0Tz3xh1xL5owHVECouwKNf9avmkc/nl
+	 spucAYOzeKXaZg30OcKjzBCwoKscbNGF0ydMbHC09k9jTJiLNCegrNX+owIC4gbc4nYpN
+	 bB3OIyyIM7RGVmL7VL7oAH3kVT2vcTGlPwqjQwKzUae3H+XWXoJajrus6kx9xmedo+EIp
+	 qv+l+o9wnoB4mB85zn95jcX73V0SeE101SIpDB3kFEbWJQ8TsiCb4ty1cSGU+H75EnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okzcsvsg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ae8IaYif;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C384606A33C;
-	Thu, 26 Nov 2026 14:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494CC606A32E;
+	Thu, 26 Nov 2026 14:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okzcsvsg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99F71F000C0;
-	Thu, 26 Nov 2026 14:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ae8IaYif
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756CF1F000C4;
+	Thu, 26 Nov 2026 14:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705005;
-	bh=3x7mhhV0A8C8FXp6c32+GCBfaxzzeaf8iu6jJCp1XoA=;
+	s=korg; t=1795705007;
+	bh=nb6BzDVCzXLV/Bu6gRF7MTmWEvX2NvU08anQTgs8lgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=okzcsvsgfzvgdZJ23eXpagKdt1QIL51SpotzuGYMdQrs/OHhTkuT19wERGXag3X12
-	 6e+9MQFkdHHFp578jhJRu3z76tQkShXFzWtQXttoK/AdRDhiEz+mZY37FuOuUQHzei
-	 vS5cZioCMAEqsDXZcMQQhPV6Q3dZM2xklfA+Z/Sw=
+	b=Ae8IaYifLNlslEbyQ7lcXUI2NsKanjygV39fYoI7/RSjAJ7TP/ZLntfG0fXQkH4yS
+	 vDgUrOqx8b7K2XUtkaMeqNRo930VEWqvrvYTKjvxeb9csj6ShtAyGeSzBTGU8gZ564
+	 ooAtBXNZJWWpZrdiG7lothEtrg9cBHJqLv8BPgBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuqiang Sun <izaiahsun@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/319] bpf: lwt: Free the skb when bpf_xmit() fails to expand the headroom
-Date: Thu, 26 Nov 2026 15:36:58 +0100
-Message-ID: <20261126144007.865887921@linuxfoundation.org>
+Subject: [PATCH 5.15 051/319] net: stmmac: copy XDP metadata in AF_XDP zero-copy RX
+Date: Thu, 26 Nov 2026 15:36:59 +0100
+Message-ID: <20261126144007.889728882@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,63 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqiang Sun <izaiahsun@gmail.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 5e96760b25fdedbbf9312827f1f237d6b18b03e8 ]
+[ Upstream commit 41d78e9ac0984f0e9577e5312e62400b5a6760c8 ]
 
-When an LWT xmit program returns BPF_OK, bpf_xmit() makes sure that
-the skb still has room for the link layer header. If
-pskb_expand_head() fails there, bpf_xmit() returns -ENOMEM without
-freeing the skb. Its callers, lwtunnel_xmit() and then
-ip_finish_output2() or ip6_finish_output2(), take any return value
-other than LWTUNNEL_XMIT_CONTINUE to mean that the skb has been
-consumed, so nothing frees it.
+stmmac_construct_skb_zc() reserves headroom for the XDP metadata and
+records the length reported by the XDP program, but only copies the
+packet data starting at xdp->data. The bytes in
+[xdp->data_meta, xdp->data) are never copied into the new skb, so the
+skb advertises metadata that is not there: after eth_type_trans()
+anchors mac_header, data_meta points at uninitialized headroom instead
+of what the program wrote.
 
-Each such failure leaks the skb, together with what it holds: its dst
-and its charge to the sending socket, so the socket is never freed
-either. The other error paths of bpf_xmit() (BPF_DROP, an illegal
-return code, a changed protocol, a failed reroute) all free the skb.
+Copy the metadata together with the packet data starting at
+xdp->data_meta, leaving skb->data at the start of the frame and the
+metadata immediately before it, and record its length. This keeps
+data_meta valid for the stack and TC BPF after eth_type_trans() anchors
+mac_header.
 
-Free it here too.
-
-The leak was found with kbound, a static analysis prototype for
-ownership mismatches at kernel interfaces, on v7.2.12; it is present in
-mainline.
-
-Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
-warnings. Run-tested on QEMU (x86_64, KVM) with KASAN: a route through a
-dummy device with an LWT xmit program that pushes one byte with
-bpf_skb_change_head(), so the headroom check has to expand the head, and
-failslab limited to allocations under bpf_xmit(). Each of 10 pings then
-fails with ENOMEM. Without this patch each leaves a raw socket behind
-(RAW slab objects 6 -> 16); with it none does (6 -> 6), and nothing else
-is reported. Without injection both kernels go from 6 to 6.
-
-Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
-Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101182343.17991-1-izaiahsun@gmail.com
+Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-4-10eae8a093a8@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/lwt_bpf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
-index 548a13052e1fe..efec218bbe157 100644
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -294,8 +294,10 @@ static int bpf_xmit(struct sk_buff *skb)
- 			 * made before LWT xmit.
- 			 */
- 			ret = xmit_check_headroom(skb, hroom);
--			if (unlikely(ret))
-+			if (unlikely(ret)) {
-+				kfree_skb(skb);
- 				return ret;
-+			}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index a7347cd844b73..773c64dd130a3 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4857,7 +4857,8 @@ static struct sk_buff *stmmac_construct_skb_zc(struct stmmac_channel *ch,
+ 		return NULL;
  
- 			return LWTUNNEL_XMIT_CONTINUE;
- 		case BPF_REDIRECT:
+ 	skb_reserve(skb, xdp->data - xdp->data_hard_start);
+-	memcpy(__skb_put(skb, datasize), xdp->data, datasize);
++	__skb_put(skb, datasize);
++	memcpy(skb->data - metasize, xdp->data_meta, datasize + metasize);
+ 	if (metasize)
+ 		skb_metadata_set(skb, metasize);
+ 
 -- 
 2.53.0
 
