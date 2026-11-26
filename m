@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704816;
-	b=sjz0+YQcZDjtkzbOkO8c/q7rAnADICUqcbOlsEVA2FyoKOHXxAS5mRSD2h76vD03YC1J
-	 ciHMRx1SN4nixJFDh/8Wmldqni2/m1qrX7GVh6fOU8SFia2NGiIVZj5xLBe6kGlZGdGae
-	 6cQMwggOqwPlmUThH/WC3uTv8JsnaA9PP3N8hZmhU1hNliUsZZ73JO7DsQ2DaO9Im0j7W
-	 UcqyR5Af2GAdTJXR7Lu8YUsIQsIzruRG5bmBpmaXQ54qhA74vy02w7+xC9favnjmTMLH8
-	 JG9XqS+BKZCg+eRjfIvuhSa2ljGfeTzLM6+32UQo+t633ICHGEaEX/Sf7FLXLRqYsIA==
+	t=1795704819;
+	b=4WNvrqOFeqah2VFeuPt9r01LBdyzlUnTZW9zxMZdtcdwLcPerUIzE91CElZzv0Cco+iD
+	 jhvY9/qGEKxY5NwLlPp+c0RPD/k9ZULvOrO2IR/RgYXR5wvyOX6EnOmk2rw+2p6fFQ/AZ
+	 Go81MsebgkYh9erGj5szEVA6GIvmn4P62IEKA0rN7Hx2pYUZZSRBo5OqhbpH/IZ8c+gmi
+	 Taq5klrPJweowD6kg2+Kj4r9RYE+mOVXK9E85gGYCVre803miGoLbd0U6u/luxbA+vxwP
+	 mk4ra/f574P9ggul+KFSpqghVe57b5YikQcM5eGa/odzSkd4yCPSZg7RTN8VfUySuRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q6wYnCuzWhifAOmWGDZlT3CzttLY97kiPpmyFAqTcDw=;
-	b=Bu15ZkSeflYgFXeAzn9puCRKkA40Z3QCD9ZPNaN147m0ZRMiwQx+EEcXtVex4FwnYFmT
-	 QVNlIJbizfbGXbIjKRUYh1s5rDZSQUkJlxp6K+2z/Z2sVEwuSECqBNO4wrMMQ+vSfXpuO
-	 8NDlgcvvXDNTXYcv1X2L2XabTXRUJyPVPAPM/ID8pFzxPamfhUcjHFOMiOoWGlinIgJQz
-	 VzRg2962jRgtU1tH/a8DWZWUJi8fAVAeefnjIJQTARmvhyBv9/nKsdtar05aOWWBuj5S9
-	 UA3eDFKDDVSnMRFmC2tIUzPve4COThz1MQx+giHITKgSjsw27KQYC4f+u9Efi5lNZjg==
+	bh=QSh93P6dbCYUUIgnlTg9Vzcz1FYm+F0s7Na8ZcULtxI=;
+	b=a8+QRysZf96kmGFAV6lCBWvD+rjA5Q9vInCh1Sh3vleuFT0h89eXw0zcEpP7RfhHHLR/
+	 W1cF0JUVSoLe+P8OIgmGmQw/gGr32AgjiLw/dIiXa6OogphqPb6CmmGSjP28BZuyz3WYO
+	 DBv0ghcDJ2dS2vpGkNrCU3Q4JK6tXJCw6KTtqq0XvzyEnD9gDEHawCCgqZsBtNE6m9URi
+	 72/bCZU9su6OOPvOUaXQzbejmvxDJ5De6ztnoeZiWFrwmWWr1RW1aJAmC6tM5W3zhcU+0
+	 7NJq7e4P9Mrr1V9YXZTCS0POEGn2x3QNuUKkXHFVIrqdDUlQgJ7o5P/JaNsk0WmJYzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjzXnzn0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQRo3MHJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8A2606A31E;
-	Thu, 26 Nov 2026 14:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D87606A31E;
+	Thu, 26 Nov 2026 14:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjzXnzn0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95221F01563;
-	Thu, 26 Nov 2026 14:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQRo3MHJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C741F000D4;
+	Thu, 26 Nov 2026 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704816;
-	bh=q6wYnCuzWhifAOmWGDZlT3CzttLY97kiPpmyFAqTcDw=;
+	s=korg; t=1795704819;
+	bh=QSh93P6dbCYUUIgnlTg9Vzcz1FYm+F0s7Na8ZcULtxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjzXnzn0xYaGNjQsBPfNmihzE5+6aqTxpZoQG+6mB8ljf4z110iTtGf3WJTyyL1iY
-	 iD7RIgYcRrFysi7ZVx4wr0iCDj4UrvoRlbBGCuauImk/DYqc0ybXRXrd9WP7OTibEc
-	 bIGcJ65LMtqieItt3qRIwdK8gI5lJPDlieuBKQHg=
+	b=KQRo3MHJ2bjk43nCFNMCpC0gHBTsrVMwjKcKBI19YcZVHks84bIODlsd4XJyDJMpl
+	 Pz3+4iaKQL5p7LOdrrkX1iSOBNy9J0JBtIAwoVumFFZPlqPZDE1WC4ilsiob5+fNhs
+	 TJnMXMbGI30laeBjOE97h6FAZVBuOkmE8zAnPrQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashank Mohan Jain <jain.sm@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.10 253/265] iio: magnetometer: mmc35240: leave cache-only mode before the cache sync
-Date: Thu, 26 Nov 2026 15:39:43 +0100
-Message-ID: <20261126143622.948802483@linuxfoundation.org>
+Subject: [PATCH 5.10 254/265] iio: trigger: Return an error when the trigger has no free irq
+Date: Thu, 26 Nov 2026 15:39:44 +0100
+Message-ID: <20261126143623.031218034@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,70 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shashank Mohan Jain <jain.sm@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 38e05cf38df705b7fa9e8ada931589fa96816f09 upstream.
+commit dff701806ab6252f6a0fccba880c47cd09602625 upstream.
 
-mmc35240_resume() marks the register cache dirty and calls
-regcache_sync_region() while the regmap is still in cache-only mode.
-It calls regcache_cache_only(false) only after the sync. This
-ordering has been wrong since the resume support was added; it happened
-to work until regmap started rejecting a sync in cache-only mode.
+iio_trigger_attach_poll_func() prints an error when all
+CONFIG_IIO_CONSUMERS_PER_TRIGGER irqs of the trigger are in use, but
+returns 0. The buffer of the extra consumer is enabled without a poll
+function.
 
-Since commit afc8e3ee8307 ("regcache: Validate cache_only state in
-regcache_sync_region()") a sync in cache-only mode is refused with a
-WARN and -EINVAL. Every resume now gives
+Disabling that buffer calls clear_bit() with a negative bit number and
+drops a module reference for the second time. On arm and arm64 the
+clear_bit() goes about 512 MB past the pool bitmap. That is an oops if
+the address is not mapped, and a bit cleared in unrelated memory if it
+is.
 
-  WARNING: drivers/base/regmap/regcache.c:536 at regcache_sync_region+0x1a4/0x1c0
-  ...
-   mmc35240_resume+0x30/0x70
-   dpm_run_callback+0x7d/0x1c0
-   device_resume+0x175/0x270
-  ...
-  mmc35240 1-0030: Failed to restore control registers
+Return the error from iio_trigger_get_irq().
 
-and the control registers are not written. If the chip lost its state
-during suspend, it runs with the reset value of CTRL1 while the cache,
-and with it the sampling frequency attribute, still has the configured
-value. Writing the same frequency again does not repair this, because
-regmap_update_bits() finds no difference to the cache.
-
-Leave cache-only mode first, then mark the cache dirty and sync it.
-
-Reproduced in qemu with the driver bound to an i2c-stub device: set
-in_magn_sampling_frequency to 25 (CTRL1 = 0x02), clear CTRL0 and CTRL1
-of the stub behind the driver's back to emulate the power loss, and run
-a suspend/resume cycle with "devices" in /sys/power/pm_test. Without
-this change CTRL1 is still 0x00 after resume and the warning is
-printed. With it, and also with the regcache commit reverted, CTRL1 is
-0x02 again and there is no warning. Not tested on real hardware.
-
-Fixes: 553a776b7908 ("iio: magnetometer: mmc35240: Add PM sleep support")
-Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
+Fixes: 995438233579 ("iio: Fix error handling in iio_trigger_attach_poll_func")
 Cc: stable@vger.kernel.org
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/mmc35240.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/industrialio-trigger.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/magnetometer/mmc35240.c
-+++ b/drivers/iio/magnetometer/mmc35240.c
-@@ -538,14 +538,13 @@ static int mmc35240_resume(struct device
- 	struct mmc35240_data *data = iio_priv(indio_dev);
- 	int ret;
+--- a/drivers/iio/industrialio-trigger.c
++++ b/drivers/iio/industrialio-trigger.c
+@@ -254,6 +254,7 @@ int iio_trigger_attach_poll_func(struct
+ 	if (pf->irq < 0) {
+ 		pr_err("Could not find an available irq for trigger %s, CONFIG_IIO_CONSUMERS_PER_TRIGGER=%d limit might be exceeded\n",
+ 			trig->name, CONFIG_IIO_CONSUMERS_PER_TRIGGER);
++		ret = pf->irq;
+ 		goto out_put_module;
+ 	}
  
-+	regcache_cache_only(data->regmap, false);
- 	regcache_mark_dirty(data->regmap);
- 	ret = regcache_sync_region(data->regmap, MMC35240_REG_CTRL0,
- 				   MMC35240_REG_CTRL1);
- 	if (ret < 0)
- 		dev_err(dev, "Failed to restore control registers\n");
- 
--	regcache_cache_only(data->regmap, false);
--
- 	return 0;
- }
- #endif
 
 
