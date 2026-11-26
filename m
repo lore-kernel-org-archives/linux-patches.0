@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704715;
-	b=vCGi+AA1UPpkIGUMiD38HMVN4/eendSeJV43GfOVdxd5iteGXtOcCvRlKfJQVdVNADj2
-	 qtpaqRoleFJ3mvhWkT4Z5SAiRBfbBWWx9M3vPhvREzdO+2jRRo+08B8SMs0pItNbL68dx
-	 ysWS+6jait0Oi2PGWrPIKRwVG7sRrzNpwwNlPPGKM5Ws1wHwZXtXS0StnnqMQduTwXtwV
-	 CZf0yjh/YeMZ7fAA8gOaDJztwNssB3YxLnOBwciYWDfkYBScKuHLnePJLp2+Kxra8WRZ4
-	 Mom+qRBDa3trKAxuSRSnk5JjE7USRhcm8TpWGa0OCsNYTfMwHbav/INWVlso+hpz8jQ==
+	t=1795704718;
+	b=hRStO+YUmm5EuEUOfQAsW0giQNvwHxJ+ZMJTB+RDK3C7c2fo3LR/OcoE/kLQHk9PZXEo
+	 nd2o3DbCYYInNq1vU4fuBfI2qX9QZdxpGQUDGH4oQ2kFvPJCbOu5ajlVhR8qpSsVzsWpN
+	 VzJSoW7uzrXUkZ/SGIg3cUkO/xN62Cg/UmRWQY8QElxfAY4SP4Sale/RnbJRkyRrMG3mA
+	 ZDyp12ot1oMtdqouPw6VS3zl/apQCFu4SS2aOgCVCgILgXMyflOlnxO70F2fl5PHHx0YX
+	 oZkb/9CbohwgXDlcI2hjEUn/vqaXVUugcycHvGfoDbZnNS4WvwDvwl7NVtQOzNEa+/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e9AczpSqba22uo7K9lLFxgGQ/PGRIhc+sXSL/xSYH3U=;
-	b=nJP3X1ORF1eqKu/BnQcb+0h837jlOYZ78usqbEEpdQY3vmaT4W8kk81iGNBYWbVr6Y43
-	 Fs+iu1XbMqe9CXTaUMKXDu+EPNOl66tdrEFjZdl+13b7T4O1rKWfKWBuQ2q6DvLi0JPp/
-	 deSHv9/ZVJPbt4fKKL5QVg2g3b+heBHfO7x+sVeLQD7qzKA5+sNJhNvjcQUelq57ysmhE
-	 ccRjX5WHnNkF3WBs8Q5F/SOLPIhJR3PxzGy81xROiUGOLxq3RoHz13aWBmIzkb6AATtLC
-	 7JJSzQxIqeJVtX8InNZNd5mUJmMNZ5WpjFHnt3NlzQWEYMhtWB3Gpz7S/Ze52fxO2tA==
+	bh=wzRi21bZYEvwLPboauvyo2khm47urWI0iyhjt8hfL4k=;
+	b=1UUaLDAfu3Dvk1+Pfc7mRL+t7RJ2VBOfP8sV1+3kcyEfGBkKqLHWFDNybU7uy3prJZ/f
+	 dCLZL7IWuhgNL73Myw9TUsn4+onOJlzRapKx7jWAHIKpI4QmtsYVLDO1LbWctDk6l2c+J
+	 neLljtyqGZLphh0vVQr78h8+JUrD5jnS9whli6/e1vy1XUw8iZwa/oedXXVc1av8izZld
+	 RwW8BJuzpIgxhotrtK8rs5ug6V+5jV/zwO4zq/TT31F8psrB/tkxyb42ZkZ/BEQQJiaFO
+	 62xWlRzajjo/4faGzWzxEMz7GIGPoFQun/7PCrutbyhtaYzdc0bZc7T0jWwlSSC97MQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUBYPwCl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aTjrsXyR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338BB606A31C;
-	Thu, 26 Nov 2026 14:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F78606A31E;
+	Thu, 26 Nov 2026 14:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUBYPwCl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8681F000C4;
-	Thu, 26 Nov 2026 14:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aTjrsXyR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9008F1F0093E;
+	Thu, 26 Nov 2026 14:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704715;
-	bh=e9AczpSqba22uo7K9lLFxgGQ/PGRIhc+sXSL/xSYH3U=;
+	s=korg; t=1795704718;
+	bh=wzRi21bZYEvwLPboauvyo2khm47urWI0iyhjt8hfL4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUBYPwClk992DQ325GBY4Qv3yPLVuxmUdDsOHmVDbubLuC2uwNe+f04+NkeqEXgob
-	 s7AU0wjJzamEpyTpZmVrhq/24Ri7LCLp8QoRTM3krtX/mFW3aVvzXwDp/gRI0pVK95
-	 7kTXxkN/AGoMNjLVmfCQa42hd62yTYDgNK+48prw=
+	b=aTjrsXyRD7eDnPCIqMQJDyOuoDw56G/1V3Bohx7vjIYyckoTLpFleZp3deBSM53/0
+	 rfJh6aQ4JntFEQBl7g39vQLQDOib7x+RKwCIIm2QRuPFTDm8kliSurKlwQNBFdQkuH
+	 UHL7vNgqG4QjYBMgBB1IwlhHBnVSHs7/Pz3vjPOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 192/265] wifi: mac80211: recheck the IBSS station limit before insertion
-Date: Thu, 26 Nov 2026 15:38:42 +0100
-Message-ID: <20261126143618.605488092@linuxfoundation.org>
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	McKenna Fan <blue_sun@tuta.io>,
+	Quinn Schive <quinnschive@hotmail.com>,
+	Bruno Filipe <bmilreu@gmail.com>,
+	Maciej Zonski <me@zonni.pl>,
+	Rishabh Jain <rishabh.jain1198@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 219/265] usb: pci-quirks: always assert xHCI OS ownership
+Date: Thu, 26 Nov 2026 15:39:09 +0100
+Message-ID: <20261126143620.560410656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,49 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Rishabh Jain <rishabh.jain1198@gmail.com>
 
-commit f7670bcdf650b37551a9c5d084521f877d939f11 upstream.
+commit 5550405351199fe78f4a3cd606c07f5ad7220e1b upstream.
 
-Frames from successive unknown IBSS peers can make the deferred worker
-install more than 128 stations.
+The xHCI ownership protocol requires the OS driver to assert the HC OS
+Owned semaphore before using the host controller, then wait for HC BIOS
+Owned to clear if firmware owns it.
 
-The receive path checks local->num_sta before allocating each station,
-but pending stations are not included in that count. Several allocations
-can therefore pass before the worker inserts any of them, and the worker
-then drains the list without rechecking the limit.
+quirk_usb_handoff_xhci() currently asserts OS Owned only when BIOS Owned
+is already set. If firmware leaves BIOS Owned clear, Linux uses the xHC
+while both ownership semaphores remain clear.
 
-Recheck the installed-station limit in the worker under the wiphy mutex
-and free entries that no longer fit.
+The timeout fallback also clears BIOS Owned using the original register
+value, which can clear OS Owned at the same time.
 
-LLM assistance was used to find the bug and review.
+On an AMD PROM21 xHCI controller (1022:43fc), this caused every S3
+resume to terminate Controller Restore State with USBSTS 0x401. Linux
+then reset the host controller, both root hubs and the USB Bluetooth
+adapter.
 
-Fixes: 8bf11d8d0811 ("mac80211: delay IBSS station insertion")
+The controller entered resume ready and halted with USBSTS 0x1.
+Endpoint state, 100 ms save/restore delays, scratchpads, the DCBAA,
+device contexts and command, event and transfer rings were verified not
+to cause the restore error.
+
+Across four S3 cycles, asserting only HC OS Owned changed USBLEGSUP from
+0x00000801 to 0x01000801 and eliminated the restore failure. Testing
+included the unmodified 7.1.8-ogc1.1.fc44.x86_64 distribution kernel
+using a test module that set the HC OS Owned semaphore. The same test
+was repeated after review with the same result. Clearing USBLEGCTLSTS
+was independently verified to be unnecessary.
+
+Always assert OS Owned for controllers using the standard xHCI handoff,
+and leave the existing TI/Renesas forced handoff unchanged. Keep OS
+Owned asserted after the standard handoff, including when forcing BIOS
+Owned clear after a timeout, to prevent firmware from reclaiming the
+controller during subsequent suspends.
+
+Fixes: 66d4eadd8d06 ("USB: xhci: BIOS handoff and HW initialization.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142235.15428-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: McKenna Fan <blue_sun@tuta.io>
+Tested-by: Quinn Schive <quinnschive@hotmail.com>
+Tested-by: Bruno Filipe <bmilreu@gmail.com>
+Tested-by: Maciej Zonski <me@zonni.pl>
+Signed-off-by: Rishabh Jain <rishabh.jain1198@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20261105175106.241182-4-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ibss.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/host/pci-quirks.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -1703,8 +1703,12 @@ void ieee80211_ibss_work(struct ieee8021
- 		list_del(&sta->list);
- 		spin_unlock_bh(&ifibss->incomplete_lock);
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -1184,10 +1184,11 @@ static void quirk_usb_handoff_xhci(struc
+ 			 && pdev->device == 0x0014)) {
+ 		val = (val | XHCI_HC_OS_OWNED) & ~XHCI_HC_BIOS_OWNED;
+ 		writel(val, base + ext_cap_offset);
+-	}
+-
+-	/* If the BIOS owns the HC, signal that the OS wants it, and wait */
+-	if (val & XHCI_HC_BIOS_OWNED) {
++	} else {
++		/*
++		 * Perform the standard handoff and leave OS ownership set to
++		 * keep the BIOS at bay during subsequent suspends.
++		 */
+ 		writel(val | XHCI_HC_OS_OWNED, base + ext_cap_offset);
  
--		ieee80211_ibss_finish_sta(sta);
--		rcu_read_unlock();
-+		if (sdata->local->num_sta >= IEEE80211_IBSS_MAX_STA_ENTRIES) {
-+			sta_info_free(sdata->local, sta);
-+		} else {
-+			ieee80211_ibss_finish_sta(sta);
-+			rcu_read_unlock();
-+		}
- 		spin_lock_bh(&ifibss->incomplete_lock);
+ 		/* Wait for 1 second with 10 microsecond polling interval */
+@@ -1199,7 +1200,9 @@ static void quirk_usb_handoff_xhci(struc
+ 			dev_warn(&pdev->dev,
+ 				 "xHCI BIOS handoff failed (BIOS bug ?) %08x\n",
+ 				 val);
+-			writel(val & ~XHCI_HC_BIOS_OWNED, base + ext_cap_offset);
++			writel((val | XHCI_HC_OS_OWNED) &
++			       ~XHCI_HC_BIOS_OWNED,
++			       base + ext_cap_offset);
+ 		}
  	}
- 	spin_unlock_bh(&ifibss->incomplete_lock);
+ 
 
 
