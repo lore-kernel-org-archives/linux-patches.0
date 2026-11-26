@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704856;
-	b=bjgpS45LaFonGXR0dlWSwVE41B6eLYqEKLxFXuGEEUR+HGkTNRbe6qeUQcMTFZ0fLuuC
-	 RlMUVcJMt4wbB4MY9kYBI/RmALmKQTrwBgMNCTL1jKb6PtmBry+tAgbGINtwhCEMgVKp4
-	 mKaWoSqx5nALLQVVwVDLZ9PgftmusVnyyGvqAXZ1NOKkjwBKHHQ7RkYxWdaaU1BCZG2Yj
-	 18LEJg320YGuuyV33/0FYPdbY9oBROXVFIxHyk8ljvi3f1RDH/f07Ml3sC48mioc2SNI7
-	 51HzSi3BkcOzbQR265AJIXvL8y8NqJhsmCDc66XGGY7BjVO8gWdqTirpTYZj0Cdpl5g==
+	t=1795704860;
+	b=RC0G3jrgIkEDKSAfAc3TrdlXykG7UZ3909AH6XE6Hd+MWPT/Z1QpvfmROp+wemZjVHXt
+	 w2DKPxkzSnWOp+KcIwbWkcyvPuY0kgrXaplonel2hBcySI2PweSGZdh0XiA/Sk2CqRQ8O
+	 C4J8VDvZNdYw7D+0LPSHlRSQ2Ru9NIxOahViiURqO488nA9MHJvZYpyIZbsCfyYEgm58A
+	 S3vlBHnAKTL9PT9Oh0Lhfd/UELpKL6o4pf10L0a1lR/Cd5N4G3ChA3TTRq65OMJss1Xt7
+	 sFqSIbzWG/b104gBOodIas+/X3v/Rp3NWMHKHGPpW2g2Zq41+TpzbtkxzIVJvVq2geQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EUVw37J3Z6E1eNrL+NEp/gkzVjekwRzzCeI2VfukfR4=;
-	b=mMKJiWQlH41KsWtk98rGJeT2WrMODMXupDXw7bPI7kBnh1N6VTX1TiMAt7MfWAL0zwJP
-	 bp5AxKgJY8VcoyRqOlX/O2gYwks1qUkWZDcK75PpOF+VNUvlkyvcdJ01qdqP/oeNBD5JS
-	 q7kZnjMj4oAnj5hBXeT/zv8noUp/RleO+LwLYaMtOnKsINcX1k4Vz8B9cPOL/6hoFpYTp
-	 odBgEuAJm3gOEo7jUeHOOnOSGWA4iOncAGXxhMHcfVqoaxOa11gEt6gpHfTja8a/SYYjb
-	 dqXXS2eZvkjW/WCx1NxPlieByr8UiXbb/9cppafXPcx8Yy4qtwYjz86jO1h0wNZ29rQ==
+	bh=DPUXsQB0SGscO2Ebf8nCNZlztWQ/RDNKbjLp+zDfucE=;
+	b=HPfQbRLRYiz7DFnuoL815kCRXMLcPA/s7yLq748BpZ7WzSEjAVSPPd+ksX9eKHlhoKb2
+	 nA3L/Zd998KN+sXjEFt7eyUgbSbXgLjlltbTMwbgr0E8+qAPKCeYNWPADy3vizcofi1nk
+	 bAMj4OCbSpY/8lmNuLMe0oY8DqT4fswrsD5Nz41xsccpgFpyl0co1P68Ajjz6Dzlc0HG8
+	 QmSzPk4ZDasnAudaPugI83/S66gamulCmcAbwq6MmCkoYV/8w0phYeKAJiBlbYCbxOCOf
+	 aBEZ/uF+F9GWojoKP8E4C5GMc9mzqNcpGrj/xlRT8ruxMZ8lRiRYyYupMWYLo7yl4Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llAqVo0h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+KTSHwr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B092A606A31C;
-	Thu, 26 Nov 2026 14:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E2A606A31C;
+	Thu, 26 Nov 2026 14:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llAqVo0h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F951F000D4;
-	Thu, 26 Nov 2026 14:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+KTSHwr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CA61F000D0;
+	Thu, 26 Nov 2026 14:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704856;
-	bh=EUVw37J3Z6E1eNrL+NEp/gkzVjekwRzzCeI2VfukfR4=;
+	s=korg; t=1795704859;
+	bh=DPUXsQB0SGscO2Ebf8nCNZlztWQ/RDNKbjLp+zDfucE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=llAqVo0hZCe/Q+YRnMcf8RFOBGewoeBafhOGfTm+XGfEILXlvM0UP1U8PDJeuoplP
-	 hHWcr7T7slXmJqqPsZV4npDDlc3/z3V165BO+NpTEOD5VsmoX9yaVMtdMXOXOQBAQ9
-	 sQn8jlzSGDBvYF577dyNlv93jEi4ikw3R9okfhAc=
+	b=d+KTSHwrZ345GBwRe6FdW+P7Supsqk2Ij9f13JkkriFxX4VSlIQmWox8MTlNY/uaD
+	 vVT1rB5tl3t6SBHrLOldkZM4x9hjm5NB2TfmH767fW43Q3UCQORKLYmXnCTWBQIU4P
+	 pbVmzAB1ANGzUsMU3RGQZXM0NMTxlzyI+volZ+6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 265/265] module: fix [e_shstrndx].sh_size=0 OOB access
-Date: Thu, 26 Nov 2026 15:39:55 +0100
-Message-ID: <20261126143623.759477635@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 239/265] USB: serial: io_edgeport: fix potential NULL-deref at open
+Date: Thu, 26 Nov 2026 15:39:29 +0100
+Message-ID: <20261126143621.982228877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,43 +66,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 391e982bfa632b8315235d8be9c0a81374c6a19c upstream.
+commit a0403880a0a638f189e5187068244d9fd5bc8d4d upstream.
 
-It is trivial to craft a module to trigger OOB access in this line:
+Do not mark the port as open until after the write FIFO has been
+allocated and initialised to prevent a racing interrupt completion from
+attempting to send stale data and dereference the FIFO buffer pointer.
 
-	if (info->secstrings[strhdr->sh_size - 1] != '\0') {
+Note that the open flag defaults to false and is cleared on close() so
+there is no need to reinitialise it on every open().
 
-BUG: unable to handle page fault for address: ffffc90000aa0fff
-PGD 100000067 P4D 100000067 PUD 100066067 PMD 10436f067 PTE 0
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 7 PID: 1215 Comm: insmod Not tainted 5.18.0-rc5-00007-g9bf578647087-dirty #10
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-4.fc34 04/01/2014
-RIP: 0010:load_module+0x19b/0x2391
-
-Fixes: ec2a29593c83 ("module: harden ELF info handling")
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-[rebased patch onto modules-next]
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/module.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/serial/io_edgeport.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -3035,6 +3035,10 @@ static int elf_validity_check(struct loa
- 	 * strings in the section safe.
- 	 */
- 	info->secstrings = (void *)info->hdr + strhdr->sh_offset;
-+	if (strhdr->sh_size == 0) {
-+		pr_err("empty section name table\n");
-+		return -ENOEXEC;
-+	}
- 	if (info->secstrings[strhdr->sh_size - 1] != '\0')
- 		return -ENOEXEC;
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -961,9 +961,7 @@ static int edge_open(struct tty_struct *
  
+ 	/* send a open port command */
+ 	edge_port->openPending = true;
+-	edge_port->open        = false;
+ 	response = send_iosp_ext_cmd(edge_port, IOSP_CMD_OPEN_PORT, 0);
+-
+ 	if (response < 0) {
+ 		dev_err(dev, "%s - error sending open port command\n", __func__);
+ 		edge_port->openPending = false;
+@@ -973,8 +971,7 @@ static int edge_open(struct tty_struct *
+ 	/* now wait for the port to be completely opened */
+ 	wait_event_timeout(edge_port->wait_open, !edge_port->openPending,
+ 								OPEN_TIMEOUT);
+-
+-	if (!edge_port->open) {
++	if (edge_port->openPending) {
+ 		/* open timed out */
+ 		dev_dbg(dev, "%s - open timedout\n", __func__);
+ 		edge_port->openPending = false;
+@@ -1002,6 +999,10 @@ static int edge_open(struct tty_struct *
+ 		return -ENOMEM;
+ 	}
+ 
++	spin_lock_irq(&edge_port->ep_lock);
++	edge_port->open = true;
++	spin_unlock_irq(&edge_port->ep_lock);
++
+ 	dev_dbg(dev, "%s - Initialize TX fifo to %d bytes\n",
+ 		__func__, edge_port->maxTxCredits);
+ 
+@@ -1934,7 +1935,6 @@ static void process_rcvd_status(struct e
+ 
+ 		/* we have completed the open */
+ 		edge_port->openPending = false;
+-		edge_port->open = true;
+ 		wake_up(&edge_port->wait_open);
+ 		return;
+ 	}
 
 
