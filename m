@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705537;
-	b=j+2mXWqZCk99K0bT1DVnzyJRowczXtO5SZMqSeNG964Xeqzkzv5vnJChH5Ooy4HdxYEs
-	 uc02hv/6LBmo7iU0+8P6x5OGcAadp9exqGaX7x7Uo+/FF6ZX7UhxBPwEAFfJwlPG35poM
-	 mtoJMrzzNS+zewgA4nYKsw2hZsQrbXCeUJfHlguKsIEyX3bPA4dHmt0ZjQi5EP86G3PR0
-	 fXrNv/6K/DvFDAv1F5eFBbBl7KsXlOPNgPGBdNjY9PZdUjHVJtV1+8xJdsDDpbdBALRkZ
-	 UPgH0yA8xgCsxMmFPwyojCEZfL1pEp/ojQH/mwi9c6BaXL45hVCH+NWWOwcOwFCgNOA==
+	t=1795705540;
+	b=GhH9RxFXeCJ99U62aPjvfu1zKy8+ZkuXddSuyZjmNkluYhW6kD7QzloztNbPCH0Q317e
+	 EeSCJgrhdt4IE6ePQq0JVuLmOpmIllikA2SGmOz+TBqIbXQ57QUh8WNyGir8HIfxjBAKw
+	 ETzfX0MpM9swOp/Zfa1xX0dkRZBaQ7bw5HoHM965Rj082bMnYqNOb81SZ5s13BqW0qhYp
+	 ZYkHEaQFRRohhp1A86FD6AO0+rnQXbib/2gL5MbW+tWKEQ/N/RjYIURel9vZPURGkzvYn
+	 TPo6iMDnWTbxpsnSYcWSS9cwjHG5NM897qsWGhIbXqeLG++kAuKTpob0QIpMqrCb70A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705537;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705540;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vg1vo/aFz0wC1k1DI+ujQ8iDHavhpF0cgHZ/4g94wVQ=;
-	b=5I3pVhX1AGg/YTVXjQtAeMX0y+yF+aRS9YKyBpUvilEEZlLBGJfFemHmCX7eTfUJd/lM
-	 W4Z9AgUB5J+vA6C0D7Xx9p7hhmOsPi59psTIDPsZMrz+Z8fW+S5/BmMxTr6kZy7a4RRf+
-	 mMTPY46ppBhtLbB/kU7QD3vMFPmA9m7O/FbcWFaVTyAunINA0Hg1cDbAwVdg2kD1SuoZM
-	 TElbEu0Q08WsLjbHBmSvnCvROOp2zBupwSNGT/gq5+SM0qj+cH2JlE2a2YzBKgQ9Q/neA
-	 2VjttMz5hxeXUgKVgbfRAvGh0qn6eNVXqpMKVwNj5DMb7/9Kq4TineREk7aayOSz72g==
+	bh=nxfAgwxBfHGyX3rDGywXO2LzOhj2LIO3NBJGYiH1yG8=;
+	b=m75k3VWTwechk8YtrKOB7f6MqNhS+t3jA7sT6shOh9shxD8q17tFysI0+y7J7aYfTY3m
+	 qoukWHnSI0xeRmfQaZsdw1jn3iK4wRc3MwD56/8/rW7yzXu0nvasaJbIWO6kdQlYZxQH5
+	 PHV6p9DI82iO57xV6YhN+nteUEtSZa5iQKavWJrqHYunSW+EhbX+zoY1WH10XhM1oqh7D
+	 xmAd7N+sIfkbzHwH3dLadNtN2ZFcDXk8zcjmXBQM1QF4k90eVdcSXtVCmPxR94OGjm3Zs
+	 mC7NtfIGAhUP6UNKpwM2xr4/NneGqjgA4DRSz+nVNpNn11gh4tP/Xs52Y+vXIbcxf+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HPy/514N";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VL+AFo/B";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF63606A31E;
-	Thu, 26 Nov 2026 15:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B676606A31C;
+	Thu, 26 Nov 2026 15:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPy/514N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6231F000CF;
-	Thu, 26 Nov 2026 15:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VL+AFo/B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5213A1F000D0;
+	Thu, 26 Nov 2026 15:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705536;
-	bh=Vg1vo/aFz0wC1k1DI+ujQ8iDHavhpF0cgHZ/4g94wVQ=;
+	s=korg; t=1795705539;
+	bh=nxfAgwxBfHGyX3rDGywXO2LzOhj2LIO3NBJGYiH1yG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPy/514NX3s2+/+k81vGtTk5kznDT8GTKfcLdnw40ZhwyGswCR8M3ISN1zWStBZMy
-	 XOBml5cFhn/oSTjLQgUdS0NjMmBBwQSWA8ArTe1d79CffVjmttQAYYxm6JEX2kDi/B
-	 gEpsnTpbIe+4XZSyn+8YNg4/+KvX3wtS758/16gk=
+	b=VL+AFo/Bi6zt1GjdW9qfYPBR/HqSRoU0PrXkCMyMZ7ioeEC/kAFg1B1e/6C4vIrC5
+	 2f+emntfjbJFiynqvjC8zraMwP6al3c+10A2YmGAzoYqhftAY8TQX65wRL5tuzRAq6
+	 uziwS5Ke7JcIYVsXcSIXIpFrxQ9NkAgcnXf5gOlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 232/319] wifi: mac80211: recheck injected headers after removing FCS
-Date: Thu, 26 Nov 2026 15:40:00 +0100
-Message-ID: <20261126144011.985072332@linuxfoundation.org>
+Subject: [PATCH 5.15 233/319] wifi: mac80211: recheck the IBSS station limit before insertion
+Date: Thu, 26 Nov 2026 15:40:01 +0100
+Message-ID: <20261126144012.007578871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,48 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 339564c7ac50464695dfed847f89d118f4cc1dc5 upstream.
+commit f7670bcdf650b37551a9c5d084521f877d939f11 upstream.
 
-Injecting a short frame with IEEE80211_RADIOTAP_F_FCS on a monitor
-interface can pass a truncated 802.11 header to transmit handlers.
+Frames from successive unknown IBSS peers can make the deferred worker
+install more than 128 stations.
 
-ieee80211_monitor_start_xmit() validates the linear 802.11 header before
-parsing radiotap. Radiotap parsing then removes the four-byte FCS without
-rechecking the remaining header length. Software encryption can subtract
-the larger header length and pass the resulting negative length as an
-unsigned size.
+The receive path checks local->num_sta before allocating each station,
+but pending stations are not included in that count. Several allocations
+can therefore pass before the worker inserts any of them, and the worker
+then drains the list without rechecking the limit.
 
-Recheck the required linear header length after pulling the radiotap
-header and before handing the frame to the transmit path. Require at
-least addr1, which the transmit path reads even for extension frames
-whose header is shorter.
+Recheck the installed-station limit in the worker under the wiphy mutex
+and free entries that no longer fit.
 
 LLM assistance was used to find the bug and review.
 
-Fixes: bddc0c411a45 ("mac80211: Fix NULL ptr deref for injected rate info")
+Fixes: 8bf11d8d0811 ("mac80211: delay IBSS station insertion")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20261028142101.11994-1-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20261028142235.15428-2-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mac80211/ibss.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2424,6 +2424,12 @@ netdev_tx_t ieee80211_monitor_start_xmit
- 	/* remove the injection radiotap header */
- 	skb_pull(skb, len_rthdr);
+--- a/net/mac80211/ibss.c
++++ b/net/mac80211/ibss.c
+@@ -1701,8 +1701,12 @@ void ieee80211_ibss_work(struct ieee8021
+ 		list_del(&sta->list);
+ 		spin_unlock_bh(&ifibss->incomplete_lock);
  
-+	/* FCS removal may have shortened the 802.11 header. */
-+	hdrlen = max_t(int, hdrlen,
-+		       offsetofend(struct ieee80211_hdr, addr1));
-+	if (skb_headlen(skb) < hdrlen)
-+		goto fail_rcu;
-+
- 	ieee80211_xmit(sdata, NULL, skb);
- 	rcu_read_unlock();
- 
+-		ieee80211_ibss_finish_sta(sta);
+-		rcu_read_unlock();
++		if (sdata->local->num_sta >= IEEE80211_IBSS_MAX_STA_ENTRIES) {
++			sta_info_free(sdata->local, sta);
++		} else {
++			ieee80211_ibss_finish_sta(sta);
++			rcu_read_unlock();
++		}
+ 		spin_lock_bh(&ifibss->incomplete_lock);
+ 	}
+ 	spin_unlock_bh(&ifibss->incomplete_lock);
 
 
