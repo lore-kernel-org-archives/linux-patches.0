@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705008;
-	b=wbdguDfsP+AOgTaxuuTu5mkyFYZ12vGTQkP5xOZCFwY4+ms7zP6CP/m/mravgtgupEtM
-	 O5oKuQHkHjmhwR62A81Xp0qxZs8smHj0j9E4Cq3GMmEy/WQ0YrJnaDoclAKQkhPaaVCOZ
-	 i3/EE8vJo3GyhcNKNoAqFlrAxnFQ7XTnbk7fga79smreBjefecy0BaBiUMpDWFR0KpjF2
-	 qUhx5tAe2mid8HchcldLDNkZVeIA7IQPflpxClJKiBPqMo2s1bG6+oUWMAoaRz3gE5nf1
-	 sJLiq1Mxe0ndkYHXFattvmO90GiSgRz0Ft4vgOC1RSt+LMPnHa+SGHO/o1EwcGUxCrw==
+	t=1795705011;
+	b=qchuN6aM7m6qy/fmlYphx5kf7sFWMDEqtjMotYhwtLwUI46jvZU+5qzZmh882jGKFK9q
+	 TnJd0v5xKRkizgWkPhSZkbqCqL+MG/FmbHVNMTQA0e0kgOn8GXDJHDBCSTjA8lQKmUXxF
+	 5nHqxZHxpB8hlumO2YJXIE7RgkxrB5PhHyZQ0jKOYk3Q1Rn2PYoMzBbr8MT/ydeE2oePS
+	 qCU0CIJPXjYnZEES3iGdbqL1oUAlOFdC2jJ33HoAwFz8cGnQTQinrTduRnTXhLjQWWhDv
+	 hEf0h5ZGoNBJ/ZVUVTSljeZKo5etGc91+oDXesIfDT2BYSK2Dqz2msKQM/Q4bUWbO4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nb6BzDVCzXLV/Bu6gRF7MTmWEvX2NvU08anQTgs8lgg=;
-	b=5kWCYjHPmUeAxzRLGAuQxNX3NmZ+HYhssnCDm0ZVEiYKD9tX10eWPWtD6sb4+Vspxg8x
-	 F7T/4EQbtE81pBB5FmuOluRJwCMBkeWcAgVg9R0Tz3xh1xL5owHVECouwKNf9avmkc/nl
-	 spucAYOzeKXaZg30OcKjzBCwoKscbNGF0ydMbHC09k9jTJiLNCegrNX+owIC4gbc4nYpN
-	 bB3OIyyIM7RGVmL7VL7oAH3kVT2vcTGlPwqjQwKzUae3H+XWXoJajrus6kx9xmedo+EIp
-	 qv+l+o9wnoB4mB85zn95jcX73V0SeE101SIpDB3kFEbWJQ8TsiCb4ty1cSGU+H75EnQ==
+	bh=BLqR954NNUN6iPZ2dCl+knNgLO8tDT04PHP5yOLaKGw=;
+	b=spctDalJeFah+D3CBI3lS/FXBt1MjGnuNh+CsDLXDB5ZujsJx0fu6WcpwqLVidawDb7B
+	 ez3QXX6QBP7ueIPDbm0PBYeCAhm9LgSgt8trtEGm85qULghGEIbV0I8YaSrdZS38QQNiJ
+	 /GdXGm7+qXoLgNTalUjwu+rnWQWALRjEq7avT3MyBly0jVoH7euzhJUj6HpJZ7MUxSTAr
+	 tevIYsl6blBzmhZRuJlW+7lLV/GEIHNJkG+DJMUA1VYwWjQsTr8fGhqWCwslJL8D6zKB0
+	 B/3W5T56Px0TMU7UsAcndd8MEb2QMT7ib2/RoHlyuY36+s6xRTC0CfHWWa9OtP/yzsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ae8IaYif;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RzM2Eb2+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494CC606A32E;
-	Thu, 26 Nov 2026 14:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCC6606A338;
+	Thu, 26 Nov 2026 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ae8IaYif
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756CF1F000C4;
-	Thu, 26 Nov 2026 14:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RzM2Eb2+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325CE1F000C0;
+	Thu, 26 Nov 2026 14:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705007;
-	bh=nb6BzDVCzXLV/Bu6gRF7MTmWEvX2NvU08anQTgs8lgg=;
+	s=korg; t=1795705010;
+	bh=BLqR954NNUN6iPZ2dCl+knNgLO8tDT04PHP5yOLaKGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ae8IaYifLNlslEbyQ7lcXUI2NsKanjygV39fYoI7/RSjAJ7TP/ZLntfG0fXQkH4yS
-	 vDgUrOqx8b7K2XUtkaMeqNRo930VEWqvrvYTKjvxeb9csj6ShtAyGeSzBTGU8gZ564
-	 ooAtBXNZJWWpZrdiG7lothEtrg9cBHJqLv8BPgBw=
+	b=RzM2Eb2+XdGKobIuVD4Q2GF+WJqmWqCOO9DP1cu/ngyEU6S9g1o80D0x1wms3Wf7A
+	 XRRFkVS5I+R2/o5wRtfRU8gALCsm9u6OiKez6Z3EW+JOxz+iEtHSRZWxPUj7rrc3aS
+	 mDHnYtLNi/xzYQuBKWci8bfpZCQ6ZI+pksMdtvGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Alex Austin <alex.austin@amd.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/319] net: stmmac: copy XDP metadata in AF_XDP zero-copy RX
-Date: Thu, 26 Nov 2026 15:36:59 +0100
-Message-ID: <20261126144007.889728882@linuxfoundation.org>
+Subject: [PATCH 5.15 052/319] sfc: ptp: drop the stale frequency reset in efx_ptp_start()
+Date: Thu, 26 Nov 2026 15:37:00 +0100
+Message-ID: <20261126144007.912748991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,46 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Alex Austin <alex.austin@amd.com>
 
-[ Upstream commit 41d78e9ac0984f0e9577e5312e62400b5a6760c8 ]
+[ Upstream commit 21d4917cfc8b6837c44d8aa186941a6a16ec17a0 ]
 
-stmmac_construct_skb_zc() reserves headroom for the XDP metadata and
-records the length reported by the XDP program, but only copies the
-packet data starting at xdp->data. The bytes in
-[xdp->data_meta, xdp->data) are never copied into the new skb, so the
-skb advertises metadata that is not there: after eth_type_trans()
-anchors mac_header, data_meta points at uninitialized headroom instead
-of what the program wrote.
+FW does not touch the clock frequency state on MC_CMD_PTP_OP_DISABLE or
+MC_CMD_PTP_OP_ENABLE, so the driver doesn't need to either. Doing so
+just desyncs the driver's cached current_adjfreq from what FW still has
+programmed.
 
-Copy the metadata together with the packet data starting at
-xdp->data_meta, leaving skb->data at the start of the frame and the
-metadata immediately before it, and record its length. This keeps
-data_meta valid for the stack and TC BPF after eth_type_trans() anchors
-mac_header.
+Resetting current_adjfreq to 0 here means the first efx_phc_adjtime()
+call after efx_ptp_start() reprograms the NIC's clock frequency to 0,
+since efx_phc_adjtime() always sends current_adjfreq to FW alongside
+the time step. efx_ptp_start() runs on every SIOCSHWTSTAMP mode change,
+on ifup, and on the reset_required path in efx_ptp_worker(), so each of
+those silently drops any frequency correction the PTP servo had already
+applied.
 
-Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-stmmac-xdp-fixes-v2-4-10eae8a093a8@oss.qualcomm.com
+efx_ptp_start() is also reached from reset recovery, but that is fine:
+on an FLR or PCIe reset FW does not touch the NIC clock, and on a full
+MC reboot the clock is reset to 1970, so a stale current_adjfreq from
+before the reset is hardly consequential - especially as it is bound to
+MAX_PPB, 1000000 ppb.
+
+Fixes: 7c236c43b838 ("sfc: Add support for IEEE-1588 PTP")
+Signed-off-by: Alex Austin <alex.austin@amd.com>
+Link: https://patch.msgid.link/20261026123023.3566549-2-alex.austin@amd.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/ptp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index a7347cd844b73..773c64dd130a3 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4857,7 +4857,8 @@ static struct sk_buff *stmmac_construct_skb_zc(struct stmmac_channel *ch,
- 		return NULL;
+diff --git a/drivers/net/ethernet/sfc/ptp.c b/drivers/net/ethernet/sfc/ptp.c
+index a2b4e3befa591..4505e0ca018c3 100644
+--- a/drivers/net/ethernet/sfc/ptp.c
++++ b/drivers/net/ethernet/sfc/ptp.c
+@@ -1364,7 +1364,6 @@ static int efx_ptp_start(struct efx_nic *efx)
+ 		goto fail;
  
- 	skb_reserve(skb, xdp->data - xdp->data_hard_start);
--	memcpy(__skb_put(skb, datasize), xdp->data, datasize);
-+	__skb_put(skb, datasize);
-+	memcpy(skb->data - metasize, xdp->data_meta, datasize + metasize);
- 	if (metasize)
- 		skb_metadata_set(skb, metasize);
+ 	ptp->evt_frag_idx = 0;
+-	ptp->current_adjfreq = 0;
+ 
+ 	return 0;
  
 -- 
 2.53.0
