@@ -1,51 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704939;
-	b=hRDOJS/EY7RxeTkrtd27x5/mZ26HS0RdhPfKGgIHi63dTAC5lXqY8f9UINi0nDToTvWv
-	 UZ6GmFIFTa0IelosneE/fBZEfZ5W+AGEV3gUfHpXTsXCazCaXVnE2+ZAsDuoDxOXgBzkg
-	 vo+08Vl3XBvPGchEFNLNmUXbe6cYKYwuTLdzOzc8L9N3TUmBQE720tG/16oruLfOO9Nb0
-	 aT+jMT6KMfbf7GlM/KwPZgjeDSBmkgPe069mx8HINvobnZK6xtuKvkbZUbCB9IoMqC18u
-	 eJeT/1ZdASvDT57LMGr3L4xmvRiuoRFMgzm/GgogSxCZX/AdCgV4duzEU5LfuFqgg5w==
+	t=1795704941;
+	b=IjwLIDbfGs2Wd5ghT9Gy1oDM4s4qFuhr87X/dbkgP6NjlrHoxnhFGJTId89ZgnCBBhqd
+	 HqbX5OA4YmywHq5C9SNYtMGbmL2tsIBuAxhSfEFIwfJ1CQIfthKkmeuPD3kBGHm28bWOa
+	 fIlLzEJpWcwbiw718cURPEp9Xu4gaOU2G7eonrRNI8sHHHdIoOA1gvlcTFIG35kSM3PvZ
+	 W7YS+Eckmw1Z68NSK2GagBgYcU315UI0ub4jIiGDrnE45x0UglUu0oe2xIJF5QDymmMnP
+	 ElfIgTxZDngn+B3SPXv1pOWoGBtnLvdjcdHr8LUupOawMyqyKPDWsLvlYR3HrgBcIOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704941;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e453hHu6dGJ2Ns6bBiVZL/uCYtISmQs/2R4Qtj3NUCQ=;
-	b=LnhqiHV4MWjAkGhUfJrCRMCXtFwEvmkV+IbxOtyBdJ83UuGYQ4meP6KGu+yFdylWwGNr
-	 JMrWOVCifxu5t02JRlwssIW0OqGxPdAKQd1zdeeGdM8/upps7xktG1GTqteWIS9Rh6iWk
-	 E7tABdjizdM2CnLXII6YV+u7+EXJNxQ26qUPuerp4bQ0O0YRQ+Rx6ZMObJ8QtunKmVrkd
-	 eZWdd5h34KvQ2SwD0io6NeYXMawWuSXQbP62l5XH2e0erfFn4usGli7wzGaNsDgjaklsW
-	 g/rB7do0iRlcMb4Dru1VUqs3pqWVkXI69pBCGF4MbRE3I4Mkyj7r2tCBXk6/sbOB/+w==
+	bh=2U9xHLmjUbxFMkAVscdAlU9zWIZMRHokKED6f8nzv1U=;
+	b=ArtZo4cnIiiU3ZtJy+4Q/Rjap3fLmu29RsHEgyS9Hj253s36v5cDRDHAS0SZD1vHkhJP
+	 Je8VwvYrUTkELRJqQNz//zhDBoAYfFekDTQs3lsoxzPcBrOcMGmi/X2oCi2bXWyrRmdEn
+	 H/M6zwvRZTHebcCf7p7PuEwtgr3tmzZjEs4ApwvxH6a/hKRpE3NAfDQYYKqWlfcnZe944
+	 eFoTDaJP6Su358YoJq79REceqLXeSEkikaTh/nCphSIkSxTWWCi5XYiXp12FGaTB5PQ3K
+	 YUgiWJSQ8dAInad4s7slzrXhOwItieEgd/XKje4I28hjPdTFIlGJcmPc2JAVIGsycoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2rz7EjAL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K4SAP4CA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33FE606A329;
-	Thu, 26 Nov 2026 14:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44322606A31C;
+	Thu, 26 Nov 2026 14:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2rz7EjAL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CD51F000C4;
-	Thu, 26 Nov 2026 14:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K4SAP4CA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7611F000C4;
+	Thu, 26 Nov 2026 14:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704938;
-	bh=e453hHu6dGJ2Ns6bBiVZL/uCYtISmQs/2R4Qtj3NUCQ=;
+	s=korg; t=1795704941;
+	bh=2U9xHLmjUbxFMkAVscdAlU9zWIZMRHokKED6f8nzv1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2rz7EjALYiElYMu5v62bIyzCl4G/rDMMsoFOC80+dWQ4Et/gFzd+on1TzuK+ri4P3
-	 vn+bIHpqNZG/B9pojkGcFUr3730x/4+GGPKZYD8OLO4ZcvIWXcGEKiZfCH5XMuTDJW
-	 W0hb5B+SkviqGlBytNjfB9Mb3k5WWjz2SmfqKNfw=
+	b=K4SAP4CAFNEXcgST9C8qFMXbszz3RseNuBDPGektTHpHGewt9UZLtkKLORWunviWX
+	 GU4GpIu78mbQunePikibSH2WAfUp1eif8N0QFcL/Iz+3RRmw24LEAW2H270Nwnb0T7
+	 Den0zJ5ZNrXoBiUCfnQavvM2d9zqjtfdvSwROJLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Chris Mason <mason@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/319] mptcp: fix UAF of child socket on listener close
-Date: Thu, 26 Nov 2026 15:36:12 +0100
-Message-ID: <20261126144006.837696149@linuxfoundation.org>
+Subject: [PATCH 5.15 005/319] mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs
+Date: Thu, 26 Nov 2026 15:36:13 +0100
+Message-ID: <20261126144006.861216980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,96 +73,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Chris Mason <mason@kernel.org>
 
-mptcp_close() orphans the listener subflow before inet_csk_listen_stop()
-runs on it. A child created in that window inherits SOCK_DEAD, so a
-following RST frees it while it is still in the accept queue:
+[ Upstream commit fe2817e3d5ea347214342c9a5cd8bcbff20c0574 ]
 
-close(listen_fd):                            3-way handshake & rst (plain TCP client)
+try_collapse_pte_mapped_thp() clears PTEs without transferring their dirty
+bits to the folio. A shmem read fault can map a clean folio writable, so
+a later store only dirties the PTE. Losing that dirty bit allows reclaim
+to discard modified data.
 
-mptcp_close
-  // mark ssk as SOCK_DEAD
-  sock_orphan(ssk);
-  __mptcp_destroy_sock
-    // ssk in conn_list is listen sk
-    __mptcp_close_ssk
-                                             // in 3-way handshake
-                                             tcp_v4_syn_recv_sock
-                                               // inherit SOCK_DEAD state from listen ssk
-                                               inet_csk_clone_lock
-                                             // process RST
-                                             tcp_reset
-                                               tcp_done
-                                               // sk is SOCK_DEAD
-                                               inet_csk_destroy_sock
-                                                   sock_put(sk); // freed
-      __tcp_close(ssk, 0)
-        // free child
-        inet_csk_listen_stop()
-            process child        <==== process freed sk
+The assumption that regular files are read-only is also obsolete since
+commit 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse
+for writable files"). In any case, transferring PTE dirty bits to the folio
+when removing mappings (and while the folio is still mapped) is the right
+thing to do.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 59 PID: 404175 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x150
-RIP: 0010:refcount_warn_saturate+0x12e/0x150
-Call Trace:
- <TASK>
- inet_csk_listen_stop+0x3e1/0x530
- __tcp_close+0x3bc/0x440
- __mptcp_close_ssk+0xb9/0x210
- __mptcp_destroy_sock+0x11c/0x280
- mptcp_close+0x25d/0x3b0
- inet_release+0x44/0x90
- __sock_release+0x42/0xb0
- __fput+0x98/0x270
- ____fput+0xe/0x20
- task_work_run+0x6d/0xb0
- do_exit+0x1e7/0x3c0
- do_group_exit+0x3b/0xb0
- get_signal+0x17a/0x940
- arch_do_signal_or_restart+0xba/0x130
- exit_to_user_mode_loop+0xae/0x160
- exit_to_user_mode_prepare+0xad/0xc0
- irqentry_exit_to_user_mode+0x9/0x20
- irqentry_exit+0x21/0x40
- exc_page_fault+0x93/0x190
- asm_exc_page_fault+0x27/0x30
+Use get_and_clear_ptes() to collect the dirty bits and mark the folio
+dirty before unmapping it. Update the comment.
 
-Unhash the listener subflow and drain its accept queue before it is
-orphaned. No new child can be queued after the unhash, and the ones
-already queued are not SOCK_DEAD.
+This was reproduced with shmem using MADV_COLLAPSE followed by
+MADV_PAGEOUT.
 
-Upstream fixed this in commit 57fc0f1ceaa4 ("mptcp: ensure listener is
-unhashed before updating the sk status"), which does not fit 5.15.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: 27e1f8273113 ("khugepaged: enable collapse pmd for pte-mapped THP")
+Fixes: 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse for writable files")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: adjust comment; simplify description; cover file-thp as well ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-17-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adapted batched PTE operations using folios to individual PTE operations using struct page ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ mm/khugepaged.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 2f18dcb8d0345..f1122038d17cf 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2834,6 +2834,16 @@ static void mptcp_close(struct sock *sk, long timeout)
- 	sk->sk_shutdown = SHUTDOWN_MASK;
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index bd909aa4b8fee..19c2a749e85d2 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1517,10 +1517,14 @@ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr)
+ 	for (i = 0, addr = haddr, pte = start_pte;
+ 	     i < HPAGE_PMD_NR; i++, addr += PAGE_SIZE, pte++) {
+ 		struct page *page;
++		pte_t ptent;
  
- 	if ((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)) {
-+		struct sock *ssk = mptcp_sk(sk)->first;
-+
-+		if (ssk) {
-+			lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
-+			if (ssk->sk_state == TCP_LISTEN) {
-+				tcp_set_state(ssk, TCP_CLOSE);
-+				inet_csk_listen_stop(ssk);
-+			}
-+			release_sock(ssk);
-+		}
- 		inet_sk_state_store(sk, TCP_CLOSE);
- 		goto cleanup;
+ 		if (pte_none(*pte))
+ 			continue;
+ 		page = vm_normal_page(vma, addr, *pte);
++		ptent = ptep_get_and_clear(mm, addr, pte);
++		if (pte_dirty(ptent))
++			set_page_dirty(hpage);
+ 		page_remove_rmap(page, false);
  	}
+ 
 -- 
 2.53.0
 
