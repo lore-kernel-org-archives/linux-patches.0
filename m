@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704924;
-	b=XjGDVGB55xb/FJRix4os1Z1S0nvKy9VOJ4tvYovO5YTdLNN0dPM2/akO9JKm6J353OGw
-	 7R4ERNd4ZO1+Jjqf1TSq0OjK6xsu3+dcqW6WgZp/Fu7llLko+NIz9FhRyrqHX1j14WJC9
-	 w18djeZAZqor1A2gSsOTAw5plMsNN6zZvOKVdHEPwADplHiCM+JFiQzM3/69wziCFDIyf
-	 yC9fZnzxRmvJZZ4GhXShazgKRLLPTw8wDi/yB+j0Ox50SQGZnnbxamVJRN6c29wAbjuQ5
-	 TaXbiFirrzHVkj+3Rs+nmfIV9tYKPPgzmYrBnAerkEMkR4kBSfkQjzuexjpaeEUP43w==
+	t=1795704927;
+	b=ZOcd1nhnu6J+FVN4vrpm6pabpwmWKD183iuM5OIJCeecovr4ytt6A5ZF4E7lBAnn2/9I
+	 cOR/RiZyPghWi9xoCfP4BjCoivT8VCWUG3R7iOu5IGUZTkvZi0r7XP4jhi1zUUnn93bh3
+	 HM9LpJOTPlS2izteYkd8ojAwDdw3RBSWRkdUAt5FeO1BjE7RAzJ46wA3btnDrMdPoG8Io
+	 FecVFpO8rbnLbJ7B+1W1s/Ip5VupC4Vm/5yV+abCHasp3uz8xUCQQoZOnLAVIkFtuDvxd
+	 RncWCR0VFUEUJyZXFjwuN8lNw6OW8vGKKaWDybOMxl9rwgh3BUNnYucvtgvtrJCl18g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ndjTefv0G1dlH/GBLv9Mm9wYoXq8AIuGy76+KKiBWF0=;
-	b=gFqpwDQbc1ytJnrWG9BvZahH/+ntwY2VKRrEky7R5a+k2vYB7VSpUTEo/TMyab1mVPos
-	 OG5gnetTLx8JJA9fsN+Aeci47YApLciZbZhptDMLmaR5m7Lc+elhriIWmw5tOSC5q+VEc
-	 tAB9bo3tdZZy6q3lqQ7akvmk1LtesDGhSsu3cMQD4f92wSoCknBo9wAUGreW5vIkcZM48
-	 rR4FK3eQBLhS+itmETq9+4VKLIrzTUDDXFZrdIQysM2Dbti3lFl0/Uxa124Wjrjxo21gK
-	 A/fnrdjQtgRhjxdmFy3KKwVdovakbiiGko0OpO/zirUeFxU5S5QR/x6hXCNw1qg+QMg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=p4I3RxJ+aJ81IRdk+1JjUhcyTNKv0yr08V9tAIvovec=;
+	b=S0v4KPjLPATW0s24j5FJx7Z4yPWJlqBaVgulOjwv0A2p1kl5fW2GIfIB04rMrv0XQiJT
+	 EdcnP2WClNfBomj6MSzaLGsa7//q8iINh0a2cxVCRuZGZANJWe2LqNshniWNA8JlzZvJI
+	 A0ra9RFII0ukwgT9K5ABYUIVKj/nANRBljKYBgKvhnVTEIjmjCVWgacEmF4xw26ZnAQPa
+	 MRDiPLWI/iyWzydW0+M2Wtnlu7yOP6WPt59nRyfGbAUz2FBj1wfzsmJBxkpuHl4Hhmd+0
+	 4pxWI6R3BWyH+rpBUv9Cy4Y9AjzTBIRTcovmMpvlSqO928GB6689mQaYnWXxgKSZ1Yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wBGQVWfk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="osN/W8D3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB79606A321;
-	Thu, 26 Nov 2026 14:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B949F606A31C;
+	Thu, 26 Nov 2026 14:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wBGQVWfk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28351F000C4;
-	Thu, 26 Nov 2026 14:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osN/W8D3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74501F000C0;
+	Thu, 26 Nov 2026 14:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704924;
-	bh=ndjTefv0G1dlH/GBLv9Mm9wYoXq8AIuGy76+KKiBWF0=;
+	s=korg; t=1795704927;
+	bh=p4I3RxJ+aJ81IRdk+1JjUhcyTNKv0yr08V9tAIvovec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBGQVWfkp4+5XBWNwu7gcfQic0lEXTQ8WDHpp82xK6HZ/nL0+TFGFdOsorOS/uJHU
-	 jiBsXKaqwV1ymmGy680wGqmTluflUPc4R4mEDsnRKC6WXZLv292WtyztCLsZM0mIkl
-	 Gkys74CeXfgYAaC/OOSC0k99zhHxBtnNoDwslmGU=
+	b=osN/W8D31BJBuDdv5zk0kF4J2jUSodb3dTcrN9rYKaLaks8JxOElasMy3v3WIW/WQ
+	 hio2voBiF9XnWxLbDm6o2AKLOtxchOnKV7/DeaNYQgYjkb/7uEsDGLcSQDMMGhT6+2
+	 408eqH1KYcEw7Rbkkj5nS5f24SXjo04C/hvuys+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Imre Kaloz <kaloz@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 022/319] wifi: ath9k_htc: start ANI when an AP interface begins to beacon
-Date: Thu, 26 Nov 2026 15:36:30 +0100
-Message-ID: <20261126144007.241875829@linuxfoundation.org>
+Subject: [PATCH 5.15 023/319] scsi: aic7xxx: Fix REQUEST SENSE allocation length on big-endian hosts
+Date: Thu, 26 Nov 2026 15:36:31 +0100
+Message-ID: <20261126144007.264045853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -63,54 +62,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 5c1b202d67a212c87e7389aaa093ce77828fa98f ]
+[ Upstream commit 9a2690eb4bbea8d7fbc3dfe478fca75fe956abb4 ]
 
-ath9k_htc_vif_reconfig() re-arms ANI after a channel change when an AP
-interface beacons. mac80211 configures the channel before it enables
-the beacon, so during a normal AP start that never triggers, and the
-start from add_interface that the previous patch removed was cancelled
-by the same channel configuration: with hostapd, ANI and the periodic
-calibration it drives did not run in AP mode until a later channel
-change.
+The REQUEST SENSE length was taken from sg->len after the AHC_DMA_LAST_SEG
+flag was or-ed in and the value converted to little-endian, so the 8-bit
+field is 0x80 on big-endian hosts and the target is asked for 128 bytes
+into a 32-byte buffer. Use the buffer size, as aic79xx does. On an SGI O2
+with a Fujitsu MAX3147NC, the sense data of its CHECK CONDITIONs during
+probe was lost.
 
-Start ANI when the beacon is enabled. The channel and its calibration
-data are in place by then, which is the state vif_reconfig() re-arms
-it in, and remove_interface() already stops it with the last AP
-interface.
-
-Fixes: a236254c35f0 ("ath9k_htc: Add ANI for AP mode")
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20261005072209.4101009-3-mehmet.fide@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Link: https://patch.msgid.link/20261013094253.2956-1-kaloz@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/htc_drv_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/aic7xxx/aic7xxx_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_main.c b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-index 72ef319feeda7..859fcd59a45df 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
-@@ -1552,6 +1552,9 @@ static void ath9k_htc_bss_info_changed(struct ieee80211_hw *hw,
- 		ath9k_htc_set_tsfadjust(priv, vif);
- 		priv->cur_beacon_conf.enable_beacon = 1;
- 		ath9k_htc_beacon_config(priv, vif);
-+		if (priv->ah->opmode == NL80211_IFTYPE_AP &&
-+		    !test_bit(ATH_OP_ANI_RUN, &common->op_flags))
-+			ath9k_htc_start_ani(priv);
- 	}
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
+index d747d0b72a13a..989e8c9bda4ac 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_core.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
+@@ -1097,7 +1097,7 @@ ahc_handle_seqint(struct ahc_softc *ahc, u_int intstat)
+ 				sc->byte2 = SCB_GET_LUN(scb) << 5;
+ 			sc->unused[0] = 0;
+ 			sc->unused[1] = 0;
+-			sc->length = sg->len;
++			sc->length = ahc_get_sense_bufsize(ahc, scb);
+ 			sc->control = 0;
  
- 	if ((changed & BSS_CHANGED_BEACON_ENABLED) && !bss_conf->enable_beacon) {
+ 			/*
 -- 
 2.53.0
 
