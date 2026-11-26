@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705255;
-	b=A+lRxkF+Xl05l488RLvRyD9I/F2bw7kBwq4mdg+9yZcWKlF6UBbZgEGYrlrgyyb+rPdg
-	 3uJt3we/unm/CIbEPEbBf3UmsAmMR1j1zsszAvsag+3s9kbneUxO2/VdQtD2a4tsUgguN
-	 kKQCWzU05d7IwqGBjXgR9Nitjt+9lrSHmiyjMaQEPxc8flaswMgqHIPT5jJ4PbIYOGy/5
-	 vTzoFP+qnXQfdvVKrgPiw3QrK6jA2Qli54gB5VSTni8Atprp8uX4vSbpdiV/dJ0IUPU25
-	 RQnVDTSYPbqYdbdUD6Su1yn91VPJzenHlGo+y/ZXmcA//XFaD6T5hR5F7rHIwYTZTxA==
+	t=1795705258;
+	b=wm/0tEm54/19oGSrIXwBSJ+PY0cD3ZFlO7Hk/gQXgaVE0/Zqr2var0pO9Tlzjn1BcB1p
+	 qFFYcYdPNjPhl1rqGbahIml/NxplVa/WgxUx4+oc4HIv/Oejw/qGvWkY+4o8genz4cpXp
+	 ip09hHjz3ubX8hUxqS/fTfIy/k+V4SKqbqrit4jefpOoyCc7+1C/YKsxaCMhrP20wQ/Hp
+	 UnvBEgXH2N3liLri7NnMvdTfX3kdfQpAATdgccys3SnyPiGw1ZJcFsTC7+lUFsxj4KEki
+	 0rum4X70Pu51k+BOHt4yGvvlE+0wNWRAdnc9FSOfF8vtD+9CXdLXQre9TLTuPk2Pv8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705255;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705258;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3uhCCHCCns9XNbV6g70q2H6DnHVa80ckzUv2KH1Yfz8=;
-	b=0gnTjhW6IsE98vij6vMFRNQx8vZKk6o7gZUnmu/8ra/uYdxZJs/vNjsnXcDJMaGDBTgL
-	 tkHy13PKuilRbBmnTbmidQIvb5mAJj5MbkZsI/uGiaO5LpLkMmKTVT2c5gx09x17IwdNZ
-	 vKAYgUnc9zkMS6qwhW+Qum7OPFEbZnglLdV31dp4q5XUOsaCGaOZkBWgTKlY/jIaHjF1v
-	 Fp7ptcRJXW2sIST6OK2xbcXJNtG+midJruTt87SKkA1uMXXMZGw3xkbAjxICABVxL7SEu
-	 IQvc6UDmQ+LudQG6LEvwVeOGaUwcVuW8J4vYgLxfC3IfGltyA58y4Yr5MtdWPKRYHnQ==
+	bh=hWg39kznLsQ/7kqxZVmWO6Mels7rIIeNvIp9bk/k124=;
+	b=JilAD7Bi82pCeNDVwaCE2gs97y1psyttOBL4nswEWvP/2bLL0vFjwM4Y0waRJuPm0n2c
+	 YIYVe0SU2EpAFXaiHv3eReVTBnBmJyz8tni9RQxYH1kiMB8COBFvRl5XXnT2FM2PTKzAg
+	 evIIdBLDihFpU28rRBnHbM0Uk+cH6PM+J5Og3BuJL8bflyTTivx4ByS4ErFR6EehhEZES
+	 VVfV8slgscKjmflLTFa52V4WQZ+LcL6cC0DlYzX+bR4PsJ+mdlvIKuRE8jNDMZp6K81Cz
+	 bUI8trtk53NLBbw2W09m8998bfpxFDeHwRDZnbOSCftOwDYL3p+KGdtafMlkMqkJjQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2JwDgeb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBO9V3D8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D332F606A321;
-	Thu, 26 Nov 2026 15:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885C6606A334;
+	Thu, 26 Nov 2026 15:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2JwDgeb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DD81F000C4;
-	Thu, 26 Nov 2026 15:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBO9V3D8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB62C1F000EC;
+	Thu, 26 Nov 2026 15:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705255;
-	bh=3uhCCHCCns9XNbV6g70q2H6DnHVa80ckzUv2KH1Yfz8=;
+	s=korg; t=1795705258;
+	bh=hWg39kznLsQ/7kqxZVmWO6Mels7rIIeNvIp9bk/k124=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z2JwDgebCsmKl0SX3ecf6rdCNO2pA1xzLqlUplwJT2nddkkXwChgQbDCpBB0rPdfV
-	 XgDFX+Iif+3xiXNUF1BjrdL0DnRGYc3NKoZZLnfSetTfQjGcp+LAwWhwb7dHo8uEsA
-	 ZROcYGmR+RyVaXjJLIBJKP9xRBlG2kpFiM0N4Q6Y=
+	b=RBO9V3D8S3XfA1+Fsn+PDe3HKf+zbv+GQCbmh7/zdK95tVxJlUmJmdFXYMm0fj23a
+	 5ODW/AhwbYMp1u1toTqb9XzZZzOjTAoCnnQUqw/41W7nCD8gXfkoMFYCIHF+PYn7/u
+	 JeFvna/qM41qejotNgOnETW6UNNW8dRm7KUoglOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Avi Weiss <thnkslprpt@gmail.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/319] SUNRPC: preserve timeout policy when cloning clients
-Date: Thu, 26 Nov 2026 15:38:26 +0100
-Message-ID: <20261126144009.860484545@linuxfoundation.org>
+Subject: [PATCH 5.15 139/319] SUNRPC: Balance switch queue length on transport removal
+Date: Thu, 26 Nov 2026 15:38:27 +0100
+Message-ID: <20261126144009.884126277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,38 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 5b0ac1f82201c2ab2d9c31ed568cc782bac6a399 ]
+[ Upstream commit 8acd94f02a960c8936df25a7af9c02c8ea87064d ]
 
-rpc_clone_client() and rpc_clone_client_set_auth() leave the
-timeout argument unset, causing rpc_new_client() to use the
-transport defaults instead of the parent's configured
-timeout. This also affects pNFS data-server clients and
-changes their request timeout and initial RTT calculations.
+When call_connect_status() moves a task off a transport marked for
+removal, it decrements xprt->queuelen but leaves the switch's
+xps_queuelen unchanged. The stale count persists after the task
+finishes and skews multipath transport selection.
 
-Use the parent's cl_timeout when no timeout is specified.
-Preserve explicitly supplied timeout overrides.
+Decrement xps_queuelen alongside xprt->queuelen, matching the normal
+transport release path.
 
-Fixes: 1b63a75180c6 ("SUNRPC: Refactor rpc_clone_client()")
+Fixes: 6f081693e7b2 ("sunrpc: remove an offlined xprt using sysfs")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/clnt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 48ffdd4192538..de2d24a16087e 100644
+index de2d24a16087e..7d7950068b030 100644
 --- a/net/sunrpc/clnt.c
 +++ b/net/sunrpc/clnt.c
-@@ -638,6 +638,8 @@ static struct rpc_clnt *__rpc_clone_client(struct rpc_create_args *args,
- 	}
- 	args->servername = xprt->servername;
- 	args->nodename = clnt->cl_nodename;
-+	if (!args->timeout)
-+		args->timeout = clnt->cl_timeout;
+@@ -2131,6 +2131,7 @@ call_connect_status(struct rpc_task *task)
  
- 	new = rpc_new_client(args, xps, xprt, clnt);
- 	if (IS_ERR(new))
+ 				xprt_release(task);
+ 				value = atomic_long_dec_return(&xprt->queuelen);
++				atomic_long_dec(&xps->xps_queuelen);
+ 				if (value == 0)
+ 					rpc_xprt_switch_remove_xprt(xps, saved);
+ 				xprt_put(saved);
 -- 
 2.53.0
 
