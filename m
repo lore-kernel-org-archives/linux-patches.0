@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704994;
-	b=dDAuxXAjzJB3OVI5OA6r8Yp1TQHvD8a8cMLpE/rgKOpEvpqgGZIOIXjPz9jBNVW9h5WT
-	 AB0hhwJtXVHmZjIMpJbUs+2WLKfSFo2mdkzNtrAznFbAEqxDp92XlP0OIn9uit1fLddVw
-	 wL+4ZrlDIl4cwvjXByXHs3juoHK1o+V/WP3rBykZ+P+oUOcKOh+g5WypVSw4BfT8nsKji
-	 9FMNaPQNSg1T87usgFOxXqfk7OJDU67ZHZLP0zn2fqlKCBBEB/wYI07cjY2GlvgCtffJR
-	 L5AFouqrRHqoMmVaeG9ObsBj882OF9ONNV2vqnokuNNeCX08OAbGlfBkqlWV4qF8SYQ==
+	t=1795704997;
+	b=B2Aeo8rCsst+FvdgoVJqhE8yfrIrIda2eRkqUqABNpsWCQHuc80alP6ziotBkdti+uLn
+	 ssgXkfcY+b45K5W9y+WzIoNxdfMkuJjPLJoavnzQQXWuaG9p5haX3FCHwoJKEIs9vs1XM
+	 FWYs4NOM28sDmuPc8PsJra4dIvK4ONmkWf2lUpESbF0pxfywM9NH/dsVhEaj3fVOlpyCM
+	 n+cEZAj+S4vw4oSZ9XPROMZmmvjJ4NsI6mlYNT8W1Y8YfnT4+IbvEuSolKshVCLHvWMcm
+	 +uhQPnYpqJManEKQOexuKgP7oO3WzzYOeyYtzTKlvEhDcZXQSN366LB+xrxDjNFQylg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pa5ElcGCOeBII7mRtbP8Zme5ztjPPLQtWGCIPQi/eeM=;
-	b=ovCRvXD+BqL+1m/UXwKixTXf+VVYbHwaFJU9xzbBM/T9FTiNr/g93e4WsjtnYZ/QYkQ0
-	 9uA8pWwKcz6SaJe0CeOQtv05gBZy2dK3Swyxac+zSqFARXTcMc/yEuwvTE+Kq6KM5v36j
-	 EcWJLv/dLTxBAO+wJLnSbksckikc5VNOYwKq3JP9XNlqsyvtIrMdb+VxA+55hRO9EMQsD
-	 k3VKfCkwiBEdB0KQ+TIXoy6q66/zGWa5HJVhAwkRU8Av9gPnZudPB8z2mGVysU8O2U9zJ
-	 YgGB2NaRkF8xa2iT9mnUr/R8j6EWT9uAHkj964Ln8B3ASzi+XzphG0yCHgCpNtWkb2w==
+	bh=8odg+u8QnMSU21vjC+NFfIFNOtT5JIdsztV+ghTrCds=;
+	b=n82XYBN1d0ODrXsS3Jo+vDd+Lrux6d6XH17QDTaoTORDgdtEbE9sQTUv5LrqnjPevkQc
+	 2lF3ta5I8x6Xx1ROqQBkmcntQDUfKovkCneZw9x8+NFHcM286mNriy3ALxBgChoE5qTmp
+	 FT4SJlCSMOPC0P+kLeQa1UWafz9aiqPvp46R18obb3/lkXI9kbgfouMAywsE1k1M2Z8B7
+	 bJSnzZoqWYvmd1b5VkC6Okva7iyUqdY5WIUY7Q/izdh9/KYhsiGHfnfPrR7Yi7Q08Jqze
+	 rPmWWxnu57XOO6s4cbImgfa9MISADNqjIS0w73wnVTy4WGt4PeguxOZaN1HMJiMtoBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=do+vdxJ7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=viJMI74H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC435606A31E;
-	Thu, 26 Nov 2026 14:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6B4606A31E;
+	Thu, 26 Nov 2026 14:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=do+vdxJ7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DBE1F000C0;
-	Thu, 26 Nov 2026 14:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=viJMI74H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED56A1F000C4;
+	Thu, 26 Nov 2026 14:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704994;
-	bh=Pa5ElcGCOeBII7mRtbP8Zme5ztjPPLQtWGCIPQi/eeM=;
+	s=korg; t=1795704997;
+	bh=8odg+u8QnMSU21vjC+NFfIFNOtT5JIdsztV+ghTrCds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=do+vdxJ7CUyB2Sy/pVsN4YCzCVv8sCki0PzMu6s8c8vJQVHYtwnykA4U1db0iCQ2J
-	 JtB05dR0XRolQR5kQ56QUUGoM8EinsDWksrHgk3FknZxf8n6620WCCnHMzQJ4vaPtr
-	 VfKKcHgAPwAfaxBlFdDFwQe3JytLwPo6h/fkHuQA=
+	b=viJMI74HoH/7Y8msTkBnlmXgWbfEfPY9aESpeJKTuA1UpuoIO4mTpslgian1P6cbQ
+	 n+UcU907hMHUXp8B3KU/VA5Nt6PaGb6YiEWfyukfpbb6LIMmt+3H1F3JpOTK8r+FNz
+	 6p76MNkh8agEQ0CHqIzTyL7X6gENvanocgFz7Lyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/319] spi: Support selection of the index of the ACPI Spi Resource before alloc
-Date: Thu, 26 Nov 2026 15:36:54 +0100
-Message-ID: <20261126144007.775982325@linuxfoundation.org>
+Subject: [PATCH 5.15 047/319] spi: remove duplicate parameters check in acpi_spi_add_resource()
+Date: Thu, 26 Nov 2026 15:36:55 +0100
+Message-ID: <20261126144007.798230817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,165 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 92640f98a78c6a3ea1ca32143144241eceb129bd ]
+[ Upstream commit cdb0cc9379f1b4fa5ea3e0492bacf8008f3f4e5a ]
 
-If a node contains more than one SPI resource it may be necessary to
-use an index to select which one you want to allocate a spi device for.
+The acpi_spi_add_resource() is never called with ctrl == NULL and
+index == -1. The only caller already performs the check. Hence
+remove the duplication from the acpi_spi_add_resource().
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20220121172431.6876-4-sbinding@opensource.cirrus.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20220709000709.35622-2-andriy.shevchenko@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 2d0953ab69d3 ("spi: acpi: only look up the IRQ of confirmed SPI devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c       | 51 +++++++++++++++++++++++++++++++++++------
- include/linux/spi/spi.h |  3 ++-
- 2 files changed, 46 insertions(+), 8 deletions(-)
+ drivers/spi/spi.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 45175348b75ea..f582dc4ac176e 100644
+index f582dc4ac176e..b662a9a3961ab 100644
 --- a/drivers/spi/spi.c
 +++ b/drivers/spi/spi.c
-@@ -2277,6 +2277,8 @@ struct acpi_spi_lookup {
- 	int			irq;
- 	u8			bits_per_word;
- 	u8			chip_select;
-+	int			n;
-+	int			index;
- };
+@@ -2328,9 +2328,6 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
+ 			if (lookup->index != -1 && lookup->n++ != lookup->index)
+ 				return 1;
  
- static void acpi_spi_parse_apple_properties(struct acpi_device *dev,
-@@ -2308,6 +2310,8 @@ static void acpi_spi_parse_apple_properties(struct acpi_device *dev,
- 		lookup->mode |= SPI_CPHA;
- }
- 
-+static struct spi_controller *acpi_spi_find_controller_by_adev(struct acpi_device *adev);
-+
- static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
- {
- 	struct acpi_spi_lookup *lookup = data;
-@@ -2321,14 +2325,35 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
- 		sb = &ares->data.spi_serial_bus;
- 		if (sb->type == ACPI_RESOURCE_SERIAL_TYPE_SPI) {
- 
-+			if (lookup->index != -1 && lookup->n++ != lookup->index)
-+				return 1;
-+
-+			if (lookup->index == -1 && !ctlr)
-+				return -ENODEV;
-+
+-			if (lookup->index == -1 && !ctlr)
+-				return -ENODEV;
+-
  			status = acpi_get_handle(NULL,
  						 sb->resource_source.string_ptr,
  						 &parent_handle);
- 
--			if (ACPI_FAILURE(status) ||
--			    ACPI_HANDLE(ctlr->dev.parent) != parent_handle)
-+			if (ACPI_FAILURE(status))
- 				return -ENODEV;
- 
-+			if (ctlr) {
-+				if (ACPI_HANDLE(ctlr->dev.parent) != parent_handle)
-+					return -ENODEV;
-+			} else {
-+				struct acpi_device *adev;
-+
-+				if (acpi_bus_get_device(parent_handle, &adev))
-+					return -ENODEV;
-+
-+				ctlr = acpi_spi_find_controller_by_adev(adev);
-+				if (!ctlr)
-+					return -ENODEV;
-+
-+				lookup->ctlr = ctlr;
-+			}
-+
- 			/*
- 			 * ACPI DeviceSelection numbering is handled by the
- 			 * host controller driver in Windows and can vary
-@@ -2371,14 +2396,21 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
-  * acpi_spi_device_alloc - Allocate a spi device, and fill it in with ACPI information
-  * @ctlr: controller to which the spi device belongs
-  * @adev: ACPI Device for the spi device
-+ * @index: Index of the spi resource inside the ACPI Node
-  *
-  * This should be used to allocate a new spi device from and ACPI Node.
-  * The caller is responsible for calling spi_add_device to register the spi device.
-  *
-+ * If ctlr is set to NULL, the Controller for the spi device will be looked up
-+ * using the resource.
-+ * If index is set to -1, index is not used.
-+ * Note: If index is -1, ctlr must be set.
-+ *
-  * Return: a pointer to the new device, or ERR_PTR on error.
-  */
- struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
--					 struct acpi_device *adev)
-+					 struct acpi_device *adev,
-+					 int index)
- {
- 	acpi_handle parent_handle = NULL;
- 	struct list_head resource_list;
-@@ -2386,8 +2418,13 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 	struct spi_device *spi;
- 	int ret;
- 
-+	if (!ctlr && index == -1)
-+		return ERR_PTR(-EINVAL);
-+
- 	lookup.ctlr		= ctlr;
- 	lookup.irq		= -1;
-+	lookup.index		= index;
-+	lookup.n		= 0;
- 
- 	INIT_LIST_HEAD(&resource_list);
- 	ret = acpi_dev_get_resources(adev, &resource_list,
-@@ -2400,7 +2437,7 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 
- 	if (!lookup.max_speed_hz &&
- 	    ACPI_SUCCESS(acpi_get_parent(adev->handle, &parent_handle)) &&
--	    ACPI_HANDLE(ctlr->dev.parent) == parent_handle) {
-+	    ACPI_HANDLE(lookup.ctlr->dev.parent) == parent_handle) {
- 		/* Apple does not use _CRS but nested devices for SPI slaves */
- 		acpi_spi_parse_apple_properties(adev, &lookup);
- 	}
-@@ -2408,9 +2445,9 @@ struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
- 	if (!lookup.max_speed_hz)
- 		return ERR_PTR(-ENODEV);
- 
--	spi = spi_alloc_device(ctlr);
-+	spi = spi_alloc_device(lookup.ctlr);
- 	if (!spi) {
--		dev_err(&ctlr->dev, "failed to allocate SPI device for %s\n",
-+		dev_err(&lookup.ctlr->dev, "failed to allocate SPI device for %s\n",
- 			dev_name(&adev->dev));
- 		return ERR_PTR(-ENOMEM);
- 	}
-@@ -2435,7 +2472,7 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
- 	    acpi_device_enumerated(adev))
- 		return AE_OK;
- 
--	spi = acpi_spi_device_alloc(ctlr, adev);
-+	spi = acpi_spi_device_alloc(ctlr, adev, -1);
- 	if (IS_ERR(spi)) {
- 		if (PTR_ERR(spi) == -ENOMEM)
- 			return AE_NO_MEMORY;
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 0951a67293c7b..c7d865ffcc90a 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -766,7 +766,8 @@ extern void spi_unregister_controller(struct spi_controller *ctlr);
- 
- #if IS_ENABLED(CONFIG_ACPI)
- extern struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
--						struct acpi_device *adev);
-+						struct acpi_device *adev,
-+						int index);
- #endif
- 
- /*
 -- 
 2.53.0
 
