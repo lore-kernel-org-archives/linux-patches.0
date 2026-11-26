@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704986;
-	b=eYM36UadMdQUi9juvFL5pCQBKsVONL43ywl8o0JZZ4mL70NOcYHMqpVzlfRN+sAeIpP1
-	 xmaBIIb8TP5bQ4yme5ynOFgsnNaTTC6CNtpASdibdXYZ4rmwweZx7L9LfRmCSG6GJUjrI
-	 a0D+fmjy6QMlDnjFAZ7H49+Dqc/vBG4HeCkSsr2cnRUVkGWgDSa9R4XdRgkF/K15tLqfV
-	 kDy+SIeBN2aAVQBq6ID9rpSD8hki4dSE4Re6btqJ9tANNqSUgT8M/sOYyZYb0AxWiJHPS
-	 6iYropspsvGl4Dafft1i+hGzn/ThtTfXOZ8mumyoF9HxzvrS9WNm/i7aEGseB2mKlqw==
+	t=1795704989;
+	b=sP0BGXSz5Yr6ITGT0psRNzWKebqmaY1r0p1qIvXjnv74fn1DoV0qdudVHZmK5qOJLz1o
+	 kLitKxts5ehEl8fgJXI/7dp4RfuMPNWb8b/cjnsJ7KmR/w6/Ia9WSFJaLXmRp21gAyfUE
+	 QhXRj6pBuFrcCYt2VnkSLPER4MLrZra5aXcsKVUGyznRex9AZL6VNZP+j4CFJmdUBzd+B
+	 B48BCmTC/x81ybPPkmT7zDAmmYMamToUpV3MybBr+paxVf5A1EdkqfMqx57RdepbluLz8
+	 Iyg0c4TlowdnJN0NlWGwxtwLxpOgFWcHNpbVpcACZN42g7Pyg4WGAFfyotZh0r4puyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UI14w+wdC9OgIUzhcNExOg1zm/dhbvEUdP/Km0b8Ia8=;
-	b=a7PLtWbRYtguIts9wrwh9OuvLsj+5Vl3wQ638Dkfy0XcYSBmhHHJ5N2FRxsgt7SuCzYv
-	 /cwJ/NHBqXi2qmRv6uMZJEW4E2/ZroFpei59xoNTBkHATeH3+boz161iKzs6D2Xsz5Ti1
-	 iVeB1HNVWZ+BTgFDCs95bvdhNLxbUOTMSzmTd1YOLoudUmxwi+XPSKY4ECT67lfJsCtso
-	 EWbHWFE4+lLAFaNo01u0C6D0f0MaUWKP7NKOBIQNGxrxQ+Y04UIGt3kQlewba6f5hxnPC
-	 YTTiv5xlbQOh2/WXgahKfthpQXTncRCVDQIHIb3Jdp4JZ1NbnOs8acsFkbfHnWxEqRA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=mg3+rsBMir8Rkn3mNzIAZkIEWJUrKurMudlPQ0rsThk=;
+	b=WfVsJ+CJTrWAWqfYSgKz6z4CEO63UNuEEXTuEKnWF6jqY2d/5KEu66jjwnkX4clQYYWc
+	 nRh6pldayikkT6PNoDY6tipxnID8Qqmky9gJIbgBMkNJvVCEh+CFu6wwhqpvepUggCCZa
+	 fgD3KdWwjtqA2xXkKZ2m3YE8Z9KPVvU8kZY28YtAdFm/cVYOaTqGB5L36fDWE2O/PkIQJ
+	 YYUrBFHDN7g6+DsWoagtxnB2itFvMmogoCjnjF8jQ5IB5df+DghHmGappmidE4B53xrlw
+	 T+rl8QXRa2RjpVwaE6gRaOB+oLzfLnZ4k0qM7ZsBvvpw03b3kUqB6ATa1SA9ZwiocKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orCgv5TG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZjYY7aq/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24063606A330;
-	Thu, 26 Nov 2026 14:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090AD606A31C;
+	Thu, 26 Nov 2026 14:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orCgv5TG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26A71F000CA;
-	Thu, 26 Nov 2026 14:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjYY7aq/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93BE1F000C4;
+	Thu, 26 Nov 2026 14:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704985;
-	bh=UI14w+wdC9OgIUzhcNExOg1zm/dhbvEUdP/Km0b8Ia8=;
+	s=korg; t=1795704988;
+	bh=mg3+rsBMir8Rkn3mNzIAZkIEWJUrKurMudlPQ0rsThk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=orCgv5TGS2YKb6sGuhVosjyaPQbfVoSRz3DEf2TzeZFQzXoWaSGK1m4Cryta6NAgw
-	 boMextTm/FMdky8Q91eD64XQo6iPHDX2mNJU3oXavegYYigTYN/IGrE58C/UkpJHbs
-	 Y+R3pGqBKczYIeS3c/cSDN5z/D/vHueSevgJunoo=
+	b=ZjYY7aq/gYSmZGW1YpMm02iDPGkapLd0jtNHipeUa7JIBhR/cIe2btIq7v9IP0Ofn
+	 Hv8AxDkN/lj/L3DnxutVLcEKx4OJ3ULvbuLpK/LuSgFRoRK1ih6RyBG4+3lV3s+tff
+	 O72rXeA4DszY8Fj/nuQ9B61lGRQ0mMYYsVyMhskk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/319] spi: Remove unused function spi_busnum_to_master()
-Date: Thu, 26 Nov 2026 15:36:52 +0100
-Message-ID: <20261126144007.731077238@linuxfoundation.org>
+Subject: [PATCH 5.15 045/319] spi: Create helper API to lookup ACPI info for spi device
+Date: Thu, 26 Nov 2026 15:36:53 +0100
+Message-ID: <20261126144007.753736607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -62,109 +63,143 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit bdc7ca008e1f5539e891187032cb2cbbc3decb5e ]
+[ Upstream commit 70dd264bc07aee4f89e65138db11e908701388dd ]
 
-The last user is gone since commit
+This can then be used to find a spi resource inside an
+ACPI node, and allocate a spi device.
 
-	2962db71c703 ("staging/fbtft: Remove fbtft_device")
-
-in 2019.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20211007121415.2401638-3-u.kleine-koenig@pengutronix.de
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20220121172431.6876-3-sbinding@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 2d0953ab69d3 ("spi: acpi: only look up the IRQ of confirmed SPI devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/spi/spi-summary.rst |  8 -------
- drivers/spi/spi.c                 | 35 -------------------------------
- include/linux/spi/spi.h           |  2 --
- 3 files changed, 45 deletions(-)
+ drivers/spi/spi.c       | 46 ++++++++++++++++++++++++++++++++---------
+ include/linux/spi/spi.h |  6 ++++++
+ 2 files changed, 42 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/spi/spi-summary.rst b/Documentation/spi/spi-summary.rst
-index d4239025461de..aab5d07cb3d7e 100644
---- a/Documentation/spi/spi-summary.rst
-+++ b/Documentation/spi/spi-summary.rst
-@@ -336,14 +336,6 @@ certainly includes SPI devices hooked up through the card connectors!
- Non-static Configurations
- ^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--Developer boards often play by different rules than product boards, and one
--example is the potential need to hotplug SPI devices and/or controllers.
--
--For those cases you might need to use spi_busnum_to_master() to look
--up the spi bus master, and will likely need spi_new_device() to provide the
--board info based on the board that was hotplugged.  Of course, you'd later
--call at least spi_unregister_device() when that board is removed.
--
- When Linux includes support for MMC/SD/SDIO/DataFlash cards through SPI, those
- configurations will also be dynamic.  Fortunately, such devices all support
- basic device identification probes, so they should hotplug normally.
 diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 490dfaad46e1e..a23fa86493299 100644
+index a23fa86493299..45175348b75ea 100644
 --- a/drivers/spi/spi.c
 +++ b/drivers/spi/spi.c
-@@ -3119,41 +3119,6 @@ int spi_controller_resume(struct spi_controller *ctlr)
+@@ -2367,8 +2367,18 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
+ 	return 1;
  }
- EXPORT_SYMBOL_GPL(spi_controller_resume);
  
--static int __spi_controller_match(struct device *dev, const void *data)
--{
--	struct spi_controller *ctlr;
--	const u16 *bus_num = data;
--
--	ctlr = container_of(dev, struct spi_controller, dev);
--	return ctlr->bus_num == *bus_num;
--}
--
--/**
-- * spi_busnum_to_master - look up master associated with bus_num
-- * @bus_num: the master's bus number
-- * Context: can sleep
-- *
-- * This call may be used with devices that are registered after
-- * arch init time.  It returns a refcounted pointer to the relevant
-- * spi_controller (which the caller must release), or NULL if there is
-- * no such master registered.
-- *
-- * Return: the SPI master structure on success, else NULL.
-- */
--struct spi_controller *spi_busnum_to_master(u16 bus_num)
--{
--	struct device		*dev;
--	struct spi_controller	*ctlr = NULL;
--
--	dev = class_find_device(&spi_master_class, NULL, &bus_num,
--				__spi_controller_match);
--	if (dev)
--		ctlr = container_of(dev, struct spi_controller, dev);
--	/* reference got in class_find_device */
--	return ctlr;
--}
--EXPORT_SYMBOL_GPL(spi_busnum_to_master);
--
- /*-------------------------------------------------------------------------*/
+-static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
+-					    struct acpi_device *adev)
++/**
++ * acpi_spi_device_alloc - Allocate a spi device, and fill it in with ACPI information
++ * @ctlr: controller to which the spi device belongs
++ * @adev: ACPI Device for the spi device
++ *
++ * This should be used to allocate a new spi device from and ACPI Node.
++ * The caller is responsible for calling spi_add_device to register the spi device.
++ *
++ * Return: a pointer to the new device, or ERR_PTR on error.
++ */
++struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
++					 struct acpi_device *adev)
+ {
+ 	acpi_handle parent_handle = NULL;
+ 	struct list_head resource_list;
+@@ -2376,10 +2386,6 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
+ 	struct spi_device *spi;
+ 	int ret;
  
- /* Core methods for SPI resource management */
+-	if (acpi_bus_get_status(adev) || !adev->status.present ||
+-	    acpi_device_enumerated(adev))
+-		return AE_OK;
+-
+ 	lookup.ctlr		= ctlr;
+ 	lookup.irq		= -1;
+ 
+@@ -2390,7 +2396,7 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
+ 
+ 	if (ret < 0)
+ 		/* found SPI in _CRS but it points to another controller */
+-		return AE_OK;
++		return ERR_PTR(-ENODEV);
+ 
+ 	if (!lookup.max_speed_hz &&
+ 	    ACPI_SUCCESS(acpi_get_parent(adev->handle, &parent_handle)) &&
+@@ -2400,16 +2406,15 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
+ 	}
+ 
+ 	if (!lookup.max_speed_hz)
+-		return AE_OK;
++		return ERR_PTR(-ENODEV);
+ 
+ 	spi = spi_alloc_device(ctlr);
+ 	if (!spi) {
+ 		dev_err(&ctlr->dev, "failed to allocate SPI device for %s\n",
+ 			dev_name(&adev->dev));
+-		return AE_NO_MEMORY;
++		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+-
+ 	ACPI_COMPANION_SET(&spi->dev, adev);
+ 	spi->max_speed_hz	= lookup.max_speed_hz;
+ 	spi->mode		|= lookup.mode;
+@@ -2417,6 +2422,27 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
+ 	spi->bits_per_word	= lookup.bits_per_word;
+ 	spi->chip_select	= lookup.chip_select;
+ 
++	return spi;
++}
++EXPORT_SYMBOL_GPL(acpi_spi_device_alloc);
++
++static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
++					    struct acpi_device *adev)
++{
++	struct spi_device *spi;
++
++	if (acpi_bus_get_status(adev) || !adev->status.present ||
++	    acpi_device_enumerated(adev))
++		return AE_OK;
++
++	spi = acpi_spi_device_alloc(ctlr, adev);
++	if (IS_ERR(spi)) {
++		if (PTR_ERR(spi) == -ENOMEM)
++			return AE_NO_MEMORY;
++		else
++			return AE_OK;
++	}
++
+ 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
+ 			  sizeof(spi->modalias));
+ 
 diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index 9ab3dab9568ae..da88bbc7e9982 100644
+index da88bbc7e9982..0951a67293c7b 100644
 --- a/include/linux/spi/spi.h
 +++ b/include/linux/spi/spi.h
-@@ -763,8 +763,6 @@ extern int devm_spi_register_controller(struct device *dev,
+@@ -17,6 +17,7 @@
+ #include <linux/ptp_clock_kernel.h>
+ 
+ #include <uapi/linux/spi/spi.h>
++#include <linux/acpi.h>
+ 
+ struct dma_chan;
+ struct software_node;
+@@ -763,6 +764,11 @@ extern int devm_spi_register_controller(struct device *dev,
  					struct spi_controller *ctlr);
  extern void spi_unregister_controller(struct spi_controller *ctlr);
  
--extern struct spi_controller *spi_busnum_to_master(u16 busnum);
--
++#if IS_ENABLED(CONFIG_ACPI)
++extern struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
++						struct acpi_device *adev);
++#endif
++
  /*
   * SPI resource management while processing a SPI message
   */
