@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704410;
-	b=lLYM0X1C3NlBY4H7CSQB3pjMkgLzbU0DjFEYZG8L1sH8pAQb/Z9SXsoBdtFcotOv8Vod
-	 eYdFzPQDtOlsNZxNJTwg65rdlzGpGlux97Kni7nwe3f1ap3iVa+tibU12fnjoeL7o5IXP
-	 shuVCEi/MDVGz34OPOGa/bdP9bu9BV0+hpHx45epGLVZ1RFA/fZia0cpk+0PKXfS2JH/C
-	 JXXsXEYaX3yR6alznqc99kRb/pEWRc1jvImhuCTcDA8GtwXvP2WWtiKP3/huXoi9IQwhg
-	 iu+KC5zU6PXdMXOvZ25WW1XHAurs5tCjyWq126KBh4SWUdiMQ7HE2xzaQJPDx83PlAA==
+	t=1795704413;
+	b=BIeq4Cja1VpbYdEuQxHxUKsM2wu7KppSWKJ4aGKyXXPWJhjkxYk+qX8ttYxE7gXiUW9a
+	 kXGYYyLdmYiozJnMDQ8btfcAtTJc+CCSYIYsb5kThIa0FWaa2Urbuw8aHfPaDciHhrU9F
+	 CpU5fSCa4djwnSEN09G+X6YOv28qseP/MkvMTDd089gp4rs2S+b1XRlpUjz92V/yU3iJP
+	 7t3n8+rYlgoP7jUvlieMTgqJqR6xXIcVona1P8kfCMHk3omjykEMC19xQJJI383jgy9Yl
+	 zgE5GuAevK2F9zMGwhaMhTr74/C1y1cnEXsw6eImt7lLDa6qBk55YnujGw0Z/D/tv9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=elr0WOK10YbzCKAujKiziieJgbO2Ew/fF7NFimZr2g4=;
-	b=j/3P1Go9LJIeEpqV/f+bcPmINvayoKv4wkcBX3QtnUYY+FEUQIPqWlMFZZ63XHOWjVXZ
-	 pyLM6lFg3LvWcF5d6LAze13ecY1CIj5mdTGSehGdvoeXOeLMdfjF6Q5lzAc2VVCaeoErw
-	 u6Zlv8fwWq0tvChSCFK+GZAyE+dgEJ7O5VPBQRO9x7/J1di6haEsscVjRWc25P1e9rH4E
-	 VCQ4eWyo8GPhH5TdcoJ262s24JoaghqRZJ5D6nMcZV9a0jUe2FnMLh0Aj978PUP1i6E+Q
-	 1rGuMDOZWR9LUKkHDfZcjXkuDSUVPfI+UdnLDGGQCo4T9oW2jYJm0oG/Laz9NnwrK1Q==
+	bh=PFC8gVmGOgYLcZSZDPJBiMgKNbg2uvUFMdAUVIq2YOg=;
+	b=AMX5HIvth+/7oP6tShtIpqdFo9bRGTqR1Lgn/AA0DXug6K3nMmW5pa6S+NkYYjQO67+c
+	 An3y/zOVDNBXBlChytzJtSs2vJjPAnYZvE9LYPf82UTBB6bxDIGiF6RaMLx8qzGD5YHX5
+	 jm/NFvlhKBqy5++Qfj5yBXz9WmGxWN5WDR5zLpenneBb/FTQAn2t2Yh1iTOHBS4CEU5oI
+	 T8stYOySYC/nrLAaRpEX82pblZG3Hc/6irf6E2xt3jlMs1awHksrgKu0XMg7W7Gwh91NK
+	 I0qBG2Cq7Pvsu+JFUO7WlshOrzD7naBMkqyNFs/qxLiAxmVok+G2ejTaZt5ZdKWwExg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqeAmHue;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bG6qoZl4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336BC606A31C;
-	Thu, 26 Nov 2026 14:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D611606A31C;
+	Thu, 26 Nov 2026 14:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AqeAmHue
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FD81F000CA;
-	Thu, 26 Nov 2026 14:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bG6qoZl4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450671F000C6;
+	Thu, 26 Nov 2026 14:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704410;
-	bh=elr0WOK10YbzCKAujKiziieJgbO2Ew/fF7NFimZr2g4=;
+	s=korg; t=1795704412;
+	bh=PFC8gVmGOgYLcZSZDPJBiMgKNbg2uvUFMdAUVIq2YOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AqeAmHueKmz+saEisVUmnH0pfyTqsj6jdw2sDUTGFEhfGWt/qWDvu1jd7i3IO8gj6
-	 mvLPNuFMZunKKNL3eR6G+llpzcxgkfL1UNTZyAkYvobqmL7h2Y2aiS1LW5B5/lF+If
-	 keQrCx+SzZxWVdoAqO/Fr1Hy9JuVFvimQuzSAGn4=
+	b=bG6qoZl4xCbSQ3UNNz1L9c0z9OBqqpWUCmnLHGjJj3vpI9ZqKgMbEK6N2Wq0f7SOw
+	 d80ii9QMurGW11SVmWuhFUWVRogxbQSZ3dS7pGuqPEdMHPFRxYNZvEJBgdgORoigGo
+	 X/Vt/dmcJoeE5zAlNLjRQ2DCIgJ+DQObBHEi6jxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/265] gpiolib: of: return -ENOENT from of_gpio_count() stub
-Date: Thu, 26 Nov 2026 15:37:25 +0100
-Message-ID: <20261126143613.054875505@linuxfoundation.org>
+Subject: [PATCH 5.10 116/265] NFSv4.1: retain MDS I/O until both thresholds are met
+Date: Thu, 26 Nov 2026 15:37:26 +0100
+Message-ID: <20261126143613.124230205@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,43 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit e20e4b8cda2b4d7dd32dbd2c0875a15d92545f04 ]
+[ Upstream commit eab627dcd18a18a44a2cbee47df3058d3637ba0d ]
 
-gpiod_count() and its firmware backends are expected to return either a
-positive number of GPIOs or a negative error code (-ENOENT) when no
-GPIOs are assigned. However, the !CONFIG_OF_GPIO stub for
-of_gpio_count() returns 0 instead of -ENOENT. This causes gpiod_count()
-to skip the platform_gpio_count() fallback (which triggers when
-count < 0) and erroneously return 0 to callers.
+When both size and I/O thresholds are configured,
+pnfs_within_mdsthreshold() uses size && io to decide whether to
+keep I/O on the MDS. Both variables indicate an unmet threshold,
+so reaching only one threshold returns false and may trigger
+pNFS layout acquisition while the other threshold remains unmet.
 
-Change the stub to return -ENOENT to match the real of_gpio_count()
-implementation and the other error-returning stubs in gpiolib-of.h.
+Use logical OR instead of AND to stay with MDS I/O until both
+thresholds are met, as recommended by RFC 8881 Section 5.12.6.
+The new RFC contains the same threshold selection rule as RFC
+5661 which is referenced in function comment.
 
-Fixes: f626d6dfb709 ("gpio: of: Break out OF-only code")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/20261105-b4-gpiolib-free-v3-3-bb47ad58642d@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: d23d61c8d351 ("NFSv4.1 test the mdsthreshold hint parameters")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-of.h | 2 +-
+ fs/nfs/pnfs.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-of.h b/drivers/gpio/gpiolib-of.h
-index ed26664f15378..7951793358c0e 100644
---- a/drivers/gpio/gpiolib-of.h
-+++ b/drivers/gpio/gpiolib-of.h
-@@ -27,7 +27,7 @@ static inline int of_gpiochip_add(struct gpio_chip *gc) { return 0; }
- static inline void of_gpiochip_remove(struct gpio_chip *gc) { }
- static inline int of_gpio_get_count(struct device *dev, const char *con_id)
- {
--	return 0;
-+	return -ENOENT;
- }
- static inline bool of_gpio_need_valid_mask(const struct gpio_chip *gc)
- {
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 3ca1599982872..b5581eb94cb3f 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1906,7 +1906,7 @@ static bool pnfs_within_mdsthreshold(struct nfs_open_context *ctx,
+ 		break;
+ 	}
+ 	if (size_set && io_set) {
+-		if (size && io)
++		if (size || io)
+ 			ret = true;
+ 	} else if (size || io)
+ 		ret = true;
 -- 
 2.53.0
 
