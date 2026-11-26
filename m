@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705573;
-	b=nL/QSfX/tDhgANgT+G4+k1OAkhomyZj6Po1qfRvhz3Kyjal1qfB40QW3GV149GqZpT73
-	 eEXd9ecNgVQdEjDSNql/QL30PcZ15l0i3C5zuei00XxV2Fox1IjRXCx+YFhEzcdhdj5/s
-	 hAnvU5DTaLOs9+yPE+Ul7PYaEPz1Lwp85yVtkxxUYmxw15cwLsYDcQz4X/Yx1GMdtRKhx
-	 faqUFicN/tz/ayJIeeeTZXJtjaG6rFfPpo6bbPx/yLcRBR/iypM/plOCt2hrCZeEOMWLR
-	 TUCEf2GAmLPNpvSkLsz7ZCKNzztq3CVp7ToxkyJPI3Xu0nIeQNF8Stsams3vyp32YZQ==
+	t=1795705576;
+	b=Cq7NUGXYQGXm1GwhEVhe0FwChusqRvYrxs0ehf8vwci3ayPU2LLmGd2BL4bNYUfBjGAh
+	 8NoI8s63Ti7kZGlUkWqBGDNK2yFJvm1gAppIOQhLqQf3QBk51WVY9NV6QmDPnahVPjrmj
+	 4NxfOqVwJK5zUX5R1tWr+ESUZt2a84A5O6aOjZMaoHyfxEZARnqq/7S10xumJbQwVB9EI
+	 jyo852QIpPSWZJEOzsUAGU2Ybg5+R4+40+YaXwHjTd4AS9V88igP2nI3u60yHOharkyoC
+	 kEkS8g/BRzY8eZknxGW46Ppy+sXUr+da9VTqadwi1zGCpLQMoPtc0DdabMFXMDtzErQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QtmLYkq8wQQgCPtOLHfZY9nkizSFivebFz9INZzQyMs=;
-	b=G3/1v59ZQMtbFIVjVbA5GghCqQj0XVvv7fADQipn0G4ywz/Bf7SntJ3i1T2ubV2uskYi
-	 EDjkVYms3FbZXbd1aWBucR1vNcJuQnoCe/eqDSU7IJ1pgOwxXqu7Pc8rhDZlLynp/P7cd
-	 FjNPkduEs4c9pc8ulA67ZFFmJerefYc0FY7opXEvaMAsr3AH/URI9c80JYTKaujX/12iw
-	 zenxy97nk02W940ClKwWbEjp3bScj6B4JtJxlNgOf584LOPChaliaITuL2N3dKkft6pB0
-	 7znh7KJItemv/5GEMAbSKz72PdiMCZZbTW53SY1y2jY4vPZmay5amd2u2VvNli427pQ==
+	bh=wPG+6yrPb3yAQI/CLaII7PGkR6DSnSaZTgphGHjGpkk=;
+	b=jQKgtzcuUH2Ku95/jLCAsiQqvih61zY6v6Q3HVrEfkv80GVMQXA8OM8Op171wpVJL3MR
+	 yaxsyyJX32k+09d2hD2LOPGvSILVxSA4p1dJWuvdkWQUFW3YjKs2sK+lk39Sgz3WSk6JK
+	 B+oCmXsNhmrpkrediAtvcLb4ZZWVLMVgiVffmWNl2rFmsbEeer1/1KC8HFnix6+vRM6SN
+	 NM9QNs81WaA9uHvkcZ12jafaVcVrlrO7a8oSwDwlLV4TyPsffEY6VFjKoh/6EY66pyCDj
+	 1n/CZCYa8gpYhAIFzMgKe+5BTHouJGVTkjmt4JoBUTjfPlK73bChHwehLggDfK08+sA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KawjnEsY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2kSyNxz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B91D606A327;
-	Thu, 26 Nov 2026 15:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179EE606A33C;
+	Thu, 26 Nov 2026 15:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KawjnEsY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F971F000C6;
-	Thu, 26 Nov 2026 15:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2kSyNxz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA4D1F000C6;
+	Thu, 26 Nov 2026 15:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705572;
-	bh=QtmLYkq8wQQgCPtOLHfZY9nkizSFivebFz9INZzQyMs=;
+	s=korg; t=1795705575;
+	bh=wPG+6yrPb3yAQI/CLaII7PGkR6DSnSaZTgphGHjGpkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KawjnEsYgPLB1iO/SaUpYKjcO2k794LbgIPCvoGSTOUIugCCdUpVmDtbD5TH54M7d
-	 M2eujJgz7IZoLQt4MS+/tlC+AxxC7cJV7aN1LYoErNW4GtJ0tWES7L2OH9y7TL/utI
-	 bl9QuqJ4r2KaqhLT1i376ckz/0P13Gi+o0mOIyt4=
+	b=v2kSyNxzn6nNWtpat11shpeOy4hc5lqIQBYJ2ggznvyfn1megz4X9vG3HEFhcxCRX
+	 mSlAV3Jhdo+nPEg0/eGFmLTL2rjIy8UZOf1OKDnBSu2R/+Ab8Q8fotou1T0fjZoKZ9
+	 6rAiMPIBk/uEd0lx7G4a4CAPHAeGujGcGtC78j0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
+	Yingjie Wang <x-professor@outlook.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 243/319] dm mpath: fix buffer overflow in parse_hw_handler()
-Date: Thu, 26 Nov 2026 15:40:11 +0100
-Message-ID: <20261126144012.229831985@linuxfoundation.org>
+Subject: [PATCH 5.15 244/319] dm mpath: cap queue_if_no_path_timeout_secs
+Date: Thu, 26 Nov 2026 15:40:12 +0100
+Message-ID: <20261126144012.251958885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,26 +67,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shao.mingyin@zte.com.cn <shao.mingyin@zte.com.cn>
+From: Yingjie Wang <x-professor@outlook.com>
 
-commit 8f611fe94a781c6fb658488cc7eab4e4923e6df6 upstream.
+commit ae5b40accbc06f93e6a513e0e9a07fd32b197e49 upstream.
 
-parse_hw_handler() builds the hw_handler parameter string in a buffer
-sized with
+enable_nopath_timeout() arms the no-path timer with
+jiffies + queue_if_no_path_timeout_secs * HZ. The module parameter is an
+unbounded unsigned long, so the delay can exceed what mod_timer()
+handles: a delay above LONG_MAX is treated as already expired, and
+values above ULONG_MAX / HZ also wrap in the multiplication. The timer
+then clears queue_if_no_path right away, and I/O queued after the last
+path fails gets -EIO instead of waiting for the configured time.
 
-	len = 4;
+On x86-64 with HZ=1000, 9223372036854776 seconds failed a write after
+124 ms while one second less remained queued throughout a 4.2-second
+observation window. A value of 18446744073709552 seconds wrapped to 384
+jiffies and failed the write after 455 ms. On 32-bit kernels with
+HZ=1000 the delay passes LONG_MAX above 2147483 seconds, a little under
+25 days.
 
-plus one byte per argument.  Those four bytes were meant for the decimal
-form of the parameter count, three digits plus the terminating NUL.
-dm_read_arg_group() accepts up to 1024 arguments and the count written is
-'hw_argc - 1', so a count of 1000 or more needs four digits plus the NUL
-and sprintf() writes one byte past the allocation.
+Cap the seconds value at the largest whole-second delay not exceeding
+MAX_JIFFY_OFFSET before multiplying by HZ. This prevents signed-delta
+overflow and multiplication wrap. The timer wheel's existing handling
+of very long delays is unchanged.
 
-Size the buffer from the actual string length instead.
-
-Fixes: 2bfd2e1337f0 ("[SCSI] scsi_dh: Use scsi_dh_set_params() in multipath.")
+Fixes: be240ff5e402 ("dm mpath: Add timeout mechanism for queue_if_no_path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -95,16 +102,15 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/md/dm-mpath.c
 +++ b/drivers/md/dm-mpath.c
-@@ -1074,8 +1074,9 @@ static int parse_hw_handler(struct dm_ar
+@@ -792,7 +792,8 @@ static void queue_if_no_path_timeout_wor
+ static void enable_nopath_timeout(struct multipath *m)
+ {
+ 	unsigned long queue_if_no_path_timeout =
+-		READ_ONCE(queue_if_no_path_timeout_secs) * HZ;
++		min_t(unsigned long, READ_ONCE(queue_if_no_path_timeout_secs),
++		      MAX_JIFFY_OFFSET / HZ) * HZ;
  
- 	if (hw_argc > 1) {
- 		char *p;
--		int i, j, len = 4;
-+		int i, j, len;
+ 	lockdep_assert_held(&m->lock);
  
-+		len = snprintf(NULL, 0, "%d", hw_argc - 1) + 1;
- 		for (i = 0; i <= hw_argc - 2; i++)
- 			len += strlen(as->argv[i]) + 1;
- 		p = m->hw_handler_params = kzalloc(len, GFP_KERNEL);
 
 
