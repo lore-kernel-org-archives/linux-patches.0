@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704600;
-	b=DRUYlzAmZh4pjshDRzr/i8xyjmIV4wl8PC8yQ4GvzO4WNPGCx90298nV/kROdyb175zg
-	 IbtCsZfbX5MKXNH4yVSvlu5c6jjsh3r1eP66z7YRwyURMlHyxQu45Z1xyfc8giYfwV6PE
-	 dkupdw055OP59u6AUxnhV9nTFYCai0+eqFbew9tz5LxWLuEKR3yTmgxx2BWHAogUqe6ZK
-	 l+Dw34+vocBM7SokFDI9oiivXRzOxP39GGUS/ifdQ9nDi4yeprExkDcvoBFLGyvTXEt0i
-	 wR1XzDuakT1wrr+NCfQb7VQCiI1ZIyUw3ljAHnYoqVce8wIvXehWgGVSh9EUPpjK5vw==
+	t=1795704603;
+	b=PvbuiRFkFR5trSdtXbsGfg3uXhzpid8cuTIaeKalkEQK8pDDP6EW7VBvzP0sfQEtyICE
+	 mdTtBP5fHwIiU4JUYSzMzcJwuOvJilmQVRSw4Z0jVtuTNNrnLNdCjHLPYDH6dK02rFkAX
+	 JUT7YLNRjPs+qT2pO14t5qTU1aS2uOj2BB9FvIe2rYTDa+6QzIiZ27gYLYp+O1yU/rKM5
+	 fu0R7c+wiouL1PZhloyRX2psmLur/g2md+YWMMXGaVK6HF0DCVtxQcxhkuKA9kjbRXUYi
+	 qXZeq/ERBokKrtYCnwi3ye+xA6kvCQ3BWP0RT0JlUg4L16nq1B/fF6/DAl0TpVfGUOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IrmzwGFxYj+9GXgt2RsH61GJ7hlDEPW6aGQdXA3ObpQ=;
-	b=cIyt8xdv1Q/FhrWDvlYQ00Hb4qws5unfXkz9U/ubGee7bAMXf3IUx1jhiM0qT+O/afMy
-	 lPPZ+j6xKSUZIbMW406CUaHFAoPpaRFNH5LLkbuHl3Stw1Ci33ftNp2jFRTfshE2XnBpy
-	 YXmWQSGIDJ6M5YIUlqdSyIkMzhSmeMv7ZvzsThK60jEg9G4GW1lIM4iC3WSVkroz5bN+Y
-	 h8haPPlGkbkUpG7hKPOKlr3n9iAaSZsm2fL45H62doYfsU36xmHZzYbgpildGo2I57kfP
-	 1f8Es/M/kmcVxs1DezXN0N6aeAe6xXV3Xb+iW3OrjVlhCOfzt2eWo7L1mh1B3y+EhgA==
+	bh=vA5XBaDW2zZ2vvKZEgHfp9YuYj99Kj/j72D7vnrvrfE=;
+	b=pGGhzgyD5aImWMufvgfsyy4QRLPeS7JS3HZIc6qLBAZ3AQb7l2VsAbEtS6tSaxB35RiX
+	 zR9I15JnBRDt0WQmN+F6GA+6lRl1VBR/LHuc8pIWjla6PLv42l1edMh8ZucsKZLa2lsnF
+	 sDlaYT1OFcRkpg9Fdw4MdSRak5x5APeVs5znKUff89YVEnmZpccuR7+OV7UxxEEQ4Qx6z
+	 0ER94PNBQdEnRVmO0IX4g1Qu8iqFWVXwTc/BbI/6n5BYKKoqMvm4qtCy/daBuBzabcudA
+	 8uJvOUoq0oISUwps/eucvKgpPpazEc22RPv2sd5P5L2NQzh47gcaa8Hst6nZtli10XQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4A5X4RT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hptdEpT7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AE9606A31E;
-	Thu, 26 Nov 2026 14:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C27606A31C;
+	Thu, 26 Nov 2026 14:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4A5X4RT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F201F000C6;
-	Thu, 26 Nov 2026 14:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hptdEpT7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A5C1F000C4;
+	Thu, 26 Nov 2026 14:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704600;
-	bh=IrmzwGFxYj+9GXgt2RsH61GJ7hlDEPW6aGQdXA3ObpQ=;
+	s=korg; t=1795704602;
+	bh=vA5XBaDW2zZ2vvKZEgHfp9YuYj99Kj/j72D7vnrvrfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4A5X4RTL4puCcsXI2nfsMXYGEY6J8S7Zi9pH5PqOE76N0JxVUpDAOgYEPD9Rx/9C
-	 sTbd8a3XMmDO0Wy+nANLIxupWiapJKtp955flDpDDClALpgB6X/fhW0qRWkm/rW6EI
-	 akM29X2PQlA7GHLy8M/Ie3UA2/5s5f/jmn86Z8Mo=
+	b=hptdEpT7T7hqCmdLpKrqjUDKPFR+3YMOLJ9Hh1uIdXPID7mIaZ1XclKY/QUqMoagj
+	 KIHkLzFe4DbX9BR2EezRamK7NmMrMWVv86/qNngfPVY/VWGphCWIuScn1cb98SVESI
+	 DNnMH/qdsLRVkBHGr5CEjpyV3pHBlY3Q6ZWkN+2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.10 179/265] xen/pvcalls: destroy the per-socket workqueue on release
-Date: Thu, 26 Nov 2026 15:38:29 +0100
-Message-ID: <20261126143617.697877679@linuxfoundation.org>
+	Gichoon Han <gichoon.han@samsung.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 144/265] ALSA: usb-audio: Drop capture packets with bogus actual_length
+Date: Thu, 26 Nov 2026 15:37:54 +0100
+Message-ID: <20261126143615.093027010@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,49 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Gichoon Han <gichoon.han@samsung.com>
 
-commit 6b3feb6bfa9ac384f7a3ec25c40b9b4d3da96d25 upstream.
+commit eed0e9583a290e6adbe3a8480bdae911f31e1ed9 upstream.
 
-pvcalls_new_active_socket() gives every active socket its own ordered
-workqueue:
+retire_capture_urb() copies urb->iso_frame_desc[i].actual_length bytes
+out of urb->transfer_buffer at the packet's offset, but never checks
+that value against the requested packet length.  A host controller
+reporting more data than requested makes memcpy() read past the end
+of the URB transfer buffer.
 
-	map->ioworker.wq = alloc_ordered_workqueue("pvcalls_io", 0);
+Commit 06be918062ad ("ALSA: usb-audio: Bound packet copies by the PCM
+buffer size") clamps the count to the PCM ring buffer size, which
+protects the destination.  The source slot is only ep->curpacksize
+bytes per packet, though, so the over-read remains.
 
-and nothing ever destroys it.  pvcalls_back_release_active() flushes
-map->ioworker.register_work and frees map, but the workqueue and its
-pool_workqueues stay allocated, so a frontend leaks a workqueue per socket
-it connects and releases - a loop a guest can run as long as it likes.
+This was hit on an ARM32 system (vendor 5.4 kernel; the code path is
+unchanged in mainline) with a full-speed UAC1 microphone behind a
+high-speed hub, i.e. the EHCI siTD path.  sitd_complete() computes
+actual_length as desc->length - SITD_LENGTH(t); the controller
+reported a remaining length larger than the programmed one, the value
+wrapped to ~4G, and the capture copy faulted on the first unmapped
+page after the URB buffer:
 
-Destroy it right after flush_work(): the IRQ is disabled and sk_data_ready
-restored by then, so nothing can queue new work, and the rings are still
-mapped while it drains - pvcalls_conn_back_read() reads map->ring and
-map->data, which xenbus_unmap_ring_vfree() takes away a few lines later.
-pvcalls_back_ioworker() does not take fedata->socket_lock, which the
-backend_disconnect() caller holds here - only the socket's own
-sk_receive_queue lock - so draining it from this point is safe; the
-flush_work() just above already has the same requirement.
+  Unable to handle kernel paging request at virtual address e8756000
+  Internal error: Oops: 7 [#1] PREEMPT SMP ARM
+  r3 : 00000000  r2 : 0001e700  r1 : e8756000  r0 : e878fc80
+  Code: ba000002 f5d1f03c f5d1f05c f5d1f07c (e8b151f8)
 
-Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
+A packet can never legitimately carry more than its requested length,
+so warn and skip it instead of copying.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261110125002.46683-3-yhlee@isslab.korea.ac.kr>
+Signed-off-by: Gichoon Han <gichoon.han@samsung.com>
+Link: https://patch.msgid.link/20261110060021.2146383-1-gichoon.han@samsung.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/pvcalls-back.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/pcm.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -443,6 +443,7 @@ static int pvcalls_back_release_active(s
- 
- 	atomic_set(&map->release, 1);
- 	flush_work(&map->ioworker.register_work);
-+	destroy_workqueue(map->ioworker.wq);
- 
- 	xenbus_unmap_ring_vfree(dev, map->bytes);
- 	xenbus_unmap_ring_vfree(dev, (void *)map->ring);
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1432,6 +1432,12 @@ static void retire_capture_urb(struct sn
+ 			// continue;
+ 		}
+ 		bytes = urb->iso_frame_desc[i].actual_length;
++		if (unlikely(bytes > urb->iso_frame_desc[i].length)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "packet %d: actual_length %u exceeds length %u, dropping\n",
++					     i, bytes, urb->iso_frame_desc[i].length);
++			continue;
++		}
+ 		if (subs->stream_offset_adj > 0) {
+ 			unsigned int adj = min(subs->stream_offset_adj, bytes);
+ 			cp += adj;
 
 
