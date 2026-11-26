@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704121;
-	b=WEXtoSEHIT5qaeN55QPQmz7Y1BCDKtykAnaPvSKhUviFDuMQwCDhZjPRaB3fWgaa0I52
-	 +15qRXyFE5VjZe3N79CELxYqgdcbXNVdhIcCo5OIN5Cb4Y10hzI/ZzIVugTHkKNAwBa7t
-	 gM+jZKcUsnuEyoaPX0queAsmsAEuYRvY4DrsBqgQ9pHltX/yjITgR+G7Ifnn+HPy0MHMA
-	 ssxHH9zB9tBkT7lBsWnL1PR65joPmoqmatPj663IbJtfeUj6NX2vPhyKk8QP9cg6qSPRp
-	 776RMsQ+5GzgqyzaXHiM8WMv9vDzEGlzw9tpV520R+QPip1pLvasxpJ+5HhP9aCReLQ==
+	t=1795704124;
+	b=WhU9xntE9lU1QG7J+Z2I4UhJZ8sz4CjjKNEnxtME/2fC0STlUQJqcYQDQ+IQSZjkgZGX
+	 KoPmzumkwHL4O3NPrn0+3hDFWVyADhuc/Ue0+M5Zgkwov1kwlH/9vMqxjpi0PGCg3O148
+	 99Q8Da71IRoHi6tsDZ+1El5d3v8TeM3M6ABgxsfZruW2WMT970kkfVoE8u5mOCIR0M+va
+	 Xau6IjKDc1wHvwdU+VgKbsXjcxANPYFM1KfnGAvfbG8rI2qo+P2c6L0rzvPUgJB9vwKty
+	 ufMiC5iYHio7LnXLl+2ptrbyFxwdgZ0eoSTMlkoiQ5efjeRpUO/liehOCleAqTLOlZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B7qHvX5WCOxKu6d/QG4iMmIEXmurH0pWk+i1prjE1vc=;
-	b=DuuNhOAsqmhJw+PWOaf72+zIlHel2CwvFrk3ToCZlyZSS/GnL/ZB+FogXiqc8jETRF+8
-	 Cy0a4qLDMm3eAAKVpLmDTYf1gw1Tv1RXZxm8CZRnmuzwNCNkwODRgpILvQp7+3fa4absa
-	 +kXqcrTIAf17RW4r7Bq8jMA8Ae4YAa0ONsyTFZac3aRzT8DwNoNCab17qzJq1T0haDMfA
-	 TBLhNaQNgwlfW3JRFnHUnIZ9nS1bfv0p2CPLtlWHGlkgmq4CPnYZ8UI4v1mjKVKp9QgDL
-	 qouhsRalcY+YN4RWLxQi0+Oyd6Y8iKVTzAvkdrbQ3oMtkK96FmMOxXOWDPKYjj9GRog==
+	bh=jkwMWHeZ6a+idRACinLUV5t914P6cBksXZ7zU+HI9/c=;
+	b=X5ysKAH1q/DOfGP0IFmvlu8IRZKbOwWdNz0lgWaewoyIyDWxI4FXi3Ap/EYnhrUBLHuf
+	 4pHj5wmmS/iwN/TU5CJgblv2ZOjxR2skqdZCANIbHFT4l4MsgAo7n+srhkKsKJvcxKgEK
+	 uvla5UJ4vJbaMhHq93NapjfBBtzp7ZEUzqawadz77iicTK7Bj2M+F/rL+WBtjkvtYm8cm
+	 T/owsviKaUGUyWa0wbMOwfDWRoefco1rq7oQR//0WyhsHUbIWYlGTTUzdbpevMWHRG3aJ
+	 0/1NM4+DBsS9hiHwuZ78NsKQfmgKl/DQZ9+ygBLM36xKJ+jUrpOYhDbzlHudFsS6fLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z1iKmPU/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wu+Y17Lt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414FC606A32D;
-	Thu, 26 Nov 2026 14:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C293606A326;
+	Thu, 26 Nov 2026 14:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1iKmPU/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA361F000E0;
-	Thu, 26 Nov 2026 14:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wu+Y17Lt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EEB1F000C4;
+	Thu, 26 Nov 2026 14:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704121;
-	bh=B7qHvX5WCOxKu6d/QG4iMmIEXmurH0pWk+i1prjE1vc=;
+	s=korg; t=1795704124;
+	bh=jkwMWHeZ6a+idRACinLUV5t914P6cBksXZ7zU+HI9/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1iKmPU/PmwKm0YJLGmHCK10W4BfcKeud94YTF2x+BnPwJzsWcpJJFX7dYNoMWUM5
-	 CSy+B+CNcAeGjEI8mZN3KBJM0dt1nJ+kp/5cnPUoptj8Hp/Qe9uHgZ0RcMpjKp1Q3A
-	 NNBvDtOKKwcBXxZQzX60hVEcaE/+rBRL11SfSTeQ=
+	b=wu+Y17Ltd5gtH2SwRZcMFuAv6lLDmW+LKyKkQ9KvpSoB72GqfjsUPVUeGKjVk4cCQ
+	 JE6XWJOHbbBtyCbkuU9d3FbrKK5EGscbIRhfOn35yPy8QZaoQJJUX9CeGOnFwtZDFb
+	 fhOiFynmBg8H9ADb+rYrhRz1xhwUgd9rjenqedBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/265] virtio-blk: fix implicit overflow on virtio_max_dma_size
-Date: Thu, 26 Nov 2026 15:35:44 +0100
-Message-ID: <20261126143606.074594701@linuxfoundation.org>
+Subject: [PATCH 5.10 015/265] remoteproc: imx_rproc: Fix refcount leak in imx_rproc_addr_init
+Date: Thu, 26 Nov 2026 15:35:45 +0100
+Message-ID: <20261126143606.145215230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,48 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit fafb51a67fb883eb2dde352539df939a251851be upstream.
+commit 61afafe8b938bc74841cf4b1a73dd08b9d287c5a upstream.
 
-The following codes have an implicit conversion from size_t to u32:
-(u32)max_size = (size_t)virtio_max_dma_size(vdev);
+of_parse_phandle() returns a node pointer with refcount
+incremented, we should use of_node_put() on it when not needed anymore.
+This function has two paths missing of_node_put().
 
-This may lead overflow, Ex (size_t)4G -> (u32)0. Once
-virtio_max_dma_size() has a larger size than U32_MAX, use U32_MAX
-instead.
-
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Message-Id: <20230904061045.510460-1-pizhenwei@bytedance.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 6e962bfe56b9 ("remoteproc: imx_rproc: add missing of_node_put")
+Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20220512045558.7142-1-linmq006@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/remoteproc/imx_rproc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 8a492dd94fa11..288aeeefb6b3d 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -706,6 +706,7 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	u32 v, blk_size, max_size, sg_elems, opt_io_size;
- 	u16 min_io_size;
- 	u8 physical_block_exp, alignment_offset;
-+	size_t max_dma_size;
- 
- 	if (!vdev->config->get) {
- 		dev_err(&vdev->dev, "%s failure: config access disabled\n",
-@@ -810,7 +811,8 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	/* No real sector limit. */
- 	blk_queue_max_hw_sectors(q, -1U);
- 
--	max_size = virtio_max_dma_size(vdev);
-+	max_dma_size = virtio_max_dma_size(vdev);
-+	max_size = max_dma_size > U32_MAX ? U32_MAX : max_dma_size;
- 
- 	/* Host can optionally specify maximum segment size and number of
- 	 * segments. */
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 373fce8b91064..95b17eaa216e4 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -290,9 +290,12 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
+ 		if (!node)
+ 			continue;
+ 		/* Not map vdevbuffer, vdevring region */
+-		if (!strncmp(node->name, "vdev", strlen("vdev")))
++		if (!strncmp(node->name, "vdev", strlen("vdev"))) {
++			of_node_put(node);
+ 			continue;
++		}
+ 		err = of_address_to_resource(node, 0, &res);
++		of_node_put(node);
+ 		if (err) {
+ 			dev_err(dev, "unable to resolve memory region\n");
+ 			return err;
 -- 
 2.53.0
 
