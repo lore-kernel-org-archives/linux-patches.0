@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704822;
-	b=B52CeUFzEnOtzVWRj1h824Fc7KNn2tHe0pG5h145Lpxd9M3bVpV1J1QL+ARxOhngJhs0
-	 eWbgTUajMoZjbM6iyLYn/kvTDXnyDl90P4hoV9eNxhpRpmgViTAiEcyDeh/0vigtkqtjQ
-	 toFZEX+4eQ1DSG896pco8iALmQPiSdqbt+Z5Mx0lC9gvrAbY7U/WzV6tt4exA51Y7JpXa
-	 WUi9Sq1DnZYDyH3vipYuE5pj7R78bFEu9Q3Xja0NL6UFQzxyeg5UDC9WJP3xKXmuJiOrN
-	 bsRpy2C1dDUJj1wfsSP6F/dSQ3Vm+ELtJIdYTx0He6CdKPGo9zBIvPxF7FqZBjFNt6w==
+	t=1795704825;
+	b=ZTCavLRZH1CREiKSUf9nwaHLzz/i0QkH/c2G2Q5dP9uTy7guAY+FGy7CwLS44UBjhCnY
+	 cBI7mqkrJZKT6qZFDnV8ZfAX38zLK7uGygy3KbqvTsANuT7AxdrL0AN0NXiEQcjiPf5W6
+	 Hzv0M/vmLZs9RobSgsRz5jOCjSX55GCXr2VHh39bEH2Q6WzK9Hw7PCGJtrFzNHQGK2cDW
+	 VGdkMv2FYcwWwlRpbBe7CfQgTvnPboXJF/fAHsmbjrSpxh5uAmrEPq8T1LiXZk08iFMD/
+	 tVF4jhAsquK7YSuvRuIw3b28qR5Ap0YfVYQdKkjqKEi7OCJl6cBPr4Yef3tRKiNbQnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P3g8Coh6pS0QnvTWZseBK6YLaRvVll5wT3wKmrGQ82Y=;
-	b=1jWrIYfhUmeR5Mh8IJfGH9uKHeZZK9KluzEKqBsMahGrJh7MaBjoT/Bn9XgDwb/4z09g
-	 DlYckG6R7My4Jq6KxvjS7Yl2utDRB6xERmLkqrIIl8fbfttYvRu0X7jxH5ZzpqYgH2DJp
-	 xx9neGiCYuAq47VW/hX6Zsi3VfRUxVtC1n1ioQhn2BtAqskPJxrCi43hfkGTz4pPPA/sR
-	 1OuHY3dwCQdfpTPobU1btZdDvLMXQg672OEJG7MV4R1I2J1JNf8J1+VCB7eNubH1vwee0
-	 +hOn/wa8rT9jd7Dcg8Qw1SQP3+duzOqJPgm1DeHrNDQTRKAbpvUA+bRcrzqS7hN1B8Q==
+	bh=G0f4CPhYXbxub5/PbiUdQz8bElVJLCE0h0HJ/PdOjEM=;
+	b=mqxk/WElT73MK0tb+7P6C7FZyFIA7y2dW+wdCGNyYPLj2/cX9FCoSVoIa+GR8aPHfK8u
+	 TKz3vEXiZH7fQIHlqQjSXwj7Jjt87MF3eiuVrczmiPPYQVGZIDX/DZvP0JvMFCvBmAGNR
+	 GDkoEMpWSYXRRDsl8FIFyqXIcTjHanOd7BRQEhRjlAel2yZzR08GRV/E0GdnSm+g7KUaY
+	 QSiSwZCiIC3ip+2phsMtHXMDBxjG+jiE/0pphyac6gU8z95eYCAm3N69dcjxzhIGFdEf+
+	 yQq+mEt3v6yFoqPDy8tlb0Sq78GgoIqW4rZoEtop1hSvHb1NDEHAdp+JgBuFls+NWtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knYGx6dN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSFWrtTZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCF1606A331;
-	Thu, 26 Nov 2026 14:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F33D606A31C;
+	Thu, 26 Nov 2026 14:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knYGx6dN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA191F000C4;
-	Thu, 26 Nov 2026 14:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eSFWrtTZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DB21F000D4;
+	Thu, 26 Nov 2026 14:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704822;
-	bh=P3g8Coh6pS0QnvTWZseBK6YLaRvVll5wT3wKmrGQ82Y=;
+	s=korg; t=1795704825;
+	bh=G0f4CPhYXbxub5/PbiUdQz8bElVJLCE0h0HJ/PdOjEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knYGx6dNKKVI+dK70tm5xHXJgE1Dtzfn00OkGGn2p3Ka1x6u1x1gmKhrSwAJ2M4La
-	 8NgIHYM4H80zynWmV4dNm2AGMtv4mb6BGuuoQyNw7QaFRj5nsavhjZXadmukEb5hL9
-	 A6wspdrUOYXqlURgdbSXnS7DgD7E2iTPg27+SS2M=
+	b=eSFWrtTZ7Nz0HMrF5TcEWvVai31wL+pBoD/5KVR70lPfVU9mi6SjGPs3h6pqpoQf9
+	 TTSF6JZ7tjLDCYgIdBSoCY9132m2xSXEDNm6N2Hj3HZbcTil4inNalOvNWH+eSC2YQ
+	 3ajEOkSpVxZhXGYRpAjsKt+ga5weCcK8BIGXQOvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 255/265] sctp: fix skb_over_panic when adding addresses with a pending delete of another family
-Date: Thu, 26 Nov 2026 15:39:45 +0100
-Message-ID: <20261126143623.096154437@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 238/265] USB: serial: io_edgeport: fix potential close() use-after-free
+Date: Thu, 26 Nov 2026 15:39:28 +0100
+Message-ID: <20261126143621.898210191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,99 +66,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit ce09d8c13a15fe881d0a04c91979dcdf45ed9543 upstream.
+commit 839ff5fa30995c40cd5fba15fd976ad63416738a upstream.
 
-sctp_make_asconf_update_ip() accounts for a pending DEL_IP
-parameter by reusing the length of the address being added. The
-write-back side instead serializes the pending address itself,
-with its own address family. If the pending delete is IPv6
-(20-byte parameter) while the added addresses are IPv4 (8-byte),
-the chunk is allocated 12 bytes short and sctp_addto_chunk()
-writes past the end of the skb. E.g. on mainline (05441d697f7f):
+Add the missing open check on write() and locking when updating the port
+status during close() to prevent a racing interrupt completion handler
+from trying to submit more data for the port while its write URB and
+FIFO are being deallocated.
 
-    skbuff: skb_over_panic: text:ffffffff84859c77 len:392 put:20
-        tail:0x188 end:0x180 dev:<NULL>
-    kernel BUG at net/core/skbuff.c:215!
-    CPU: 0 UID: 1000 PID: 379 Comm: poc_sctp
-    Call Trace:
-     skb_panic
-     skb_put
-     sctp_addto_chunk
-     sctp_make_asconf_update_ip
-     sctp_send_asconf_add_ip
-     sctp_setsockopt_bindx
-     __x64_sys_setsockopt
+This issue was flagged by Sashiko when reviewing a related fix.
 
-Requires addip enabled on the endpoint (net.sctp.addip_enable=1).
-
-Account for the pending delete with its own address family, as the
-write-back side already does.
-
-This issue was discovered by an LLM code scanner.
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261111082313.1606366-1-bsdhenrymartin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260714101316.823942-1-shpark061104%40gmail.com?part=1
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |   28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/usb/serial/io_edgeport.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -2845,7 +2845,6 @@ struct sctp_chunk *sctp_make_asconf_upda
- 	int addr_param_len = 0;
- 	union sctp_addr *addr;
- 	int totallen = 0, i;
--	int del_pickup = 0;
- 	struct sctp_af *af;
- 	void *addr_buf;
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -1161,7 +1161,9 @@ static void edge_close(struct usb_serial
  
-@@ -2860,16 +2859,21 @@ struct sctp_chunk *sctp_make_asconf_upda
- 		totallen += addr_param_len;
+ 	/* port->close = true; */
+ 	edge_port->closePending = false;
++	spin_lock_irq(&edge_port->ep_lock);
+ 	edge_port->open = false;
++	spin_unlock_irq(&edge_port->ep_lock);
+ 	edge_port->openPending = false;
  
- 		addr_buf += af->sockaddr_len;
--		if (asoc->asconf_addr_del_pending && !del_pickup) {
--			/* reuse the parameter length from the same scope one */
--			totallen += paramlen;
--			totallen += addr_param_len;
--			del_pickup = 1;
--
--			pr_debug("%s: picked same-scope del_pending addr, "
--				 "totallen for all addresses is %d\n",
--				 __func__, totallen);
--		}
+ 	usb_kill_urb(edge_port->write_urb);
+@@ -1203,6 +1205,12 @@ static int edge_write(struct tty_struct
+ 
+ 	spin_lock_irqsave(&edge_port->ep_lock, flags);
+ 
++	/* avoid accessing freed fifo if tty_wakeup() races with close() */
++	if (!edge_port->open) {
++		spin_unlock_irqrestore(&edge_port->ep_lock, flags);
++		return 0;
 +	}
 +
-+	if (asoc->asconf_addr_del_pending) {
-+		/* The DEL_IP parameter is serialized from the pending address
-+		 * itself below; account for its own address family, which may
-+		 * differ from the added ones.
-+		 */
-+		addr = asoc->asconf_addr_del_pending;
-+		af = sctp_get_af_specific(addr->v4.sin_family);
-+		totallen += paramlen;
-+		totallen += af->to_addr_param(addr, &addr_param);
-+
-+		pr_debug("%s: picked del_pending addr, "
-+			 "totallen for all addresses is %d\n",
-+			 __func__, totallen);
- 	}
- 
- 	/* Create an asconf chunk with the required length. */
-@@ -2892,7 +2896,7 @@ struct sctp_chunk *sctp_make_asconf_upda
- 
- 		addr_buf += af->sockaddr_len;
- 	}
--	if (flags == SCTP_PARAM_ADD_IP && del_pickup) {
-+	if (flags == SCTP_PARAM_ADD_IP && asoc->asconf_addr_del_pending) {
- 		addr = asoc->asconf_addr_del_pending;
- 		af = sctp_get_af_specific(addr->v4.sin_family);
- 		addr_param_len = af->to_addr_param(addr, &addr_param);
+ 	/* calculate number of bytes to put in fifo */
+ 	copySize = min((unsigned int)count,
+ 				(edge_port->txCredits - fifo->count));
 
 
