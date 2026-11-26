@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704418;
-	b=D5UF9VXIAHsxyHampZGqO4hYVqBngWeoCkF6F0S5wuD+pqPmWERWy98Z8g7cbel0OZSV
-	 JXdepc5qcopIFWpoOyJwcouMfGsDPtlA4aGbEsyqQOVBYrijklxerSYoCUubIfw+01JGo
-	 rj2DphMJxySY1dwEC0ctYVhbRK64LTGM5SWvbdtBNR4c56QzCEDlv2xZrfzBIH/aO91ux
-	 SHgz0D8FggE7a3YcNNS45LeGjd8b+5lshRJxVwpZ5JniI1G11VVU40IDVQPG330dY5WnZ
-	 TepH4lfUBQ3EjnymFL5rplLpTXFTaFbUp5Ki6j+VcRa+VRBzF/SUmLaGezTxrt2pu4A==
+	t=1795704421;
+	b=VPpuDQN3W4rmUUVjYo7pSc+NTxu96W+cF7r7dQJoEQHqpRZ3HPjPnNTXrP9FWVlYbM+S
+	 /nAX+sgz9PY1WDcsavFmGKyCT0V7GFzSrwJNt7lb81f8SAVFTpfXzXlakCj0Tffro5aFV
+	 hh+sw4VPpoAZkpB8hmL5jfDNRvUwuDVvr9QLV7CRTD4ES3JKjYyLyZCownvvJEWpaZBO0
+	 fGbIIkTn2Ou37T94H0AElVorUlmg8rjWhuwWbZWu3aInCxFWzy8py4yn7DSfJJHxhzFIx
+	 keKwcWethIgwhQ7l4NvMpDPLvv4kAUbx3/zG70FpUqfVpZTAjfPM8L1/WTR+RHZp1yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dVhb54Go4XSQOduzcTGER192U5xb4rdLHaWUmBMU3Z0=;
-	b=wY45JHOSUK0ZZDDAOCnW7mAPis3b1HDwHZaxdwGh6VwBQb2fZxaC33mUD0eDxiwAXkwd
-	 eoCAV1a/korHLZpkgNhI2lnunntvIePLxK8fTO8OI3YBL0Uwr29jtS7aC69k+9IDE8RRn
-	 Y3Cqmtv8DgVYPEniC0nDpPe1DuR4rxt3IH7TllEx+ACSDwFr1PNoLILcreSnMQ5YHEMiJ
-	 ycx0/AQtVR9qTKAaiI8OurRApMdShcZ7s7TEYoWcUZFvtQxPUsFU07VF8pii0y5hZKOyD
-	 syX8hZVi7+tUcNIlnJSIa9lTpm1sXl+xMR6OV6fEefTm1oqunEf2FGgwFZCYoWzV9Aw==
+	bh=vQxmGOONiCEZILqVuDD17iKy6xlKSBigc3PS6+nEVZs=;
+	b=frxFip/HfG1JmfS+8ivuE7KxQKg8bLWia2cJsaDliU1V4l5CZj9e8KIyi74wK3PomUOo
+	 3WlvHTybGPG2cMLxD1dtXwyayza/0ZCw5bPHapy216Q8c+yTa2pvD3RzCvq7l3c8KRenP
+	 xZRLXp385yZNYhMyzzV4fiEewN2Oewws+OunKKSxFcHD/4vS45He5A9n7CVJeQJaQMQEN
+	 G2xS8usnocn5w66wyk/ByxRP3oX5nJ5qil0n8DWcpGbBXKsFWeTVc5ZGzr4wSjk0d4xu0
+	 UHs+r+nECEk0isTIlOCW+yqMqDUpI1E9nl3SK4ae5ibWHjWRjjbYZ6CvR7kg6WFtxbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1KwND7S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n36XGp4u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAF8606A31E;
-	Thu, 26 Nov 2026 14:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05446606A323;
+	Thu, 26 Nov 2026 14:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1KwND7S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44391F000C6;
-	Thu, 26 Nov 2026 14:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n36XGp4u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C231F000C0;
+	Thu, 26 Nov 2026 14:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704418;
-	bh=dVhb54Go4XSQOduzcTGER192U5xb4rdLHaWUmBMU3Z0=;
+	s=korg; t=1795704420;
+	bh=vQxmGOONiCEZILqVuDD17iKy6xlKSBigc3PS6+nEVZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1KwND7SM3BFydIIBVOj82ptdrlroaemr8RwKhdSbqtJBm8SGpIO6JXVdBErGi9eJ
-	 scUrdzNGPa5F62JPGX91dN50RQX2+3YeIKsF4RIh2KJXOPCCyhCpiVAzOihb5Xo2fi
-	 /Vq+DvWog3y4eYAV3KW2vLIw6D+OZaRgtcELPdlQ=
+	b=n36XGp4uW9pJokQEXWHNjB2SjwNfKh+4C4j+v3dcujF3amN3CujHBQduF5nIiTbTM
+	 8eDjC8u6/z8Dlz6nL69u395DwayBeMJce9VZl4GWzFwaca5dmKs5LDsTKBRQ6PYHv1
+	 48mJqNJ+RAINDbE/wvC2BA9ADNV+DGerszExCFCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/265] SUNRPC: preserve timeout policy when cloning clients
-Date: Thu, 26 Nov 2026 15:37:28 +0100
-Message-ID: <20261126143613.282475639@linuxfoundation.org>
+Subject: [PATCH 5.10 119/265] ipv6: ignore link state in gateway check
+Date: Thu, 26 Nov 2026 15:37:29 +0100
+Message-ID: <20261126143613.345428346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,40 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
 
-[ Upstream commit 5b0ac1f82201c2ab2d9c31ed568cc782bac6a399 ]
+[ Upstream commit b76bcf3fff9332076d92de47a80d12fd3d5268e2 ]
 
-rpc_clone_client() and rpc_clone_client_set_auth() leave the
-timeout argument unset, causing rpc_new_client() to use the
-transport defaults instead of the parent's configured
-timeout. This also affects pNFS data-server clients and
-changes their request timeout and initial RTT calculations.
+IPv6 route cannot be added in table when all
+following conditions are true:
+- gateway is not link-local address
+- ignore_routes_with_linkdown=1 on device
+- nexthop has no carrier
+- gateway is not present or covered by any route in table already
+Also multipath routes addition is invalidated by kernel even
+if only one of added nexthops satisfies all above conditions.
 
-Use the parent's cl_timeout when no timeout is specified.
-Preserve explicitly supplied timeout overrides.
+Reproducer:
 
-Fixes: 1b63a75180c6 ("SUNRPC: Refactor rpc_clone_client()")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+  ip netns add t
+  ip -n t link add va type veth peer name vb
+  ip -n t link set va up
+  ip -n t addr add fd00::1/64 dev va nodad
+  ip netns exec t sysctl -w \
+    net.ipv6.conf.va.ignore_routes_with_linkdown=1
+  ip -n t -6 route add 2001:db8::/64 via fd00::2 dev va
+  # added
+  ip -n t -6 route add 2001:db8::/64 table 100 via fd00::2 dev va
+  # RTNETLINK answers: No route to host
+  ip -n t -6 route show table all
+  ip netns del t
+
+Route should be added because:
+- RT6_LOOKUP_F_IGNORE_LINKSTATE in commit d5d32e4b7668
+("net: ipv6: Do not consider link state for nexthop validation")
+was added for this
+- the same route is valid in main table (when no specifying table id
+while adding route)
+- fib6_nh_init() initializes nexthops with no carrier
+- IPv4 already does this (fib_check_nh_v4_gw() ignores link state
+using the FIB_LOOKUP_IGNORE_LINKSTATE flag)
+
+Before commit b2c709cce682 ("ipv6: Convert gateway validation to
+use fib6_info") rt6_lookup() was used for checking if nexthop is
+valid, rt6_lookup called rt6_device_match() which does not check the
+link state. After change rt6_lookup() to fib6_lookup()
+find_match() under fib6_lookup() started to invalidate linkdown
+devices, because RT6_LOOKUP_F_IGNORE_LINKSTATE is not passed to it.
+
+Adding RT6_LOOKUP_F_IGNORE_LINKSTATE to flags for ip6_route_check_nh()
+solves the problem. RT6_LOOKUP_F_IGNORE_LINKSTATE is already used
+inside the first search ip6_nh_lookup_table() and fixes the
+bug in second search fib6_lookup(). Also RT6_LOOKUP_F_IGNORE_LINKSTATE
+isn't read inside fib6_select_path().
+
+Fixes: b2c709cce682 ("ipv6: Convert gateway validation to use fib6_info")
+Signed-off-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104195655.1406837-2-aroslavdudkov622@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 0a4b4870c4d99..7205c6cdd7668 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -627,6 +627,8 @@ static struct rpc_clnt *__rpc_clone_client(struct rpc_create_args *args,
- 	}
- 	args->servername = xprt->servername;
- 	args->nodename = clnt->cl_nodename;
-+	if (!args->timeout)
-+		args->timeout = clnt->cl_timeout;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 44500bcc99a29..e550a3960c453 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3278,9 +3278,9 @@ static int ip6_route_check_nh(struct net *net,
+ 			      struct net_device **_dev,
+ 			      struct inet6_dev **idev)
+ {
++	int flags = RT6_LOOKUP_F_IFACE | RT6_LOOKUP_F_IGNORE_LINKSTATE;
+ 	const struct in6_addr *gw_addr = &cfg->fc_gateway;
+ 	struct net_device *dev = _dev ? *_dev : NULL;
+-	int flags = RT6_LOOKUP_F_IFACE;
+ 	struct fib6_result res = {};
+ 	int err = -EHOSTUNREACH;
  
- 	new = rpc_new_client(args, xps, xprt, clnt);
- 	if (IS_ERR(new))
 -- 
 2.53.0
 
