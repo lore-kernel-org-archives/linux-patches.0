@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705590;
-	b=l04EKLDjHdvFj/U7ghVHzIVp1vQJhqJ2qXXqaB+TFUEeIQlvO2JJ1u2bx+0yZZMdTyH3
-	 sMxUfesZc5TC5obWfm9kGXPyIn6XIIVdUqh2c9uekuPMhU2n2+ONVRkaX9qNGrPC9uNXI
-	 mc6jSYJyYc5nhKM+6MkyqSXe0PI+NtIMtpjUaD6SjFkOY2Y+BfQmANVxXWDUZhqsilX0r
-	 Bt9ufXGQyOQ0Z2PjioDAPoI44wdQSTe6y+QEGs0ri6U/cxD99m4ECyA0Nz1iQ7Vn+pCp+
-	 8UbwVWm2fkJ6vf1QBux5xcn3J3SIm7o94/zyxKmDBEWeM24fPPw5L9tj0Y0aOrREK1A==
+	t=1795705596;
+	b=XUAA70aPUe2XGr/ym6mvNI1xbHZvrMXbllAY/4uKIdT0RXiXh+zPEZokGTUW2uZoDjvj
+	 EG7GY9kQcjhaLrTY9XpeLRnhZyoptydJmQSSiC5pozaTQlzu9/4YrbhTTaGBgQgcd0QhH
+	 NCS4zJd+7pVLC6E3CPfpYcc9HAOqprvotqkje7/nNVVdBefRD2YDLhqW6ZcUz39ruKXMP
+	 s1anizw1mOsL1+RyHULi6fKRVlP9khaGV9N/Yt0Z7eZBNl/mwo47UojVaOH9r2hwiA7O9
+	 XTKV4jFDVcyjbeMPj6U/ebnbdmNBKzjbtDc82M9SWwuPj56c5bOA4SrsuTHB30XwZ0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gWUIppKyle6omVft5FYDfFB+YcNN3CNiK9YDdELV8f8=;
-	b=y9GGT0y9UhQM6m6npzj52WyVwhz5cgIk0Df3bfIlqgKeWICsCtqcQv+GzV8wVIwQjH+c
-	 7afhQ1b8oDPP2yB0FVKWvb9F47rphfxqnq/2VThcd+wES5Dr+66uiuObNP/3oqmmwpk99
-	 BKz4GiekhQre45nb8MzUPnBVTIPOCzZlg8xxoXHzGsomBNNv3crO1nOP1ClCNLnO9xMH2
-	 56q+BuOWkQ3OcbjJCEQ617gygprsOFdmZYwvhclwnWkllDSdsJPdA/oujAqbn5iDoSz8q
-	 e8bKFbjnxgwaXCxc85VlAdcAHbpB4BetdT7jLEVVsFgCcxleIt2blqDNSc1SjZGM1Hw==
+	bh=vVTEGm+B3qqoZ14D4hzlZ/xo3kXfDYweXzTw55staVE=;
+	b=qoqPL+kH5H53nB0GJh4B+cahKxTQX+1kuhhXCsxnaj20lYAVAGirOT1ETbQJlf83iolv
+	 h/5VauepRAioeMMXom30NT0dHRBjNnqRatHdueCdAX1+9ucmo8IQFZCCjSST7/KtZzWzx
+	 NjnPF+fAOWt5x/7gtcvxfp1Niz0DNG4q0oE3dIf4dwJRuNSRBIykf8UjjS1Y4O75LPLkC
+	 0hFx+HgJSo4ZoPJuZ/A1gmiXAlxGHMY5QXdeDAWQNyUXxkZb9PVIY4a+MPCNLlNyEzqw6
+	 iSY5tmarmGZp39eUBeJZvGI6b4A30+45zpXTF5Oe+lALN7pd6alTnqPPgrURCcMWIlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7neBVw8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cIsO0OXO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30084606A331;
-	Thu, 26 Nov 2026 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C023606A31C;
+	Thu, 26 Nov 2026 15:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7neBVw8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330A41F000D3;
-	Thu, 26 Nov 2026 15:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cIsO0OXO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797541F000E0;
+	Thu, 26 Nov 2026 15:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705589;
-	bh=gWUIppKyle6omVft5FYDfFB+YcNN3CNiK9YDdELV8f8=;
+	s=korg; t=1795705596;
+	bh=vVTEGm+B3qqoZ14D4hzlZ/xo3kXfDYweXzTw55staVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7neBVw8uju1mpf4pl+u/UfPVCwz9AdgPON+o6YJOZOyVUCh9iOzuLlOsZnOwer0H
-	 fXa0vbWcLAeO3yRstaEX2MZhl0GE63sHCVVN98oStbQDjs7itWS86PTlH1/aY/7QoM
-	 ZALToKuVc44zEsHaHDIf3+MKxKHeQZugWLdQEoug=
+	b=cIsO0OXOtzto2aiX6xVYaxPiVx9qlW9f/qlx6jUQvEaUn1AnMzZZIQOAv/I6UVMfR
+	 5fva2blHZ6DdG5YNdACF0fxX1uWhZuXJFv/GkUaPAyP74cRnMBjX4y81iozdZPCSiY
+	 W2/+oc2dGKpguD0ede8VimUYEvpqUr4xmiGYaBvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 248/319] dm snapshot: fix discard writing into the next COW chunk
-Date: Thu, 26 Nov 2026 15:40:16 +0100
-Message-ID: <20261126144012.342260115@linuxfoundation.org>
+Subject: [PATCH 5.15 250/319] dm zoned: do not reclaim a random zone into another random zone
+Date: Thu, 26 Nov 2026 15:40:18 +0100
+Message-ID: <20261126144012.386137660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,99 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Kyrylo Biryuk <illofspeed@gmail.com>
 
-commit 73174b4bb6fcd0e6cf973c9402a0fae2e567ad9f upstream.
+commit dab527d83462a618d99bfc96370ce45ae3428706 upstream.
 
-zero_exception() zeroes one chunk of the COW device and takes the start
-sector from bio->bi_iter.bi_sector.  remap_exception() has already set
-that to the COW chunk start plus the offset inside the chunk.  That
-offset is needed for reads and writes, but for a discard it is wrong:
-the zeroing window is shifted, so the head of the target chunk keeps
-its old data and the tail lands in the next COW chunk, which holds a
-different exception.
+dmz_reclaim_rnd_data() falls back to a random destination zone when no
+free sequential zone is available and the target has cache zones. When
+the target is idle and the cache zone list is empty,
+dmz_get_rnd_zone_for_reclaim() selects random zones of the zoned device
+as well, so a random zone is then copied into another random zone. That
+frees nothing: the next pass picks the next random zone and copies it
+again, for as long as the target stays idle.
 
-io_overlaps_chunk() should have caught this, but it only compares the
-length.  "maps to entire chunks" in snapshot.rst also means the discard
-has to start on a chunk boundary.
+Seen on a two-device target (256 GiB regular cache device plus a 27 TB
+host-managed drive) used as an md RAID5 member: after a full rebuild
+every chunk was mapped and no sequential zone was free, and the idle
+drive kept reading and writing while the free zone counters
+in "dmsetup status" did not change.
 
-A discard that is not a full chunk has a second problem: after
-remap_exception() it is sent to the COW device, where it hits a chunk
-that still backs a live exception.  After a discard the contents are
-undefined, but the exception stays in the table and keeps pointing at
-that chunk, so a later read returns whatever the discard left instead
-of the snapshot's data.
+Only switch to a random destination zone when the zone being reclaimed
+is a cache zone: moving it to the zoned device still frees cache space.
 
-Reproducer:
+This depends on "dm zoned: back off when reclaim cannot make progress":
+without it, dmz_reclaim_work() would retry the resulting -ENOSPC at
+once, and run dmz_check_dev(), for as long as the target stays idle.
 
-	truncate -s 4M o.img c.img
-	o=$(losetup -f --show o.img)
-	c=$(losetup -f --show c.img)
-	dmsetup create snap --table \
-		"0 8192 snapshot $o $c P 512 1 discard_zeroes_cow"
+Tested on 7.4-rc1 together with the previous patch, on a two-device
+target (a 512 MiB RAM-backed regular cache device plus a 1 GiB
+scsi_debug host-managed drive) filled until no sequential zone was
+free, then idle for 60 seconds: the stock module made 877
+random-to-random copies; with this series it made none, and each pass
+failed with -ENOSPC once per DMZ_IDLE_PERIOD without a device check.
 
-	# write two chunks, this creates two exceptions
-	head -c 256K /dev/zero | tr '\000' '\252' > pat
-	dd if=pat of=/dev/mapper/snap bs=256K seek=1 count=1 conv=notrunc
-	dd if=pat of=/dev/mapper/snap bs=256K seek=2 count=1 conv=notrunc
-
-	# shift the snapshot by 8 sectors, so a discard that is aligned on
-	# top is unaligned inside the snapshot
-	dmsetup create top --table "0 8184 linear /dev/mapper/snap 8"
-	blkdiscard -o 262144 -l 262144 /dev/mapper/top
-	sync
-	echo 3 > /proc/sys/vm/drop_caches
-
-	# chunk 1
-	dd if=/dev/mapper/snap bs=512 skip=512 count=8 | od -An -tx1 -N1
-	# chunk 2
-	dd if=/dev/mapper/snap bs=512 skip=1024 count=8 | od -An -tx1 -N1
-
-Before: aa 00  <- chunk 2 was zeroed although it was not discarded
-After:  aa aa  <- nothing written, a discard is only a hint
-
-Fix it by requiring the discard to start on a chunk boundary in
-io_overlaps_chunk(), and by finishing a discard that is not a full
-chunk with bio_endio() instead of passing it down to the COW device.
-
-Fixes: 2e6023850e17 ("dm snapshot: add optional discard support features")
+Fixes: c5c788595292 ("dm zoned: start reclaim with sequential zones")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-snap.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/md/dm-zoned-reclaim.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-snap.c
-+++ b/drivers/md/dm-snap.c
-@@ -1976,8 +1976,8 @@ static void zero_exception(struct dm_sna
- 
- static bool io_overlaps_chunk(struct dm_snapshot *s, struct bio *bio)
- {
--	return bio->bi_iter.bi_size ==
--		(s->store->chunk_size << SECTOR_SHIFT);
-+	return bio->bi_iter.bi_size == (s->store->chunk_size << SECTOR_SHIFT) &&
-+	       !(bio->bi_iter.bi_sector & s->store->chunk_mask);
- }
- 
- static int snapshot_map(struct dm_target *ti, struct bio *bio)
-@@ -2037,11 +2037,13 @@ static int snapshot_map(struct dm_target
- 	e = dm_lookup_exception(&s->complete, chunk);
- 	if (e) {
- 		remap_exception(s, e, bio, chunk);
--		if (unlikely(bio_op(bio) == REQ_OP_DISCARD) &&
--		    io_overlaps_chunk(s, bio)) {
-+		if (unlikely(bio_op(bio) == REQ_OP_DISCARD)) {
- 			dm_exception_table_unlock(&lock);
- 			up_read(&s->lock);
--			zero_exception(s, e, bio, chunk);
-+			if (io_overlaps_chunk(s, bio))
-+				zero_exception(s, e, bio, chunk);
-+			else
-+				bio_endio(bio);
- 			r = DM_MAPIO_SUBMITTED; /* discard is not issued */
- 			goto out;
- 		}
+--- a/drivers/md/dm-zoned-reclaim.c
++++ b/drivers/md/dm-zoned-reclaim.c
+@@ -290,7 +290,13 @@ static int dmz_reclaim_rnd_data(struct d
+ again:
+ 	szone = dmz_alloc_zone(zmd, zrc->dev_idx,
+ 			       alloc_flags | DMZ_ALLOC_RECLAIM);
+-	if (!szone && alloc_flags == DMZ_ALLOC_SEQ && dmz_nr_cache_zones(zmd)) {
++	/*
++	 * If no free sequential zone is available, a cache zone can still be
++	 * moved into a free random zone of the zoned device, which frees cache
++	 * space. Do not do this for a random zone: moving it into another
++	 * random zone frees nothing and, on an idle target, repeats forever.
++	 */
++	if (!szone && alloc_flags == DMZ_ALLOC_SEQ && dmz_is_cache(dzone)) {
+ 		alloc_flags = DMZ_ALLOC_RND;
+ 		goto again;
+ 	}
 
 
