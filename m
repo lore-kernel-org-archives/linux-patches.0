@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704313;
-	b=YKz9xpPntHviStHSwl1r2mUf+UWbGXJZ6ZhC9xUk41YGlsy+2/hqQ7DZN3Dvib5nhV+2
-	 F3flSk4NyEDb5XCPLt6r/hSrdK+YyT3UGczeA3e6E04xdz8eNliAl8xyebf4D8qUH0OdP
-	 Y3is6mg5XblgTGoXTxCg21gxcUJYyS6C1S8DI1lw6IuE3xNaMdUTPWAjdbeB6kv+8rJdW
-	 AMtN1iI/85cWqc12Wucg9FtCROzQM33WDtlzCWzm/Zw/ZDAHmuOr9Fs1l9Sd2JYUY9caG
-	 vzV5wYN2G9bUkkuf3n7l+7UVWrnoZ+aqM+hIbV2JYpBjiclSk+Gv/JigBqpS5we68gg==
+	t=1795704316;
+	b=ZPvdAUZOv6q/YYUYkR20D8cEy4oep2q+DlRrdPxAHk7wKOiUV+5r4MEvymVzMxPS4g6Q
+	 UqSycIhPubhCUSwzi68avYPUvVOKCDVVZv4SCeaoC/QnLWWeR4R+sthUPPKtYEtKpMA5i
+	 eqe8J9x0RLlCetkrv6dVDLC4g9UGhN9Go0EzThrgZAqym0DBUPN3bs3JYPeIy+iLQksQF
+	 U4/d+bH9RvzO8Vh97sp4OlmA3WxJNDTW+4kJB9TO5tjL0GIuDlHjPSPmVioEqtJpEjoS+
+	 iei04DAzWCpVDlirL94rzHcxK3aZwbH+JtE+v5P63ePGn1r7cl1XwOzWtE8Wzvbm7iQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xiD3A8ZOI5XkSUaz50dErXcu2K15ohEe9wwWhbO0ZL8=;
-	b=MkIU4j05RJ0r5b+LtWKG20IMBYA4jXK7XUAdFQDtJamvfVWMbRs06LFOoXL7VLFZLBwQ
-	 QjVXd4379/rDaKu8E4ZJcd5TnJ1s47stacXZ5iuJLH3biZrBA2e5KIXe5sf6hpDaXm8Yv
-	 XWSCvjWY27gr8+MikOrnYNGpUTxReZF8xX0Ax3YTxqaAVYb+Pul65yfnuedrej2CjFgT2
-	 Bg0bH8ZaAq7jkztMTm1zlWuk+XIG7X1JBrAEC5TNV40CTx4AOOW0jEyg0OpiHvtY1obLf
-	 4Zh5pKotcPRIBYwzonSSZgDpVMVOTXlKaNs/zolVSe0yGNAGAmhxZA9tGciVvP6y7Og==
+	bh=hl/kcMX6znVEWrsomYX/xqeNpfu5gRm57jILd/1tB6w=;
+	b=oflC3niXqMwyWPCb7vcp/fb7WuqG243CyL/SA80qKjSJRWvv3fqex9ZWDGvJioy/SZmd
+	 Wn2/AfUrb2VljABERqLdvAu9qzp9btwSEdMAEMBsq53RnxLjFbR09isM1szWeIARkN0GN
+	 4w0zbz/szB0dQOlZJiy004kBN571tFJfboTmGXMeEM4FW9RlRmcVfQ0uJqmF/kyu/ojiF
+	 2PBEmOsXK7LrFo0h1j6+2EJMoZakSj4Os7slcu630jxpswH2MnSLboqraVTt/LyiXxQEV
+	 soHrp1Pmt2gYKoNEpB86tUbNaQsbmuqnT7mcNCi6kLKmpSQ60nrFSKBiGR8/1n9zlsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xtDzOr3f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W2NIYa97;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF61A606A31E;
-	Thu, 26 Nov 2026 14:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3F0606A330;
+	Thu, 26 Nov 2026 14:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xtDzOr3f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7821F000C6;
-	Thu, 26 Nov 2026 14:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W2NIYa97
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B0A1F000C4;
+	Thu, 26 Nov 2026 14:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704313;
-	bh=xiD3A8ZOI5XkSUaz50dErXcu2K15ohEe9wwWhbO0ZL8=;
+	s=korg; t=1795704316;
+	bh=hl/kcMX6znVEWrsomYX/xqeNpfu5gRm57jILd/1tB6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xtDzOr3fSHlEc6n2h6zXKhOK7Pu842W6Noken9dcpPYaVunJnck6jEAFsScBlpeZV
-	 jnhhmHIf22L80kAqYsqG1p72AAg5AmMVNlmsykbKcYL4yNlzQqksYBKgTjsDJyj8BK
-	 qkQqSTQEmEj0yF6lVjn1jFZzpdUGI4gO4KtrZpHY=
+	b=W2NIYa97gk5TLblIByE29Fioxc0l2ONVwOXTtqZGQR/omsWZj10C22oY1iT0W53z7
+	 wDV9VwAcpnBG5Ig3waVubfcMIpfbdjFFmcu8OSrBGEXLDfz329sjjVspqCspDI0ia7
+	 ozkdg1Jyt948b8T1tZi5CWQhM4EnsAOl3xDx6aqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 079/265] ACPI: scan: Print the offline failure message in acpi_bus_offline()
-Date: Thu, 26 Nov 2026 15:36:49 +0100
-Message-ID: <20261126143610.568484752@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 080/265] Bluetooth: L2CAP: Clear request identifiers on incoming LE connections
+Date: Thu, 26 Nov 2026 15:36:50 +0100
+Message-ID: <20261126143610.637813834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,55 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit b9ea1e921c2721546f53270cffdc6866e20576dd ]
+From: Zhao Li <enderaoelyther@gmail.com>
 
-When a physical node of an ACPI device being hot-removed cannot be
-offlined, acpi_bus_offline() passes the physical device back to
-acpi_scan_try_to_offline() through ret_p and the latter prints
-"Offline failed." for it after the namespace walk.  By then
-physical_node_lock is not held anymore, so the device may have been
-unbound from its ACPI companion and freed in the meantime.
+[ Upstream commit 15a80cc8263abd50132a05d1b06824de8e28abcb ]
 
-Print the message in acpi_bus_offline() when device_offline() fails in
-the second pass, while physical_node_lock keeps the device bound to its
-ACPI companion and so the reference taken by acpi_bind_one() is still
-held.  acpi_scan_try_to_offline() only needs to know that something
-could not be offlined, so pass the ACPI device back through ret_p
-instead, like in the "Offline disabled." case.
+Incoming LE and ECRED channels retain the peer's request identifier
+after an immediate response. The deferred LE response also leaves the
+identifier set, unlike the deferred ECRED response.
 
-Fixes: 303bfdb1a14d ("ACPI / scan: Add second pass of companion offlining to hot-remove code")
-Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261029034507.2721580-2-sashal@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+A later ECRED request can reuse that identifier and include an unrelated
+channel in its shared-response handling. That walk matches on the
+identifier alone, so an LE channel is selected too. If the old channel is
+closing, the checks can refuse the new connection. The check at request
+receipt rejects it with L2CAP_CR_LE_INVALID_PARAMS; the check before a
+deferred response returns L2CAP_CR_LE_AUTHORIZATION.
+
+Store the identifier only when deferring the response, and clear it
+after sending the deferred LE response. Keep deferred ECRED identifiers
+until the shared response is sent, since a partially accepted group
+still needs them.
+
+AI assistance was used.
+
+Fixes: 27e2d4c8d28b ("Bluetooth: Add basic LE L2CAP connect request receiving support")
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/scan.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 08a43d1393e0e..745a9d42307b7 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -169,8 +169,9 @@ static acpi_status acpi_bus_offline(acpi_handle handle, u32 lvl, void *data,
- 		if (ret >= 0) {
- 			pn->put_online = !ret;
- 		} else {
--			*ret_p = pn->dev;
-+			*ret_p = &device->dev;
- 			if (second_pass) {
-+				dev_warn(pn->dev, "Offline failed.\n");
- 				status = AE_ERROR;
- 				break;
- 			}
-@@ -239,7 +240,6 @@ static int acpi_scan_try_to_offline(struct acpi_device *device)
- 					 (void **)&errdev);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 15809ca665ffa..2c7330d021875 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4080,6 +4080,7 @@ void __l2cap_le_connect_rsp_defer(struct l2cap_chan *chan)
  
- 		if (errdev) {
--			dev_warn(errdev, "Offline failed.\n");
- 			acpi_bus_online(handle, 0, NULL, NULL);
- 			acpi_walk_namespace(ACPI_TYPE_ANY, handle,
- 					    ACPI_UINT32_MAX, acpi_bus_online,
+ 	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CONN_RSP, sizeof(rsp),
+ 		       &rsp);
++	chan->ident = 0;
+ }
+ 
+ static void l2cap_ecred_list_defer(struct l2cap_chan *chan, void *data)
+@@ -6129,10 +6130,10 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
+ 
+ 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
+ 
+-	chan->ident = cmd->ident;
+ 	chan->mode = L2CAP_MODE_LE_FLOWCTL;
+ 
+ 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
++		chan->ident = cmd->ident;
+ 		l2cap_state_change(chan, BT_CONNECT2);
+ 		/* The following result value is actually not defined
+ 		 * for LE CoC but we use it to let the function know
+@@ -6355,10 +6356,10 @@ static inline int l2cap_ecred_conn_req(struct l2cap_conn *conn,
+ 
+ 		__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
+ 
+-		chan->ident = cmd->ident;
+ 		chan->mode = L2CAP_MODE_EXT_FLOWCTL;
+ 
+ 		if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
++			chan->ident = cmd->ident;
+ 			l2cap_state_change(chan, BT_CONNECT2);
+ 			defer = true;
+ 			chan->ops->defer(chan);
 -- 
 2.53.0
 
