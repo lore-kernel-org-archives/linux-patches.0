@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704813;
-	b=vx2K4ESWNzlTIwstO2Cb3LRlZ6kDkaNe1uGMwUIheLwQHgwubZewziVfzjUIzGumUSPZ
-	 QpPFHOawIUGD9a2zhzdCTm/9sfXeTyzImru7scg2XT8LrC+EavhdELSMY2xKOX14KLanE
-	 YTYbz+WeWgTQpXUfyGKSEdxdhm0ZgoP1lSQkeAFzZ1gUmn/Nl9YzuM7tmz64Zuq2q+dzj
-	 igvn8GcA9ukKMJ21bhLF7v2o8R4XFoiSiksDJ3F8JmA6MqpKFzTgzM3nVVR+6NRjIbNyx
-	 aQGf1Cg8wB0kVewoxt9PTtGqJ7l5bDTASIyVVpPMqSRoHYJJcLZvTrxozedqNvLx2sA==
+	t=1795704816;
+	b=sjz0+YQcZDjtkzbOkO8c/q7rAnADICUqcbOlsEVA2FyoKOHXxAS5mRSD2h76vD03YC1J
+	 ciHMRx1SN4nixJFDh/8Wmldqni2/m1qrX7GVh6fOU8SFia2NGiIVZj5xLBe6kGlZGdGae
+	 6cQMwggOqwPlmUThH/WC3uTv8JsnaA9PP3N8hZmhU1hNliUsZZ73JO7DsQ2DaO9Im0j7W
+	 UcqyR5Af2GAdTJXR7Lu8YUsIQsIzruRG5bmBpmaXQ54qhA74vy02w7+xC9favnjmTMLH8
+	 JG9XqS+BKZCg+eRjfIvuhSa2ljGfeTzLM6+32UQo+t633ICHGEaEX/Sf7FLXLRqYsIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704816;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PC0M9dx9yhImFZye3DZ/Q36zh6whlsYRJjYWHhtZ89s=;
-	b=rcDdYwmmxh6njeToDvCYLxwxjs+WeHhrDTQk0c+/3lDz+CyATfTQBw3IrFI3PTO/tF0m
-	 EoP4RAgQuWeMsDuNVE/yGeDvgm6gnyboGPUdk+hgNS6GJ94A0/ZOMs6e+sxs6P1n4DQoo
-	 zW3ZrC3tailIIPqYaHV/oEoPOQPF39tQ9ktkJ6IcU2RlC9V1AmKIPBB3D5eku/XnZk/l0
-	 lAizh79GbogilcuzS0Im9NsrS8fgt2XrOoT5R57Nrgeg+RbNLRwknQUL+UGxNFA2Zc9b0
-	 QQrHVtCNk9uV1yHHdv0/9fSYJ8Ozm3Gp+tYz0nMttL70m68YmYmx+dBZxS5ezheL05g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=q6wYnCuzWhifAOmWGDZlT3CzttLY97kiPpmyFAqTcDw=;
+	b=Bu15ZkSeflYgFXeAzn9puCRKkA40Z3QCD9ZPNaN147m0ZRMiwQx+EEcXtVex4FwnYFmT
+	 QVNlIJbizfbGXbIjKRUYh1s5rDZSQUkJlxp6K+2z/Z2sVEwuSECqBNO4wrMMQ+vSfXpuO
+	 8NDlgcvvXDNTXYcv1X2L2XabTXRUJyPVPAPM/ID8pFzxPamfhUcjHFOMiOoWGlinIgJQz
+	 VzRg2962jRgtU1tH/a8DWZWUJi8fAVAeefnjIJQTARmvhyBv9/nKsdtar05aOWWBuj5S9
+	 UA3eDFKDDVSnMRFmC2tIUzPve4COThz1MQx+giHITKgSjsw27KQYC4f+u9Efi5lNZjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xGNtFjs2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjzXnzn0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DCC606A32A;
-	Thu, 26 Nov 2026 14:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8A2606A31E;
+	Thu, 26 Nov 2026 14:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xGNtFjs2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E511F00A36;
-	Thu, 26 Nov 2026 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TjzXnzn0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95221F01563;
+	Thu, 26 Nov 2026 14:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704812;
-	bh=PC0M9dx9yhImFZye3DZ/Q36zh6whlsYRJjYWHhtZ89s=;
+	s=korg; t=1795704816;
+	bh=q6wYnCuzWhifAOmWGDZlT3CzttLY97kiPpmyFAqTcDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xGNtFjs2LHtQxLBJB+xsKWEFBuPxpfPGtKZHodNMZgNh2YWaXdih+FF8TMyL8dcTh
-	 77bP355r1wRLL1yJ6MYfoaD+JF4PQRNzTI75FoQPc4Tn7MQdumO1N1tLgFNT9qKmFW
-	 I9yenIOYIBHzhxsWKvdHzKIZUuqnlUR3rS7UJyvg=
+	b=TjzXnzn0xYaGNjQsBPfNmihzE5+6aqTxpZoQG+6mB8ljf4z110iTtGf3WJTyyL1iY
+	 iD7RIgYcRrFysi7ZVx4wr0iCDj4UrvoRlbBGCuauImk/DYqc0ybXRXrd9WP7OTibEc
+	 bIGcJ65LMtqieItt3qRIwdK8gI5lJPDlieuBKQHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sarmanow <as@discnull.de>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Shashank Mohan Jain <jain.sm@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.10 252/265] iio: light: vcnl4035: Fix reversed ALS mode bit
-Date: Thu, 26 Nov 2026 15:39:42 +0100
-Message-ID: <20261126143622.867231738@linuxfoundation.org>
+Subject: [PATCH 5.10 253/265] iio: magnetometer: mmc35240: leave cache-only mode before the cache sync
+Date: Thu, 26 Nov 2026 15:39:43 +0100
+Message-ID: <20261126143622.948802483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -62,46 +61,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sarmanow <as@discnull.de>
+From: Shashank Mohan Jain <jain.sm@gmail.com>
 
-commit 6bcabc30b89f31e2925647d1ffa5a0e4b7919829 upstream.
+commit 38e05cf38df705b7fa9e8ada931589fa96816f09 upstream.
 
-According to the datasheet (table 2) the ALS_SD bit behaves the opposite
-way the current ALS mode defines are set, writing 0 powers the sensor
-and writing 1 shuts it down.
+mmc35240_resume() marks the register cache dirty and calls
+regcache_sync_region() while the regmap is still in cache-only mode.
+It calls regcache_cache_only(false) only after the sync. This
+ordering has been wrong since the resume support was added; it happened
+to work until regmap started rejecting a sync in cache-only mode.
 
-The current driver thinks the ALS is up while it's actually shut down
-and it's down when the systems powers it up.
+Since commit afc8e3ee8307 ("regcache: Validate cache_only state in
+regcache_sync_region()") a sync in cache-only mode is refused with a
+WARN and -EINVAL. Every resume now gives
 
-Fixes: 55707294c4eb ("iio: light: Add support for vishay vcnl4035")
+  WARNING: drivers/base/regmap/regcache.c:536 at regcache_sync_region+0x1a4/0x1c0
+  ...
+   mmc35240_resume+0x30/0x70
+   dpm_run_callback+0x7d/0x1c0
+   device_resume+0x175/0x270
+  ...
+  mmc35240 1-0030: Failed to restore control registers
+
+and the control registers are not written. If the chip lost its state
+during suspend, it runs with the reset value of CTRL1 while the cache,
+and with it the sampling frequency attribute, still has the configured
+value. Writing the same frequency again does not repair this, because
+regmap_update_bits() finds no difference to the cache.
+
+Leave cache-only mode first, then mark the cache dirty and sync it.
+
+Reproduced in qemu with the driver bound to an i2c-stub device: set
+in_magn_sampling_frequency to 25 (CTRL1 = 0x02), clear CTRL0 and CTRL1
+of the stub behind the driver's back to emulate the power loss, and run
+a suspend/resume cycle with "devices" in /sys/power/pm_test. Without
+this change CTRL1 is still 0x00 after resume and the warning is
+printed. With it, and also with the regcache commit reverted, CTRL1 is
+0x02 again and there is no warning. Not tested on real hardware.
+
+Fixes: 553a776b7908 ("iio: magnetometer: mmc35240: Add PM sleep support")
+Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sarmanow <as@discnull.de>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/vcnl4035.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/magnetometer/mmc35240.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/iio/light/vcnl4035.c
-+++ b/drivers/iio/light/vcnl4035.c
-@@ -46,8 +46,8 @@
- #define VCNL4035_DEV_ID_MASK		GENMASK(7, 0)
+--- a/drivers/iio/magnetometer/mmc35240.c
++++ b/drivers/iio/magnetometer/mmc35240.c
+@@ -538,14 +538,13 @@ static int mmc35240_resume(struct device
+ 	struct mmc35240_data *data = iio_priv(indio_dev);
+ 	int ret;
  
- /* Default values */
--#define VCNL4035_MODE_ALS_ENABLE	BIT(0)
--#define VCNL4035_MODE_ALS_DISABLE	0x00
-+#define VCNL4035_MODE_ALS_ENABLE	0x00
-+#define VCNL4035_MODE_ALS_DISABLE	BIT(0)
- #define VCNL4035_MODE_ALS_INT_ENABLE	BIT(1)
- #define VCNL4035_MODE_ALS_INT_DISABLE	0
- #define VCNL4035_DEV_ID_VAL		0x80
++	regcache_cache_only(data->regmap, false);
+ 	regcache_mark_dirty(data->regmap);
+ 	ret = regcache_sync_region(data->regmap, MMC35240_REG_CTRL0,
+ 				   MMC35240_REG_CTRL1);
+ 	if (ret < 0)
+ 		dev_err(dev, "Failed to restore control registers\n");
+ 
+-	regcache_cache_only(data->regmap, false);
+-
+ 	return 0;
+ }
+ #endif
 
 
