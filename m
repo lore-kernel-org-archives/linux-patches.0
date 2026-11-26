@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705436;
-	b=Z84y2IcGRu9umbTxA5EA6d63zb98HIPPs9yCmJpLGHHCml4zF3LoIgbTheTLpvHZPzSp
-	 lTiaELvjPuMlZ+oapxBT+QL/4EjmmtJdxjMhQXPApOdqH+NlXOyJK8RTn0F/fRcOySL3i
-	 UgEROwsrWmxrjhDlTzMpML7KK2P++vhlAv5k2jdDAixak7o1u54VkTI6um0yXj1gcPFns
-	 NLqDY/ZQ9YKO7d76RJ1Wpv0imSGDS31bz4204YB86jEcoWh7aLsHEt26O/ndICOJ2wJEy
-	 vLnEGCBahY+uEY/XQkKfYY3Ua5bqCY833OuFLhwadFrBc4dqGqPbas3i1RkL5HmmEag==
+	t=1795705440;
+	b=xVRJeMl+0i2UFWOeL9kDTRnce9IvgHA+Bvn9yXuoxLhfknwM9z8zLvTJVKEUweBxZjaz
+	 LDSuKappqbnpGZCDF1GNnSK6aT8iWd2pAgm/t6kMMuFW289y8sYxV+0PGWKM2qFZ3PYgi
+	 /rIP2YzGHh3/KkjuNvBI2HurKWalGwTG/wIrehtpkyhY/MaN8PdPgvbfBzIIuIC2eaJ0n
+	 /BqRSdkUAKdyhh6exTb0UuzjJZgyufMpnuO5cEk/kknalLfLJ8kSceuflFj0L+2lHIsEr
+	 6pweM79sL+ou4vXMXXDwlC/WZuoXiM+MyWyuk0iH+Sn4UQ6bLOOHEF3fpU0dOKdB6Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z/jho07/OgiIqWhr2bUOVzPGAz14XzBzpkX5IN0DRhg=;
-	b=AF92B3ngjY2+jZp6vjjDv8Mtot24GpoeQHS36aQ8lCHw1PUnKiVTZBxAaSNPvKLyjXBz
-	 TO/bwc4fICtbe3COigtza7LEo+DWFgqEwqOB/ztSRE7VtnFxpMqI9sWCzQKZCMA6c9fvy
-	 7ryUaTxHSQV0MtxiroebqQ/Nj6vQVbTc9i3QRktUBuIV/RUTt5NMM/gcNUBSDthGLbXRS
-	 UFh2QN6laPsh1V0xqA7LU7Icgh4Rr27K/g8iLcPYcqn3xWrx5oZUJC/ScYXuDXchS2Jy6
-	 fyoHxSrTgoGpaDYQtcARbp6KUf7BvVIaGy0+9ZaPqOBchdvjSbUiXd6j9G2ZdTYtwWg==
+	bh=i4xceH+qRnGHcBatBi9cNcSzmeEk2q91U3LfHkp/p9U=;
+	b=yYBKuAlpue3/dsvy/PtqnfKM+EpySoy1PKmA+fJpsmfk9YniDgeOhbK+g404NY5Ofm65
+	 KrgyoclkGRkeFD2RvxXsvqrbptSC5NZAMiQosw5Id/OuFMQUL32D662FmYXeTlXyANGB6
+	 Bh8DK0KS0IesIGnpTWelXh9M+L7gqMJAM2O3drn4rr0P1f6OJwLJI5yoWRg/hnZ/AJWn+
+	 FKUb56yDAVTIny97oNUrixpZivZfF80QDWoAnFssJ0fxg9f6+xwR8rLPNW3GTG4h9YqHo
+	 TV+57Pr7OayTr3q56AbE4oxsXsqwD3BILzIh6EYPUqkDTtR7jdgig/lw2VZWLplNz2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Zceldyf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qckl9aWd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C857606A32A;
-	Thu, 26 Nov 2026 15:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FCD606A321;
+	Thu, 26 Nov 2026 15:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Zceldyf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014F21F000CA;
-	Thu, 26 Nov 2026 15:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qckl9aWd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E371F000EB;
+	Thu, 26 Nov 2026 15:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705436;
-	bh=Z/jho07/OgiIqWhr2bUOVzPGAz14XzBzpkX5IN0DRhg=;
+	s=korg; t=1795705439;
+	bh=i4xceH+qRnGHcBatBi9cNcSzmeEk2q91U3LfHkp/p9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Zceldyfc5B33Uj0pMxkFkMTX/BDHYAvc6BLdUIK0/oueiKIXihpHuNtuj+oGC7xL
-	 nZwdJEHOpv/+zmuA4MNnttCerilfekvbHxBWMeJTiu/QpiHIV2NwCCfVYUCfANZmMe
-	 q6dii45bjjXacGVt4OgvqTD4YvuUGZC6t1JGLn1c=
+	b=qckl9aWd3B0LgE7mG3GHHWHnwZN7tWFoE4PptrIpCGeBTRO8vgrpGK+e8ekWWpvK2
+	 frT0cwje9vnwBr/HRr0hMtWppBAj6NeYPs3NO59h2aJCrvNa2jw/JOQ7263JW6W0+c
+	 GusfOQyAxi+huhaSjeRktwEa0tPcqv6kRuCzUxwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 198/319] ipvs: fix protocol data lifetime during namespace teardown
-Date: Thu, 26 Nov 2026 15:39:26 +0100
-Message-ID: <20261126144011.213241105@linuxfoundation.org>
+	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <liuwe@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Subject: [PATCH 5.15 199/319] hv_netvsc: Stop PPI parsing on invalid metadata
+Date: Thu, 26 Nov 2026 15:39:27 +0100
+Message-ID: <20261126144011.236762216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,90 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-commit 832aa3e89e806bb2667fe4e656b705f4088b3c9d upstream.
+commit 19a227903e65c7a9c179156485660a4e017575fe upstream.
 
-IPVS frees its per-net protocol data before control cleanup cancels
-defense work and unregisters the sysctl table. A defense worker can load
-a protocol data pointer, then namespace cleanup can unlink and free that
-object before the worker dereferences pd->pp or pd->next. The worker's
-securetcp_lock does not serialize with protocol cleanup. A concurrent
-defense-mode sysctl write can reach the same timeout update path.
+rndis_get_ppi() uses continue when a per-packet information entry has an
+invalid size or offset, or cannot hold the requested metadata. However,
+the remaining length and entry pointer are only updated at the bottom
+of the loop. Each error path therefore retries the same invalid entry
+indefinitely, repeatedly logging the error and preventing receive
+processing from completing.
 
-KASAN reported:
+Return NULL on these validation failures instead of continuing. This
+terminates the lookup when malformed metadata is encountered while
+preserving the existing behavior for valid entries.
 
-  BUG: KASAN: slab-use-after-free in ip_vs_protocol_timeout_change
-  Workqueue: events_long defense_work_handler
-  Call Trace:
-   ip_vs_protocol_timeout_change+0x1b4/0x1e0
-   update_defense_level+0x63e/0xd80
-   defense_work_handler+0x1e/0xc0
-  Allocated by task 125:
-   ip_vs_protocol_net_init+0xda/0x2f0
-   __ip_vs_init+0x16b/0x240
-   setup_net+0xfc/0x310
-  Freed by task 12:
-   ip_vs_protocol_net_cleanup+0x1d6/0x2e0
-   __ip_vs_cleanup_batch+0x7d/0x100
-   cleanup_net+0x38c/0x770
+The issue was reported through an internal bug-tracking system and
+confirmed by manual code inspection. The pre-fix hang has not been
+reproduced locally.
 
-Run control cleanup before protocol cleanup so that defense work and
-active sysctl handlers have finished before their protocol data is freed.
-Initialize protocols before exposing the control interface, and unwind
-in reverse order, to enforce the same lifetime on initialization failure.
-Protocol initialization and exit do not depend on control state.
-
-Fixes: 9330419d9aa4 ("IPVS: netns, use ip_vs_proto_data as param.")
+Fixes: 44144185951a ("hv_netvsc: Add validation for untrusted Hyper-V values")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Wei Liu <liuwe@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/hyperv/rndis_filter.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -2424,12 +2424,12 @@ static int __net_init __ip_vs_init(struc
- 	if (ip_vs_estimator_net_init(ipvs) < 0)
- 		goto estimator_fail;
+--- a/drivers/net/hyperv/rndis_filter.c
++++ b/drivers/net/hyperv/rndis_filter.c
+@@ -411,12 +411,12 @@ static inline void *rndis_get_ppi(struct
+ 		/* Validate ppi_offset and ppi_size */
+ 		if (ppi->size > len) {
+ 			netdev_err(ndev, "Invalid ppi size: %u\n", ppi->size);
+-			continue;
++			return NULL;
+ 		}
  
--	if (ip_vs_control_net_init(ipvs) < 0)
--		goto control_fail;
--
- 	if (ip_vs_protocol_net_init(ipvs) < 0)
- 		goto protocol_fail;
+ 		if (ppi->ppi_offset >= ppi->size) {
+ 			netdev_err(ndev, "Invalid ppi_offset: %u\n", ppi->ppi_offset);
+-			continue;
++			return NULL;
+ 		}
  
-+	if (ip_vs_control_net_init(ipvs) < 0)
-+		goto control_fail;
-+
- 	if (ip_vs_app_net_init(ipvs) < 0)
- 		goto app_fail;
- 
-@@ -2449,10 +2449,10 @@ sync_fail:
- conn_fail:
- 	ip_vs_app_net_cleanup(ipvs);
- app_fail:
--	ip_vs_protocol_net_cleanup(ipvs);
--protocol_fail:
- 	ip_vs_control_net_cleanup(ipvs);
- control_fail:
-+	ip_vs_protocol_net_cleanup(ipvs);
-+protocol_fail:
- 	ip_vs_estimator_net_cleanup(ipvs);
- estimator_fail:
- 	net->ipvs = NULL;
-@@ -2469,8 +2469,8 @@ static void __net_exit __ip_vs_cleanup_b
- 		ipvs = net_ipvs(net);
- 		ip_vs_conn_net_cleanup(ipvs);
- 		ip_vs_app_net_cleanup(ipvs);
--		ip_vs_protocol_net_cleanup(ipvs);
- 		ip_vs_control_net_cleanup(ipvs);
-+		ip_vs_protocol_net_cleanup(ipvs);
- 		ip_vs_estimator_net_cleanup(ipvs);
- 		IP_VS_DBG(2, "ipvs netns %d released\n", ipvs->gen);
- 		net->ipvs = NULL;
+ 		if (ppi->type == type && ppi->internal == internal) {
+@@ -424,7 +424,7 @@ static inline void *rndis_get_ppi(struct
+ 			if (ppi->size - ppi->ppi_offset < ppi_size) {
+ 				netdev_err(ndev, "Invalid ppi: size %u ppi_offset %u\n",
+ 					   ppi->size, ppi->ppi_offset);
+-				continue;
++				return NULL;
+ 			}
+ 			return (void *)((ulong)ppi + ppi->ppi_offset);
+ 		}
 
 
