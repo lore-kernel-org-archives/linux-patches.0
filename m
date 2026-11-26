@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704751;
-	b=0VepSzsz+N593qLk4lWKsiB6CooiimB4QvPAQMk2ZqzjKxxOqpy1Lm63eFXG/u2f3BRO
-	 /JKoIYAYviGsfRto4bLlgKxAF4Ec9XM/Q775nBDzFfqoe37GzERmXT+vxl7uTJBIOapQk
-	 IRP4hyN7rtSxf1W9QzOpws0RyhnaUR6BRkGwiS6Wr3yaUCxmMBV9e9nt7vEJ9m6miTO6c
-	 NOF6z5qraIlfNIlnE1y4HndBTnuks/PBJOvrZzRIlgZKVTuIFtmy4nXX3+x+caZ3Svqrq
-	 eUWvUMU0EMjVaIHILmm0/N5+rwYW2cQBWxLZsTq5+xCtvUg9A6vjM8qVY1gl/8efdfA==
+	t=1795704748;
+	b=l1fkk2A5OJC8DLnQLqJA+Dv0gYpkChw1f7Mypl3eMe2ZnA2yNJiSQ/McQea8iU8xLsbP
+	 c+fjSxut58VL08+SpzO/rDgVkT0B4BDDXtzWyT2Fa/dg+MIZhHxMsEVmn2s/zI1npv6Is
+	 xfdaGmrHHL9uqlE6LXy/s+CRMc/gfVKJeAhNmdgvRCVCoQVtK9PPKq/yqHIcJ4NTFyJXJ
+	 dlqaCxDsRVcolLCSVNnFXklViillU/1E+HQlu6LFcb16aPubibN9k5Xt1ga4awzebOV83
+	 lEghnKdpXM8z7qv3TXErwb43XjK1xjh7/ByKwMFRWHUpOZF/075Ywcngn1c6dTVkG1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hMkIITpHMB4zAsGh37Hcau3q6WA0zw0h4ECDjEdw36k=;
-	b=CPAXl8c2zQyT+5aFqYw7/AhHa8hO6SyFXODxMPmssDRsY1R2/UMcvIVF/tjyykoiJHvS
-	 5FOlblAAHHFVzn8GrAGK4VF5JGBV9HSYRsFPf2Z8770x9uMzzu12I24uvpMRvPkDeekl7
-	 FuvdGwEgA+4sNsYF+Cq1AQu1dxAY3RL3Xlpp34JahX+/ymtr7d4+seTvlbNfTO3lC5N+7
-	 hSASR9NEyNXJ1WAtOTNYMdvENBQMwtgEQYwzur5PL2iAR5FmkjVIDPWeVELcBb7yVWTZQ
-	 YRPbbL9IsuGyU0S71p0CmhTCP+HzT9P6IUZdTvov+7APbb8ROHGyNkKPwAbrXwbEtSg==
+	bh=P8GFfA1+QsFBYBpCpcu/HVOjzf93gtbbaS/56wh0qS8=;
+	b=1FkdyKOZuSV4ajwtaITEfzDwKS55Jq5fardXEv/eyk3ihJt1A7CxKp851ev7b+scfKQ7
+	 X3kjBWeP5H42o6wW+MCpPB15zwr2ZJhdEYm1PFmN24BmvAw28q4KZ3n6EDmf0D0YYLLZ5
+	 BOpaOrzCWmFjBf4ePbwgsdGSvwRAZX48MmYpSK3rEb3xoTfiaFiA+R72Ew8fxGj60Uen8
+	 mKSFEzH7qe0tyfP7AgqRt47b1qHMrFeeB1LjUpM9b4vbpqLFgW66NR9n4969btKVTEQ7d
+	 /chlxzlW+tZy8ippPlB15pve/O9GCSIh/0oQsipxXiT9ftfO6rZstg+NHjSZ/LQ04vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLXeXeCe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDLMOKCK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFEB606A326;
-	Thu, 26 Nov 2026 14:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67B6606A323;
+	Thu, 26 Nov 2026 14:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLXeXeCe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16D41F000EF;
-	Thu, 26 Nov 2026 14:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDLMOKCK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33F41F000D1;
+	Thu, 26 Nov 2026 14:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704751;
-	bh=hMkIITpHMB4zAsGh37Hcau3q6WA0zw0h4ECDjEdw36k=;
+	s=korg; t=1795704748;
+	bh=P8GFfA1+QsFBYBpCpcu/HVOjzf93gtbbaS/56wh0qS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLXeXeCeXv0kDd3SNGxEQorWBJYoegwQ3okYZZu+Hgv4e8zRsRDMObFBCjCyCMhHi
-	 X5MvfLmBeP7UTAtLVA2oR4qLCWIkpGQsGRKPYryxbXwwRsevN0s9hz3EACuFVSGbyW
-	 Qu2b6ZKnG2ANh0w5llxU8+KIiIZoj3XELK3J+DRY=
+	b=YDLMOKCKnXIvFwhsSuK7kc/kEhjASA+tZP/OUHUtLbVFDDeF5ABxKGbl+a8RxhjiX
+	 gvTSNuQY4kVqVwKoFZVCJQAjGIFc72ROXH9TOSjuBOuW9Y3sWtWbQpElWaDsJwIGHd
+	 3cmQXL9bLTq2DStA8ShLp+xo9wN5EiVXN1cUKowQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 5.10 229/265] w1: ds2805: use the bus mutex to talk on the bus
-Date: Thu, 26 Nov 2026 15:39:19 +0100
-Message-ID: <20261126143621.268138550@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 193/265] wifi: mac80211: recheck the OCB station limit before insertion
+Date: Thu, 26 Nov 2026 15:38:43 +0100
+Message-ID: <20261126143618.683109742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,71 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit a2e52ccce044e13d2695bb1bbdc07942727f28dd upstream.
+commit 27e29a077b4887d0e0a813337f8b7e06bd020c81 upstream.
 
-Since commit b02f8bede217 ("W1: split master mutex to avoid deadlocks.")
-the slave drivers serialise their accesses to the bus with bus_mutex.
-This driver takes the mutex of the master in the callbacks of its eeprom
-file instead.
+Frames from successive unknown OCB peers can make the deferred worker
+install more than 128 stations.
 
-That mutex is held while a slave which has disappeared from the bus is
-removed, which waits for the sysfs callbacks of the slave to return.  A
-callback which is waiting for the mutex at that moment never does: both
-tasks are stuck, and with them the thread of the bus master.
+The receive path checks local->num_sta before allocating each station,
+but pending stations are not included in that count. Several allocations
+can therefore pass before the worker inserts any of them, and the worker
+then drains the list without rechecking the limit.
 
-Besides, it does not keep the other slave drivers off the bus, so that two
-transactions can get mixed up on the wire.
+Recheck the installed-station limit in the worker under the wiphy mutex
+and free entries that no longer fit.
 
-Fixes: f6887531c0c6 ("drivers: w1: Add 1w slave driver for DS28E05 EEPROM")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-5-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+LLM assistance was used to find the bug and review.
+
+Fixes: 239281f803e2 ("mac80211: 802.11p OCB mode support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20261028142302.16634-2-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_ds2805.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/ocb.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/w1/slaves/w1_ds2805.c
-+++ b/drivers/w1/slaves/w1_ds2805.c
-@@ -102,7 +102,7 @@ static ssize_t w1_f0d_read_bin(struct fi
- 	if (count == 0)
- 		return 0;
+--- a/net/mac80211/ocb.c
++++ b/net/mac80211/ocb.c
+@@ -138,8 +138,12 @@ void ieee80211_ocb_work(struct ieee80211
+ 		list_del(&sta->list);
+ 		spin_unlock_bh(&ifocb->incomplete_lock);
  
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 
- 	/* read directly from the EEPROM in chunks of W1_F0D_READ_MAXLEN */
- 	while (todo > 0) {
-@@ -123,7 +123,7 @@ static ssize_t w1_f0d_read_bin(struct fi
- 		off += W1_F0D_READ_MAXLEN;
+-		ieee80211_ocb_finish_sta(sta);
+-		rcu_read_unlock();
++		if (sdata->local->num_sta >= IEEE80211_OCB_MAX_STA_ENTRIES) {
++			sta_info_free(sdata->local, sta);
++		} else {
++			ieee80211_ocb_finish_sta(sta);
++			rcu_read_unlock();
++		}
+ 		spin_lock_bh(&ifocb->incomplete_lock);
  	}
- 
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 
- 	return count;
- }
-@@ -211,7 +211,7 @@ static ssize_t w1_f0d_write_bin(struct f
- 	if (count == 0)
- 		return 0;
- 
--	mutex_lock(&sl->master->mutex);
-+	mutex_lock(&sl->master->bus_mutex);
- 
- 	/* Can only write data in blocks of the size of the scratchpad */
- 	addr = off;
-@@ -256,7 +256,7 @@ static ssize_t w1_f0d_write_bin(struct f
- 	}
- 
- out_up:
--	mutex_unlock(&sl->master->mutex);
-+	mutex_unlock(&sl->master->bus_mutex);
- 
- 	return count;
- }
+ 	spin_unlock_bh(&ifocb->incomplete_lock);
 
 
