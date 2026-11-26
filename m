@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705468;
-	b=soSVwG/WGoZ1D3hcg9pDc4QKuafZ5hMGGiDgP4m29z0bMHwBqaCdkjnJe2s2+5VyXbEM
-	 Mmjh0zVlsV2rn+nwKg+FfqDcUNzXuXeBpwPGKkBSkQB5lP9XrYRdXsIU6X8y0G9RCDOMi
-	 5X9+kf7kcowTZUoiioc0xgKaf3fn8J8zhZu30lpoTn9BwZvT3BnMgLj7kU224uxBorhIB
-	 rFzdsMBT+5Km/LHuRRYRdFDUm1hjAd+ttjT2pyEX/IEd9wm4fr1209FUTbXSGAPdZ57VC
-	 k2C7GFxJyabA3KzlrPgl9igeqNJPGEU8S25QNZVaukMeeW5cwfA9rtsi9FudQlg4k1A==
+	t=1795705470;
+	b=KxBzw/r93ZWvSmMKnMzXnwgw+waAKQlXV3Ti5Jk/EyZfIAutnwmCu7G2bN44lCIXxn4/
+	 9x1Ijp0QZQIJPNRCQuOmRYZX6IqeRVp61DdjBBlatV83bY9WFnQx3tdanPJKzgzK2ou49
+	 lfyhwGD+Hah7vIbi7qU4cLo/PFQYmI7NO88afcTqGY4QKnK8RbaqX1/7kemN1Ds+vEw/2
+	 7NFNFaffOZhchFY+G+0p+gi+JkqTUWPluRYC/MdwOQ5nlNSaBtimnZZlL0vKzobmVVu6h
+	 rBL4TZc2xMDomtOoRrKzuEfo1qIfHCoodZzevn6TNmBLuwfWPfVjHut8pNGPeSPFGVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tEX06U3yF9cHzDPL++SpiSNCgY9Mt3p6RIRRcsl3uPc=;
-	b=Gj3BIU6xZm142WA47m8OEex1ZjxE6x3FISqDXxJjVuMlmRTPedGhhr7G4NjZT/5s35BF
-	 BQImE2P8vADbJrUpKwSwlTPskfHcE26Dy3SA0dED/sgq186BlUjDAiovfYS02Cp1knuDl
-	 F92nOAG7sSOCAId/TmEpyZxABe6ki+VObqxcJLoaDZUT6h6FRtF0YNvoFVojyfpfNPReP
-	 9IgGXUWUhL8uoZ0D2avCyyGetDqb5rCD7tx/1Z9tRQKmTEIEUvWKwqGNnZoHCDnqTG1Lc
-	 OcvKV91BpBrsAWM+2KO4UnTL0G5G8lbcATqQmMjnh6v2TSirIi74ph56PwhA+FP8aww==
+	bh=SVW5kxkRmFSgRjbkpYxAtTaPO7Z97qwd+fDs354GKYo=;
+	b=GJdGWZ7bW/rFDFhWO7cCRTObD+DfZFdsnQ43u3l/0XUJzRTYL0UVWf/OXoDb0tNMs5t4
+	 Vb9m15gwxwHHAo6x3+/M7zsNKyTHGQgyZK0pA4od9bPj76AsUlE6TBFEjKAXEx2s1Vo2b
+	 3vkiR1zQHkseu4HIJYCJeX1di65K/JOVvB7kweBKb6F5fC4sQpNgtyYVa5rlx56OszeeS
+	 z9GW6HHHygbU0ZUkSbFPUCI3CxiN0i2oplMY0OIpM0KiYwm/KtYhD572xg3pvrogiCAnN
+	 tFPHAT5PnFhVO0bVd7ZWaFMuTYv8RAnVmfeVVm2y2b1gT7QEcQ/qiz9sOMv+NqTf97g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L6gdeyia;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DT3ldB8K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE856606A327;
-	Thu, 26 Nov 2026 15:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9914606A31C;
+	Thu, 26 Nov 2026 15:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L6gdeyia
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E331F000C6;
-	Thu, 26 Nov 2026 15:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DT3ldB8K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D82C1F000C6;
+	Thu, 26 Nov 2026 15:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705467;
-	bh=tEX06U3yF9cHzDPL++SpiSNCgY9Mt3p6RIRRcsl3uPc=;
+	s=korg; t=1795705470;
+	bh=SVW5kxkRmFSgRjbkpYxAtTaPO7Z97qwd+fDs354GKYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L6gdeyiaxtVjXxzaf7HYQ9VuAmYdnWHzPGmGCHOfE152doRDSOPaFJ7ODS2v2kR9r
-	 495DxlmemPPvc5GdEjipWBHkBhp70Pa87+17uHYOvU10NrI+zbw1fktBer7C0qsYlX
-	 wfilP+oZGdXErfQW6UPPL5Wtv2tT0O+hYVY5BISc=
+	b=DT3ldB8KbxLwdJFz70dTM/YRj9CMQRMdx1PrxLSDikGAuorajwhDP/ybHr1aW94fc
+	 0ErR1aqkhiMjEqML+oNLNDaZr+uJ5DAUDH7rhlEKX0o7JpdS69VKOemXhgg2a+lLpE
+	 zahpkAi+687DwC698DDKyViJPoZwiG4MtHLcXSZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Yongkang <teel4res@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 207/319] fs/proc: fix the write length returned by proc_sys_call_handler()
-Date: Thu, 26 Nov 2026 15:39:35 +0100
-Message-ID: <20261126144011.416952928@linuxfoundation.org>
+	Li RongQing <lirongqing@baidu.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 208/319] cpufreq: acpi-cpufreq: fix P-state index mismatch in extract_io()
+Date: Thu, 26 Nov 2026 15:39:36 +0100
+Message-ID: <20261126144011.439319647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,63 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-commit fbdc020ee1b82079102e493aaa7200de5f497a38 upstream.
+commit 6bc092a0fc4d331a4adbbb664078af149c580834 upstream.
 
-proc_sys_call_handler() reads the write length from iov_iter_count() and
-copies that many bytes from the iterator into kbuf.  A cgroup/sysctl BPF
-program can replace the new value through bpf_sysctl_set_new_value() and
-update count to the length of the replacement value.  The handler then
-returns that adjusted count as the number of bytes written, even though
-the iterator originally held a different number of bytes.
+When policy->freq_table is built in acpi_cpufreq_cpu_init(), entries
+that are not lower in frequency than the previous one are skipped.
+For each remaining entry, freq_table[].driver_data stores the
+original ACPI P-state index, so the index space of freq_table no
+longer matches perf->states[].
 
-If the replacement value is longer than the original input, ->write_iter()
-reports more bytes than the iterator held.  splice(2) passes that value to
-iter_file_splice_write(), which subtracts it from the pipe length and
-walks past the pipe head:
+extract_io() currently walks perf->states[] with index i and uses the
+same i to index policy->freq_table[i]. When duplicate frequencies
+exist, this can associate a P-state status with the frequency of a
+different P-state. It can also access an invalid or sentinel entry in
+freq_table when the number of entries in perf->states[] is greater than
+the number of entries remaining in the frequency table.
 
-  Splice Exceeded! ret=7 tot=1 left=0
-  Oops: general protection fault
-  RIP: 0010:iter_file_splice_write+0xb6f/0x1170
+extract_io() is used on ACPI_ADR_SPACE_SYSTEM_IO platforms by the
+frequency verification path, which is enabled by the
+acpi_pstate_strict module parameter. With the mismatched lookup,
+check_freqs() can fail to match the frequency of the P-state that
+drv_write() has already programmed. It then sleeps through all 100
+iterations - at least ~1 ms of usleep_range() plus 100 cross-CPU
+calls and I/O port reads, all with policy->rwsem held, and
+.target_index() returns -EAGAIN, leaving perf->state at its previous
+value while the hardware is running at the newly requested P-state.
 
-The write path consumes at most the original iterator length in
-copy_from_iter_full() before the BPF hook runs.  Return the smaller of the
-adjusted and original counts on the write path, so an expanded BPF value
-cannot exceed the iterator while a handler that reports a shorter parsed
-length still produces a short write.  The read path keeps using the
-adjusted count for copy_to_iter().
+The cpufreq core consequently keeps policy->cur at the old frequency.
+Since __cpufreq_driver_target() returns early when the requested
+frequency equals policy->cur, the driver is not called again for that
+frequency and the control register is not rewritten. The hardware can
+therefore remain at a frequency that differs from the frequency known
+to the cpufreq core.
 
-Fixes: 4e63acdff864 ("bpf: Introduce bpf_sysctl_{get,set}_new_value helpers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Link: https://patch.msgid.link/179328314073.648427.7892850166511253762@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fix this by iterating over policy->freq_table and using
+pos->driver_data as the original ACPI P-state index when accessing
+perf->states[], as extract_msr() already does.
+
+Fixes: fe27cb358835 ("[CPUFREQ][2/8] acpi: reorganize code to make MSR support addition easier")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260910111329.2220-2-lirongqing@baidu.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/cpufreq/acpi-cpufreq.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -539,6 +539,8 @@ static ssize_t proc_sys_call_handler(str
- 	struct ctl_table_header *head = grab_header(inode);
- 	struct ctl_table *table = PROC_I(inode)->sysctl_entry;
- 	size_t count = iov_iter_count(iter);
-+	/* ->write_iter() must never report more than the iterator held */
-+	size_t orig_count = count;
- 	char *kbuf;
- 	ssize_t error;
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -196,14 +196,13 @@ static unsigned extract_io(struct cpufre
+ {
+ 	struct acpi_cpufreq_data *data = policy->driver_data;
+ 	struct acpi_processor_performance *perf;
+-	int i;
++	struct cpufreq_frequency_table *pos;
  
-@@ -589,7 +591,8 @@ static ssize_t proc_sys_call_handler(str
- 			goto out_free_buf;
- 	}
+ 	perf = to_perf_data(data);
  
--	error = count;
-+	/* the write path consumed at most the original iterator length */
-+	error = write ? min(count, orig_count) : count;
- out_free_buf:
- 	kvfree(kbuf);
- out:
+-	for (i = 0; i < perf->state_count; i++) {
+-		if (value == perf->states[i].status)
+-			return policy->freq_table[i].frequency;
+-	}
++	cpufreq_for_each_entry(pos, policy->freq_table)
++		if (value == perf->states[pos->driver_data].status)
++			return pos->frequency;
+ 	return 0;
+ }
+ 
 
 
