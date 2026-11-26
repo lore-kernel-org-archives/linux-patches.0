@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704141;
-	b=Y9SpQ7lQOMN2zwvtalsR4vtIMRjj3GcMeF0/DFgRrojrGO/pZglCa17a1iaJL58l8J0w
-	 1MgCQDoL0eg8okDlcFBF4dLqxmlZcxsDufF7fEQlyTImmXTcr3HLQUP7RJHAxlNbubdRW
-	 ZIWMMWJ95/soumFaqlQyZxFV00/YXRe12c9jr5agrjO4HyZ/4FO0mMSvptwWBBPitkGIi
-	 J+xjRgNBN0+r4RKvgRA+mKkFikZ0sZgJ+UJf2b3zyjwaHESg2//+mmHbreCMrH5M3hw0m
-	 49uLaV/k+FU8GloFxp0l/faNoAO+fs5iquX3xNfT1n79AvomGxMk/sEZdmyMO7pYRBw==
+	t=1795704144;
+	b=jDOMJg4tOhCpVREnRyPba1dunnVzxTG52fWDHIvxbHK7DadBsl8MzaRkoFLu7AZGq6Zo
+	 iiXEQC8L4OFTPorK45v6JnDzNHVCAJFjUFjWzfFMPN7EWj0FQwNuMvMzf59hop7pNa6rP
+	 C4I6zdUjONzsxHJFbspiJGmMplpU5cxqCDbpeKnzhoL5RW0Jlth3kLPnC79rWZ/SrQ0bu
+	 FZTxzFIvGNvn9iLkceoiNvYrx1ZUEY4hibCgFoiMHSNqr6UKoNlKdHTr802L/JfmKjYdI
+	 7RqMst+W9ttTyqG1DjQ3V+Xg9t1nK3a9GPtgiamd9WJcOoswfN0DAWtcB3eGXuiPUeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PqIjKC3kJaOVaTzE7aQXFH0A49PQVXp/St42fD/Dsq8=;
-	b=SjjFSbc6/+Ba1wCz8pFDL7tDLZHF379nQmqH0xFaa9nlm5zSRUqQOCx/4ZRQBOu5gU23
-	 S10eKvL+ZzDQkWkogw9tdLwBkOdZFtfjWamqG025c8p26rD73NieEJ8yYINnNkGMp3wRD
-	 4f2K5GICanNcbCY77Ik9lJOFDjL+ioI+vYw0Zavtn4pdppGE0d79XEWBB8eTgGyyjqpBf
-	 57kjzBVqLCLMxzpChUNUYVXinBedBYBBRrVR17EDPU4AJ37GpFs6olBXjdQux25cSP9eh
-	 HOsb35lrLCSWwnCditDTL6AFJZ+JdpKBC6CaECZ5d3KUVthN76EvkPvNJcEI9QOdSYw==
+	bh=GND38nt93YTTnm5zuEjCe4GBEGttmJylI1pfW/x6qeU=;
+	b=z4e7LvBCYU0rDv3LSxjvp6Oe82Q7AmralMpQCu9sbViePTmKtB+2Ii7qALM4yGVQXzCM
+	 PA98Kns6XeXpMuHW4Uczbqs5Ze7kWEr3zs2mFNv6IEcEmpiB+suigaJiARqeF9f0Gm2+u
+	 bgnn/Zu4UMrfGuy2xq/G4hp1OhDTh7WURdUmfGwAHehhLH6R8s2yNJHQepX76RCC7I03X
+	 NNq6GmniVmmBJoywjXtjYyh+8DaflAn9bG/BSE6VUWTuz5dMcsTLhs067J/du1duogXWA
+	 HTFuVBOid1hIu1JZGq5abvWxN3mQMPq7zqUDgnuRDz6kixjr8ZCZkX9m/jXf8R9/i0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W7fvRJoZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wLF+k/UJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FB8606A31C;
-	Thu, 26 Nov 2026 14:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B79606A321;
+	Thu, 26 Nov 2026 14:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W7fvRJoZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AB71F000C0;
-	Thu, 26 Nov 2026 14:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLF+k/UJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF711F000ED;
+	Thu, 26 Nov 2026 14:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704141;
-	bh=PqIjKC3kJaOVaTzE7aQXFH0A49PQVXp/St42fD/Dsq8=;
+	s=korg; t=1795704144;
+	bh=GND38nt93YTTnm5zuEjCe4GBEGttmJylI1pfW/x6qeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W7fvRJoZZGb5MZ/u+ARHjcyLlG3halgBrpSbyf0bd0mK+AFEI9zB+xVLWGaQASiVk
-	 m2KYFrcSMOTbNJlh+yPckoalkub5k8cGwl3Pqj8rAEyvIxg2aOiEDfMKoT8B0zJqVz
-	 Wg5N5FklZQSlhGDeKkdVLWlngttA9hm3cGTRwL04=
+	b=wLF+k/UJp2mQoU8rn46rpoYs/2HQtpDelyxYMd2vz4tLj+WgeVE12wd4OTJCRxp0j
+	 ad4+sb5C8kqZoRFehHimQsOC1LjyJriRKjTbxxk6qZzd97gjANqhA0xiHDr6mYrM5+
+	 EICNxeA4it9ezG+dPmr6CLaGJ8kk/1wFIFAeXICY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gideon Heinz <gideonheinz02@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Feng Ning <feng@innora.ai>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/265] Input: destroy force-feedback device on input unregistration
-Date: Thu, 26 Nov 2026 15:35:50 +0100
-Message-ID: <20261126143606.473110695@linuxfoundation.org>
+Subject: [PATCH 5.10 021/265] staging: media: atomisp: use array3_size() for overflow-safe allocation
+Date: Thu, 26 Nov 2026 15:35:51 +0100
+Message-ID: <20261126143606.549816292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,72 +68,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Feng Ning <feng@innora.ai>
 
-[ Upstream commit 2ae35f090d029d2d8491b0a7f98a04c5c05d0a44 ]
+commit d178c7ca8fefc28115d35b94c3b1f4d653e34182 upstream.
 
-When an input device is unregistered while userspace holds an open file
-descriptor to its event node, input_dev_release() is deferred until the
-last file descriptor is closed. Because input_ff_destroy() was only
-called from input_dev_release(), force-feedback teardown (ff->destroy
-and freeing ff->private) could run after the parent driver had already
-unbound, freed its device state, or even been unloaded via rmmod,
-causing use-after-free errors or page faults in unmapped module text.
+Replace open-coded width * height * sizeof() multiplications with
+array3_size() to prevent integer overflow in buffer allocations.
 
-Commit ef166ce08801 ("Input: stop force-feedback timer when
-unregistering input devices") added a separate ff->stop callback for
-ff-memless, but left ff->destroy invoked from input_dev_release().
+The atomisp driver computes DVS, morphing table, shading table and
+statistics buffer sizes using unchecked arithmetic.  When dimensions
+are attacker-controlled or simply large, the product can silently wrap,
+causing kvmalloc() to allocate an undersized buffer.
 
-Once __input_unregister_device() has disconnected all input handlers
-(which flushes effects, closes the device, and marks evdev dead) and
-deleted the device from sysfs, nothing accesses dev->ff anymore. Call
-input_ff_destroy() directly in __input_unregister_device() so that
-ff->destroy() always runs synchronously while the driver and its module
-are still active, and remove the now-redundant ff->stop callback. Keep
-input_ff_destroy() in input_dev_release() (where it is a no-op once
-dev->ff is NULL) to handle input_free_device() on devices that were
-never registered.
+array3_size() saturates to SIZE_MAX on overflow, so kvmalloc() returns
+NULL instead of succeeding with too few bytes.
 
-Fixes: 509ca1a93836 ("Input: implement new force feedback interface")
-Reported-by: Gideon Heinz <gideonheinz02@gmail.com>
-Closes: https://lore.kernel.org/r/CAPb1+K2BxnfQ7VUQ15td5f9pVhn-ARSM9EjfOU8WuW72o+cvPg@mail.gmail.com
-Tested-by: Gideon Heinz <gideonheinz02@gmail.com>
-Link: https://patch.msgid.link/2f722967b6db0692d4dd4164aff39b62@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ sashal: Dropped the ff->stop removal hunks (ff-memless.c, input.h, input.c) since that callback doesn't exist here, keeping only the input_ff_destroy() call after device_del() and the comment fix. ]
+Signed-off-by: Feng Ning <feng@innora.ai>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/ff-core.c | 2 +-
- drivers/input/input.c   | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ .../media/atomisp/pci/sh_css_param_dvs.c      | 11 +++---
+ .../media/atomisp/pci/sh_css_param_shading.c  |  4 ++-
+ .../staging/media/atomisp/pci/sh_css_params.c | 35 +++++++++++--------
+ 3 files changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/input/ff-core.c b/drivers/input/ff-core.c
-index a765e185c7a12..41609fd328b18 100644
---- a/drivers/input/ff-core.c
-+++ b/drivers/input/ff-core.c
-@@ -361,7 +361,7 @@ EXPORT_SYMBOL_GPL(input_ff_create);
-  *
-  * This function is only needed in error path as input core will
-  * automatically free force feedback structures when device is
-- * destroyed.
-+ * unregistered or destroyed.
+diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
+index ff0082d02af3e..0d08629797a47 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
++++ b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
+@@ -13,6 +13,7 @@
+  * more details.
   */
- void input_ff_destroy(struct input_dev *dev)
- {
-diff --git a/drivers/input/input.c b/drivers/input/input.c
-index 9190aa18263e8..c648b31a0b2d1 100644
---- a/drivers/input/input.c
-+++ b/drivers/input/input.c
-@@ -2193,6 +2193,8 @@ static void __input_unregister_device(struct input_dev *dev)
- 	mutex_unlock(&input_mutex);
  
- 	device_del(&dev->dev);
-+
-+	input_ff_destroy(dev);
- }
++#include <linux/overflow.h>
+ #include "sh_css_param_dvs.h"
+ #include <assert_support.h>
+ #include <type_support.h>
+@@ -58,7 +59,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
+ 		}
  
- static void devm_input_device_unregister(struct device *dev, void *res)
+ 		/* Generate Y buffers  */
+-		dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
++		dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
+ 						 GFP_KERNEL);
+ 		if (!dvs_config->xcoords_y) {
+ 			IA_CSS_ERROR("out of memory");
+@@ -66,7 +67,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
+ 			goto exit;
+ 		}
+ 
+-		dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
++		dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
+ 						 GFP_KERNEL);
+ 		if (!dvs_config->ycoords_y) {
+ 			IA_CSS_ERROR("out of memory");
+@@ -77,7 +78,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
+ 		/* Generate UV buffers  */
+ 		IA_CSS_LOG("UV W %d H %d", width_uv, height_uv);
+ 
+-		dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
++		dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
++							      sizeof(uint32_t)),
+ 						  GFP_KERNEL);
+ 		if (!dvs_config->xcoords_uv) {
+ 			IA_CSS_ERROR("out of memory");
+@@ -85,7 +87,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
+ 			goto exit;
+ 		}
+ 
+-		dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
++		dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
++							      sizeof(uint32_t)),
+ 						  GFP_KERNEL);
+ 		if (!dvs_config->ycoords_uv) {
+ 			IA_CSS_ERROR("out of memory");
+diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
+index 69cc4e423d8b1..460a8099af8e5 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
++++ b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
+@@ -13,6 +13,7 @@
+  * more details.
+  */
+ 
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ 
+ #include <math_support.h>
+@@ -350,7 +351,8 @@ ia_css_shading_table_alloc(
+ 	me->fraction_bits = 0;
+ 	for (i = 0; i < IA_CSS_SC_NUM_COLORS; i++) {
+ 		me->data[i] =
+-		    kvmalloc(width * height * sizeof(*me->data[0]),
++		    kvmalloc(array3_size(width, height,
++					 sizeof(*me->data[0])),
+ 			     GFP_KERNEL);
+ 		if (!me->data[i]) {
+ 			unsigned int j;
+diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
+index 34d8ffb7742d3..edb21110e9a94 100644
+--- a/drivers/staging/media/atomisp/pci/sh_css_params.c
++++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
+@@ -13,6 +13,7 @@
+  * more details.
+  */
+ 
++#include <linux/overflow.h>
+ #include "gdc_device.h"		/* gdc_lut_store(), ... */
+ #include "isp.h"			/* ISP_VEC_ELEMBITS */
+ #include "vamem.h"
+@@ -1405,11 +1406,11 @@ struct ia_css_morph_table *ia_css_morph_table_allocate(
+ 	}
+ 
+ 	for (i = 0; i < IA_CSS_MORPH_TABLE_NUM_PLANES; i++) {
+-		me->coordinates_x[i] = kvmalloc(height * width *
+-						sizeof(*me->coordinates_x[i]),
++		me->coordinates_x[i] = kvmalloc(array3_size(height, width,
++							    sizeof(*me->coordinates_x[i])),
+ 						GFP_KERNEL);
+-		me->coordinates_y[i] = kvmalloc(height * width *
+-						sizeof(*me->coordinates_y[i]),
++		me->coordinates_y[i] = kvmalloc(array3_size(height, width,
++							    sizeof(*me->coordinates_y[i])),
+ 						GFP_KERNEL);
+ 
+ 		if ((!me->coordinates_x[i]) ||
+@@ -4390,13 +4391,17 @@ ia_css_dvs_statistics_allocate(const struct ia_css_dvs_grid_info *grid)
+ 		goto err;
+ 
+ 	me->grid = *grid;
+-	me->hor_proj = kvmalloc(grid->height * IA_CSS_DVS_NUM_COEF_TYPES *
+-				sizeof(*me->hor_proj), GFP_KERNEL);
++	me->hor_proj = kvmalloc(array3_size(grid->height,
++					    IA_CSS_DVS_NUM_COEF_TYPES,
++						sizeof(*me->hor_proj)),
++				GFP_KERNEL);
+ 	if (!me->hor_proj)
+ 		goto err;
+ 
+-	me->ver_proj = kvmalloc(grid->width * IA_CSS_DVS_NUM_COEF_TYPES *
+-				sizeof(*me->ver_proj), GFP_KERNEL);
++	me->ver_proj = kvmalloc(array3_size(grid->width,
++					    IA_CSS_DVS_NUM_COEF_TYPES,
++						sizeof(*me->ver_proj)),
++				GFP_KERNEL);
+ 	if (!me->ver_proj)
+ 		goto err;
+ 
+@@ -4665,24 +4670,26 @@ ia_css_dvs2_6axis_config_allocate(const struct ia_css_stream *stream)
+ 				    params->pipe_dvs_6axis_config[IA_CSS_PIPE_ID_VIDEO]->height_uv;
+ 	IA_CSS_LOG("table Y: W %d H %d", width_y, height_y);
+ 	IA_CSS_LOG("table UV: W %d H %d", width_uv, height_uv);
+-	dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
++	dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y,
++						     sizeof(uint32_t)),
+ 					 GFP_KERNEL);
+ 	if (!dvs_config->xcoords_y)
+ 		goto err;
+ 
+-	dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
++	dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y,
++						     sizeof(uint32_t)),
+ 					 GFP_KERNEL);
+ 	if (!dvs_config->ycoords_y)
+ 		goto err;
+ 
+-	dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv *
+-					  sizeof(uint32_t),
++	dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
++						      sizeof(uint32_t)),
+ 					  GFP_KERNEL);
+ 	if (!dvs_config->xcoords_uv)
+ 		goto err;
+ 
+-	dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv *
+-					  sizeof(uint32_t),
++	dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
++						      sizeof(uint32_t)),
+ 					  GFP_KERNEL);
+ 	if (!dvs_config->ycoords_uv)
+ 		goto err;
 -- 
 2.53.0
 
