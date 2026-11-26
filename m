@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704881;
-	b=jo7wfFQq87vwCkucIbhEVkLLXqKaq7eKnyXsVcdSZxygKkXdCNRqiLdIiZVEKBIoKaMC
-	 l9HW2gAAJsDC6Sin87HsJy3wgA+TL8IE4VzMiynQlpPnNJZf3LttVoc7WqCeMnNhwNTPU
-	 iES7u4+pTTawG6YeXfT09v8RlQBumOGwHCQcxnRKJbzpF/C2Ur6/gfO4esV7pBCJdfmW0
-	 BeXCcZgS97dbYavLQO9aUukZ562o/YW9LFoi2wGo6tCr1opbuyzfKsMi2JOqMfOjzvWTM
-	 Chlri0E+hdcutyuanTEqlTwBfy31Yh1VsSe1LLR2Jw4RXbfe3pSMXEUh2oU/0DBM2qg==
+	t=1795704884;
+	b=eC63uCNq+MyuJjSeBlltdlEqOxGefTECPz6WsYF+7vSDA//MvqBbqTN+Ml7nBReWaMJH
+	 mh4eAh3uXxWUxiYspPzWSeqSu0y/gnYe95T923xyssb6CUza3xDL76GRArtHo2XJk9pzs
+	 R7KNI3R6M1SWPf6Gns2FBbbhYJFlrV79q7IqSasaThghfpIwNshY962YuIK4LXScFHGN/
+	 elhQcJKD5Arfr8geh3zpdpVzkDW0hoiqYtDzGfZ7xE1lrWZvKaQY+fo09o+16y8wt5HE0
+	 fx2ZS92S+OyCQDa/cyq/CUXWt5yiPnqVPxll8qpUn0TBAyUqqiG8GHLVHJb1YmBIqTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5MKYu7E/KsSleK7Il00rdRYqSss61kS2zqbFIHljvpw=;
-	b=JiNqSSnPa9K/+kbJ5COww7eWPQh3gsdDR5CLt5TXm1WI/azPct7tBDnip17bGIyVGTT5
-	 /oCBCwuLZsrNM/Lv++dN4QXosySZ8O6XI0+5SlMymazQtWUaDbn21VLKZhPBcB+6Vnaaz
-	 RKlb2Nqk0anPJs7AoJ2y+/5SdIRrF/xxpGUkuqgVblV73hUfucsg5+IcTiElfim503YGs
-	 +IusWJIYa06ZjmY/1EhgK7CgtcpU2j8oRsBAoQIT9z3ashsTmyEYuxvBYi2TlalmyJMLR
-	 weed37kxu/Bp6YiZnwJzZDW/LC4mNJ4UdWHvDJcW9l02DUpvu4/3j7YhCC+rxuVELCg==
+	bh=NCQLGKdcMuOc7QUkoj6wcqZTgooVd5wD+y9kKpPQLyU=;
+	b=wvmpZlX5zum/VPN2chbMniUrsef26U99lab7qhl/mcbl01HBdXZzCWwmbgDJy7wxUdNU
+	 SX0oEo1JkoUl2IhnBy0qN6hSSwhuuzO/++ww3og4bu0+pOcAI8ky+zQBrTh5uryKBUk+D
+	 CWy0WoTcYt7VjbEP0eW+KOTQqDbhL7UHW+3SY3YGhv/0wv4F4eoVrzpEIfh3j2UdG86jp
+	 CzNuDDT3JQYYn+HG7BEXjFzNzLN7hcfFGXVQON69FdMMF81lRj9vXbghmf6jIC9Mb489e
+	 jNPXVdrnHYazEK3gVkmItIweGJJqXsdJazOiLbIOeqVyxcvTpeHJ8yu4BV2mILGLrWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jku2dPWU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0D1iPcR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BC3606A32E;
-	Thu, 26 Nov 2026 14:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31971606A321;
+	Thu, 26 Nov 2026 14:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jku2dPWU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7031F000C0;
-	Thu, 26 Nov 2026 14:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S0D1iPcR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A091F000C0;
+	Thu, 26 Nov 2026 14:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704880;
-	bh=5MKYu7E/KsSleK7Il00rdRYqSss61kS2zqbFIHljvpw=;
+	s=korg; t=1795704883;
+	bh=NCQLGKdcMuOc7QUkoj6wcqZTgooVd5wD+y9kKpPQLyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jku2dPWUTvZElNHzX2uChiVtlRQ/U0HwknbG3+g/NpJI5bchCVAStTTc+xYEV2PkA
-	 vCUURdhUzxTiVT7suCKCoyXycxB2HAqhD+kjArk93rXSAx7bf6fIU54izCuPif9n/b
-	 RIh87MfSZsoGRuCpcoUT08NhZtFH394I91h1EBbo=
+	b=S0D1iPcRPoI1nBoUy5o49xsdVR29e9cJuYxtQqmiK56HamS1FzoeUc8SeV2d2fk3U
+	 0eCb3wi91s1Nrzr8htu32od5TTx5jmJHG/mVDup1UbErUEHFp0qheEz8pKtcPumCmn
+	 4AhMUZ4f2a4JWBuR1iiFhl5Fi9RnXwjsKsF5Jckc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 236/265] USB: serial: sierra: validate URB length in instat callback
-Date: Thu, 26 Nov 2026 15:39:26 +0100
-Message-ID: <20261126143621.747333239@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/319] media: uvcvideo: Undup use uvc_endpoint_max_bpi() code
+Date: Thu, 26 Nov 2026 15:36:09 +0100
+Message-ID: <20261126144006.770307889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
-References: <20261126143605.076581697@linuxfoundation.org>
+In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
+References: <20261126144006.732901931@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -63,64 +65,70 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit a3d43b39032cc5565a5693a10c581844342372cd upstream.
+[ Upstream commit 5b9c75c794ce041e6e00789efef75d71915c4f4c ]
 
-sierra_instat_callback() reads request fields and one byte past the
-usb_ctrlrequest header without first checking that urb->actual_length
-is large enough.  A short USB interrupt transfer could cause an
-out-of-bounds read.
+Replace manual decoding of psize in uvc_parse_streaming(), with the code
+from uvc_endpoint_max_bpi(). It also handles usb3 devices.
 
-Add two length checks matching the pattern already present in the
-option driver (option_instat_callback): one for the request header
-before accessing bRequestType, and one for the line-state data byte
-inside the serial-state notification handler.  Use dev_err() since
-failing these checks causes the interrupt URB not to be resubmitted.
-
-Fixes: 033a3fb980b041 ("USB: Sierra Wireless driver update")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-[ johan: use sizeof(*req_pkt) consistently ]
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/sierra.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 4 +---
+ drivers/media/usb/uvc/uvc_video.c  | 3 +--
+ drivers/media/usb/uvc/uvcvideo.h   | 1 +
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/serial/sierra.c
-+++ b/drivers/usb/serial/sierra.c
-@@ -577,12 +577,24 @@ static void sierra_instat_callback(struc
- 				__func__);
- 			return;
- 		}
-+		if (urb->actual_length < sizeof(*req_pkt)) {
-+			dev_err(&port->dev, "%s: short transfer\n",
-+				__func__);
-+			return;
-+		}
- 		if ((req_pkt->bRequestType == 0xA1) &&
- 				(req_pkt->bRequest == 0x20)) {
- 			int old_dcd_state;
--			unsigned char signals = *((unsigned char *)
--					urb->transfer_buffer +
--					sizeof(struct usb_ctrlrequest));
-+			unsigned char signals;
-+
-+			if (urb->actual_length < sizeof(*req_pkt) + 1) {
-+				dev_err(&port->dev,
-+					"%s: short interrupt transfer\n",
-+					__func__);
-+				return;
-+			}
-+			signals = *((unsigned char *)urb->transfer_buffer +
-+					sizeof(*req_pkt));
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index a521038903f20..2cd4ae6342fda 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1023,9 +1023,7 @@ static int uvc_parse_streaming(struct uvc_device *dev,
+ 				streaming->header.bEndpointAddress);
+ 		if (ep == NULL)
+ 			continue;
+-
+-		psize = le16_to_cpu(ep->desc.wMaxPacketSize);
+-		psize = (psize & 0x07ff) * (1 + ((psize >> 11) & 3));
++		psize = uvc_endpoint_max_bpi(dev->udev, ep);
+ 		if (psize > streaming->maxpsize)
+ 			streaming->maxpsize = psize;
+ 	}
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index d0415ebe54d04..4d84726b605ec 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1841,8 +1841,7 @@ static void uvc_video_stop_transfer(struct uvc_streaming *stream,
+ /*
+  * Compute the maximum number of bytes per interval for an endpoint.
+  */
+-static unsigned int uvc_endpoint_max_bpi(struct usb_device *dev,
+-					 struct usb_host_endpoint *ep)
++u16 uvc_endpoint_max_bpi(struct usb_device *dev, struct usb_host_endpoint *ep)
+ {
+ 	u16 psize;
+ 	u16 mult;
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index 2dd8d04589abe..e2732986b7e8f 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -926,6 +926,7 @@ void uvc_simplify_fraction(u32 *numerator, u32 *denominator,
+ u32 uvc_fraction_to_interval(u32 numerator, u32 denominator);
+ struct usb_host_endpoint *uvc_find_endpoint(struct usb_host_interface *alts,
+ 					    u8 epaddr);
++u16 uvc_endpoint_max_bpi(struct usb_device *dev, struct usb_host_endpoint *ep);
  
- 			dev_dbg(&port->dev, "%s: signal x%x\n", __func__,
- 				signals);
+ /* Quirks support */
+ void uvc_video_decode_isight(struct uvc_urb *uvc_urb,
+-- 
+2.53.0
+
 
 
