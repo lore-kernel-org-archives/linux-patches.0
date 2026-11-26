@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704871;
-	b=Qg6t/twG/pq7DXkTAACIISs2Y5j5GvEPhcfr/8s7zs6fbphsNlRqTSHOJtMnzAVrsWD7
-	 pYWk7MfT0+pXsKV+b2paWucRYYu17epp9rd5tvinXTTqqeomUEGvGR9+7Quikcl/JzSZL
-	 guK6G/TdS+Cioq8APh2CHBkj4+iY+43p/JtL/7B2gIVpaKlCfVyzFQPs9770rwJIZWVtG
-	 /zQF3+58xUwpqwI59666HOKs22XEW2DNAi6x1ReRkGBEdjx/o/4fkrKQ9+LpWw8z4B1zo
-	 k6U1nomYuSUxtgRL/JX8NNnL67n6i0KIOINRRydmuZDTc46AWgiBYUOwPRc4w6tHZvg==
+	t=1795704875;
+	b=4e4zi3KP9rJGbQntXI0Hr50tkYkEPAr8Fb3s3xv+9NvvK3dTzQHIA0B2VhKbNW886T0F
+	 Ah8QPJ95YmfXNUMxvJ0hJN4Fn96Ywhc2cvr1tUHvYJXt589x1PxQYVSuMvkc46RmbZ7EN
+	 GB4BoIyO6ktOIvPr6BvJe080yZXRZoOqdLaZIDiA/QxgOjdCVPeJjFvrDR3qjLJsR9Cl9
+	 O4D0FSlqkVpT4C5n0VRgDmttcydjJWzWBYjFuMe3WYLxV79FDCXoXpbb+JjmE6Fzt+r70
+	 kCFkQR1SwCRdFm+oByzQp5Jo3aQiJ+hJuIiZCYQJxtM5YVfhVHp9eqPM4ZyPMcYGdfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MuwKJsUud6YMpCiYfvSx6i1CAckwwrtbyMUfptpDDB4=;
-	b=oK2DmTAY6RTXDN8YfKw7cpB55jk69X+rsDP7bqB5aR3VaYgUNfToM6owjsD43Wjcpv18
-	 v4WzKwbhz1WKWkoppCcMTlIb7QPhLsRHsVvZyyXvpfoKyrOt1FUNAGLD292AZ1rZyvtTE
-	 cHh01b19iXANr/i7WW4/BiS5gT+gRTS6LNotm+2T48bIxBTzvc0v7R0w1VVVdqvb1J9np
-	 mKFwr9Z2ZYaltp5JYVhsuFKWP6/t8e5/uDiQceSorkjBIO5xji80yhCtGTYbhyMBiMWay
-	 n07ndceR6ZGN/9E4EzR/IaRX6VpopA0UMttH/zRM5/cSIJbZNzJAQ2j9WhXQaNilQGw==
+	bh=hBd1XolBmQVb+kGsdAaAh8QzlkqHF5SY2J7O5GA2aX4=;
+	b=c9wRtxalu4bM7Qfa9TM6Fv8V0RUeetYUKzmSwdrFdDyreLi4yEfg5XRHrDNaVnovmEdA
+	 SeUHWbPSEO/P4Cs+7HGRWQPCSN3/dT6E0AapE2HOzmOAjUogNy72GQeuSfQrYmKWC8M1a
+	 Rj0Scgevb+Eg/vC9Kv8lif8pw8yNO4K2yH1JUsfKT+/B1Yjf5vA2PSLEnhk/8e6mq7eXH
+	 JfBHYhttgzXddIujVQXNkKp814nHYSfYJX7CucemSpKpNbWtEyaM9QaHgR16gY4o5x0a/
+	 YTgc9szUsyT5PhSe0Foe12RrtDyZyj35K436nu078XpuR+DIxu2AoSnXP2fU5EBPDyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irs5VO+B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="An/vbzox";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622D2606A31C;
-	Thu, 26 Nov 2026 14:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B407606A31C;
+	Thu, 26 Nov 2026 14:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irs5VO+B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C452E1F000C6;
-	Thu, 26 Nov 2026 14:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=An/vbzox
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08401F000C4;
+	Thu, 26 Nov 2026 14:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704871;
-	bh=MuwKJsUud6YMpCiYfvSx6i1CAckwwrtbyMUfptpDDB4=;
+	s=korg; t=1795704874;
+	bh=hBd1XolBmQVb+kGsdAaAh8QzlkqHF5SY2J7O5GA2aX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=irs5VO+BHEl/igNxo98jQc2Gn6Bgo4+uaI343+wbbcnt+88omjCAvsYWE4wV1y4b4
-	 HRaEziXDUpDj5hDxce5GXhYUoevkrCUc4srz+Qc0fwu5m1oqWQOrYvokYxSUftTStR
-	 JDB2D3WpuryR+3DHU/WJAw36UM2Q96ObMzTm9xII=
+	b=An/vbzoxSFfK4XA37aq/X8xipCZC70Rk9imXiIlR2WpQO2nBOr6YFnqzmLCDf2WCz
+	 YZMqy520MtzZ9QrZklWxpnonAFl4gl+iN/5WqC/20dSwCYpN5HxN9ev9WmK3e8wIHF
+	 04VQMcCWmyWYOV2M0oBxj1NIDd3TiInopHhmnzCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <liguangshuo@mail.sdu.edu.cn>,
-	Joshua Crofts <crofts@kernel.org>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Matt Ranostay <matt@ranostay.sg>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.10 243/265] iio: accel: kxsd9: Fix potential use-after-free on removal
-Date: Thu, 26 Nov 2026 15:39:33 +0100
-Message-ID: <20261126143622.263583812@linuxfoundation.org>
+Subject: [PATCH 5.10 244/265] iio: atlas-ezo: Fix humidity channel read support
+Date: Thu, 26 Nov 2026 15:39:34 +0100
+Message-ID: <20261126143622.316906074@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,39 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-commit fd7334314f63a3a2a4927f209b2ca0e33d111840 upstream.
+commit 0cb3fc8987038a26ac0f581bfa26b16daf6ca6a7 upstream.
 
-Unregistering an IIO device with an active triggered buffer detaches its
-poll function. Freeing the poll function first can therefore make
-iio_device_unregister() access freed memory.
+The atlas_ezo_read_raw() function rejects channels that are not of
+type IIO_CONCENTRATION, preventing the relative humidity channel
+from reading raw and scale values.
 
-Unregister the device before cleaning up the triggered buffer.
+Remove the early channel type check to allow both concentration
+and relative humidity channels to reach the mask-specific handling.
 
-This issue was found by our static analysis tool under development.
-
-Fixes: 0427a106a98a ("iio: accel: kxsd9: Add triggered buffer handling")
-Signed-off-by: Guangshuo Li <liguangshuo@mail.sdu.edu.cn>
-Reviewed-by: Joshua Crofts <crofts@kernel.org>
+Fixes: dc3ebfcaa51f ("iio: chemical: atlas-ezo-sensor: add humidity sensor support")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Matt Ranostay <matt@ranostay.sg>
 Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/kxsd9.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/chemical/atlas-ezo-sensor.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/iio/accel/kxsd9.c
-+++ b/drivers/iio/accel/kxsd9.c
-@@ -484,8 +484,8 @@ int kxsd9_common_remove(struct device *d
- 	struct iio_dev *indio_dev = dev_get_drvdata(dev);
- 	struct kxsd9_state *st = iio_priv(indio_dev);
+--- a/drivers/iio/chemical/atlas-ezo-sensor.c
++++ b/drivers/iio/chemical/atlas-ezo-sensor.c
+@@ -115,9 +115,6 @@ static int atlas_ezo_read_raw(struct iio
+ 	struct atlas_ezo_data *data = iio_priv(indio_dev);
+ 	struct i2c_client *client = data->client;
  
--	iio_triggered_buffer_cleanup(indio_dev);
- 	iio_device_unregister(indio_dev);
-+	iio_triggered_buffer_cleanup(indio_dev);
- 	pm_runtime_get_sync(dev);
- 	pm_runtime_put_noidle(dev);
- 	pm_runtime_disable(dev);
+-	if (chan->type != IIO_CONCENTRATION)
+-		return -EINVAL;
+-
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW: {
+ 		int ret;
 
 
