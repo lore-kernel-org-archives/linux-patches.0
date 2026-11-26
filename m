@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704144;
-	b=jDOMJg4tOhCpVREnRyPba1dunnVzxTG52fWDHIvxbHK7DadBsl8MzaRkoFLu7AZGq6Zo
-	 iiXEQC8L4OFTPorK45v6JnDzNHVCAJFjUFjWzfFMPN7EWj0FQwNuMvMzf59hop7pNa6rP
-	 C4I6zdUjONzsxHJFbspiJGmMplpU5cxqCDbpeKnzhoL5RW0Jlth3kLPnC79rWZ/SrQ0bu
-	 FZTxzFIvGNvn9iLkceoiNvYrx1ZUEY4hibCgFoiMHSNqr6UKoNlKdHTr802L/JfmKjYdI
-	 7RqMst+W9ttTyqG1DjQ3V+Xg9t1nK3a9GPtgiamd9WJcOoswfN0DAWtcB3eGXuiPUeA==
+	t=1795704147;
+	b=4+Ef2c+I3yffYfnJa59ol6wWpJlp9LN3nbsobcX3LwpwPKi9TRZQ1bdXNWzUSaYeIdKi
+	 JU8uACE3vTrz7T4JdGdV5wK5/ENujwdr3WaLXKpsqmU25RmD7UxC7JNi8xx9f+e/Q9EJF
+	 lDx5Nz6z5sX5gx05AuX4uKdp+/ZuHiPNLv3IenJvhPLj9DV0ck2/kpowCnmCz7r+vH0OU
+	 wUZR44rzIzYM3d/0Y+awp0h85vVwA0PgZrDfocoIeYMXOMq0TDV/3GUSQR5HHNqnOl8k0
+	 wOB/Iukkb0mhdO3Vh2fjFRdxj1zDIGn+qWm3fEe+6XuNCTYDDwUCaXYMGQiB7G6/maw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704147;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GND38nt93YTTnm5zuEjCe4GBEGttmJylI1pfW/x6qeU=;
-	b=z4e7LvBCYU0rDv3LSxjvp6Oe82Q7AmralMpQCu9sbViePTmKtB+2Ii7qALM4yGVQXzCM
-	 PA98Kns6XeXpMuHW4Uczbqs5Ze7kWEr3zs2mFNv6IEcEmpiB+suigaJiARqeF9f0Gm2+u
-	 bgnn/Zu4UMrfGuy2xq/G4hp1OhDTh7WURdUmfGwAHehhLH6R8s2yNJHQepX76RCC7I03X
-	 NNq6GmniVmmBJoywjXtjYyh+8DaflAn9bG/BSE6VUWTuz5dMcsTLhs067J/du1duogXWA
-	 HTFuVBOid1hIu1JZGq5abvWxN3mQMPq7zqUDgnuRDz6kixjr8ZCZkX9m/jXf8R9/i0Q==
+	bh=WB9qGBnamxVSfXobjg10nVP2ycR6iNDAom/ysMhO3lE=;
+	b=yA5xx0ulncGkKY9S4dWYcQL+/9NQzL9wCH9FFxD7HhJfI+hRdAAJKyNsptOIofBsAn9C
+	 Yz+3USmcVG22pDmICf1SmC0I9cUUl735wzg3Nt295+Xb+YowX2oPHPVsk+1no8Poa+Vmy
+	 dSZxSK0aCyiclyZdJ7P7JY6n40Q7lDpGYoJDx9JUMljTfkbiGVqGNBl0n6NxKVnP1s62i
+	 zIPylLn9prPLpppUqWT7i1wnsNvwjiquNCASpc4KYki2H9ILt6eWcvZYKhrfle/J5gnwA
+	 dth/XZJTeY6WnVGFy6ILMjXjCWoEFr4pP5pfvVEv7sNZpnhTAPzdOSO5dEPmHDXiVvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wLF+k/UJ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0jtJBNJ1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B79606A321;
-	Thu, 26 Nov 2026 14:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCF9606A31C;
+	Thu, 26 Nov 2026 14:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLF+k/UJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF711F000ED;
-	Thu, 26 Nov 2026 14:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0jtJBNJ1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74571F000C4;
+	Thu, 26 Nov 2026 14:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704144;
-	bh=GND38nt93YTTnm5zuEjCe4GBEGttmJylI1pfW/x6qeU=;
+	s=korg; t=1795704147;
+	bh=WB9qGBnamxVSfXobjg10nVP2ycR6iNDAom/ysMhO3lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLF+k/UJp2mQoU8rn46rpoYs/2HQtpDelyxYMd2vz4tLj+WgeVE12wd4OTJCRxp0j
-	 ad4+sb5C8kqZoRFehHimQsOC1LjyJriRKjTbxxk6qZzd97gjANqhA0xiHDr6mYrM5+
-	 EICNxeA4it9ezG+dPmr6CLaGJ8kk/1wFIFAeXICY=
+	b=0jtJBNJ1VrDofdWBFeD46qtXhV+7/YkoQWaPCd78fVPY8On58h8GuhGi31Q1T1bLO
+	 a88iQbU0HcnzSmWc9gZArtFfwtd1AKZf5cKUiCmHXMUp3dUJRGUJH7FI3y/j/1/9YK
+	 4t8QBqjP13WnBMmW4ZRS0IMRBclDTF91wA6B3dDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Ning <feng@innora.ai>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Giovanni Vignone <gio@octane.security>,
+	Shubham Antil <shubham@octane.security>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/265] staging: media: atomisp: use array3_size() for overflow-safe allocation
-Date: Thu, 26 Nov 2026 15:35:51 +0100
-Message-ID: <20261126143606.549816292@linuxfoundation.org>
+Subject: [PATCH 5.10 022/265] xfrm: zero-initialise km_event in the replay-notify path
+Date: Thu, 26 Nov 2026 15:35:52 +0100
+Message-ID: <20261126143606.619262970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,185 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Ning <feng@innora.ai>
+From: Shubham Antil <shubham@octane.security>
 
-commit d178c7ca8fefc28115d35b94c3b1f4d653e34182 upstream.
+[ Upstream commit e35a12dffd5da67b6ca12bd23eebdd0570592205 ]
 
-Replace open-coded width * height * sizeof() multiplications with
-array3_size() to prevent integer overflow in buffer allocations.
+xfrm_replay_notify(), xfrm_replay_notify_bmp() and
+xfrm_replay_notify_esn() declare a struct km_event on the stack and
+initialise only its .event and .data.aevent fields, leaving .seq and
+.portid uninitialised. build_aevent() then builds the XFRM_MSG_NEWAE
+message with those fields:
 
-The atomisp driver computes DVS, morphing table, shading table and
-statistics buffer sizes using unchecked arithmetic.  When dimensions
-are attacker-controlled or simply large, the product can silently wrap,
-causing kvmalloc() to allocate an undersized buffer.
+  nlmsg_put(skb, c->portid, c->seq, ...)
 
-array3_size() saturates to SIZE_MAX on overflow, so kvmalloc() returns
-NULL instead of succeeding with too few bytes.
+so the netlink header of a replay event carries uninitialised stack
+values rather than defined ones. This was confirmed at runtime rather
+than by inspection alone: the .seq and .portid carried in that header
+hold values that nothing in the replay path assigns.
 
-Signed-off-by: Feng Ning <feng@innora.ai>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+The request-driven paths set these header fields from the requester
+(xfrm_get_ae() / xfrm_new_ae()); only the kernel-originated replay path
+leaves them unset. Zero-initialise the event so the header fields are 0,
+the correct value for a kernel-originated notification.
+
+Fixes: f8cd54884e67 ("[IPSEC]: Sync series - core changes")
+Reported-by: Giovanni Vignone <gio@octane.security>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Shubham Antil <shubham@octane.security>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/atomisp/pci/sh_css_param_dvs.c      | 11 +++---
- .../media/atomisp/pci/sh_css_param_shading.c  |  4 ++-
- .../staging/media/atomisp/pci/sh_css_params.c | 35 +++++++++++--------
- 3 files changed, 31 insertions(+), 19 deletions(-)
+ net/xfrm/xfrm_replay.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-index ff0082d02af3e..0d08629797a47 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_param_dvs.c
-@@ -13,6 +13,7 @@
-  * more details.
-  */
+diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
+index aedc61ceadb30..1e8e23dded617 100644
+--- a/net/xfrm/xfrm_replay.c
++++ b/net/xfrm/xfrm_replay.c
+@@ -37,7 +37,7 @@ EXPORT_SYMBOL(xfrm_replay_seqhi);
+ ;
+ static void xfrm_replay_notify(struct xfrm_state *x, int event)
+ {
+-	struct km_event c;
++	struct km_event c = {};
+ 	/* we send notify messages in case
+ 	 *  1. we updated on of the sequence numbers, and the seqno difference
+ 	 *     is at least x->replay_maxdiff, in this case we also update the
+@@ -278,7 +278,7 @@ static void xfrm_replay_advance_bmp(struct xfrm_state *x, __be32 net_seq)
  
-+#include <linux/overflow.h>
- #include "sh_css_param_dvs.h"
- #include <assert_support.h>
- #include <type_support.h>
-@@ -58,7 +59,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 		}
+ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
+ {
+-	struct km_event c;
++	struct km_event c = {};
+ 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
+ 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
  
- 		/* Generate Y buffers  */
--		dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+		dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
- 						 GFP_KERNEL);
- 		if (!dvs_config->xcoords_y) {
- 			IA_CSS_ERROR("out of memory");
-@@ -66,7 +67,7 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 			goto exit;
- 		}
+@@ -330,7 +330,7 @@ static void xfrm_replay_notify_bmp(struct xfrm_state *x, int event)
+ static void xfrm_replay_notify_esn(struct xfrm_state *x, int event)
+ {
+ 	u32 seq_diff, oseq_diff;
+-	struct km_event c;
++	struct km_event c = {};
+ 	struct xfrm_replay_state_esn *replay_esn = x->replay_esn;
+ 	struct xfrm_replay_state_esn *preplay_esn = x->preplay_esn;
  
--		dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+		dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y, sizeof(uint32_t)),
- 						 GFP_KERNEL);
- 		if (!dvs_config->ycoords_y) {
- 			IA_CSS_ERROR("out of memory");
-@@ -77,7 +78,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 		/* Generate UV buffers  */
- 		IA_CSS_LOG("UV W %d H %d", width_uv, height_uv);
- 
--		dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
-+		dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+							      sizeof(uint32_t)),
- 						  GFP_KERNEL);
- 		if (!dvs_config->xcoords_uv) {
- 			IA_CSS_ERROR("out of memory");
-@@ -85,7 +87,8 @@ alloc_dvs_6axis_table(const struct ia_css_resolution *frame_res,
- 			goto exit;
- 		}
- 
--		dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv * sizeof(uint32_t),
-+		dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+							      sizeof(uint32_t)),
- 						  GFP_KERNEL);
- 		if (!dvs_config->ycoords_uv) {
- 			IA_CSS_ERROR("out of memory");
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-index 69cc4e423d8b1..460a8099af8e5 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_param_shading.c
-@@ -13,6 +13,7 @@
-  * more details.
-  */
- 
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- 
- #include <math_support.h>
-@@ -350,7 +351,8 @@ ia_css_shading_table_alloc(
- 	me->fraction_bits = 0;
- 	for (i = 0; i < IA_CSS_SC_NUM_COLORS; i++) {
- 		me->data[i] =
--		    kvmalloc(width * height * sizeof(*me->data[0]),
-+		    kvmalloc(array3_size(width, height,
-+					 sizeof(*me->data[0])),
- 			     GFP_KERNEL);
- 		if (!me->data[i]) {
- 			unsigned int j;
-diff --git a/drivers/staging/media/atomisp/pci/sh_css_params.c b/drivers/staging/media/atomisp/pci/sh_css_params.c
-index 34d8ffb7742d3..edb21110e9a94 100644
---- a/drivers/staging/media/atomisp/pci/sh_css_params.c
-+++ b/drivers/staging/media/atomisp/pci/sh_css_params.c
-@@ -13,6 +13,7 @@
-  * more details.
-  */
- 
-+#include <linux/overflow.h>
- #include "gdc_device.h"		/* gdc_lut_store(), ... */
- #include "isp.h"			/* ISP_VEC_ELEMBITS */
- #include "vamem.h"
-@@ -1405,11 +1406,11 @@ struct ia_css_morph_table *ia_css_morph_table_allocate(
- 	}
- 
- 	for (i = 0; i < IA_CSS_MORPH_TABLE_NUM_PLANES; i++) {
--		me->coordinates_x[i] = kvmalloc(height * width *
--						sizeof(*me->coordinates_x[i]),
-+		me->coordinates_x[i] = kvmalloc(array3_size(height, width,
-+							    sizeof(*me->coordinates_x[i])),
- 						GFP_KERNEL);
--		me->coordinates_y[i] = kvmalloc(height * width *
--						sizeof(*me->coordinates_y[i]),
-+		me->coordinates_y[i] = kvmalloc(array3_size(height, width,
-+							    sizeof(*me->coordinates_y[i])),
- 						GFP_KERNEL);
- 
- 		if ((!me->coordinates_x[i]) ||
-@@ -4390,13 +4391,17 @@ ia_css_dvs_statistics_allocate(const struct ia_css_dvs_grid_info *grid)
- 		goto err;
- 
- 	me->grid = *grid;
--	me->hor_proj = kvmalloc(grid->height * IA_CSS_DVS_NUM_COEF_TYPES *
--				sizeof(*me->hor_proj), GFP_KERNEL);
-+	me->hor_proj = kvmalloc(array3_size(grid->height,
-+					    IA_CSS_DVS_NUM_COEF_TYPES,
-+						sizeof(*me->hor_proj)),
-+				GFP_KERNEL);
- 	if (!me->hor_proj)
- 		goto err;
- 
--	me->ver_proj = kvmalloc(grid->width * IA_CSS_DVS_NUM_COEF_TYPES *
--				sizeof(*me->ver_proj), GFP_KERNEL);
-+	me->ver_proj = kvmalloc(array3_size(grid->width,
-+					    IA_CSS_DVS_NUM_COEF_TYPES,
-+						sizeof(*me->ver_proj)),
-+				GFP_KERNEL);
- 	if (!me->ver_proj)
- 		goto err;
- 
-@@ -4665,24 +4670,26 @@ ia_css_dvs2_6axis_config_allocate(const struct ia_css_stream *stream)
- 				    params->pipe_dvs_6axis_config[IA_CSS_PIPE_ID_VIDEO]->height_uv;
- 	IA_CSS_LOG("table Y: W %d H %d", width_y, height_y);
- 	IA_CSS_LOG("table UV: W %d H %d", width_uv, height_uv);
--	dvs_config->xcoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+	dvs_config->xcoords_y = kvmalloc(array3_size(width_y, height_y,
-+						     sizeof(uint32_t)),
- 					 GFP_KERNEL);
- 	if (!dvs_config->xcoords_y)
- 		goto err;
- 
--	dvs_config->ycoords_y = kvmalloc(width_y * height_y * sizeof(uint32_t),
-+	dvs_config->ycoords_y = kvmalloc(array3_size(width_y, height_y,
-+						     sizeof(uint32_t)),
- 					 GFP_KERNEL);
- 	if (!dvs_config->ycoords_y)
- 		goto err;
- 
--	dvs_config->xcoords_uv = kvmalloc(width_uv * height_uv *
--					  sizeof(uint32_t),
-+	dvs_config->xcoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+						      sizeof(uint32_t)),
- 					  GFP_KERNEL);
- 	if (!dvs_config->xcoords_uv)
- 		goto err;
- 
--	dvs_config->ycoords_uv = kvmalloc(width_uv * height_uv *
--					  sizeof(uint32_t),
-+	dvs_config->ycoords_uv = kvmalloc(array3_size(width_uv, height_uv,
-+						      sizeof(uint32_t)),
- 					  GFP_KERNEL);
- 	if (!dvs_config->ycoords_uv)
- 		goto err;
 -- 
 2.53.0
 
