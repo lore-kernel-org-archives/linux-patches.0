@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705299;
-	b=GgQCYFc4M1I+2Iol2cUZJhc88um54zuR7Tcoe8/3fyr8UWlQgza0GSBPPQZmlUOCnpGd
-	 Wp876M47G1ihlQN1jYK8E5XFOdQvFhUPFvrHIIaOz6gPW9UZdjRbrJ+aqbLRQ7KdLkuqG
-	 9yrQ2+xnKmEg9Y6PRFHRplmSRGIdmEqKPAfOlv/tVjp/1YmaQE+qigHwka7UDMN53nRoq
-	 j6JsEsdRq+THilaTvxmeCad1rvANwX+rM9WUDDgW8C/PcDm3XGdM6rbKHlmYvb6AXqL59
-	 4DJWKobKE9W0ra8joLobsY5s/PZGGKgGz+g8F4L2RKtIRojWDUMA9+DWMOb9v2xfvtw==
+	t=1795705301;
+	b=Hx2SVvXpBtIdQpq5rsdIE5MO65jJzFzCULIQFiHKvgc7sL8dL6UOFekTKgszk9ESWuH5
+	 NYZxZzOuoIdOIi93OkyxPnatDeqT/0H9DTYCS50vjrRMbYWkxsnzTv+QX0voJ4ZBUJA3L
+	 LOmw2BBiNaUJdIShaMlaAeaGncQ6BaOCpWrjjO1In8HP35gjIwmGAIUw3OvABo/UNeIvD
+	 pB1o+g4+NexuQSmsxsLW5+IdO53ps7nD5HTwyZr+y/C84vtPHTrxSlxdmn9h351ppnw0F
+	 tZGNPG2mwAbS3HsbZyB8U4qeEaIP9QUfRNNhjnLfuVs31w8kx7HQ3vUeQT/2xIgTSXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705299;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PmES7aV1UXhWkJhUvM+nX7D7O33u6pDKouOTFVSKflk=;
-	b=jWD1aiAFOkqOFFuf97jKowsmWYr/u4gaswwHu9BnnJPArlU6ccgtO7Q62RzxZH3dIjhe
-	 s9yJPZ9EiyBR9zRrkyzlr6ZhKTDZ6ky2oMbfykUhEgs/eZymeh8cCnxeUGN7JIbXrPnKV
-	 KgMQlxaPnxM0HTsJtvXzBfINjBrDftcfGgCe+ma+1qrYbLVYwqCsY1Ygf7bmaJJhwDINf
-	 2IQnHGE8c9/vZp7kHRU7FKNaE5qAM+t+9ZVI2RfmA0ioJdkhOPHJ10PvQKqOp7rQZW3LN
-	 k7An1RRNsRcgvD3Lpb9qO2l2YCDeCwhwqohNw3CTU3FT//lqA7t4AH56TdmPv6Ie8nQ==
+	bh=Vb874s1gOnmhCDwoqS0PSO8RNUJuWr3OHDeniIF/xTs=;
+	b=SjrZ32FNh+b6BH3YXZDhhLJJrBXRDQDBBUYNWbSbdHZzM8sMb73uFWd4ml7w6hWjBB+N
+	 8fa0DyKMtJwd64rxI7KeAG73lITlU0IvbfSLXCTc7J6g00cOfEy8gL34fFnNPDA3Aw+Dd
+	 8u4XaWd922ucdmlZLZYlEmHTQwQPHwbwlU3qbB1gpJ6lBH4VdO2CtQXBprwY4IEHPqCab
+	 7AeAAoUw8WJNIl6RCOp0iohykmnFdMj8S2xVwASjbQRBq8IVnezJfJcT1VxgnTwwQbYqz
+	 NPYOOypUQC3R2JMjTBvA7rm1xP2IFIjDUIk3vDn+KM3ZKmIBagiQRoAAm8F/WD5UaDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KnQ5yajy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFu0x8Kf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98DB606A32D;
-	Thu, 26 Nov 2026 15:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA1F606A31C;
+	Thu, 26 Nov 2026 15:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KnQ5yajy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FC71F000CF;
-	Thu, 26 Nov 2026 15:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFu0x8Kf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83321F000C0;
+	Thu, 26 Nov 2026 15:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705298;
-	bh=PmES7aV1UXhWkJhUvM+nX7D7O33u6pDKouOTFVSKflk=;
+	s=korg; t=1795705301;
+	bh=Vb874s1gOnmhCDwoqS0PSO8RNUJuWr3OHDeniIF/xTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KnQ5yajyC0uscbEcxqC4KrZMS600QfHeeAkV/wf6VIgGw1T0DhEICUbOINjfd2IfJ
-	 byNZWqg8f79tTjBLP6xn56pwWYwcRdZTELmXX0pI9esDF+H29LmC6ZThLXG7mHqnID
-	 vA/QHzSyN+PC1PdK7P8zSzC4YQKSldn/k5iZeP8U=
+	b=JFu0x8KfXlGxwjeLAazNvyX1FL80TpD8VpOXj4YjIc/BP8TjRGLPNppVoyZTUfyg/
+	 HkkvNxr9LLbYTS1PBxemxpP1pP8oGbAmVaRgnmVo2cWCppuebuHfyll32bq+wKw6xW
+	 2b4P0rurt3maP9ZbmnCv+38d/yvPjtUtiPXNPUtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kyle Pepper <cochcoder@proton.me>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/319] fou: gue: check IP version of held packets for direct IP encapsulation
-Date: Thu, 26 Nov 2026 15:38:39 +0100
-Message-ID: <20261126144010.153306570@linuxfoundation.org>
+Subject: [PATCH 5.15 125/319] Bluetooth: reject invalid LE supervision timeout relationships
+Date: Thu, 26 Nov 2026 15:38:13 +0100
+Message-ID: <20261126144009.565318834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,59 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Kyle Pepper <cochcoder@proton.me>
 
-[ Upstream commit c59f004734a2a7c0e427011db13aca524e781498 ]
+[ Upstream commit c1d50a71cdee90a0c68b7a67221d8aae96d14a0c ]
 
-For GUE version 0, gue_gro_receive() compares the base GUE header and
-its optional fields with every held packet. For GUE version 1 (direct
-IP encapsulation), it skips this comparison and selects the next GRO
-handler only from the IP version of the incoming packet.
+The LE parameter validator calculates an unsigned maximum latency by
+subtracting one from a truncated quotient. If the quotient is zero,
+this wraps and accepts invalid parameters. Exact quotient boundaries
+also accept equality where the supervision timeout must be greater.
 
-A held version 0 GUE packet from the same outer flow therefore stays
-eligible. For example, a GUE/IPv4/UDP packet can be aggregated with a
-direct IPv4/TCP packet, and inet_gro_receive() then parses the held
-packet's GUE header as an IPv4 header.
+Compare the products directly after checking the field bounds. The
+validated interval and latency limits keep the products within int.
+This enforces the strict timeout relationship without division or
+unsigned subtraction.
 
-Clear same_flow for held packets whose first nibble does not match the
-incoming IP version. A valid version 0 GUE header always has a first
-nibble between 0 and 3, so this also separates the two GUE formats.
-The reverse case is already handled: the version 0 path compares the
-whole base GUE header, including the version bits.
+Sashiko identified the underflow while reviewing the soft interval
+preference RFC. The bug is already present in its unpatched base; keep
+this common-validator fix independent of that preference policy.
 
-Fixes: c1e48af7960e ("gue: Implement direction IP encapsulation")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261106195615.2498766-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8757825b128e ("Bluetooth: hci_check_conn_params() check proper range")
+Assisted-by: LLM
+Signed-off-by: Kyle Pepper <cochcoder@proton.me>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fou_core.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/bluetooth/hci_core.h | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/fou_core.c b/net/ipv4/fou_core.c
-index 556323c687e5b..9636a31e0a63e 100644
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -368,6 +368,18 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
- 		default:
- 			goto out;
- 		}
-+
-+		/* Match the encapsulation format and IP version. */
-+		list_for_each_entry(p, head, list) {
-+			const struct iphdr *iph2;
-+
-+			if (!NAPI_GRO_CB(p)->same_flow)
-+				continue;
-+
-+			iph2 = (const struct iphdr *)(p->data + off);
-+			if (iph2->version != ((struct iphdr *)guehdr)->version)
-+				NAPI_GRO_CB(p)->same_flow = 0;
-+		}
- 		goto next_proto;
- 	default:
- 		goto out;
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index bb5c8fdd9d335..8656ce27eb330 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1685,8 +1685,6 @@ static inline struct smp_irk *hci_get_irk(struct hci_dev *hdev,
+ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+ 					u16 to_multiplier)
+ {
+-	u16 max_latency;
+-
+ 	if (min > max) {
+ 		BT_WARN("min %d > max %d", min, max);
+ 		return -EINVAL;
+@@ -1712,19 +1710,14 @@ static inline int hci_check_conn_params(u16 min, u16 max, u16 latency,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (max >= to_multiplier * 8) {
+-		BT_WARN("max %d >= to_multiplier %d * 8", max, to_multiplier);
+-		return -EINVAL;
+-	}
+-
+-	max_latency = (to_multiplier * 4 / max) - 1;
+ 	if (latency > 499) {
+ 		BT_WARN("latency %d > 499", latency);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (latency > max_latency) {
+-		BT_WARN("latency %d > max_latency %d", latency, max_latency);
++	if ((latency + 1) * max >= to_multiplier * 4) {
++		BT_WARN("latency %d, max %d and timeout %d are incompatible",
++			latency, max, to_multiplier);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
