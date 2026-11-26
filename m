@@ -1,51 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705413;
-	b=2JwK1jMEQ2tKnutHXLSji0fENkXELUStzYa+NFJeknJS4NtbxZ+NXLItnNc34aft4fOk
-	 OdrT5c8P6razd/UYJoxoKafAQQWkTxUwmQO+BWGEl2vaJeiMWP5jc0ICutBiG+F12ymoJ
-	 zq2JavFkV59abVYGOp/nlQv0HX130ZavAvefT/IA5TTIUUJPRP4lo3YYzVBM9LgoNzSt7
-	 FahQ8SRC8m3x3hBTLqZgFKy3t4+5OiVAUmqBz3A/Nhh6ozX4XHgbdFqVXfXCpciy4oFDi
-	 /ybArfTub4rUUamSUIg7a9YYyP0zaUte6/23hekwC8S+QoWlsxa+7kyBx8a5yG9p5MA==
+	t=1795705416;
+	b=2pl7ZjJAH2FvPAToQEv3MSCcKss0nHQNl2mDiLsJyDiaVdyRg0ndDxwwScf/7q+nisWF
+	 BPd2SuKMlIYxHBSo3hZOeRQVnFb+3KV3mD8pscf65dNeGPvr3kdvPipcg8RfeF2/V0Qzt
+	 hi1cm16FEdH9hTlJWxVP87WvzUzDApLoX8nLWocs5+pVlfgj/4bgxNYZeto0OtI9szrk1
+	 YanN6bxguyac15uZLvTh2A0dXAZAzf59oP/5Qb12Fa0Bq4vj5JBVhDQ3Jho5Lyjq7Py1B
+	 b7v6S8crd/AK6diF3vFwgRQ2MugX7moWMCirEUjoJBOWKNvXEAUlBumD92FwChjNr5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wIUy7Wg+N5k0c4lN0cPz2MgdapzgDTGp1jH6W+jFMg0=;
-	b=ab6v3g8uGg7fq3RAwv5+9kRag6mTROlQLDbK3MEdATmvoa7guJlil72DzMNP6kuqpOE8
-	 QKojXjCF+WE56G97fZ2txcYpdbV7jKNc5HkGdOJf0z63F6Z9YVZbK8A3peJWTuRAPNvoL
-	 MGWKQtUj38vlb2xmIUh4K5TPqlGBEoYBq9dGAbmrga3N6zyjvIsWkmtDkSZltcRx0ig6W
-	 omzLV21ZCLJi2uAPy4tb2kTAPmqPTkaEQA0oBl1OAZ23NoGGxLrD0dygaYNS8YaeWTPSG
-	 BwHQo5gTxl9woxODIwuZp4X1VPmQNUdRuG81KXd8veiQSXuxMKlewUdWQd42qoOGqtg==
+	bh=YsDOQvRhCBcUEe9YoO49zc40taW6BWl+xLa2RVLdSBc=;
+	b=iZyw1wPEsyFB/EsJBCrRKMPWyCgMB8nLj3OdNkiiJK+Y10ZfuPNaONqzxwsdwtpYHlsK
+	 pg++s1Nu0r8PZ0Ui4dibhLjeTAHEqH6hzFTQ5ZPxSAfLd4PtNOkGvDeg/WKmZdMKrYy4w
+	 cqXNo4eKRfybedEdn0mocZbLvgPtSus5LVWAVyZC9YUtiV+kCzGhrLH9QaDx7kf4kL8HB
+	 7LSKjG5cpg3vc1M2X4jQDVTa8KfeeF8QJWmOQCaZGr7GsvJWSc6V9sMO/EKW+KR7BLEJd
+	 Gxiov3vORBk1NJ5iMmSB4fRDAUz52jJa35FO5HgYYPSyImL82s+BkR1HFhVnXVbKHHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIG9+gPq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4BqwNT+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD8606A323;
-	Thu, 26 Nov 2026 15:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2290B606A31C;
+	Thu, 26 Nov 2026 15:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UIG9+gPq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1E21F000D1;
-	Thu, 26 Nov 2026 15:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4BqwNT+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E91E1F000D0;
+	Thu, 26 Nov 2026 15:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705412;
-	bh=wIUy7Wg+N5k0c4lN0cPz2MgdapzgDTGp1jH6W+jFMg0=;
+	s=korg; t=1795705415;
+	bh=YsDOQvRhCBcUEe9YoO49zc40taW6BWl+xLa2RVLdSBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIG9+gPqBQfH5eNAzKD+PnD2GPBs7XTiqhu6SKloHTgVKBz0ymX1qgglvhohHcUVt
-	 HX3Yr2B5Yi7Qd4r/RuL6Up7ryHfdB719z7O3agZryybDo2d/6qYGBX0K3R+Htd4fyI
-	 iQaHJs8OQWVB7j/zFF1YRjuxbZXdYfbI8xb3san8=
+	b=v4BqwNT+1CjBnOEJ2N+FoibwjaEYFHrYMr+jdcKW5qcrMjl8Sienk//O0ZaEOKqyq
+	 3GDQrKsKgfuhCwhgoZ88mG4InF0SF1LSE3JbHGlf0/fJjjBGs/Qu3Y2m3Yakxg9ydw
+	 n8t/7pT166KntpCuYD2uf+fwxeWdAO2tuhhJJem8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Vega <vega@nebusec.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 190/319] tls: only install push_pending_record for a TX context
-Date: Thu, 26 Nov 2026 15:39:18 +0100
-Message-ID: <20261126144011.035000459@linuxfoundation.org>
+Subject: [PATCH 5.15 191/319] seg6: validate state in netfilter continuations
+Date: Thu, 26 Nov 2026 15:39:19 +0100
+Message-ID: <20261126144011.057008480@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,67 +73,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-commit c47e766c5307c06a78304582b2b5b5ab01ee1358 upstream.
+commit 549484dd3e80a721d51bd695f22a800d2e05bea1 upstream.
 
-tls_set_sw_offload() assigns ctx->push_pending_record for both
-directions, but the hook is a TX-side dispatcher. On a socket whose TX
-side is HW offloaded, tls_set_device_offload() installs
-tls_device_push_pending_record(); any later TLS_RX setsockopt
-overwrites it with tls_sw_push_pending_record(), because
-tls_set_device_offload_rx() itself calls tls_set_sw_offload(sk, 0, NULL)
-for the software half of a successful HW RX offload, and so does the
-fallback when the RX offload is declined (NIC with TX-only offload,
-tls_dev_add() failure).
+When nf_hooks_lwtunnel is enabled, End.DX4 sends decapsulated packets
+through NF_INET_PRE_ROUTING. If DNAT changes the inner destination,
+nf_nat_ipv4_pre_routing() drops skb_dst(), and the continuation then
+dereferences the missing dst's lwtstate. This causes a KASAN NULL
+pointer dereference and fatal exception panic.
 
->From then on tls_handle_open_record() (a TLS_SET_RECORD_TYPE cmsg after
-a MSG_MORE send, or the close path with a pending writer) runs
-tls_sw_push_pending_record() against priv_ctx_tx, which is a
-struct tls_offload_context_tx, not a struct tls_sw_context_tx, and
-reads open_rec from inside the offload context. On x86_64 without lock
-debugging that field overlays sg_tx_data[2].dma_address, which is never
-set, so the push is silently skipped and the data buffered by the
-MSG_MORE send is later sent under the cmsg's record type, e.g.
-application data in a handshake or alert record. Enabling
-CONFIG_DEBUG_SPINLOCK, CONFIG_DEBUG_LOCK_ALLOC and CONFIG_LOCKDEP, but
-not CONFIG_LOCK_STAT, in the tested x86_64 configuration moves open_rec
-over sg_tx_data[5].page_link. Once populated, its page pointer and
-scatterlist flags are interpreted as a tls_rec pointer and dereferenced
-while reading msg_plaintext.sg.size.
+End.DX6 has the same issue with IPv6 DNAT. In seg6_iptunnel,
+POST_ROUTING SNAT with an outbound XFRM policy can replace the dst before
+the continuation resumes.
 
-Only set the hook when initialising the TX side.
+Validate the current dst and expected lwtstate type in each NF_HOOK()
+continuation before calling the existing handler. Drop packets with
+missing or incompatible state while preserving direct no-hook paths.
+The helpers return bool because callers only need a validity check.
 
-Found by code review while developing TLS 1.3 HW offload rekey support.
+Testing shows that the End.DX4 DNAT reproducer triggers a KASAN NULL
+pointer dereference without this change and no longer does so with the
+fix. The SNAT+ESP/XFRM reproducer also completes without the reported
+fault. The in-tree End.DX4 netfilter forwarding selftest passes all four
+bidirectional checks with nf_hooks_lwtunnel disabled and enabled.
 
-Tested with HW TLS TX and RX offload on Mellanox ConnectX-6 Dx (Crypto
-Enabled): after setting TLS_RX, send() "AAAA" with MSG_MORE, then
-sendmsg() "BBBB" with a TLS_SET_RECORD_TYPE cmsg for a handshake
-record. Without this patch the peer receives a single handshake record
-"AAAABBBB"; with it, an application data record "AAAA" followed by a
-handshake record "BBBB".
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Fixes: 7a3f5b0de364 ("netfilter: add netfilter hooks to SRv6 data plane")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Link: https://patch.msgid.link/20261102213011.4191020-1-rjethwani@purestorage.com
+Reported-by: Vega <vega@nebusec.ai>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260720204430.1886091-1-xmei5@asu.edu
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Acked-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/8574739acd6f5d9eb0a5640e893122619e9f79ef.1793726355.git.petalzu987@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/seg6_iptunnel.c |   46 +++++++++++++++++++++++++++++++++++----
+ net/ipv6/seg6_local.c    |   55 ++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 94 insertions(+), 7 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2567,7 +2567,8 @@ int tls_set_sw_offload(struct sock *sk,
- 		}
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -18,6 +18,7 @@
+ #include <net/ip6_fib.h>
+ #include <net/route.h>
+ #include <net/seg6.h>
++#include <net/dst_metadata.h>
+ #include <linux/seg6.h>
+ #include <linux/seg6_iptunnel.h>
+ #include <net/addrconf.h>
+@@ -58,6 +59,21 @@ static inline struct seg6_lwt *seg6_lwt_
+ 	return (struct seg6_lwt *)lwt->data;
+ }
+ 
++static bool seg6_skb_has_lwtstate(struct sk_buff *skb)
++{
++	struct dst_entry *dst;
++
++	if (unlikely(!skb_valid_dst(skb)))
++		return false;
++
++	dst = skb_dst(skb);
++	if (unlikely(!dst->lwtstate ||
++		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6))
++		return false;
++
++	return true;
++}
++
+ static inline struct seg6_iptunnel_encap *
+ seg6_encap_lwtunnel(struct lwtunnel_state *lwt)
+ {
+@@ -537,6 +553,17 @@ drop:
+ 	return err;
+ }
+ 
++static int seg6_input_core_nf(struct net *net, struct sock *sk,
++			      struct sk_buff *skb)
++{
++	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_input_core(net, sk, skb);
++}
++
+ static int seg6_input_nf(struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb_dst(skb)->dev;
+@@ -545,10 +572,10 @@ static int seg6_input_nf(struct sk_buff
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, NULL,
+-			       skb, NULL, dev, seg6_input_core);
++			       skb, NULL, dev, seg6_input_core_nf);
+ 	case htons(ETH_P_IPV6):
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, NULL,
+-			       skb, NULL, dev, seg6_input_core);
++			       skb, NULL, dev, seg6_input_core_nf);
  	}
  
--	ctx->push_pending_record = tls_sw_push_pending_record;
-+	if (tx)
-+		ctx->push_pending_record = tls_sw_push_pending_record;
+ 	return -EINVAL;
+@@ -623,6 +650,17 @@ drop:
+ 	return err;
+ }
  
- 	rc = crypto_aead_setkey(*aead, key, keysize);
++static int seg6_output_core_nf(struct net *net, struct sock *sk,
++			       struct sk_buff *skb)
++{
++	if (unlikely(!seg6_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_output_core(net, sk, skb);
++}
++
+ static int seg6_output_nf(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct net_device *dev = skb_dst(skb)->dev;
+@@ -630,10 +668,10 @@ static int seg6_output_nf(struct net *ne
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING, net, sk, skb,
+-			       NULL, dev, seg6_output_core);
++			       NULL, dev, seg6_output_core_nf);
+ 	case htons(ETH_P_IPV6):
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_POST_ROUTING, net, sk, skb,
+-			       NULL, dev, seg6_output_core);
++			       NULL, dev, seg6_output_core_nf);
+ 	}
  
+ 	return -EINVAL;
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -23,6 +23,7 @@
+ #include <net/addrconf.h>
+ #include <net/ip6_route.h>
+ #include <net/dst_cache.h>
++#include <net/dst_metadata.h>
+ #include <net/ip_tunnels.h>
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ #include <net/seg6_hmac.h>
+@@ -150,6 +151,21 @@ static struct seg6_local_lwt *seg6_local
+ 	return (struct seg6_local_lwt *)lwt->data;
+ }
+ 
++static bool seg6_local_skb_has_lwtstate(struct sk_buff *skb)
++{
++	struct dst_entry *dst;
++
++	if (unlikely(!skb_valid_dst(skb)))
++		return false;
++
++	dst = skb_dst(skb);
++	if (unlikely(!dst->lwtstate ||
++		     dst->lwtstate->type != LWTUNNEL_ENCAP_SEG6_LOCAL))
++		return false;
++
++	return true;
++}
++
+ static struct ipv6_sr_hdr *get_and_validate_srh(struct sk_buff *skb)
+ {
+ 	struct ipv6_sr_hdr *srh;
+@@ -428,6 +444,17 @@ static int input_action_end_dx6_finish(s
+ 	return dst_input(skb);
+ }
+ 
++static int input_action_end_dx6_finish_nf(struct net *net, struct sock *sk,
++					  struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return input_action_end_dx6_finish(net, sk, skb);
++}
++
+ /* decapsulate and forward to specified nexthop */
+ static int input_action_end_dx6(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+@@ -448,7 +475,7 @@ static int input_action_end_dx6(struct s
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_PRE_ROUTING,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev,
+-			       NULL, input_action_end_dx6_finish);
++			       NULL, input_action_end_dx6_finish_nf);
+ 
+ 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -482,6 +509,17 @@ static int input_action_end_dx4_finish(s
+ 	return dst_input(skb);
+ }
+ 
++static int input_action_end_dx4_finish_nf(struct net *net, struct sock *sk,
++					  struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return input_action_end_dx4_finish(net, sk, skb);
++}
++
+ static int input_action_end_dx4(struct sk_buff *skb,
+ 				struct seg6_local_lwt *slwt)
+ {
+@@ -498,7 +536,7 @@ static int input_action_end_dx4(struct s
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev,
+-			       NULL, input_action_end_dx4_finish);
++			       NULL, input_action_end_dx4_finish_nf);
+ 
+ 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
+ drop:
+@@ -1122,6 +1160,17 @@ static int seg6_local_input_core(struct
+ 	return rc;
+ }
+ 
++static int seg6_local_input_core_nf(struct net *net, struct sock *sk,
++				    struct sk_buff *skb)
++{
++	if (unlikely(!seg6_local_skb_has_lwtstate(skb))) {
++		kfree_skb(skb);
++		return -EINVAL;
++	}
++
++	return seg6_local_input_core(net, sk, skb);
++}
++
+ static int seg6_local_input(struct sk_buff *skb)
+ {
+ 	if (skb->protocol != htons(ETH_P_IPV6)) {
+@@ -1132,7 +1181,7 @@ static int seg6_local_input(struct sk_bu
+ 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
+ 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_IN,
+ 			       dev_net(skb->dev), NULL, skb, skb->dev, NULL,
+-			       seg6_local_input_core);
++			       seg6_local_input_core_nf);
+ 
+ 	return seg6_local_input_core(dev_net(skb->dev), NULL, skb);
+ }
 
 
