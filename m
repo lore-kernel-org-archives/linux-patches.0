@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704930;
-	b=IjKaO+NPfA9WwLkYu95R9EcWcGCOvyjLssCkEbXK2Y1gHy3SCAVzW5aqSUorLWjmAFqV
-	 HDnlYu/OzI5u1BMbGBbkiaUOIQoG+ys4YKv6VzHcuiwgOl+f+Z7lvixvRsobtVyURgxrT
-	 ddrGyKgKmtNDNYGTUuddLqOv+jtKRdz+utZw2c0EGskK4/ojZtvtQ9HJnP5iFOMqmsId0
-	 V8nPM9XWun1SEEXB5NR/zogBFRdfWcfTfXRLhqHxFgL0tMulqz+EB+eb4JlyXAlnmphoJ
-	 UHxut6MVY1KB1bTgDbifpIbekAm4bmQwL7RaT3NcmnlEzerwgNcrPxiEhuhghbQlVJw==
+	t=1795704932;
+	b=mqAhzBgQcXqiYw6kK/9N8f6KNBXrXUeWwDwwNkeTDAQt6eO7BESy4x4JEmVpLDcoakkE
+	 miUaaA71RwGGumMrB3n7FVQDxqNdUEp06ZjU0DJO/DU8mUgztJmTC+XGog0+H7Iw2Hi7B
+	 WoFGAxkSmAf9/arXczMuLu9UCJiHAG8vrA/NE/GTWBJFkXIJuyM89Ld/u0UGF0ArK+IXp
+	 jGHNdKiW2Vq6hxWF0ScvdyWCsUfT+izdunv7CZNutt95wVgUUQdRXnsNykDUKtZN+5qyw
+	 0x+IIQZtruitax9Gbh+vQMsEVHqIM0GEtFOTGJOK1FNY6kIT8tDgsOmlDirNKaGK9fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DkPIoIDqGfhOg5UdaZwzNj6VsB8r1bP/1oP1iOO8IlM=;
-	b=U9Be3D6+VrG9jVkYWF/9jCPTM+VUvKDLjGll8mv83HvXJRnreWK0aSmA52yyZ5Tj7MNE
-	 J6WWXy4Ir9hy521HYmjxD0XOcTzG8rrRTHEmgjR+501E13XmeHuTU5S79xI/Gwn0Ccq7H
-	 SrtcUVWPUyVKhixcVuc31DZsTinkoI974fFYxgaiTzNJQ1C/Amx8teH1TtMsOZK8pkXQK
-	 OOfYhf/EDfs+vEfZqF9E54kUa4XQzykb7UZCrOlAM/h6w3wuc7nC09fHu36F3hhSKrzdH
-	 Ah1bBUwsf1PByowTjy0u9N3omjj59WadKsroPAnyV9mJ779pT2pzAPhjo7xQDUUQOyw==
+	bh=/unZPiZyth6QJJCpkL+4HkxJQK4/VRfZlEzu03RcRt0=;
+	b=4mLm1EzWQYZ/RWjbStTeuN6trFmLPMZYYRjt+67sUDImrQwzxKy2F18LHU4/THYBRcLh
+	 yKV+2ziOtCYIF/M6sl1Cm2zAJBTLASVtiA1VzvapRZPk3G4cWr8lfrvFbbWnp1qgsTIpw
+	 nw5QjwAMAWw2tk9W9cbYI/ilGh86OAVOTEJxxeznneP63Z/onIn4GfyVRD7ZLQI+1klxf
+	 mhuwuLvgN3noTWG4+o2mwoeMNm2mvnSryfK65oIPXZSfEXi39XGgpwt/4duBP3zrwuLEU
+	 FSGcA6E6Rtl0UHE1Z1jQXpQDfQLa0eC/U6wI9vWaNH9CInyQ8iQyDGyFrtF8rx8GjAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oi1yyTMd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJi6Ny2Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354AD606A31C;
-	Thu, 26 Nov 2026 14:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3F9606A31C;
+	Thu, 26 Nov 2026 14:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oi1yyTMd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711C71F000C0;
-	Thu, 26 Nov 2026 14:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJi6Ny2Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE111F000C0;
+	Thu, 26 Nov 2026 14:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704929;
-	bh=DkPIoIDqGfhOg5UdaZwzNj6VsB8r1bP/1oP1iOO8IlM=;
+	s=korg; t=1795704932;
+	bh=/unZPiZyth6QJJCpkL+4HkxJQK4/VRfZlEzu03RcRt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oi1yyTMdjJZukMHCW1KO+gy8mO+sZI0bk6U3vSviH42xPvBApiQ2E4Yy8NFq3tqL7
-	 s1PKVemcmyzbGdTBdnz2EBqTZYsFWhQJwiHEYP0vOaUAmHBsoRKmNjKSJ4LdTZi2QH
-	 2AcOtjSPdBnd9LkaFgGul6YFiEVPTiORq4+kt4NM=
+	b=SJi6Ny2YbANwtagH1LHsCINKPDbz84EnGKlv7bLrV6MADxBgujnwDny3Xm/6Yynpp
+	 U8RYiZgbM/q9iYz4xOB53kCSGRcqgfEHYWz8/haxGVZcmRgUgr6XnNaA6aaCdT++PJ
+	 NaW+yRB9uSafU/R6ETVH41uu9HhlWZHkVPpsXmA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurence Oberman <loberman@redhat.com>,
-	Matthew Whitehead <tedheadster@gmail.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/319] scsi: aha1542: Remove unneeded scsi_dma_unmap() call
-Date: Thu, 26 Nov 2026 15:36:32 +0100
-Message-ID: <20261126144007.286394325@linuxfoundation.org>
+Subject: [PATCH 5.15 025/319] ath10k: turn rawmode into frame_mode
+Date: Thu, 26 Nov 2026 15:36:33 +0100
+Message-ID: <20261126144007.309066984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,52 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Whitehead <tedheadster@gmail.com>
+From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
 
-[ Upstream commit 9ec6671b137de06f0345962fb8091466b7d56a96 ]
+[ Upstream commit a09740548275a74b897654b3aca5af589289b57a ]
 
-aha1542 never DMA maps the command's scatterlist. Data is bounced
-through a per-command buffer allocated with dma_alloc_coherent() in
-aha1542_init_cmd_priv(), the adapter is programmed with
-acmd->data_buffer_handle, and the payload is copied to and from the
-request segments in aha1542_queuecommand() and aha1542_free_cmd().
+Turn boolean rawmode module param into integer frame_mode param that
+contains value from ath10k_hw_txrx_mode enum. As earlier the default
+param value is non-RAW (native Wi-Fi) encapsulation. The param name
+is selected to be consistent with the similar ath11k param.
 
-The scsi_dma_unmap() call left in aha1542_free_cmd() therefore unmaps
-a scatterlist that was never mapped. With CONFIG_DMA_API_DEBUG enabled
-this results in:
+This is a preparation step for upcoming encapsulation offloading
+support.
 
-  device driver tries to free DMA memory it has not allocated
-    [device address=0x0000000000000000] [size=0 bytes]
-
-Remove the call.
-
-Verified by testing on real hardware.
-
-Fixes: 2f2fef022c3e ("aha1542: use a local bounce buffer")
-Suggested-by: Laurence Oberman <loberman@redhat.com>
-Assisted-by: LLM
-Signed-off-by: Matthew Whitehead <tedheadster@gmail.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260929144528.7061-1-tedheadster@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20220516032519.29831-4-ryazanov.s.a@gmail.com
+Stable-dep-of: 2a87e367c628 ("wifi: ath10k: Stop unanswered temperature reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aha1542.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c | 11 +++++++----
+ drivers/net/wireless/ath/ath10k/core.h |  1 +
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/aha1542.c b/drivers/scsi/aha1542.c
-index 584a59522038b..f13a49b665c1c 100644
---- a/drivers/scsi/aha1542.c
-+++ b/drivers/scsi/aha1542.c
-@@ -273,8 +273,6 @@ static void aha1542_free_cmd(struct scsi_cmnd *cmd)
- 			buf += bv.bv_len;
- 		}
- 	}
--
--	scsi_dma_unmap(cmd);
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 4a93c415db07b..0a8fc3cd74038 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -32,9 +32,11 @@ EXPORT_SYMBOL(ath10k_debug_mask);
+ static unsigned int ath10k_cryptmode_param;
+ static bool uart_print;
+ static bool skip_otp;
+-static bool rawmode;
+ static bool fw_diag_log;
+ 
++/* frame mode values are mapped as per enum ath10k_hw_txrx_mode */
++unsigned int ath10k_frame_mode = ATH10K_HW_TXRX_NATIVE_WIFI;
++
+ unsigned long ath10k_coredump_mask = BIT(ATH10K_FW_CRASH_DUMP_REGISTERS) |
+ 				     BIT(ATH10K_FW_CRASH_DUMP_CE_DATA);
+ 
+@@ -43,15 +45,16 @@ module_param_named(debug_mask, ath10k_debug_mask, uint, 0644);
+ module_param_named(cryptmode, ath10k_cryptmode_param, uint, 0644);
+ module_param(uart_print, bool, 0644);
+ module_param(skip_otp, bool, 0644);
+-module_param(rawmode, bool, 0644);
+ module_param(fw_diag_log, bool, 0644);
++module_param_named(frame_mode, ath10k_frame_mode, uint, 0644);
+ module_param_named(coredump_mask, ath10k_coredump_mask, ulong, 0444);
+ 
+ MODULE_PARM_DESC(debug_mask, "Debugging mask");
+ MODULE_PARM_DESC(uart_print, "Uart target debugging");
+ MODULE_PARM_DESC(skip_otp, "Skip otp failure for calibration in testmode");
+ MODULE_PARM_DESC(cryptmode, "Crypto mode: 0-hardware, 1-software");
+-MODULE_PARM_DESC(rawmode, "Use raw 802.11 frame datapath");
++MODULE_PARM_DESC(frame_mode,
++		 "Datapath frame mode (0: raw, 1: native wifi (default))");
+ MODULE_PARM_DESC(coredump_mask, "Bitfield of what to include in firmware crash file");
+ MODULE_PARM_DESC(fw_diag_log, "Diag based fw log debugging");
+ 
+@@ -2490,7 +2493,7 @@ static int ath10k_core_init_firmware_features(struct ath10k *ar)
+ 	ar->htt.max_num_amsdu = ATH10K_HTT_MAX_NUM_AMSDU_DEFAULT;
+ 	ar->htt.max_num_ampdu = ATH10K_HTT_MAX_NUM_AMPDU_DEFAULT;
+ 
+-	if (rawmode) {
++	if (ath10k_frame_mode == ATH10K_HW_TXRX_RAW) {
+ 		if (!test_bit(ATH10K_FW_FEATURE_RAW_MODE_SUPPORT,
+ 			      fw_file->fw_features)) {
+ 			ath10k_err(ar, "rawmode = 1 requires support from firmware");
+diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
+index 5aeff2d9f6cf7..f5b00f55bd5fd 100644
+--- a/drivers/net/wireless/ath/ath10k/core.h
++++ b/drivers/net/wireless/ath/ath10k/core.h
+@@ -1311,6 +1311,7 @@ static inline bool ath10k_peer_stats_enabled(struct ath10k *ar)
+ 	return false;
  }
  
- static irqreturn_t aha1542_interrupt(int irq, void *dev_id)
++extern unsigned int ath10k_frame_mode;
+ extern unsigned long ath10k_coredump_mask;
+ 
+ void ath10k_core_napi_sync_disable(struct ath10k *ar);
 -- 
 2.53.0
 
