@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705304;
-	b=jGGuFCWqy9qo9P2l5YOpEhhybcMMAqxiQZAmwhZQnb3tBp5m8IXO0iYQGs3pTkRfs6hi
-	 EInPgxFbObSxtQk2hu3oEMdD5WPghiy7v20/Yolfjqlt6IbIzmZYFO6rg4i5PhuMZmUnT
-	 2X144xZS3VqHUgXioEWPdgg/ZnUzugGOqel5k4tzBDOSO8iZb3qNKRipbobodguASL+40
-	 iYX2VFauzXLGijuuXnT/Fy5q8wNb1KFubSLABSkNYuVQC5SqlRwwyYzmhcdoIbw4hjQ2d
-	 43HaYrTJCB3b1UDuMURBNRMY9FNkJGGiJeFMQFJa+RNUsUv0DsqzahsD4chfTSXttbA==
+	t=1795705307;
+	b=s/p1DeUozssIJYytslVFvVXbVle9DC+8MmuirEW7eDCdBBIIai7Q9ajBOCifuxSzEcet
+	 O7ms3JGdWVH+6wRb6ULUAR4CdhMzysVeNsyOSQXgAmaQNLzRSkk9Vlmj9cM8ks2K+fmZv
+	 Ehx/rUlBAxf70TW8PN+7/zZbvY7+rDkk0ewzavT8EEec3MhzQaqymciSUR4KAC+xkldlT
+	 c4wEoRNelk42YUq5MQ1AGfWtJI4AKfJTECx3arOI/scaA/eF2N6X8LcDq0zxHOgaZ02q0
+	 FvIcfH+N52vEQpHwYvDeZoU2dnZuNhQhka2MQfS8/GKw7/n6CzKcvFEhVK4JCBGovwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=88Kdk47I2Qv/SaK0ICGx75JboppKfteW4hPpvjWxdBQ=;
-	b=gu0jPGk+TxGjy3/dmdLt5KqQk3GGJm8lFKhNXI+rJTns935cgWLVN4jUUpIu+5seDBSv
-	 om4zPo6Jzgt3XiD1wfnlQTpZUzTU+fSikiZXag7GY+jeViZny8xlS65xnaIO622dFE7Iz
-	 ZlBpCu6z6l4VgOjPpEW/vvv5EXmZ5gg+Y8M237dgoVs8J3I5IHrPerDjyuBMEl3k8fUl6
-	 lHKg86O4zw9FzAZiF7GLJKPJIf/9FCrkjvGhWV/5kZg7xnKFfgsXetHtBll1g4zb95yvZ
-	 uBoFalv9bdD1ZF31mTKGFIYNfVCbuVTBNxJR4lJNjK0aouensoeecshMh9uZQz/SqSg==
+	bh=r7Qv2tNGDLrQAZ5RmZqEuVd/+32jRjCXlAUGUGN9gcU=;
+	b=fVdb88wvzZHl7+9aKp14NtCVtPKXE8fyZ6fPQJrSGAp4mEu5vpZ0y/mtCUfc7VUojw+l
+	 ykyfVI7cf9h6/ExdpxoH8e90rikFMT+v0RfuSdr7IT5GYYlspBcHw7n+0nGoFvI6NvBTY
+	 l0a+RUW0E1CKetONKp13/CcaOfK+RFoQLOzq7Tm4LQvjj/q8YsrRch8KYPfw4eqtwKPcn
+	 YzK2wk4fpqpnYpz7eZBj+SWPPtZdFbflu3U4rJhdVUARJhp3nKoxag/skKSqZGBKhGKz/
+	 KvzSbPIZO9sZcKtlRvrGjq62ErWPgFPZdVLxDMESnERVdz/UtPfj6oIOGRmZwFuyYpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fkh2tutQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yO0wHGO4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98771606A32E;
-	Thu, 26 Nov 2026 15:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A2A606A329;
+	Thu, 26 Nov 2026 15:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fkh2tutQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C4B1F000D0;
-	Thu, 26 Nov 2026 15:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yO0wHGO4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842061F000CF;
+	Thu, 26 Nov 2026 15:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705304;
-	bh=88Kdk47I2Qv/SaK0ICGx75JboppKfteW4hPpvjWxdBQ=;
+	s=korg; t=1795705307;
+	bh=r7Qv2tNGDLrQAZ5RmZqEuVd/+32jRjCXlAUGUGN9gcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fkh2tutQF/i/qDdQwCx7XzMrKZeYuw+CWT0HIW7Tt6EucNzF/M4U0Xpi3wrqAjjYA
-	 n/uXCeJ46TxVYmOASTfWfSWjJ2G6ILGdUNrD+tBefJ8PH1vPeUtkUtvBdYHWu66kMY
-	 F8RPtuM6G+CxKkanm4doCvXBn7WOyi/+0xrNZJLM=
+	b=yO0wHGO4+cFoyyDLwi85jR63l8Cs+E5tYVnzGW2cVJhf5aVEau46UjlhPtFhRgLZ1
+	 A+wOFoc4XtpY6oPgqIFKiK/Mu2oa88vjzI46pyfS6EQ0sj3LpHSWeP7k5HV9TwHBW9
+	 54g8i9uH1FiH3k7QJKnTigWiHu4nO0ufFjtIvUnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 152/319] udp: do not use a cross-family sk_rx_dst in early demux
-Date: Thu, 26 Nov 2026 15:38:40 +0100
-Message-ID: <20261126144010.175579499@linuxfoundation.org>
+Subject: [PATCH 5.15 153/319] drm/bridge: sii902x: validate I2S data lane values
+Date: Thu, 26 Nov 2026 15:38:41 +0100
+Message-ID: <20261126144010.198279559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,88 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 5636e67320563be743d47706ef4914078c27edb2 ]
+[ Upstream commit 444b7116e7ef1fdb5f7db3bc1f74b20098d062d4 ]
 
-A dual-stack UDP socket connected to a v4-mapped address can receive
-both IPv4 packets and IPv6 packets using v4-mapped addresses:
-ip6_rcv_core() no longer rejects a v4-mapped source since commit
-dcc32f4f183a ("ipv6: weaken the v4mapped source check"), which kept
-that check only in tcp_v6_conn_request(). ipv6_portaddr_hash() hashes
-v4-mapped addresses like IPv4 ones, so both early demux handlers find
-the socket, and both __udp4_lib_rcv() and __udp6_lib_rcv() store their
-input dst in the same sk->sk_rx_dst.
+The sil,i2s-data-lanes property reader bounds the number of entries, but
+does not bound each entry's value. Those values index the four-entry
+i2s_lane_id table when the audio FIFO sequence is built.
 
-udp_v6_early_demux() validates the cached dst with dst_check(), but
-ipv4_dst_check() ignores the cookie, so an IPv4 dst gets attached to
-an IPv6 skb. ip6_rcv_finish_core() then skips the route lookup and
-ip_local_deliver() parses the IPv6 header as an IPv4 one: the IPv6
-next header and hop limit are read as a fragment offset, and the IPv4
-protocol is taken from a source address byte.
+Reject unsupported lane values before indexing that table. Report the
+property name and invalid value with dev_err_probe() so the diagnostic
+identifies the faulty configuration.
 
-The reverse direction looks possible too: per-cpu dsts of IPv6 routes
-using nexthop objects have rt->sernum set, and ip6_dst_check() then
-ignores the cookie, so udp_v4_early_demux() can attach an IPv6 dst to
-an IPv4 skb.
+The issue was found by our static-analysis tool.
 
-Kyle Zeng reported that such a packet can reach XFRM input still
-holding the prefetched, non refcounted, socket set by early demux,
-which can then outlive its RCU grace period.
-
-Only use the cached dst if its family matches the packet. Otherwise
-fall back to a regular route lookup.
-
-TCP does not have the same problem: sk_ehashfn() hashes a v4-mapped
-socket with inet_ehashfn(), while IPv6 lookups use inet6_ehashfn(),
-so IPv6 packets do not normally find a v4-mapped TCP socket.
-
-Fixes: 5425077d73e0 ("net: ipv6: Add early demux handler for UDP unicast")
-Fixes: c9f2c1ae123a ("udp6: fix socket leak on early demux")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261106110135.2161204-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ff5781634c41 ("drm/bridge: sii902x: Implement HDMI audio support")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260920034833.18874-1-hppiscas@163.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 5 ++++-
- net/ipv6/udp.c | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/sii902x.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 65780cf993eac..b3878e610c2a6 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2642,8 +2642,11 @@ int udp_v4_early_demux(struct sk_buff *skb)
- 	skb->destructor = sock_efree;
- 	dst = rcu_dereference(sk->sk_rx_dst);
+diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
+index 89558e5815303..91c627ff6d6e2 100644
+--- a/drivers/gpu/drm/bridge/sii902x.c
++++ b/drivers/gpu/drm/bridge/sii902x.c
+@@ -781,9 +781,15 @@ static int sii902x_audio_codec_init(struct sii902x *sii902x,
+ 	}
+ 	codec_data.max_i2s_channels = 2 * num_lanes;
  
--	if (dst)
-+	/* A dual-stack socket can cache an IPv6 dst. */
-+	if (dst && dst->ops->family == AF_INET)
- 		dst = dst_check(dst, 0);
-+	else
-+		dst = NULL;
- 	if (dst) {
- 		u32 itag = 0;
+-	for (i = 0; i < num_lanes; i++)
++	for (i = 0; i < num_lanes; i++) {
++		if (lanes[i] >= ARRAY_SIZE(i2s_lane_id))
++			return dev_err_probe(dev, -EINVAL,
++					     "invalid sil,i2s-data-lanes value %u\n",
++					     lanes[i]);
++
+ 		sii902x->audio.i2s_fifo_sequence[i] |= audio_fifo_id[i] |
+ 			i2s_lane_id[lanes[i]] |	SII902X_TPI_I2S_FIFO_ENABLE;
++	}
  
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 21f34a3a4e8ec..46b98f46dca3d 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1108,8 +1108,11 @@ void udp_v6_early_demux(struct sk_buff *skb)
- 	skb->destructor = sock_efree;
- 	dst = rcu_dereference(sk->sk_rx_dst);
- 
--	if (dst)
-+	/* A dual-stack socket can cache an IPv4 dst. */
-+	if (dst && dst->ops->family == AF_INET6)
- 		dst = dst_check(dst, sk->sk_rx_dst_cookie);
-+	else
-+		dst = NULL;
- 	if (dst) {
- 		/* set noref for now.
- 		 * any place which wants to hold dst has to call
+ 	sii902x->audio.mclk = devm_clk_get_optional(dev, "mclk");
+ 	if (IS_ERR(sii902x->audio.mclk)) {
 -- 
 2.53.0
 
