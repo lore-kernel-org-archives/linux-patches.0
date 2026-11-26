@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705641;
-	b=Kidj8UdD/SqqaN6jyWdHl3kBVf/vacWCnTKmx3OltOlegzmTbis7Zg6dBlCFRJRXkX04
-	 f6PVW1oPMBCao+LEWDrJ/Nz5Nr7G/HgoyMekibOXhE8UT6Iuc6WWUOhm2fPn5igF0O3oB
-	 d67HGN3rlLn7XsoL3Ajvoox4A/kfVQQo8h2ToxEwvnH0IIbouznpcIZDlNbsfYA0Bvd+X
-	 4rWwQUGdTmRAdeWEt+0o/ubypSxOwcqybH20skgnUNVGXBuhhXnfqdW+yz3n9SxOdsBKS
-	 NtWyKYNSYPs2b8f2BtlvbLc4sOebeKuFoD5+Y9WW9hIVA3Nf5kX2TrmQR3yjvTwx5Iw==
+	t=1795705644;
+	b=5X8kcBlL8/f49SLozQkS5lErnJhw0ritJY8XgrhzKjsyDJ9UC8m5kwHTWPe5QnmdYdAO
+	 Ow4KKYGPmAjDApuUuuh0l54UpgUZNsL2wHwZ7LdcmiVSh1f8Z7Nu+gEwU8m/C13+fkdWY
+	 +lAb+Dl0e1CZMkykPaJn730WhwwPNfEPE6ySRwiOM3rOnqiU6XqekyAtiZRxIAzrSKCsc
+	 7JzU73OX3vjdphwP317XbqFgQrStw/oVmltSeIaLbhgPZIWNOtAuSuu5BxLRiOsfPC38z
+	 /LHteOCmxrUfLUc2uAKb6PRjRBQr55mjz1/QVV72SZ09170pMkVX2wrb1nAHDnafeWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bjQ9FcaZdnZczgG/mem+VGQLu3uEp1qOGa0zvZPvy6Y=;
-	b=kS2jGRZmlbUfn0orX1k+M+mnslXPPaRwM/ViFfkOgkMUNEQ7pEhSD4n7TGHV5kPYtHln
-	 7lqWNp4YEQgjO56LiyW3ULH3t/KoqIzdLyWhvYeCQrp4ueJwX2yuvoKhHUP+8bwaFcxjo
-	 QZ6ahZzXq5EtyuwzlWp+TIcnyFQ5Evf/yjDZc7CUaqFuoxvEL4TUQv1XW1mrikK/ZOtoA
-	 Kwqav6teaLdkXl4BOTaeRjOKzOyfc+gQAq/vjWixvxBGutYhlQAeBraEqksjg3dpeXnlY
-	 jHtAV+sVkVmu7YrEOW+Y59bfA1vstu1VOFFFNGd3YGsvtZQ2X20yvQ+TjjBbqzyhGGg==
+	bh=HdsNumqZv7VNRXHobK6uw0dvh4xDi9xuCz6R2lMGOVI=;
+	b=wLU8qBScTvbAluG1FlOkSrguGwaAFWRrmck6zZ5puE+01K3zJYsEeitvpNnV1QqrG4Dh
+	 zNd3mizglRvwJCVTw+8bKy3naW1FeyQXblj/o1BALB3KWm2KEVEY5XD+pGDzZc6pJlVPw
+	 Z0cFvE0Lp+J+l2q4iwqLw26aAP9w2/aEcloXNTc6cLJVZaTqP4OoOxnXFnn3CH3cIw8+r
+	 57SvRaYkv6J42gkq3ZVHG2dUh3SQeHNtNzo7CPrn/ldK0NHAqXbuEL1AE5k76JZQsk6nP
+	 /lghQiMfhL4iuzkBIFFpTnifrYUKiYaO0d4Ec/NtGQOgEq2McqdCFB8gq9ykUphgMZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqg4JZxr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijsniiR2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFFD606A32C;
-	Thu, 26 Nov 2026 15:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32700606A32A;
+	Thu, 26 Nov 2026 15:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqg4JZxr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E94C1F000C0;
-	Thu, 26 Nov 2026 15:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijsniiR2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612141F000CF;
+	Thu, 26 Nov 2026 15:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705640;
-	bh=bjQ9FcaZdnZczgG/mem+VGQLu3uEp1qOGa0zvZPvy6Y=;
+	s=korg; t=1795705643;
+	bh=HdsNumqZv7VNRXHobK6uw0dvh4xDi9xuCz6R2lMGOVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sqg4JZxrbVM5oy6b7BMDbeY6206bifyj9TkvYqFhozJtTTN1dTWbnutl8u234YBw8
-	 0AphlX6cq5NLrwxvF7aNm3oCcTQ7gb5eKf6GOlJroVKTsH2V9JYcBlUl3WUuKC2muv
-	 CUVIS00JpwVAOLrXcJAFvpVuLdlzquhGQ1VN0Ekg=
+	b=ijsniiR28M5P+46AjPjrPVdSxhBQxYcYDOB9bVr/LPBU/b0N+5FUCVW/htPLUgJFr
+	 kSbhGM+fTbQ4RO9jxSZYdH7AYJrEXx8TF035j7cygXJ5C1gs+x9IRQgXSRdKGjfQkq
+	 ImXLeF35eSX3D27jJvW+GPwvea/EXiUPcG3yKPP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>
-Subject: [PATCH 5.15 264/319] misc: bcm-vk: fix DMA allocation memory leak
-Date: Thu, 26 Nov 2026 15:40:32 +0100
-Message-ID: <20261126144012.706921277@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>
+Subject: [PATCH 5.15 265/319] misc: ibmvmc: initialize HMC state before device registration
+Date: Thu, 26 Nov 2026 15:40:33 +0100
+Message-ID: <20261126144012.728798563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -66,106 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit a36b3db60466d44eefcc5c252ce927c043429922 upstream.
+commit 2022f170e5655c40b93ed98629f7d0adb98cea49 upstream.
 
-bcm_vk_dma_alloc() leaks dma->pages and pinned user-page references
-when page pinning or coherent SG allocation fails. DMA mapping
-failures can also leave the SG list and earlier mappings unreleased,
-as bcm_vk_sg_alloc() skips the partially initialized slot.
+misc_register() exposes the IBM VMC device before the HMC state and
+spinlocks are initialized. A userspace operation racing module
+initialization can therefore access an HMC through an uninitialized
+spinlock.
 
-This issue was found by our static analysis tool under development.
+Initialize all HMC state before registering the misc device.
 
-Fixes: 111d746bb476 ("misc: bcm-vk: add VK messaging support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20261027150921.137189-1-lgs201920130244@gmail.com
+Fixes: 0eca353e7ae7 ("misc: IBM Virtual Management Channel Driver (VMC)")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20261028044828.96177-5-yaojiale02@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/bcm-vk/bcm_vk_sg.c |   43 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 7 deletions(-)
+ drivers/misc/ibmvmc.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/misc/bcm-vk/bcm_vk_sg.c
-+++ b/drivers/misc/bcm-vk/bcm_vk_sg.c
-@@ -80,7 +80,8 @@ static int bcm_vk_dma_alloc(struct devic
- 		dma->nr_pages = (err >= 0) ? err : 0;
- 		dev_err(dev, "get_user_pages_fast, err=%d [%d]\n",
- 			err, dma->nr_pages);
--		return err < 0 ? err : -EINVAL;
-+		err = err < 0 ? err : -EINVAL;
-+		goto err_pages;
+--- a/drivers/misc/ibmvmc.c
++++ b/drivers/misc/ibmvmc.c
+@@ -2359,14 +2359,6 @@ static int __init ibmvmc_module_init(voi
+ 	ibmvmc.state = ibmvmc_state_initial;
+ 	pr_info("ibmvmc: version %s\n", IBMVMC_DRIVER_VERSION);
+ 
+-	rc = misc_register(&ibmvmc_miscdev);
+-	if (rc) {
+-		pr_err("ibmvmc: misc registration failed\n");
+-		goto misc_register_failed;
+-	}
+-	pr_info("ibmvmc: node %d:%d\n", MISC_MAJOR,
+-		ibmvmc_miscdev.minor);
+-
+ 	/* Initialize data structures */
+ 	memset(hmcs, 0, sizeof(struct ibmvmc_hmc) * MAX_HMCS);
+ 	for (i = 0; i < MAX_HMCS; i++) {
+@@ -2376,6 +2368,14 @@ static int __init ibmvmc_module_init(voi
+ 			hmcs[i].queue_outbound_msgs[j] = VMC_INVALID_BUFFER_ID;
  	}
  
- 	/* Max size of sg list is 1 per mapped page + fields at start */
-@@ -92,8 +93,10 @@ static int bcm_vk_dma_alloc(struct devic
- 					 dma->sglen,
- 					 &dma->handle,
- 					 GFP_KERNEL);
--	if (!dma->sglist)
--		return -ENOMEM;
-+	if (!dma->sglist) {
-+		err = -ENOMEM;
-+		goto err_pages;
++	rc = misc_register(&ibmvmc_miscdev);
++	if (rc) {
++		pr_err("ibmvmc: misc registration failed\n");
++		goto misc_register_failed;
 +	}
- 
- 	dma->sglist[SGLIST_NUM_SG] = 0;
- 	dma->sglist[SGLIST_TOTALSIZE] = vkdata->size;
-@@ -110,8 +113,8 @@ static int bcm_vk_dma_alloc(struct devic
- 			       dma->direction);
- 	transfer_size = size;
- 	if (unlikely(dma_mapping_error(dev, sg_addr))) {
--		__free_page(dma->pages[0]);
--		return -EIO;
-+		err = -EIO;
-+		goto err_sglist;
- 	}
- 
- 	for (i = 1; i < dma->nr_pages; i++) {
-@@ -123,8 +126,8 @@ static int bcm_vk_dma_alloc(struct devic
- 				    size,
- 				    dma->direction);
- 		if (unlikely(dma_mapping_error(dev, addr))) {
--			__free_page(dma->pages[i]);
--			return -EIO;
-+			err = -EIO;
-+			goto err_unmap;
- 		}
- 
- 		/*
-@@ -169,6 +172,32 @@ static int bcm_vk_dma_alloc(struct devic
- #endif
- 
- 	return 0;
++	pr_info("ibmvmc: node %d:%d\n", MISC_MAJOR,
++		ibmvmc_miscdev.minor);
 +
-+err_unmap:
-+	/*
-+	 * Unmap completed SG entries and the in-progress DMA range,
-+	 * which has not been written to the SG list yet.
-+	 */
-+	sgdata = (struct _vk_data *)&dma->sglist[SGLIST_VKDATA_START];
-+	for (i = 0; i < dma->sglist[SGLIST_NUM_SG]; i++) {
-+		size = sgdata[i].size;
-+		addr = get_unaligned(&sgdata[i].address);
-+		dma_unmap_page(dev, addr, size, dma->direction);
-+	}
-+	dma_unmap_page(dev, sg_addr, transfer_size, dma->direction);
-+
-+err_sglist:
-+	dma_free_coherent(dev, dma->sglen, dma->sglist, dma->handle);
-+
-+err_pages:
-+	for (i = 0; i < dma->nr_pages; i++)
-+		put_page(dma->pages[i]);
-+	kfree(dma->pages);
-+	dma->pages = NULL;
-+	dma->sglist = NULL;
-+	dma->sglen = 0;
-+	dma->nr_pages = 0;
-+	return err;
- }
+ 	/* Sanity check module parms */
+ 	ibmvmc_scrub_module_parms();
  
- int bcm_vk_sg_alloc(struct device *dev,
 
 
