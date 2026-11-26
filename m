@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704844;
-	b=r/WtA0h9Hle9xDa87q6z8uTh0hH7UM5yg6Yw/QJqDo4XLzvLYCMrrbN1F8mHjINJG866
-	 +93ltNY7G/NlCiHMtCTkl9yrUwttAFB8NslOnb1HgHojYh/SYmNCgwoqNd8KsSFpkTHs6
-	 Gny2zs+RgXEn5g9BeqLapcyHPxCJ/pw85PFs5DIPziGXyvg/9VIkeBddERibfTC695lG7
-	 89+VzS0mv45GogOYlxmjjFAo2jfpBraq9AaUam2WlX/U1g/GOxfYvaK3gHEEel+kf54PS
-	 oJlwtilwzM2yKvW6cfvhcEjbL/Oe/gF8LRBnrFO7xVElUpRNqnREwd5lYmqdHj+UY/w==
+	t=1795704847;
+	b=tC5nvpAhPpJxXfHTwjDyTsERnlY2oOXZRYs3dYu6zx6Uc8yza4sIem0MCoBqKzTiK7PK
+	 X9ffWV4+e9aZK4yMVMq/Rixk9bU4cD+hpDPTyqlDRPpSWmgzU7ZBBRiI440bRTgYBsjol
+	 ZsYxvNwfEkxgpOwvCOdb4mh1RIPc0DhqN/5CGJPRbji+9vERyu2m8Ts91w5YU/XS8CeLM
+	 SJrddypj7qpd91xavbjjeS+DXVRNgwWopnMGvS6gHkPUvCG8l6TM8KmZk5DpQwWJnojjK
+	 ssFVk/PQh3w88lslgelRodEEXB3BhoKmXPJ+D/gbI1G3g6JFFrErYzt6PiH73Eo3QoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7g7NwwK97y5AUE5gsRXRXZ3gkzQT8ohUlXlbGOcH3SQ=;
-	b=rDvBb9VL30Iqvt5fZmZJcgfN3rD/Mzkdwhk7JKiJsQCg40sPevqvhre7d7SbVC+gk02x
-	 G5i42oUPhlf6MpHq5scNpvvpLsm5NjKkUo5Jx4DlVuBTx7ypXmrnO+2wRyOkw+vzWQVsr
-	 VBDKh/uX/zKpjNpjd6UQLAf+0yCNBPOA/qfwsbs3oF1KfRKSqi1G9+xYLpr4GXmhhKjSY
-	 qdlTdNJhcI6c2JR6AVtF4VORb0ymxtNbIfjUb261nRVhdEi2GqXUtWDoPaGJ26nB2F2fq
-	 j7ap3xHZg4bb5zhykANfNzMvzExtfxfx8+9xyzFYgYPHj/JfzA6uqgFiyk93kBAgt0A==
+	bh=kQdYesf+Cd7Zip+CXT+V6QPE/7zXa9vXgSxZivlLYt0=;
+	b=1iag3LBpxyL88cC9ueLHTfMEZsRFHZOD9ibv2uT8loSULG9/w8u7OBV9cl9qRL2lAHAW
+	 RZtTaqbjJQxFfV6WhhGOHkeeTdelxA0saLiBlGijbKj3LhWNycSmfFh3XF2tSSwAWbcXd
+	 5qHr0jnspMO5rd5Thj8kQnLnGsu2mfynZr7vqzHPD+io3XU8nLgqrgALkjSd1NVJa2kn7
+	 RK2bpTe5By/HOfy5LsESrI96gfBl3B4Tw3GFTl2AHt4DPipTortFmMKMzxFN7ikrS+gmZ
+	 hk5fI7ON+sBDtkw+W8MM0kFSVB7zEhQVi/pnVbyQqVYWcI/PoRr6SXQb/ZolPVQY18g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mob36/WH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebrlOuCX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCAA606A321;
-	Thu, 26 Nov 2026 14:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EBB606A327;
+	Thu, 26 Nov 2026 14:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mob36/WH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E861F000C0;
-	Thu, 26 Nov 2026 14:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebrlOuCX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03F01F000C4;
+	Thu, 26 Nov 2026 14:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704844;
-	bh=7g7NwwK97y5AUE5gsRXRXZ3gkzQT8ohUlXlbGOcH3SQ=;
+	s=korg; t=1795704847;
+	bh=kQdYesf+Cd7Zip+CXT+V6QPE/7zXa9vXgSxZivlLYt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mob36/WHQBVwxFHw5Ss8pwpOWU4EgUybqxAr/e3SCeRnCaDba+Ia4kKqZbKFw9nk+
-	 8kfavRDYoj4lwQ0biJDjgNZgDV7V3dVbfbxfTTCeo+4MdcZx7CiYYhMBDtt3Qfrq76
-	 7UrxiWUg5virTy+DsHWPjNby3niEEWWGFSiKYFcU=
+	b=ebrlOuCXTP922vi4Ta8oCtVpzeQlZWPhmFiDNoKlW21itJ+FjjojWzSSynjHiyeho
+	 xi+rSD1+dnZwsPFBKq9Wj3vDDZ9zXTgAmoCI1ToIcgXkSKu6uuBl1cxt8w2oV/xSGl
+	 OFHqc9P/BojBKzIjivzOdmmEo7ZDqzZY51PKpt5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>
-Subject: [PATCH 5.10 261/265] vfio/fsl-mc: prevent read-only region mappings from becoming writable
-Date: Thu, 26 Nov 2026 15:39:51 +0100
-Message-ID: <20261126143623.482116290@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Petr Vaganov <petrvaganoff@gmail.com>
+Subject: [PATCH 5.10 262/265] fs/stat.c: avoid harmless garbage value problem in vfs_statx_path()
+Date: Thu, 26 Nov 2026 15:39:52 +0100
+Message-ID: <20261126143623.547291961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,53 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit 25fd8b27ee8d4f59cc2ad99cf67aef4570b82096 upstream.
+commit 0fac3ed473dd2955053be6671cdd747807f5e488 upstream.
 
-vfio_fsl_mc_mmap() rejects writable mappings of regions without the
-WRITE flag, but leaves VM_MAYWRITE set.  Userspace can map such a region
-read-only and then upgrade the mapping to writable with mprotect().
+Clang static checker(scan-build) warning:
+fs/stat.c:287:21: warning: The left expression of the compound assignment is
+an uninitialized value. The computed value will also be garbage.
+  287 |                 stat->result_mask |= STATX_MNT_ID_UNIQUE;
+      |                 ~~~~~~~~~~~~~~~~~ ^
+fs/stat.c:290:21: warning: The left expression of the compound assignment is
+an uninitialized value. The computed value will also be garbage.
+  290 |                 stat->result_mask |= STATX_MNT_ID;
 
-Clear VM_MAYWRITE for regions without the WRITE flag, as i915 does for
-its read-only objects and as fixed in drm/vc4 (CVE-2026-68445),
-drm/panthor (CVE-2024-53071) and commit a5edadbae57e ("ptp: vmclock:
-prevent read-only mappings from becoming writable").
+When vfs_getattr() failed because of security_inode_getattr(), 'stat' is
+uninitialized. In this case, there is a harmless garbage problem in
+vfs_statx_path(). It's better to return error directly when
+vfs_getattr() failed, avoiding garbage value and more clearly.
 
-Note this is defensive hardening: the fsl-mc bus publishes all device
-regions with the WRITE flag set, so no device can currently reach the
-read-only path.  The guard costs nothing and keeps the mmap() interface
-honest if a read-only region ever appears.
-
-Fixes: 67247289688d4 ("vfio/fsl-mc: Allow userspace to MMAP fsl-mc device MMIO regions")
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Link: https://lore.kernel.org/r/20260929094848.7439-3-suruurism@gmail.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20250119025946.1168957-1-suhui@nfschina.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ Petr: There is no vfs_statx_path() in this tree. The fix is applied
+  directly in vfs_statx() by jumping to path_put() via a new out_path
+  label, preserving the reference drop and the ESTALE retry. ]
+Fixes: fa2fcf4f1df1 ("statx: add mount ID")
+Signed-off-by: Petr Vaganov <petrvaganoff@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/fsl-mc/vfio_fsl_mc.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/stat.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/vfio/fsl-mc/vfio_fsl_mc.c
-+++ b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
-@@ -494,9 +494,13 @@ static int vfio_fsl_mc_mmap(void *device
- 			&& (vma->vm_flags & VM_READ))
- 		return -EINVAL;
+--- a/fs/stat.c
++++ b/fs/stat.c
+@@ -195,11 +195,14 @@ retry:
+ 		goto out;
  
--	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)
--			&& (vma->vm_flags & VM_WRITE))
--		return -EINVAL;
-+	/* Prevent read-only region mappings from being upgraded with mprotect() */
-+	if (!(vdev->regions[index].flags & VFIO_REGION_INFO_FLAG_WRITE)) {
-+		if (vma->vm_flags & VM_WRITE)
-+			return -EINVAL;
-+
-+		vma->vm_flags &= ~VM_MAYWRITE;
-+	}
- 
- 	vma->vm_private_data = mc_dev;
- 
+ 	error = vfs_getattr(&path, stat, request_mask, flags);
++	if (error)
++		goto out_path;
+ 	stat->mnt_id = real_mount(path.mnt)->mnt_id;
+ 	stat->result_mask |= STATX_MNT_ID;
+ 	if (path.mnt->mnt_root == path.dentry)
+ 		stat->attributes |= STATX_ATTR_MOUNT_ROOT;
+ 	stat->attributes_mask |= STATX_ATTR_MOUNT_ROOT;
++out_path:
+ 	path_put(&path);
+ 	if (retry_estale(error, lookup_flags)) {
+ 		lookup_flags |= LOOKUP_REVAL;
 
 
