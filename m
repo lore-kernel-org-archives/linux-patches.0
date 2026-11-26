@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704743;
-	b=3KQ9YbEBS4X5c2F41vMSp0+GTK3w0u9Md7xFMgFXQc3d2VGqoQ72RUaWzwGgIgP0+bOR
-	 d97z1PHX+Z1QYeLgebmTFAMxm+sDHTMjKGFOZfBGj+qNaBci+hfoxHiZsZFZ9ZekABa2v
-	 7T9USFodZ6pVYOU8cZ1maiRShyc69b3Okd8XJO8SE97H5rCwTxXJjG8UU8wnJdqKZop+J
-	 4viTW0EgBRPCYpSa/jI3FMq6DrJBm+40xCZ+leeWypy0MyCBhwKnrQJnSyP+QPciiejY0
-	 fTxZupB/ENGcd7Ngtls9s+fot9zRSPttY5VLCEDyqhR/VzT1I4AeWvFV/41QzfLUZAg==
+	t=1795704745;
+	b=ej3G0+UnRe2AMa16bHG/IJCEXUIsmhpfm8OMPHcRVxWT/tCkbrAn9IeIEwMIHYlvUL2t
+	 WQ3+CDxjYmu83jsNHrMliD7oYhBKAy3OxdR9j8SAcbM6mXfVwpKIxHBvPQ3Ly08RTm+2r
+	 XzY6gf2UZxTGkCk2I5cFtpEZoY8WK3Tfha16qlZJyXA0CBz0BkiA8lxph0+stnDAT7djW
+	 JJwhgDX851xKxPmuhHAldc/v748yKI+lWd5Uvd+kYFfziP8yQt+rS7jQZcFPWEH2jfI4o
+	 XGFjLX3Fz4Imi9gqzmtp6SX9JVWW4r6AoIl9/KBGV1U+NgM7OtTnYhs6txWd4pkXx8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704745;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qx47N03bJDl9+aZnfF1vvxY+bRrOUVxVOJCZK0tmFAY=;
-	b=ogZ22e68eoKvUjyVByjfx4BIfDPQrGAxKVYanOL8LxTWtTkg8m/8mLqHvJ3uBCEMUbv+
-	 8B7CL+KmmeuSnz0HNfn/XDcfrEj/66DYaVJ/KRoKnn068VAUZF1usIU26HTvfIjx/ojdy
-	 X53mtDlzlCa0AepoWX/v4teUvuQRNaVY6k8rC+o64RW25dBfq9aBbp8yKGZmHaQBzGjI8
-	 j0Rn3sYcEid8MNBB/fKOjbZkqo2l/LqPLK6SRY3rbXilAVBwFtsmsLD45xoFRspN2d8P7
-	 gxqRhz8k/f4h8gcgQ/S9nkCqv7LNF9iwYN4Q9n6+VqkS5QaUBCEQIN7kD/45aHzwabA==
+	bh=jj2n/BfmLiQn0lt9zBOT7siS1ky0JbV/Q8l0hoQn7Jw=;
+	b=kwJjBhES1ILDbfoVhbeWxjiO43+CmAXhsG/w9tqzsR8ZgYn6KKFFA/Tp2PSpQt2EHL3Q
+	 UyWcJQnocmt9Z3XPSAbQmtZZ0XMn9hZfJ5ECcgLcpIu6V/7+9omfRc2WbCPfVCTiuZ0o6
+	 RZBaOzhuIDxof71+epk/vrYr+HFWN6UjGsdvz0IhSXusJzeD+ku4T0X1q+Y9B6IEkuDXg
+	 FOooBHsmJMhHG2EUobz3AnHn5wME5i4wv45T/osZ9EQajCZNd2+Kjg3ZrPz1j7AtYB69N
+	 AJEn0BA2Jg/2gn2Loa1+RxvMxilC2Iazn26KO+XD+YimSlQ+PPdJ1NeJzCHc7lLeJQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWwUB5+j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LDY2e26Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF90606A31C;
-	Thu, 26 Nov 2026 14:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF75606A327;
+	Thu, 26 Nov 2026 14:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWwUB5+j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85991F000D0;
-	Thu, 26 Nov 2026 14:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LDY2e26Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD861F000D0;
+	Thu, 26 Nov 2026 14:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704742;
-	bh=qx47N03bJDl9+aZnfF1vvxY+bRrOUVxVOJCZK0tmFAY=;
+	s=korg; t=1795704745;
+	bh=jj2n/BfmLiQn0lt9zBOT7siS1ky0JbV/Q8l0hoQn7Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uWwUB5+j+5bdkJiCcvFnMzEVPqthnmV9jLw5er6NVFKw010Cq2IChGIFw2Exc7mht
-	 QryAbUhi0QIQSw2/jWxtBC2BhcAEF5/WRdCP8fNXDopuN5yrgkBJQ6uXn0BdsSVOcR
-	 4TKWa2/5Xk3c0i6PDxuei/ruBUrrhGear1HOc6Zs=
+	b=LDY2e26Z2QX7c88kNH+24DrRR+mg9Gnees2/T+lYoqKrcMQnACthRG2c3D8PjAK14
+	 tu0+3VUZaRY3aRi/g2kB+mPOX1O3CEg18V/g+nuy9LXgwTXGltDs5Jdb3A20+6qOaQ
+	 PXFhvD+EK0vAl9DZ2Zb9oU/pB3jSlp2onH7U+RME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 5.10 227/265] w1: dont hold list_mutex while a slave is torn down
-Date: Thu, 26 Nov 2026 15:39:17 +0100
-Message-ID: <20261126143621.131578433@linuxfoundation.org>
+Subject: [PATCH 5.10 228/265] w1: ds2482: set the strong pull-up with its byte
+Date: Thu, 26 Nov 2026 15:39:18 +0100
+Message-ID: <20261126143621.197318942@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,80 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-commit 7ef382cb0ae0b2d6df4fbc5c822cd80394308839 upstream.
+commit e4f673632fa8292a2922bcfbb39519b08016b382 upstream.
 
-When the last reference to a slave is dropped, w1_unref_slave() holds
-list_mutex of the master until the slave has been freed.  In between it
-calls the ->remove_slave() callback of the family driver and
-device_unregister().  Both wait for others: for the sysfs callbacks
-which are running, and in the case of w1_therm also for the file
-therm_bulk_read of the master and for everybody who is talking to the
-sensor.  None of those can therefore take list_mutex, although the
-callbacks of therm_bulk_read walk the list which it protects.
+The eight channels of a DS2482-800 are eight independent 1-wire masters
+for the w1 core, but share one I2C device. Each bus operation consists of
+several I2C transfers: select the channel, send the command, poll the
+status, set the read pointer, read the result. access_lock keeps the
+operations of the channels apart.
 
-The mutex is only needed to make the decrement of the reference count and
-the removal from the list one step for w1_search_slave() and
-w1_slave_search_device(), which look the slave up in the list and, in the
-first case, take a reference.  Once the slave is off the list, nobody can
-find it any more.  Drop the mutex at that point.
+ds2482_w1_set_pullup() polls the status, writes the configuration and
+polls again without the lock. Polling sets the read pointer of the device
+to the status register. In the middle of a read on another channel, after
+that one has set the pointer to the data register, this makes the read
+return the status instead of the data. The cached copy of the pointer in
+pdev->read_prt can go wrong as well.
 
-The callers which hold the mutex of the master, which serialises
-attaching and detaching, are not affected.  The one which does not is
-w1_process_cb(), when it drops the last reference to a slave which has
-been detached while a netlink command for it was queued.  Somebody who
-attaches a slave with the same ID through sysfs or netlink at that very
-moment used to wait until the old device was gone.  Now the registration
-of the new device may fail because the name is still in use.
+The lock alone is not enough. The strong pull-up is a setting of the
+whole chip which is used up by the next byte. If an operation of another
+channel gets in before the byte it was meant for, that channel gets the
+pull-up, and the sensor converts without power.
 
-This is a preparation for "w1: w1_therm: lock the list of slaves for the
-bulk read".
+So only note the request in ds2482_w1_set_pullup(), and write the
+configuration in ds2482_w1_write_byte(), under the lock and after the
+channel has been selected. The w1 core calls the former right before the
+latter, under the bus mutex of the channel.
 
+Fixes: 9c95bb6f25ff ("w1: ds2482: Added 1-Wire pull-up support to the driver")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-7-d2e6bfafb6a4@linuxfoundation.org
+Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-3-d2e6bfafb6a4@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/w1.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/w1/masters/ds2482.c |   36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -783,16 +783,24 @@ int w1_unref_slave(struct w1_slave *sl)
+--- a/drivers/w1/masters/ds2482.c
++++ b/drivers/w1/masters/ds2482.c
+@@ -105,6 +105,7 @@ struct ds2482_data;
+ struct ds2482_w1_chan {
+ 	struct ds2482_data	*pdev;
+ 	u8			channel;
++	bool			spu;	/* strong pullup after the next byte */
+ 	struct w1_bus_master	w1_bm;
+ };
+ 
+@@ -338,6 +339,19 @@ static void ds2482_w1_write_byte(void *d
+ 	if (pdev->w1_count > 1)
+ 		ds2482_set_channel(pdev, pchan->channel);
+ 
++	if (pchan->spu) {
++		pchan->spu = false;
++		/* the wait above and this one are crucial, otherwise devices
++		 * might not be powered long enough, causing e.g. a w1_therm
++		 * sensor to provide wrong conversion results
++		 */
++		/* note: it seems like both SPU and APU have to be set! */
++		ds2482_send_cmd_data(pdev, DS2482_CMD_WRITE_CONFIG,
++				     ds2482_calculate_config(DS2482_REG_CFG_SPU |
++							     DS2482_REG_CFG_APU));
++		ds2482_wait_1wire_idle(pdev);
++	}
++
+ 	/* Send the write byte command */
+ 	ds2482_send_cmd_data(pdev, DS2482_CMD_1WIRE_WRITE_BYTE, byte);
+ 
+@@ -422,27 +436,19 @@ static u8 ds2482_w1_reset_bus(void *data
+ static u8 ds2482_w1_set_pullup(void *data, int delay)
  {
- 	struct w1_master *dev = sl->master;
- 	int refcnt;
-+
-+	/*
-+	 * Once it is off the list nobody can find the slave and take a new
-+	 * reference.  The lock must not be held any longer than that: the rest
-+	 * waits for sysfs callbacks and for users of the family data.
-+	 */
- 	mutex_lock(&dev->list_mutex);
- 	refcnt = atomic_sub_return(1, &sl->refcnt);
-+	if (refcnt == 0)
-+		list_del(&sl->w1_slave_entry);
-+	mutex_unlock(&dev->list_mutex);
-+
- 	if (refcnt == 0) {
- 		struct w1_netlink_msg msg;
+ 	struct ds2482_w1_chan *pchan = data;
+-	struct ds2482_data    *pdev = pchan->pdev;
+-	u8 retval = 1;
  
- 		dev_dbg(&sl->dev, "%s: detaching %s [%p].\n", __func__,
- 			sl->name, sl);
+ 	/* if delay is non-zero activate the pullup,
+ 	 * the strong pullup will be automatically deactivated
+ 	 * by the master, so do not explicitly deactive it
++	 *
++	 * The setting is used up by the next byte on any channel of the chip:
++	 * ds2482_w1_write_byte() makes it, in one go with the byte.
+ 	 */
+-	if (delay) {
+-		/* both waits are crucial, otherwise devices might not be
+-		 * powered long enough, causing e.g. a w1_therm sensor to
+-		 * provide wrong conversion results
+-		 */
+-		ds2482_wait_1wire_idle(pdev);
+-		/* note: it seems like both SPU and APU have to be set! */
+-		retval = ds2482_send_cmd_data(pdev, DS2482_CMD_WRITE_CONFIG,
+-			ds2482_calculate_config(DS2482_REG_CFG_SPU |
+-						DS2482_REG_CFG_APU));
+-		ds2482_wait_1wire_idle(pdev);
+-	}
++	if (!delay)
++		return 1;
  
--		list_del(&sl->w1_slave_entry);
--
- 		memset(&msg, 0, sizeof(msg));
- 		memcpy(msg.id.id, &sl->reg_num, sizeof(msg.id));
- 		msg.type = W1_SLAVE_REMOVE;
-@@ -806,7 +814,6 @@ int w1_unref_slave(struct w1_slave *sl)
- 		kfree(sl);
- 	}
- 	atomic_dec(&dev->refcnt);
--	mutex_unlock(&dev->list_mutex);
- 	return refcnt;
+-	return retval;
++	pchan->spu = true;
++	return 0;
  }
+ 
  
 
 
