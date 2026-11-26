@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704478;
-	b=KUgiarDQc06Z1tybaWgV2/ezIROJ5MnzXFXLp2iGdrup+rmbeF95j3G7+qUP7U41nzXa
-	 9TF9RTBjTAvADDnPloguPKbcTtxr/pHOFWL1xQJ6+JNIlwFtPxsBloCiAfwptMufNsTgn
-	 Tkqmzwk5m7vEogKy//CXVc6J1mFIskGfZptl7nJsV2zhsalEcfaSnd+OeM0hlbF+wrWj0
-	 AS4hx2OUd8YkzpiyhJbr0h+Fe3xP9RwH05cbkCWTcuOXCeDWj+RlUjqK9maau4lZWhcpo
-	 8TQmlQUwVIVc7RLfsX+0XV4AKozyMhVuwp3hfd1gniqn0JY30O7exzUYFZKkbDBTthw==
+	t=1795704481;
+	b=DEcjawSawt71aXcJtBYuMjci91f71xSRWg5RZjFUNIOQm7Wi1494wjXX6KhJmU7jU3tc
+	 yKG6YusXqETYaE5AQHm/yx62l7jHOkLyBs+ivdmk+oM3cF+xjOAjV+8G5nclOCpzsY3Os
+	 4GPPxAWNu3HOHi2AopbtZcW2ofQZjfg7aVxmvgMzWj5J2p/PsaxQPRpR6SmXsj9QLg1QQ
+	 Q5YS6/2W5Do3YvM4/+I9FAMYQOXn3p4zGoxuZj/bcgQcp+a2S/F/ByIzuUKGmy098wlzC
+	 +dQr4/7LxeT/xTaCx8Qp95D0TKRl2HBZ03USs9UPDFBJndUIECh9AaQX9PMGS3JBtPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704478;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EiJ288QovdnJvntVljHpnw8GiLSPIhvFIERJ3e2Gd4c=;
-	b=ZGgji85xBxc4EFqyFTgMLpv+GUf+Cr6g+XAaHP2LQcMaW1m+MXgLL5NtKpFSR4UsthwA
-	 AsK2z0sUbJmIN3txfpuPHD1pmIqLbK/FV8A2PbQ/qE5AiTnydD12iR5uK7PX8QsB5xeB+
-	 cHU1FNdwrgFT7/Xmx8ehrl99Me8i/b/pfZXxdPLt5ogpD/+ItYHhQOn21NwSccgylJaOB
-	 pmT2hFqlQkFclY03tZqus1tH/c7De/hzPlDV+uHBS4xtumHHxXaGiYtE9idT1tSFTA/RF
-	 MO9fe09Of+hqKubNCq2jvBMMobl0suFlh8vtaJOLEn7nJ/NU/D3jm4MXuAa8DYb3oQA==
+	bh=kloywYBphTk1HPJsMCMmC2CcKaK0aOzNN/hOWUmZPjU=;
+	b=HJonPwGVeJ9gItRMTVoQbuSyq/atOCqvtZA1AGfzvu7WwVOKehFTqU6hX/TxvWltRQ39
+	 PzL2Az9jHev4QTDyLHNabk8gN/9V5GC/mydqGjmQwkvcPp93t6ycApk3vpkjZdQrZw6ji
+	 U12yfkY5IuVb6grIsnwzDxpYtS1EIKzpzF0v2C4xmdDwQUaHtdo8kPc852vl4fXifjNg/
+	 sD6tFo73b9nnjBGRnUksKUkRw7GMbsHZKWJ1Ofi89eK4rrivGxRGIG9D7eK+kmdYYi3Ve
+	 NJG0GfMtJ4mFi0rQIG2OB6h5NflfU1KCyO6+IGnLokxhyQADnwnAuTfJzIeMWNZyUcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXJC17b2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lmc0Iahv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2D8606A326;
-	Thu, 26 Nov 2026 14:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5A8606A326;
+	Thu, 26 Nov 2026 14:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXJC17b2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646881F000EC;
-	Thu, 26 Nov 2026 14:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lmc0Iahv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961A71F000E1;
+	Thu, 26 Nov 2026 14:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704477;
-	bh=EiJ288QovdnJvntVljHpnw8GiLSPIhvFIERJ3e2Gd4c=;
+	s=korg; t=1795704480;
+	bh=kloywYBphTk1HPJsMCMmC2CcKaK0aOzNN/hOWUmZPjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NXJC17b2ct+aH8XzOe1hxDu1jLWH/gkeZ0uCFsTgU3ozuWKUYEl8eddLussOCyCFH
-	 xn+ovyR2qj6uboupR5AOcSlHSOoe0nXP2kZcLkHCRc0LcwSSf2T1aUdarqEd/DAx44
-	 PPoLPTnBeT52RwugLaK8LAkRpnorLfPVS/fCc8ck=
+	b=Lmc0IahvgTy6UVaPcFdKlJFcVZk0brrnJ+T1a6kYbe1qS4cCLie76nrk8XEScVOqR
+	 odmTnCTDEl9wQNLhLGaO6JiVk3tK2J45eIB6t2ZrfHKgnbBXVyHuQzOvmgsDQjVkxv
+	 ziFWSlKTYkMAez7omu4ahdQp5aYtMnPhFn+x/gtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Guixiong Wei <weiguixiong@bytedance.com>,
+	Jude Gyimah <jude.gyimah87@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/265] KEYS: do not let an unmatched key decide the search result
-Date: Thu, 26 Nov 2026 15:37:47 +0100
-Message-ID: <20261126143614.612691008@linuxfoundation.org>
+Subject: [PATCH 5.10 138/265] ALSA: aw2-alsa: select SND_PCM
+Date: Thu, 26 Nov 2026 15:37:48 +0100
+Message-ID: <20261126143614.687110385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,77 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixiong Wei <weiguixiong@bytedance.com>
+From: Jude Gyimah <jude.gyimah87@gmail.com>
 
-[ Upstream commit 143fe160178c73e43575bff4890d23f84e37146d ]
+[ Upstream commit bca568589ad118a9b0bac086760baee2a41976a5 ]
 
-With the dns_resolver key type available, put a key named "foo" in a
-fresh session keyring, revoke it, and search for "bar":
+Several stanzas in sound/pci/Kconfig select SND_PCM.
+SND_AW2 selects nothing at all.
 
-  keyctl new_session >/dev/null
-  A=$(printf '127.0.0.1\0' | keyctl padd dns_resolver foo @s)
-  keyctl revoke "$A"
-  keyctl search @s dns_resolver bar
+aw2-alsa calls snd_pcm_new, which sound/core/pcm.c provides under SND_PCM.
 
-Results:
+  aw2-alsa.c:(.text+0x554): undefined reference to `snd_pcm_new'
 
-  keyctl_search: Key has been revoked
+4 symbols are undefined in all.
 
-The search returns -EKEYREVOKED even though there is no key named "bar".
-It should return -ENOKEY.
+The driver can be built into vmlinux while SND_PCM is a module, in which
+case the symbols are not there at link time.
 
-A dns_resolver search walks the keys in the keyring and uses
-dns_resolver_cmp() to compare their descriptions with the requested
-name. When keyring_search_iterator() sees the revoked "foo" key, it
-records -EKEYREVOKED in ctx->result and skips the key before comparing
-its description. The search continues, but without a match it returns
-the error recorded for "foo".
+Select rather than depend on: SND_PCM has no prompt of its own and is only
+ever enabled by a select, so a depends on would leave SND_AW2
+unselectable.
 
-Call the match callback before checking for invalidated, revoked or
-expired keys. A nonmatching key then leaves ctx->result alone.
+Reproduced on v7.3, arm64, with CONFIG_SND_AW2=y and CONFIG_SND_PCM=m.
 
-Fixes: b2a4df200d57 ("KEYS: Expand the capacity of a keyring")
-Reported-by: Jarkko Sakkinen <jarkko@kernel.org>
-Closes: https://lore.kernel.org/lkml/avDG8G-Jl1YsmfCs@kernel.org/
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20261109032931.80406-2-weiguixiong@bytedance.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Found with kreach, a static check that compares what Kconfig allows
+against the symbols the compiled objects actually reference.
+
+Fixes: 98f2a97f207a ("[ALSA] Emagic Audiowerk 2 ALSA driver.")
+Signed-off-by: Jude Gyimah <jude.gyimah87@gmail.com>
+Link: https://patch.msgid.link/20261113064614.15045-1-jude.gyimah87@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/pci/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index fc6b9894c32d6..655cd752060ba 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -598,6 +598,12 @@ static int keyring_search_iterator(const void *object, void *iterator_data)
- 		return 0;
- 	}
+diff --git a/sound/pci/Kconfig b/sound/pci/Kconfig
+index 41ce125971777..ad7ef4d12f85a 100644
+--- a/sound/pci/Kconfig
++++ b/sound/pci/Kconfig
+@@ -137,6 +137,7 @@ config SND_AU8830
  
-+	/* A key the caller did not ask for must not decide the result. */
-+	if (!ctx->match_data.cmp(key, &ctx->match_data)) {
-+		kleave(" = 0 [!match]");
-+		return 0;
-+	}
-+
- 	/* skip invalidated, revoked and expired keys */
- 	if (ctx->flags & KEYRING_SEARCH_DO_STATE_CHECK) {
- 		time64_t expiry = READ_ONCE(key->expiry);
-@@ -617,12 +623,6 @@ static int keyring_search_iterator(const void *object, void *iterator_data)
- 		}
- 	}
+ config SND_AW2
+ 	tristate "Emagic Audiowerk 2"
++	select SND_PCM
+ 	help
+ 	  Say Y here to include support for Emagic Audiowerk 2 soundcards.
  
--	/* keys that don't match */
--	if (!ctx->match_data.cmp(key, &ctx->match_data)) {
--		kleave(" = 0 [!match]");
--		return 0;
--	}
--
- 	/* key must have search permissions */
- 	if (!(ctx->flags & KEYRING_SEARCH_NO_CHECK_PERM) &&
- 	    key_task_permission(make_key_ref(key, ctx->possessed),
 -- 
 2.53.0
 
