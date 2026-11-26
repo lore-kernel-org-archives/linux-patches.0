@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704524;
-	b=0yH1hTTWj+UvTCizhTLXxDXT00RuWZhPu6HJdkmeC+szcWx/KVEaGQEZKf6wMUSkzAwW
-	 BpC5jP3tGbUGJfCACKf0Uv6YRvM98nuolWoXuPfTC+q9tajizS/ZA3Jjr1aKdBkVtHXd9
-	 HJgFrR4481mZN5OTXerExQ2Bnqt9ZbecYv8hQvd7aaaVY3qQl/J+W4nRpElVjhr2LhomU
-	 TAYjnhBmhWpgqKd5qlYhZtnvgIuvRW+ufLXxrXWr2ZKZO1SrOdkMbCy4e/bPCPBGGfPAu
-	 dNbEnGFGFagWwdQvf3vOKUj51UMaM36uR9HWyUiL4bcBDlz23Niyplrgb2hYUInoO1Q==
+	t=1795704527;
+	b=22KMMAfxZlj0lCqs/o5NgacmjTV/scVqZULppXDRbMjk+GuQH4Qjfu1zdvwgIrQuCU/6
+	 crDH1OUhVL1eWb0IMRzkBVdxiHimUw7p71Ss0rGvzNMVDD9BMSHredy5Y1+4JovEdEigo
+	 i+AcEjDYa6s9lbUqsAyTyPW1oU6+8I1sVaoFJz79DLxPCmJS3NzIE+ekYuKRK+kziYEYM
+	 Y6/t3fHKTOQ5DtQv1qarVIfAUjhQ0L1irZwLGkf7D2Ismfx9q84m83oJTLFkiqKNBG2vH
+	 0FTIrgOkPAz5L9wxIEIFKQ4MWhhUgy/JoL3JucGirb/Ju+XwLU58wJf0+kbtzEHlASQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8sEzKtAEIwdbH9f4Bnnr/i+ZQlaNtzsf+b5OqlJ9bWw=;
-	b=327SFgdVWFKAvTJwzNJDcyq310WAjNXgPutai8xaRsFhR4Fw796mVilEAEZldilai/zd
-	 autAgecKOBHleH2GBemHenGqBjoZ2fRdnHQYhgRfLqncR0/Xwzj9pgmSGwW+Q+ePf7YeK
-	 hESzCzxKrsmASfZvvSrEHt/Fqnf1J6nZ0yVa3aqmd2rHQ+wxlxel6lnTU9aMtLWRGk60I
-	 GwoH7msSIr4qU4RLebvZKIePXcNMs8Z9+SxCL2bDTZ5/mQqHytuzBYctSYXEsCK9sfaoM
-	 qWZScQsmHYTQX1sZbTD8zSCm5FGcM/++giaL0osK99bB8Eui9VKmqcqtbCtZ6uoTaxQ==
+	bh=UlTX9hJ1UzsyQ5LKPO/nLZ+cZR1kzytwoFqOqWDngIk=;
+	b=H1UWn3cHTxEEM37v/gHbEoljsROYPGP4L+Z2kIKMQIbYURgGDWgMBUmt0WNkKjMb2EBN
+	 TA3ijxQ0F11WMdd3z6icn+N/UFcQ2WIcp/03b+ltW/xYq7VuXGiWjunSVm73m9xf127br
+	 61ZEwRTVbAsEJ6frSQY48f7hjD6BYqbcr03BXSTybk8mC0oC+mAEG7/apAUozkHyk30nr
+	 qkO2BpFiZoPazPNncX+M1XZqaEYi1Y8SFKiNCRbSIj2J+6c0lKlyaYT0qvz0+6MDjz5mv
+	 Nk2mPHZiqn1YFTOja4Z5j+6aj3gM5vX6S3u2YD92Ko4Z7AHA/bsWvFsUSGFoaksaZhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SrEh1yCB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UupyGyBi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE6E606A323;
-	Thu, 26 Nov 2026 14:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30DD606A31C;
+	Thu, 26 Nov 2026 14:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SrEh1yCB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA641F000CF;
-	Thu, 26 Nov 2026 14:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UupyGyBi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8CA1F000CF;
+	Thu, 26 Nov 2026 14:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704523;
-	bh=8sEzKtAEIwdbH9f4Bnnr/i+ZQlaNtzsf+b5OqlJ9bWw=;
+	s=korg; t=1795704526;
+	bh=UlTX9hJ1UzsyQ5LKPO/nLZ+cZR1kzytwoFqOqWDngIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SrEh1yCBwdLTWuDEBxK5HtifcZhj0qqsNGIgzYDIgjTmSCMqnF4dCWcGI6/FkXYYB
-	 mGq4YJ4DCFWXzrT/I9tjmHHm6KN0i5lYcsLDYuJfU6IZU9sZlwXODNCJDnIjjepG5z
-	 z+CzE7xyoXq2fZfljWo01wasr3UHzD3Thx7Bg5/o=
+	b=UupyGyBisOHefIVU7jDYd/62lxn68lGwPw2ohbBmqRHikPHfwBib1dyX7EOQ9Gmjc
+	 zo0LE3ulM5bEFPif4mHfRRtm28CqcIbljeymQPNJmllWg5B4BW8P20BqUB6zH/U4pM
+	 3rUDNFw01SC0EHR8CTm1AcI6a2Kqo+9FeYYgQUnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Kyle Zeng <kylebot@openai.com>,
-	Allison Henderson <achender@kernel.org>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
-Subject: [PATCH 5.10 155/265] net/rds: Do not unpin a page after a failed atomic pin
-Date: Thu, 26 Nov 2026 15:38:05 +0100
-Message-ID: <20261126143615.916891385@linuxfoundation.org>
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 156/265] net: bridge: use one headroom snapshot for ND replies
+Date: Thu, 26 Nov 2026 15:38:06 +0100
+Message-ID: <20261126143615.979053877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,52 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 8d5ce4751fad9499ea408163af7f410f18a85782 upstream.
+commit e573df093ef849bb7c763aed591cb6556b110671 upstream.
 
-rds_cmsg_atomic() assumes that a non-NULL output from rds_pin_pages()
-represents a pin that it owns. However, pin_user_pages_fast() can roll
-back a fast-GUP pin after racing fork() and then fail in the slow path,
-for example after a concurrent mprotect(PROT_NONE). The output slot can
-still contain the already-unpinned page.
+br_nd_send() calls LL_RESERVED_SPACE(dev) once to size the reply skb and
+again to reserve its headroom. When a port requiring more headroom is
+added to the bridge, br_add_if() can increase dev->needed_headroom
+between the two calls. The reserved headroom can then exceed the space
+accounted for by alloc_skb().
 
-The common error path calls unpin_user_page() on that stale pointer.
-This can consume another subsystem's pin and allow the page to be freed
-while it is still in use. A local unprivileged reproducer triggers a
-KASAN use-after-free write through an io_uring registered buffer.
+Take one headroom snapshot and use it for both the allocation size and
+skb_reserve().
 
-Clear page when rds_pin_pages() does not return one. The error path
-continues to release the page on errors after a successful pin, and
-successful requests retain their existing ownership and behavior. All
-four RDS atomic ancillary operations share this path.
-
-The issue was found by an LLM.
-
-Fixes: 15133f6e67d8 ("RDS: Implement atomic operations")
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
 Cc: stable@kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261103075439.43644-1-juny24602@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bridge/br_arp_nd_proxy.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -960,8 +960,11 @@ int rds_cmsg_atomic(struct rds_sock *rs,
- 	}
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -257,6 +257,7 @@ static void br_nd_send(struct net_bridge
+ 	struct sk_buff *reply;
+ 	struct ipv6hdr *pip6;
+ 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
++	int headroom;
+ 	int ns_olen;
+ 	int i, len;
+ 	u8 *daddr;
+@@ -266,7 +267,8 @@ static void br_nd_send(struct net_bridge
+ 	if (!dev || skb_linearize(request))
+ 		return;
  
- 	ret = rds_pin_pages(args->local_addr, 1, &page, 1);
--	if (ret != 1)
-+	if (ret != 1) {
-+		/* A failed pin can leave a stale page pointer. */
-+		page = NULL;
- 		goto err;
-+	}
- 	ret = 0;
+-	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
++	headroom = LL_RESERVED_SPACE(dev);
++	len = headroom + sizeof(struct ipv6hdr) +
+ 		sizeof(*na) + na_olen + dev->needed_tailroom;
  
- 	sg_set_page(rm->atomic.op_sg, page, 8, offset_in_page(args->local_addr));
+ 	reply = alloc_skb(len, GFP_ATOMIC);
+@@ -275,7 +277,7 @@ static void br_nd_send(struct net_bridge
+ 
+ 	reply->protocol = htons(ETH_P_IPV6);
+ 	reply->dev = dev;
+-	skb_reserve(reply, LL_RESERVED_SPACE(dev));
++	skb_reserve(reply, headroom);
+ 	skb_push(reply, sizeof(struct ethhdr));
+ 	skb_set_mac_header(reply, 0);
+ 
 
 
