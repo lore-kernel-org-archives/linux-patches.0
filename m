@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704552;
-	b=4brCESjwjSnqjgu7b9/kv7CitAfzCzeaoyHmSDhkuujLGYnaBzjiphzk+GTRNDGQmO75
-	 tWqiykGMCHQb58hmFqOHD8tTtwrEoQhIiH9IRqlKYnXvJQpFyiknQO4X5rKQmc9M8RCzR
-	 UmbOQeFlNV1WwAqsSKcam8Lsmt6TjOmfJNzJWccn95/gPMUDCDjokZTv+6QPi+XDPOKuI
-	 uwiRE0RpbLU3mf+MYnUsJV4TV6qmXoaVVCG1Jdek2MrqXGHTuPPR1R/Zd9l1fuNqeIYcv
-	 lLbmKBdNjOObX0cmaA8Qa7l40u5VjkKCCMuTH8iTB1l+31JZpe7lwzyjzAM/55myIDw==
+	t=1795704555;
+	b=qzc8tN7NhMdO2WbqI6CQLHqWeZp70fpa9vDahE8KdC4veyvtdW2z0FWJL4fnTnM7zcpA
+	 tDLk3mmMpj6n3KlFc2jP5z6j9HuBdWDus1zFnA8c6V9LJb6GYA7IlW79r9+XYkw5W1JlC
+	 hgRDtFrc7WuwqRNx4zFYne0lAFm89hld9YLVN/LPtivxApoiDPQ0LVFaNeruRSYfOKRJi
+	 SSRVA5X1pb13OUg9pYpRBGRl3JgW5EyZKVxLhfA+w7GHM1WkmHfcNIlCNtwMgtCW7mMYn
+	 V7bgIfKxTo2W/DCk377wqM7n/0r6PiV+urlT2vSj6oJl2dPLAJ7mGS5UPzsBKwLpA0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CgJgckPsIBcr+QhLYafc7Lc/R6brcTPKElmxBMAZS4U=;
-	b=Xck7XXDGYp05gqLGpyVwkbdR1siW7aW7XJa5cY9L9UEQg+ZH2jZ3kd5vx99Wq7K+ct0J
-	 fKHm+f4cys1MrAKKY4PeNeJRmZhG/ehNkMQbkidt0eb7mY8XA5NKoxvSHyKyeegQsHu43
-	 xNd/nK9DYDCO6YjmBWjA0XT3ijFvTtwi8iRWQ9ENcgL24ROaRltSOLx1RnAdyRrLy1Dzc
-	 Xgs/AYYyBF2F4X1yppEo9VrTygmFIMY0CDyytVhgkA/alR4PWVV8QkgZRNNJMEj69Mks2
-	 PKuFT8hEQ/AvQNSCRO8SSxfDOEDz4QGGZ5/G/xP4oB56ErgXI1ujt21psTubNpuw+TA==
+	bh=XAbgWmMgmqUK6fQIbQO6n6wFigUK+DcYAgBsRKG4Nmk=;
+	b=Y1fmaGgcCdqOxuZv+ctZURGmfwc1jxyk1KlMyxPyk5Ij+0JHyxzAeHJkkIu6mvyRguYr
+	 y2DyBU1/JpxZrDlDxfvQv3rJHjVN82hdzAMBwmysiOTgV/HPdVJi4OU5hHKrby3MYX4el
+	 b8EqU5W8MNFcamjL/prWppSbmvZXu9RtBMoWvmpv5r+7VQlr59nn/qIvXJe5vzUTEtaf7
+	 SSVsxdhaVchCDz+Gbcas/GYzz9BxAkRGf1vhwfc7g84MKTi2vOTuRkp+av1zv5rHOCkUg
+	 qnuWndk2QfVc5nyiu33kLCBDWv/wquJ1RHIPnvKV5LEVv68q1XU2w3tryiuATVNemSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHzV3WzZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tCk+t8TX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE2A606A31C;
-	Thu, 26 Nov 2026 14:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A491606A32E;
+	Thu, 26 Nov 2026 14:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHzV3WzZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCBF1F000C0;
-	Thu, 26 Nov 2026 14:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tCk+t8TX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD941F000D2;
+	Thu, 26 Nov 2026 14:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704552;
-	bh=CgJgckPsIBcr+QhLYafc7Lc/R6brcTPKElmxBMAZS4U=;
+	s=korg; t=1795704555;
+	bh=XAbgWmMgmqUK6fQIbQO6n6wFigUK+DcYAgBsRKG4Nmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UHzV3WzZNrGiJs7kJ5/ZPDhKNliedoHe3u48lIZOncCRjROCRipyxy/LcsQqfCc5k
-	 lXjgEgoSskuR6/16UYHicj0i04Xp8OFwEZg/k5RpuKRL/ycF8FVXIgY7EdYgghyIcX
-	 zT1d5VbZ980NaqG2xFcQcVmt/0s/GPeM1mM7vcn4=
+	b=tCk+t8TXRqktewiY0RPx2LS2XMscp5y/3YtmkdOvz3E7hFNpSSOeUyi489ut6xgb1
+	 cOIueuEE9ADBIfyOsYaN98Ipcb6Od8bhJFHHMWEl9EteBv/V93sywZzNaHP7Q+bjyB
+	 mebW+dKuP8Ad98ABWcA10xWkCm9rQ+8Rwe1r2EVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Julian Anastasov <ja@ssi.bg>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 164/265] ipvs: fix protocol data lifetime during namespace teardown
-Date: Thu, 26 Nov 2026 15:38:14 +0100
-Message-ID: <20261126143616.603825399@linuxfoundation.org>
+Subject: [PATCH 5.10 165/265] netfilter: xt_recent: do not call remove_proc_entry() under recent_lock
+Date: Thu, 26 Nov 2026 15:38:15 +0100
+Message-ID: <20261126143616.673302893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,90 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-commit 832aa3e89e806bb2667fe4e656b705f4088b3c9d upstream.
+commit 17c2e41736b62cfe444c64d67860b1fbc1e886ac upstream.
 
-IPVS frees its per-net protocol data before control cleanup cancels
-defense work and unregisters the sysctl table. A defense worker can load
-a protocol data pointer, then namespace cleanup can unlink and free that
-object before the worker dereferences pd->pp or pd->next. The worker's
-securetcp_lock does not serialize with protocol cleanup. A concurrent
-defense-mode sysctl write can reach the same timeout update path.
+recent_proc_net_exit() removes the /proc/net/xt_recent/<name> entries of
+a dying network namespace while holding spin_lock_bh(&recent_lock).
+remove_proc_entry() may sleep: proc_entry_rundown() waits until every
+task that is still inside the entry's file operations has left. A reader
+of such an entry is counted in by proc_reg_read() before
+recent_seq_start() takes recent_lock. So if a read is in flight when the
+namespace is torn down, cleanup_net() sleeps in atomic context holding
+the spinlock that the reader is spinning on, and neither side can ever
+make progress.
 
-KASAN reported:
+An unprivileged user can trigger this from a user namespace by adding a
+rule with the "recent" match and reading its proc file while the
+namespace is being destroyed. As recent_lock is global, every later
+attempt to take it spins forever too: the spinning can spread to all
+CPUs, and network namespace teardown stops system-wide.
 
-  BUG: KASAN: slab-use-after-free in ip_vs_protocol_timeout_change
-  Workqueue: events_long defense_work_handler
+  BUG: sleeping function called from invalid context at
+    kernel/sched/completion.c:116
+   #3: (recent_lock){+...}-{3:3}, at: recent_net_exit+0x2b/0x140
+  Workqueue: netns cleanup_net
   Call Trace:
-   ip_vs_protocol_timeout_change+0x1b4/0x1e0
-   update_defense_level+0x63e/0xd80
-   defense_work_handler+0x1e/0xc0
-  Allocated by task 125:
-   ip_vs_protocol_net_init+0xda/0x2f0
-   __ip_vs_init+0x16b/0x240
-   setup_net+0xfc/0x310
-  Freed by task 12:
-   ip_vs_protocol_net_cleanup+0x1d6/0x2e0
-   __ip_vs_cleanup_batch+0x7d/0x100
-   cleanup_net+0x38c/0x770
+   proc_entry_rundown+0x185/0x1b0
+   remove_proc_entry+0x21a/0x520
+   recent_net_exit+0x7f/0x140
+   cleanup_net+0x414/0x8f0
+  ...
+  rcu: INFO: rcu_preempt self-detected stall on CPU
+  Call Trace:
+   queued_spin_lock_slowpath+0x313/0xc20
+   recent_seq_start+0x87/0x1b0
+   seq_read_iter+0x265/0x11e0
+   proc_reg_read+0x1ab/0x270
 
-Run control cleanup before protocol cleanup so that defense work and
-active sysctl handlers have finished before their protocol data is freed.
-Initialize protocols before exposing the control interface, and unwind
-in reverse order, to enforce the same lifetime on initialization failure.
-Protocol initialization and exit do not depend on control state.
+Fix by taking recent_mutex instead of recent_lock. According to
+commit a0e889bb1bdc ("[NETFILTER]: recent match: fix "sleeping function
+called from invalid context""), recent_mutex is the lock to use here: it
+protects recent_net->tables and was introduced so that proc entries are
+created and removed without recent_lock held, because those calls may
+sleep. hashlimit_proc_net_exit() does the same for xt_hashlimit.
 
-Fixes: 9330419d9aa4 ("IPVS: netns, use ip_vs_proto_data as param.")
+Fixes: 665e205c16c1 ("netfilter: xt_recent: fix namespace destroy path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+Cc: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/netfilter/xt_recent.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -2436,12 +2436,12 @@ static int __net_init __ip_vs_init(struc
- 	if (ip_vs_estimator_net_init(ipvs) < 0)
- 		goto estimator_fail;
+--- a/net/netfilter/xt_recent.c
++++ b/net/netfilter/xt_recent.c
+@@ -649,14 +649,15 @@ static void __net_exit recent_proc_net_e
  
--	if (ip_vs_control_net_init(ipvs) < 0)
--		goto control_fail;
--
- 	if (ip_vs_protocol_net_init(ipvs) < 0)
- 		goto protocol_fail;
+ 	/* recent_net_exit() is called before recent_mt_destroy(). Make sure
+ 	 * that the parent xt_recent proc entry is empty before trying to
+-	 * remove it.
++	 * remove it. Use recent_mutex instead of recent_lock since
++	 * remove_proc_entry() may sleep.
+ 	 */
+-	spin_lock_bh(&recent_lock);
++	mutex_lock(&recent_mutex);
+ 	list_for_each_entry(t, &recent_net->tables, list)
+ 	        remove_proc_entry(t->name, recent_net->xt_recent);
  
-+	if (ip_vs_control_net_init(ipvs) < 0)
-+		goto control_fail;
-+
- 	if (ip_vs_app_net_init(ipvs) < 0)
- 		goto app_fail;
+ 	recent_net->xt_recent = NULL;
+-	spin_unlock_bh(&recent_lock);
++	mutex_unlock(&recent_mutex);
  
-@@ -2461,10 +2461,10 @@ sync_fail:
- conn_fail:
- 	ip_vs_app_net_cleanup(ipvs);
- app_fail:
--	ip_vs_protocol_net_cleanup(ipvs);
--protocol_fail:
- 	ip_vs_control_net_cleanup(ipvs);
- control_fail:
-+	ip_vs_protocol_net_cleanup(ipvs);
-+protocol_fail:
- 	ip_vs_estimator_net_cleanup(ipvs);
- estimator_fail:
- 	net->ipvs = NULL;
-@@ -2481,8 +2481,8 @@ static void __net_exit __ip_vs_cleanup_b
- 		ipvs = net_ipvs(net);
- 		ip_vs_conn_net_cleanup(ipvs);
- 		ip_vs_app_net_cleanup(ipvs);
--		ip_vs_protocol_net_cleanup(ipvs);
- 		ip_vs_control_net_cleanup(ipvs);
-+		ip_vs_protocol_net_cleanup(ipvs);
- 		ip_vs_estimator_net_cleanup(ipvs);
- 		IP_VS_DBG(2, "ipvs netns %d released\n", ipvs->gen);
- 		net->ipvs = NULL;
+ 	remove_proc_entry("xt_recent", net->proc_net);
+ }
 
 
