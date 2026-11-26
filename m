@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704989;
-	b=sP0BGXSz5Yr6ITGT0psRNzWKebqmaY1r0p1qIvXjnv74fn1DoV0qdudVHZmK5qOJLz1o
-	 kLitKxts5ehEl8fgJXI/7dp4RfuMPNWb8b/cjnsJ7KmR/w6/Ia9WSFJaLXmRp21gAyfUE
-	 QhXRj6pBuFrcCYt2VnkSLPER4MLrZra5aXcsKVUGyznRex9AZL6VNZP+j4CFJmdUBzd+B
-	 B48BCmTC/x81ybPPkmT7zDAmmYMamToUpV3MybBr+paxVf5A1EdkqfMqx57RdepbluLz8
-	 Iyg0c4TlowdnJN0NlWGwxtwLxpOgFWcHNpbVpcACZN42g7Pyg4WGAFfyotZh0r4puyQ==
+	t=1795704991;
+	b=O/LNpyKefiYZVY3K0rZj+01Yn30c60/rbFNo3HZ/A7P5Yk8I1Dvej56fU1k0eQw9D73L
+	 XVBccY5+bMGOW4i6HSHflCjE+l6Pu4s+dDzSKmU/wUOe1krUpkOaWOoLv8/7wC8F3Es+S
+	 DxrOj91F9dV22Ka4WM4RlU9mstuLkCJ5eBgwJvna+GKw7q+Lk6t4e7pBxiJfY5a0egiDh
+	 wrhOIKhp0lyFm4fbvaMzVEAZl7Cm8dQTe7rWUOeyVRdPGYF7VpToRWc7UvDhX/qND9UOG
+	 CjpGY9/XU0522Q9k5vRx8lVbcp0NdBDOu9bu8Ubl8edS/iIKEUdhmP+cUhJky7T/lqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704989;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mg3+rsBMir8Rkn3mNzIAZkIEWJUrKurMudlPQ0rsThk=;
-	b=WfVsJ+CJTrWAWqfYSgKz6z4CEO63UNuEEXTuEKnWF6jqY2d/5KEu66jjwnkX4clQYYWc
-	 nRh6pldayikkT6PNoDY6tipxnID8Qqmky9gJIbgBMkNJvVCEh+CFu6wwhqpvepUggCCZa
-	 fgD3KdWwjtqA2xXkKZ2m3YE8Z9KPVvU8kZY28YtAdFm/cVYOaTqGB5L36fDWE2O/PkIQJ
-	 YYUrBFHDN7g6+DsWoagtxnB2itFvMmogoCjnjF8jQ5IB5df+DghHmGappmidE4B53xrlw
-	 T+rl8QXRa2RjpVwaE6gRaOB+oLzfLnZ4k0qM7ZsBvvpw03b3kUqB6ATa1SA9ZwiocKA==
+	bh=HbffrTbfw9MPgLF3MIccIPc9xFRWGAPx/HZXm3zYoMs=;
+	b=zvhDuenVCDVhqRi35eOrV/jaROfSI9QBl2QZAf6hD9dpLG8BT0i2fXmJO0Jl9h2EiFTa
+	 /ecv1l6Nl3ndg2wVyW2bisDVzG/rHKMUq3nGEn93BgMjTHCXw9Nxd101U2uLX+tcyFrPn
+	 hicj+eYIOPpUe6oOPmlGV+kCSUc8NVrezlFc0DPTXA/n7nk0XENd+whIOLx3y1PJYTIHA
+	 KmIN+UU6gOlob3EgyfEPEfOTyc6QoRzhgI65+HOTGfLaoKF42Lha1aq3t8uRIj7jnpyFo
+	 kmzL4MZFGZEbXVN9vwrzFrv5w7qYY8ro/ZGgnNOxPXxRFmdYQyeY11E+TCw8FdyEOvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZjYY7aq/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QT2f3KXB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090AD606A31C;
-	Thu, 26 Nov 2026 14:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEA5606A321;
+	Thu, 26 Nov 2026 14:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjYY7aq/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93BE1F000C4;
-	Thu, 26 Nov 2026 14:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QT2f3KXB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74E61F000C4;
+	Thu, 26 Nov 2026 14:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704988;
-	bh=mg3+rsBMir8Rkn3mNzIAZkIEWJUrKurMudlPQ0rsThk=;
+	s=korg; t=1795704991;
+	bh=HbffrTbfw9MPgLF3MIccIPc9xFRWGAPx/HZXm3zYoMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjYY7aq/gYSmZGW1YpMm02iDPGkapLd0jtNHipeUa7JIBhR/cIe2btIq7v9IP0Ofn
-	 Hv8AxDkN/lj/L3DnxutVLcEKx4OJ3ULvbuLpK/LuSgFRoRK1ih6RyBG4+3lV3s+tff
-	 O72rXeA4DszY8Fj/nuQ9B61lGRQ0mMYYsVyMhskk=
+	b=QT2f3KXBw9lY833k9x97pKQagtIOs7sCVCb+k93BsxJKN6IXvVMGqrLVNrB9zyR2A
+	 qTXDiZL2Z1OFRVJS+ejbbkAIQcUgHBjhFOnnhfq5ycx+iwjGVe3bQNJuJrhNXawVgj
+	 I01v2wB/dA6RpdJa4b5akUekLmR69uDGHdsFBsi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Filippo Falezza <effeffe99@gmail.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/319] spi: Create helper API to lookup ACPI info for spi device
-Date: Thu, 26 Nov 2026 15:36:53 +0100
-Message-ID: <20261126144007.753736607@linuxfoundation.org>
+Subject: [PATCH 5.15 028/319] wifi: ath10k: Stop unanswered temperature reads
+Date: Thu, 26 Nov 2026 15:36:36 +0100
+Message-ID: <20261126144007.376524087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,140 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Filippo Falezza <effeffe99@gmail.com>
 
-[ Upstream commit 70dd264bc07aee4f89e65138db11e908701388dd ]
+[ Upstream commit 2a87e367c62856b87a90f745c6b7d2eb91e0c51f ]
 
-This can then be used to find a spi resource inside an
-ACPI node, and allocate a spi device.
+Reading the ath10k hwmon temperature sends WMI_PDEV_GET_TEMPERATURE and
+waits up to 5 s (ATH10K_THERMAL_SYNC_TIMEOUT_HZ) for the reply event,
+holding conf_mutex. Not all firmware answers: the WCN3990 firmware
+WLAN.HL.3.3.1-00694-QCAHLSWMTPLZ-1 on a Motorola Moto G 5G Plus
+codename nairo (SM7250) never sends the event, so every read of
+temp1_input stalls for 5 s, logs
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20220121172431.6876-3-sbinding@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 2d0953ab69d3 ("spi: acpi: only look up the IRQ of confirmed SPI devices")
+  ath10k_snoc 18800000.wifi: failed to synchronize thermal read
+
+and returns -ETIMEDOUT. Tools that read all hwmon sensors, such as
+lm-sensors, hang for 5 s on every run, and configuration changes of the
+interface wait for conf_mutex in the meantime.
+
+Whether the firmware answers cannot be told from the chip: firmware that
+answers and firmware that does not both advertise
+WMI_SERVICE_THERM_THROT, and WCN3990 firmware differs between devices.
+Instead, remember that the running firmware did not answer, and return
+-EOPNOTSUPP right away on later reads. Forget it when the firmware
+starts, so that a restarted or updated firmware is asked again.
+
+The first read after each firmware start still takes 5 s when the
+firmware does not answer. Reads on firmware that answers are unchanged.
+
+Fixes: e98199a8c27f ("ath10k: enable QCA6174/QCA9377 to read the chip temperature")
+Signed-off-by: Filippo Falezza <effeffe99@gmail.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027-ath10k-temperature-v2-1-0793e80d73bc@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c       | 46 ++++++++++++++++++++++++++++++++---------
- include/linux/spi/spi.h |  6 ++++++
- 2 files changed, 42 insertions(+), 10 deletions(-)
+ drivers/net/wireless/ath/ath10k/core.c    | 1 +
+ drivers/net/wireless/ath/ath10k/thermal.c | 9 ++++++++-
+ drivers/net/wireless/ath/ath10k/thermal.h | 2 ++
+ 3 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index a23fa86493299..45175348b75ea 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2367,8 +2367,18 @@ static int acpi_spi_add_resource(struct acpi_resource *ares, void *data)
- 	return 1;
- }
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index b49a45139c980..da3415d70e1b9 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -2791,6 +2791,7 @@ int ath10k_core_start(struct ath10k *ar, enum ath10k_firmware_mode mode,
+ 	clear_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags);
  
--static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
--					    struct acpi_device *adev)
-+/**
-+ * acpi_spi_device_alloc - Allocate a spi device, and fill it in with ACPI information
-+ * @ctlr: controller to which the spi device belongs
-+ * @adev: ACPI Device for the spi device
-+ *
-+ * This should be used to allocate a new spi device from and ACPI Node.
-+ * The caller is responsible for calling spi_add_device to register the spi device.
-+ *
-+ * Return: a pointer to the new device, or ERR_PTR on error.
-+ */
-+struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
-+					 struct acpi_device *adev)
- {
- 	acpi_handle parent_handle = NULL;
- 	struct list_head resource_list;
-@@ -2376,10 +2386,6 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
- 	struct spi_device *spi;
- 	int ret;
+ 	ar->running_fw = fw;
++	ar->thermal.broken = false;
  
--	if (acpi_bus_get_status(adev) || !adev->status.present ||
--	    acpi_device_enumerated(adev))
--		return AE_OK;
--
- 	lookup.ctlr		= ctlr;
- 	lookup.irq		= -1;
- 
-@@ -2390,7 +2396,7 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
- 
- 	if (ret < 0)
- 		/* found SPI in _CRS but it points to another controller */
--		return AE_OK;
-+		return ERR_PTR(-ENODEV);
- 
- 	if (!lookup.max_speed_hz &&
- 	    ACPI_SUCCESS(acpi_get_parent(adev->handle, &parent_handle)) &&
-@@ -2400,16 +2406,15 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
+ 	if (!test_bit(ATH10K_FW_FEATURE_NON_BMI,
+ 		      ar->running_fw->fw_file.fw_features)) {
+diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
+index cefd97323dfe5..51484c986298c 100644
+--- a/drivers/net/wireless/ath/ath10k/thermal.c
++++ b/drivers/net/wireless/ath/ath10k/thermal.c
+@@ -74,6 +74,12 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 		goto out;
  	}
  
- 	if (!lookup.max_speed_hz)
--		return AE_OK;
-+		return ERR_PTR(-ENODEV);
- 
- 	spi = spi_alloc_device(ctlr);
- 	if (!spi) {
- 		dev_err(&ctlr->dev, "failed to allocate SPI device for %s\n",
- 			dev_name(&adev->dev));
--		return AE_NO_MEMORY;
-+		return ERR_PTR(-ENOMEM);
- 	}
- 
--
- 	ACPI_COMPANION_SET(&spi->dev, adev);
- 	spi->max_speed_hz	= lookup.max_speed_hz;
- 	spi->mode		|= lookup.mode;
-@@ -2417,6 +2422,27 @@ static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
- 	spi->bits_per_word	= lookup.bits_per_word;
- 	spi->chip_select	= lookup.chip_select;
- 
-+	return spi;
-+}
-+EXPORT_SYMBOL_GPL(acpi_spi_device_alloc);
-+
-+static acpi_status acpi_register_spi_device(struct spi_controller *ctlr,
-+					    struct acpi_device *adev)
-+{
-+	struct spi_device *spi;
-+
-+	if (acpi_bus_get_status(adev) || !adev->status.present ||
-+	    acpi_device_enumerated(adev))
-+		return AE_OK;
-+
-+	spi = acpi_spi_device_alloc(ctlr, adev);
-+	if (IS_ERR(spi)) {
-+		if (PTR_ERR(spi) == -ENOMEM)
-+			return AE_NO_MEMORY;
-+		else
-+			return AE_OK;
++	/* Don't stall every read on firmware that never answers */
++	if (ar->thermal.broken) {
++		ret = -EOPNOTSUPP;
++		goto out;
 +	}
 +
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
- 
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index da88bbc7e9982..0951a67293c7b 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -17,6 +17,7 @@
- #include <linux/ptp_clock_kernel.h>
- 
- #include <uapi/linux/spi/spi.h>
-+#include <linux/acpi.h>
- 
- struct dma_chan;
- struct software_node;
-@@ -763,6 +764,11 @@ extern int devm_spi_register_controller(struct device *dev,
- 					struct spi_controller *ctlr);
- extern void spi_unregister_controller(struct spi_controller *ctlr);
- 
-+#if IS_ENABLED(CONFIG_ACPI)
-+extern struct spi_device *acpi_spi_device_alloc(struct spi_controller *ctlr,
-+						struct acpi_device *adev);
-+#endif
-+
- /*
-  * SPI resource management while processing a SPI message
-  */
+ 	reinit_completion(&ar->thermal.wmi_sync);
+ 	ret = ath10k_wmi_pdev_get_temperature(ar);
+ 	if (ret) {
+@@ -89,7 +95,8 @@ static ssize_t ath10k_thermal_show_temp(struct device *dev,
+ 	time_left = wait_for_completion_timeout(&ar->thermal.wmi_sync,
+ 						ATH10K_THERMAL_SYNC_TIMEOUT_HZ);
+ 	if (!time_left) {
+-		ath10k_warn(ar, "failed to synchronize thermal read\n");
++		ath10k_warn(ar, "failed to synchronize thermal read, not asking again until the firmware restarts\n");
++		ar->thermal.broken = true;
+ 		ret = -ETIMEDOUT;
+ 		goto out;
+ 	}
+diff --git a/drivers/net/wireless/ath/ath10k/thermal.h b/drivers/net/wireless/ath/ath10k/thermal.h
+index 1f4de9fbf2b30..d1fb5b958c37c 100644
+--- a/drivers/net/wireless/ath/ath10k/thermal.h
++++ b/drivers/net/wireless/ath/ath10k/thermal.h
+@@ -19,6 +19,8 @@ struct ath10k_thermal {
+ 	/* protected by conf_mutex */
+ 	u32 throttle_state;
+ 	u32 quiet_period;
++	/* the running firmware did not answer a temperature request */
++	bool broken;
+ 	/* temperature value in Celsius degree
+ 	 * protected by data_lock
+ 	 */
 -- 
 2.53.0
 
