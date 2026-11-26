@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704766;
-	b=0ZvzVMppmJunWLyS1QonyzGMqx77aSq4Css3IBz16rmsDB3A1ZSOEcy3Pc5tR57/aaDb
-	 8bdcLq6+YV0u0BtmF7NlYY5Naxg+SdgMb2xiW3p2P3heBMOuqVxFBaOe/rU0F4R7IgOGZ
-	 wxfRWKqQghz97ZOLcBdcPtTTuiwvP4gWW8mXUqQEEZbtkgllfl5ot87rPHhagqSxbj1rL
-	 g+HSvc/zQMbZCGJ85TrURhG34uX6zw3Y95a+Z3gTNxP2sYt2YGRkQ4aFQDh0ErhmKT0Hx
-	 WyJsu4tIG1FHn54M4fHgFdtPxWrj996pH+A7pCdq0/xts56Bt3vX/XUT4aYgvVGmdvg==
+	t=1795704769;
+	b=3qJxg38qV3qdMD42SuUfQN5yGpdgsYUGZQw/i5p7WSQWHJOqtlddLd+YiMlJhiD7wSZp
+	 kzPqZCMneGDrMWulUfYnXhUhYKKeScI9xArpdAfrfgi2dC5OPjFkX52HmV0+8TFBCdt23
+	 8q1jbMlpowHpalRs/5VY8+jiC6bQIr55bf0W/x/kkPaDmvdP5SHKRgHBT3uKyK6HzACuf
+	 1JIrD4RFrb+p1AeiqJCpW+O3cCaDNbCJUO3lvvGhjwETXqBH6AOW8AQu/mIEVTSeN9GR/
+	 Pd1Cwc9CzvCMLlXSTr8ENSgPtt/jSUF+hSzpMTfgG0a8ALppImUubt7VQsCehDbEueg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TQzsrG1TRwZjr7zaKoZM8qH8moQJqMelWUx1D2trjBk=;
-	b=y/2hyCrLXJSOm7IvMxwfYRqJWpD8WUUQ5USg8MCOv5IG0F1O0kLfauKL1Yribhjqb9x6
-	 LtgMCKkjGKKtVjyCjrC1ORNkUAxahFd9XIGwJaw0HgI4+KsNHe+7LX2CIWDj1KtMDjRNT
-	 Tw3QnSRvOahrF+Vtxw5wlhFHUGd1aptaXw0vWCeUWANCegtJUVNZ83ObwM2xfEkBaxXtG
-	 mfBQgEo8lQ3aB8goAs35LOy1+agvFJDdCdOFRJwUh2qmhIfwOSiYNJf0M2hsP8cFUCkru
-	 i2sjRQAM9YL/eap7/TTtnG5Qu/OQgX5lw3PDn0Gru0fNXkkBTOIbji2Z5WLWnAiB+/Q==
+	bh=XoTcKZcp0IxS/idJ5vqzpJCQl6kjTL1yj64CaVegWsk=;
+	b=MliejoclQFOKLYlPt8rfgTOU9AvVb9F409dOe8RNNXG+08nxZhKDItl6jiWQz/LQE9M3
+	 9L0fU60BcCq0GVzZzcS96eSgSNl7/BplS1MuGbgvO21Fw0O0RMURGyz1ZjcRABEQRnCI9
+	 MG4IDVw4JcsX2MFTN1PXRFpMjXyIA518iemuIOnNXn3O2DV7Zs/plX305uxhYfgoUzIwg
+	 okb208W1sb3PSV56xcrXY0TaBBWwrM6VF6KV7CSPCmcO0eW4WZU9sBEk42s8JKsohunO6
+	 qI5DQiCj0PXZ+708kIDJnMRnST5cthdtUpFrUrVya8b6uC6wTKib6a9wLG+ism+4ncg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPvz2yHf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DR7C3vTY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7906E606A31C;
-	Thu, 26 Nov 2026 14:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59863606A321;
+	Thu, 26 Nov 2026 14:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPvz2yHf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F221F000C0;
-	Thu, 26 Nov 2026 14:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DR7C3vTY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4771F000C0;
+	Thu, 26 Nov 2026 14:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704766;
-	bh=TQzsrG1TRwZjr7zaKoZM8qH8moQJqMelWUx1D2trjBk=;
+	s=korg; t=1795704768;
+	bh=XoTcKZcp0IxS/idJ5vqzpJCQl6kjTL1yj64CaVegWsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lPvz2yHfeQ8D20rXJZuOLEhEyPxnaa0dMULszE7Imq8D3tVDVgSZeFrBrR6NaSRJ1
-	 SJAhbHw9ZSQhnWPRqeFKp/RkcF77w0dvCOg5pMS51EpGc6loViWKXk+eNNgNfLqGSm
-	 1n6QgDwwS401iM/uYM+Su00tfYb1CGhFJQS77PaA=
+	b=DR7C3vTYojBfek0CzZQ3ljNB7LyzUyD9Wrips9NFvGOSaOB0uHOgp3OQOyTp34B5R
+	 lQgGvOgU6+6NeVRRrhj0QyfZPJE1yC9iVOO+iVRDDZb/8fiFFbu5Y6Iz1yXRqV6efF
+	 TC7eIypMxqt5befuy4rQzNZg55SNssMr/GVqSVS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 5.10 234/265] w1: w1_therm: leave the slaves of other families alone
-Date: Thu, 26 Nov 2026 15:39:24 +0100
-Message-ID: <20261126143621.613041135@linuxfoundation.org>
+	Hui Peng <benquike@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 235/265] USB: serial: garmin_gps: validate packet data length in nat_receive()
+Date: Thu, 26 Nov 2026 15:39:25 +0100
+Message-ID: <20261126143621.668670377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,114 +67,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit c0eadd2e06e52563cae2b80491e56eb9712eb727 upstream.
+commit ca783a2d55b3361493917ad4a3573715ba902503 upstream.
 
-The file therm_bulk_read belongs to the bus master.  Its callbacks walk
-all the slaves of the bus and look at sl->family_data as if every slave
-were a temperature sensor.  A 1-wire bus can carry other devices too:
+In nat_receive() (called from garmin_write() when userspace writes to
+/dev/ttyUSBn in MODE_NATIVE mode), while garmin_data_p->insize is less
+than GARMIN_PKTHDR_LENGTH (12), the loop copies up to 12 bytes into
+garmin_data_p->inbuffer. Once garmin_data_p->insize reaches
+GARMIN_PKTHDR_LENGTH, nat_receive() computes the total packet size as:
 
-- The family data of a slave which is driven by another driver, such as
-  w1_ds2433, w1_ds250x, w1_ds28e04 or w1_ds28e17, is a structure of that
-  driver.  bulk_read_support() takes whatever is at the offset of
-  specific_functions for a pointer and dereferences it, and if the
-  result happens not to be 0, the callbacks write the state of the
-  conversion into that foreign structure.
+  len = GARMIN_PKTHDR_LENGTH + getDataLength(garmin_data_p->inbuffer);
 
-- For a slave without family data, which is the case for most of the
-  other drivers and for the default family, trigger_bulk_read() gives up
-  with -ENODEV.  A single serial number chip on the bus is enough to
-  make the bulk read unusable for all the sensors.
+Because getDataLength() returns a signed int from __le32_to_cpup(), a
+12-byte header with a negative 32-bit length field (such as 0xfffffff5,
+i.e., -11) causes len to underflow to a small positive value (12 + (-11)
+= 1) without any bounds check at that point. Then garmin_data_p->insize
+>= len (12 >= 1) evaluates to true and nat_receive() calls
+garmin_write_bulk(port, inbuffer, 1, 0), which allocates a 1-byte slab
+buffer via kmemdup() and immediately reads 4 bytes from it in
+getLayerId(buffer) (and again in garmin_write_bulk_callback() when the
+URB completes):
 
-Only look at the slaves whose family is one of ours.  A bulk conversion
-now works on a bus with other devices.
+  BUG: KASAN: slab-out-of-bounds in garmin_write_bulk.constprop.0+0x3eb/0x500
+  Read of size 4 at addr ffff888002cc0ba0 by task init/1
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x70/0xa0
+   print_report+0x153/0x4c6
+   kasan_report+0xf1/0x120
+   garmin_write_bulk.constprop.0+0x3eb/0x500
+   garmin_write+0x60f/0x1450
+   serial_write+0x123/0x200
+   n_tty_write+0x8ea/0xeb0
+   file_tty_write.isra.0+0x44f/0x7a0
+   vfs_write+0x671/0xd20
 
-Fixes: 57c76221d5af ("w1_therm: adding bulk read support to trigger multiple conversion on bus")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027-llm-char-misc-w1-v1-9-d2e6bfafb6a4@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Validate the unsigned 32-bit data length (dlen >= GPS_IN_BUFSIZ -
+GARMIN_PKTHDR_LENGTH, matching the existing len >= GPS_IN_BUFSIZ bound)
+in nat_receive() as soon as the 12-byte header is present, resetting
+insize and returning -EINVPKT on invalid lengths so garmin_write_bulk()
+is only ever called with a full valid packet header (12 <= len <
+GPS_IN_BUFSIZ).
+
+Tested in QEMU against Linux 7.3.0-rc3 by emulating a Garmin USB GPS
+device (091e:0003) via dummy_hcd + raw-gadget, switching /dev/ttyUSB0
+to MODE_NATIVE via PRIV_PKTID_SET_MODE, and writing a 12-byte native
+packet with data length 0xfffffff5: on the unfixed kernel this triggers
+KASAN slab-out-of-bounds reads in garmin_write_bulk() and
+garmin_write_bulk_callback(), whereas on the fixed kernel nat_receive()
+rejects the packet with -EINVPKT and 0 KASAN faults.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+[ johan: move comment and dev_dbg(); add comment about redundant check ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_therm.c |   37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ drivers/usb/serial/garmin_gps.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/w1/slaves/w1_therm.c
-+++ b/drivers/w1/slaves/w1_therm.c
-@@ -851,6 +851,19 @@ static inline bool bulk_read_support(str
- }
+--- a/drivers/usb/serial/garmin_gps.c
++++ b/drivers/usb/serial/garmin_gps.c
+@@ -750,11 +750,7 @@ static int nat_receive(struct garmin_dat
+ 			len = GARMIN_PKTHDR_LENGTH;
  
- /**
-+ * bulk_read_slave() - check if a slave of the bus takes part in a bulk read
-+ * @sl: any slave on the list of the master
-+ *
-+ * The family data of the slaves of other families is none of our business.
-+ *
-+ * Return: true if it is one of our devices and supports bulk read
-+ */
-+static bool bulk_read_slave(struct w1_slave *sl)
-+{
-+	return device_family(sl) && sl->family_data && bulk_read_support(sl);
-+}
+ 		if (len >= GPS_IN_BUFSIZ) {
+-			/* seems to be an invalid packet, ignore rest
+-			   of input */
+-			dev_dbg(&garmin_data_p->port->dev,
+-				"%s - packet size too large: %d\n",
+-				__func__, len);
++			/* should never end up here given the dlen check below */
+ 			garmin_data_p->insize = 0;
+ 			count = 0;
+ 			result = -EINVPKT;
+@@ -773,8 +769,17 @@ static int nat_receive(struct garmin_dat
+ 
+ 		/* do we have a complete packet ? */
+ 		if (garmin_data_p->insize >= GARMIN_PKTHDR_LENGTH) {
+-			len = GARMIN_PKTHDR_LENGTH+
+-			   getDataLength(garmin_data_p->inbuffer);
++			u32 dlen = getDataLength(garmin_data_p->inbuffer);
 +
-+/**
-  * conversion_time() - get the Tconv for the slave
-  * @sl: device to get the conversion time
-  *
-@@ -1442,9 +1455,7 @@ static int trigger_bulk_read(struct w1_m
- 	 * so we can apply a strong pullup if required
- 	 */
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (!sl->family_data)
--			goto error;
--		if (bulk_read_support(sl)) {
-+		if (bulk_read_slave(sl)) {
- 			int t_cur = conversion_time(sl);
- 
- 			t_conv = t_cur > t_conv ? t_cur : t_conv;
-@@ -1482,7 +1493,7 @@ static int trigger_bulk_read(struct w1_m
- 			/* set a flag to instruct that converT pending */
- 			list_for_each_entry(sl,
- 				&dev_master->slist, w1_slave_entry) {
--				if (bulk_read_support(sl))
-+				if (bulk_read_slave(sl))
- 					SLAVE_CONVERT_TRIGGERED(sl) = -1;
- 			}
- 
-@@ -1511,7 +1522,7 @@ mt_unlock:
- set_flag:
- 	/* set a flag to register convsersion is done */
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (bulk_read_support(sl))
-+		if (bulk_read_slave(sl))
- 			SLAVE_CONVERT_TRIGGERED(sl) = 1;
- 	}
- error:
-@@ -1879,16 +1890,14 @@ static ssize_t therm_bulk_read_show(stru
- 	int ret = 0;
- 
- 	list_for_each_entry(sl, &dev_master->slist, w1_slave_entry) {
--		if (sl->family_data) {
--			if (bulk_read_support(sl)) {
--				if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
--					ret = -1;
--					goto show_result;
--				}
--				if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
--					/* continue to check other slaves */
--					ret = 1;
-+		if (bulk_read_slave(sl)) {
-+			if (SLAVE_CONVERT_TRIGGERED(sl) == -1) {
-+				ret = -1;
-+				goto show_result;
- 			}
-+			if (SLAVE_CONVERT_TRIGGERED(sl) == 1)
-+				/* continue to check other slaves */
-+				ret = 1;
- 		}
- 	}
- show_result:
++			if (dlen >= GPS_IN_BUFSIZ - GARMIN_PKTHDR_LENGTH) {
++				/* invalid packet, ignore rest of input */
++				dev_dbg(&garmin_data_p->port->dev, "%s - invalid length: %u\n",
++					__func__, dlen);
++				garmin_data_p->insize = 0;
++				result = -EINVPKT;
++				break;
++			}
++			len = GARMIN_PKTHDR_LENGTH + dlen;
+ 			if (garmin_data_p->insize >= len) {
+ 				garmin_write_bulk(garmin_data_p->port,
+ 						   garmin_data_p->inbuffer,
 
 
