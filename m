@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704561;
-	b=qIyhEIGwalK0ZgG2WsRvHUdpNOwzF0A+BcwTIE+BJ2TFUfS2uDBNxhggiJRYOx7JqGtM
-	 j/OBiYO7YAgED+glGFLJ7OzmMJfc3KZsO8Yvm8ROVTchTjsOM1QcabtTaKHHoxpuOEXwn
-	 V/RbsmY245oJzOZLIWgL7w1HDG5FIRXWTmfwi+edZyIX3+yl7p5VomvhneyL21QryD5ro
-	 Qe9HK4LV6c4NY9iyUNgVD+Kqa8imA+iLwNQGPODr88M4xoJ55Pxy8RBS+KKGMMbdXy6cT
-	 ijqZSJ8DANv5TLu6oX6mB7Yuoo6pJNC3hwiRx210wB/Py5/uqcrrkAXKjFbJ8fQmp7g==
+	t=1795704564;
+	b=Ow1In81LS70kKubYImx9grko+m2gG/njClg2rt7ksxYq69RX9GJHEjeRo/HL3zeCrQtI
+	 /+/xdFMQ5IHIQ4AGG+bWRpNtzT3PQ12AHO04d/P/pZWlJmubW2Vnpm1PZ6Q4YEidlYTbH
+	 24DRxrs1L+y1ywZrnSwhqQxcMScSdbDGMBF+Hzmo/tfS25RHp0l3ANReVKvcbIKKwbsQG
+	 ZhIHklxrR9wXJbr65sI36Z1zhFbg4Z8yb7Tn0W8bTNtdOpgPmnApCFyg0alVyz+l9S2MM
+	 FIidtrgP7MXbMDps7cfy8sDm96YsSt5r1dZXlzkcB5+B//rCyI6QRroS7vVPQVdoWCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704564;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s2RkssOCRA1rcFolLNz8RU9SMfQ4rjvgPRT+OwcGdz8=;
-	b=Tf5794hDMBYeUPD96McXKcDXbyLLUzllib98pZOxIADITKe05fWltvVcnXJlE0mK/jzv
-	 6MGMok2XFbju/AGOCB5TNrWUs1VjdI6R/QWNgFRQCY8fEls9TYVI/PKJBIKmGHVA4vYXG
-	 toAZC5C5T66g4MYbO8aEka/nLYYs0LtQ+OjOJdhm4A1nPq7MCVpaGlBbneOYdLIweL49T
-	 j4fUQz6oFP8rgkHQ7marjPieeZBrLs1V0ljWOEMZC68XWPbA2gq2Ge9UXms/JDuwyCHXc
-	 Wai2R1W5FMik7yIlm7Zcl1ZGlQm+CUH+S/HPBHgjACP/LRIlGkN9ilCk/IjDTyHfu1g==
+	bh=3KKy07UIbERZzGNrxQyx816+ExyAOjemnaVcZRJuGdo=;
+	b=zhLVgwqP40AfzID/ejQolnvSFmUXb/EZh4wzy91lpWjY+b6yEpUYchx1sDzAfvROyO2E
+	 fhBXlCJ5/wQDk7MOPyNGgfsAGa66L9jr//XJxC5LWBKMBKH8RaS7gfpYg0CKMBNZpnkEl
+	 BaO+gsfYAmA0mzPJUPwSB+iJ5yK5JnGvIYM9poGY9Q+RAk4GandOaMeGdvt+ypwGG1ZpQ
+	 p3nBPD0OCpCOFgmsAGakijXMhhaOqf6qAPXc2u+4Fbs8iFfjydp8Dk9NAZpRuUI21bm3w
+	 R0bRFs43ysLw2bhbs3YsWc2wviF4AbYgRQAkJ/zPt0Jm21wV9plylrhs7OdnD6WkJ7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HQ3/YLkc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEXOUNbN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035D0606A334;
-	Thu, 26 Nov 2026 14:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D2A606A326;
+	Thu, 26 Nov 2026 14:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HQ3/YLkc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C77D1F000CA;
-	Thu, 26 Nov 2026 14:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MEXOUNbN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0901F000CA;
+	Thu, 26 Nov 2026 14:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704560;
-	bh=s2RkssOCRA1rcFolLNz8RU9SMfQ4rjvgPRT+OwcGdz8=;
+	s=korg; t=1795704563;
+	bh=3KKy07UIbERZzGNrxQyx816+ExyAOjemnaVcZRJuGdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HQ3/YLkcR7UaBSBbe6xV59e9xvpKUp2kU4AS0Bl9nC4ovt63km7pTLuDAYsZt6UQi
-	 BM1eHDFqlZU5s0JioR/gXAQqeF2ts6kbqwpKtI28fqRLW5BKmFMUIlnQzUUJztLIVY
-	 EOsvQ924MLRik7w2MmIcYnzhkP7SqM1uNZkyG1Y0=
+	b=MEXOUNbNlicO8/IltFF0OzqLVmQ5uyu437gmSL9oLR+6EzTX80dv3gWxU+yg7/K5W
+	 Mag+6yWW3gXwp4ConuIVWhf9ti8cVR7wvZjIIR+hRtFwUkdVvxFnog3ngv4Pvua+h3
+	 7795/lL2ES16va/NIp4ByJoQWahlj7RgTQR1HeXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shaos <shawnq1@163.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 167/265] net/sched: act_ife: encode configured zero metadata values
-Date: Thu, 26 Nov 2026 15:38:17 +0100
-Message-ID: <20261126143616.835069249@linuxfoundation.org>
+	Brian Norris <briannorris@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 168/265] PM: runtime: Update last_busy in rpm_resume() for active devices
+Date: Thu, 26 Nov 2026 15:38:18 +0100
+Message-ID: <20261126143616.914685431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,90 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 7d02c07c738bf5c4b9a7d7ef498fbf465c446853 upstream.
+commit 55b2b8af704f845e01fa2f31ee259b07641ce3a9 upstream.
 
-Reported by shaos <shawnq1@163.com> with a reproducer for the 32-bit
-case, which was reproduced and verified in our test environment.
+Setting an autosuspend delay for a device can be expected to cause a
+runtime suspend of the device after calling, say, pm_runtime_put() to
+be deferred, so the time between the last successful attempt to resume
+the device and its subsequent suspend is at least equal to the
+autosuspend delay.
 
-The issue:
-ife_check_meta_u32() and ife_check_meta_u16() both reserve eight bytes
-of metadata for a configured value even when that value is zero, but the
-matching encoder returns without calling ife_tlv_meta_encode(). The
-encoder therefore writes neither the TLV header nor its value, while the
-enclosing IFE length still includes the reserved bytes, exposing stale
-skb headroom contents to the peer.
+However, that expectation is only met after the device has been actually
+resumed in rpm_resume() by invoking its runtime resume callback.  If the
+runtime PM status of the device is already "active" when rpm_resume()
+runs for it, the device's last_busy timestamp is not updated which may
+allow a subsequent pm_runtime_put() invocation (or similar) to suspend
+it right away.
 
-The 32-bit helper has been present since the IFE action was introduced
-(v4.6); the 16-bit helper was added with the 16-bit metadata helpers used
-by the skbtcindex callback (v4.9). Both defects predate the oldest
-supported stable kernel (5.10), so they are fixed together in this patch.
-Each hunk keeps its own Fixes: tag for provenance.
+This is arguably inconsistent and confusing, so make rpm_resume() also
+update the device's last_busy timestamp when it finds that the device is
+already "active" and it is about to return 1 early.
 
-The fix:
-Encode any configured value, including zero; skip the TLV only when
-there is neither a configured nor a runtime value. The runtime fallback
-is unchanged.
-
-A raw TCA_IFE_METALST netlink request is needed to express the
-configured zero: the IFE_META_SKBMARK attribute carries four zero
-payload bytes for the u32 helper, and IFE_META_TCINDEX two zero payload
-bytes for the 16-bit helper (not an absent or zero-length attribute).
-Stock tc cannot build these requests; "use mark 0x0" emits no mark
-attribute and "allow mark" emits a zero-length one.
-
-Conditions to recreate the bug:
-CONFIG_NET_ACT_IFE=y, CONFIG_NET_IFE_SKBMARK=y,
-CONFIG_NET_IFE_SKBTCINDEX=y, CONFIG_NET_CLS_MATCHALL=y,
-CONFIG_NET_SCH_INGRESS=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y,
-CONFIG_VETH=y. In a fresh user and network namespace create a veth pair
-and attach clsact to the egress side. Install a matchall filter whose
-ife encode action carries a zero skb mark (or a zero tcindex) in
-TCA_IFE_METALST. Send a frame through the veth and inspect the IFE
-metadata in the received frame. The metadata region is eight bytes but
-holds neither a valid TLV header nor a value; it exposes prior headroom
-contents. Setting the value to a nonzero one does not trigger the leak.
-The namespace needs CAP_NET_ADMIN; no additional privilege is required.
-With the fix the zero TLVs are 0001000800000000 (u32) and
-0005000600000000 (u16).
-
-Fixes: ef6980b6becb ("introduce IFE action")
-Fixes: 6a5d58b67e20 ("net sched ife action: add 16 bit helpers")
-Reported-by: shaos <shawnq1@163.com>
-Link: https://lore.kernel.org/netdev/20261022144739.61342-1-shawnq1@163.com/
-Cc: stable@vger.kernel.org
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/SER-NSBD.v3.r0.20261103064310-1@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 56f487c78015 ("PM / Runtime: Update last_busy in rpm_resume")
+Link: https://lore.kernel.org/linux-pm/CAJZ5v0jTX1FgeS9FCV=+V4uacSgLQBVsSPnU27ybgUGg57GUOA@mail.gmail.com/
+Reported-by: Brian Norris <briannorris@chromium.org>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Tested-by: Brian Norris <briannorris@chromium.org>
+Link: https://patch.msgid.link/13032301.O9o76ZdvQC@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/base/power/runtime.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -49,8 +49,7 @@ int ife_encode_meta_u16(u16 metaval, voi
- 		edata = *(u16 *)mi->metaval;
- 	else if (metaval)
- 		edata = metaval;
--
--	if (!edata) /* will not encode */
-+	else
- 		return 0;
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -793,6 +793,12 @@ static int rpm_resume(struct device *dev
+ 		pm_runtime_deactivate_timer(dev);
  
- 	edata = htons(edata);
-@@ -93,8 +92,7 @@ int ife_encode_meta_u32(u32 metaval, voi
- 		edata = *(u32 *)mi->metaval;
- 	else if (metaval)
- 		edata = metaval;
--
--	if (!edata) /* will not encode */
-+	else
- 		return 0;
- 
- 	edata = htonl(edata);
+ 	if (dev->power.runtime_status == RPM_ACTIVE) {
++		/*
++		 * The attempt to resume the device means that it is needed for
++		 * something, so update its last_busy timestamp as in the case
++		 * in which it actually resumes below.
++		 */
++		pm_runtime_mark_last_busy(dev);
+ 		retval = 1;
+ 		goto out;
+ 	}
 
 
