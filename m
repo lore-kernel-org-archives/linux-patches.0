@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705761;
-	b=ntsEtMVf0T+E2KvqXcKyMa2tg8JjH6kHYRzNzld0IDdoSERNG0FOs8eBKUd2u84g95hM
-	 8upaWStkToLErK3DHD6HmHxHK6TRD2D8SYRJogbQb6U3JLq5F2tGwmgDDVNgvKurBIeNb
-	 OEzt1pxU+m7Z61V+BSH1KzWoEbiG26Oe0fSo4DC29OCmmBzDhkoqRTPpownH2j0kh9aFv
-	 YspDg702eLfGG7BRL4Njf0R6FCID3K0mvKMj1wwjXMffsvgT8Cz0evHw+7u4KDAYJXl25
-	 ZCHgPbQppeFGFDe6U4QDlqq1iGBZvKx7ZnfOK9qFopDVNrLdAZ5/n3jdDfxtGLgmq4Q==
+	t=1795705764;
+	b=X6iBYe7MtKpVfCHd8vAWBplSiqnGqjjjBWknfBVIDumrfbVci0Pb3s1m3h97sjKv5238
+	 +4fLR38DgDktySbzJV9di3FP4P6mfLKUJSN3D4ZAaJ+NNcLqo+QrslRzQxLdyE4H/NClV
+	 2Ewz1w8N688uXOyoRFjyw52kzFn8lDr74HJM6gj2bu51SpvzodH2Dpx/rCKlHuPN7lgjJ
+	 p+XYkBmzJs9VorG4D//pxeabyhxnjmbqvHG+x1ntT+47iPzgmuIfN9V1fyaf7UgHwJwTl
+	 AhNBz1xmWq7+QEiBSpBhuCrDWqQw/UP3O0sOAzSka8bkE5/chXVe8aStoFjW/UaNs9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WeE/gybHz41+yNs5/E2jgADYmZ0ukrqFGd3SnVSF9xM=;
-	b=l0Qtdq1nsrvIiCdGdylDptANXlIAYKE+0s36dHPe0LjrbOUeaC4pPoGKlwxfXNUfn7Gi
-	 8knCV5SjI+FJe3e01FFwWkWF9H0eAf5JjOPc3AH5yIhXkm7JkIPG9UHsb5yIzlV9yqlYS
-	 CASCzZIzHE2lhV3HrWuC27wh+2R9/cX0dZcwCosjpUVXC8biaoH6/GZMZhpAbBvykCnDV
-	 MyG/yoChc0f09DEkNDTCvyMccCV9aeB741rhGJ5eSqCCKhtieUrjoQV6F6M+eTV5eBIVb
-	 T1FLS2YQbb5Z7XTMHe74Tp1x+3dWezFiTQ3QkSeIvMO8vj/QzztoVdwZOkVoD1k/zMA==
+	bh=t+Rsm33uPoPzZ2DZQr1243r3YkZfJmHAfxZhfF44Fgw=;
+	b=hsip44DGcp7jrM+c/DK7mYmjuUynkjyRgwa1LMrVE8HpJZ1KhYkOqVrzuE/XvY+CgNJl
+	 8QIJOI+RQXMaGAmcusoWD8tAWXbQJmO/bnJHuqtYsj2RkOi+31N+XWIGWziBfAJb5ZcnT
+	 o94qsSiJKauQo3c/b1HMrJ3xPygjg1D01tHNsgZRbFqvRb2/JHfCTQEH3XWXl/uULC3kr
+	 Dvpi6/Ac0LYkWP+MoBIhGh8Rz2F9MGCS6bw3+lwOFuCyxdZrCaQXibdymDSNP7iDCEjtA
+	 tMSLE4ai3rc25FmiyoL5rUafc1n1i5Ewv4zmFAH0Gn0Ehuhy9z4HZdPrHol45pI6qTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNzW+X8f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8UIQE9g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815E6606A32C;
-	Thu, 26 Nov 2026 15:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B057D606A31C;
+	Thu, 26 Nov 2026 15:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNzW+X8f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB771F000D2;
-	Thu, 26 Nov 2026 15:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8UIQE9g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749021F000C6;
+	Thu, 26 Nov 2026 15:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705761;
-	bh=WeE/gybHz41+yNs5/E2jgADYmZ0ukrqFGd3SnVSF9xM=;
+	s=korg; t=1795705763;
+	bh=t+Rsm33uPoPzZ2DZQr1243r3YkZfJmHAfxZhfF44Fgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nNzW+X8fe2KojHT+lS6rn0hLaw5QNNQRo3IT7B6Kvwr7lFTRMlsmH5mRMXEpae7rU
-	 d0V+DlowMpNirZzWI6ZU6hVDGZ9qXCc4iHTzOjahmivUsO1w6MqOtriX7ns+6u4+b1
-	 mZOGvkTsH11vfZ49IjoqSW3KQLgSCJuOJR1cdGPc=
+	b=A8UIQE9gxjyqLJlp+19Gy8I7hgdKIihezVsf7Fas3UUapC8jHngBftT2PAM68UIDC
+	 byDUTBraZjTpfa5CtCkt8sVGoiT/xCy7ufHn702PTTlXIn8mgm7jEjF1gqr9oGUN+G
+	 jVHFhkvWC3UxDzw4lAOmhmawFqSO17CTVjXCDokA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 5.15 305/319] iio: imu: kmx61: reject duplicate event disable
-Date: Thu, 26 Nov 2026 15:41:13 +0100
-Message-ID: <20261126144013.641687733@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 270/319] USB: serial: garmin_gps: fix deadlock on reset request
+Date: Thu, 26 Nov 2026 15:40:38 +0100
+Message-ID: <20261126144012.843101124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,39 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9a60b35fe45801d45454e1efe90569c9cc6ea736 upstream.
+commit ab89a9dab02d9553eb0cc27fd3e4a4998acbc8e9 upstream.
 
-The IIO core does not filter duplicate writes to the event enable
-attribute. kmx61_write_event_config() already ignores repeated enable
-requests, but a repeated disable request still calls
-kmx61_set_power_state(data, false, KMX61_ACC), dropping a runtime PM
-reference that was not acquired for this request. This can underflow the
-runtime PM usage count and trigger a "Runtime PM usage count underflow"
-warning.
+The garmin_gps driver has a reset feature that is supposed to reset the
+device when writing a private reset request packet. The reset is however
+done synchronously from the write() callback (and without holding the
+required device lock) which leads to a deadlock in the line discipline
+when hanging up the port as part of disconnect.
 
-Return early when the requested state already matches ev_enable_state.
+Switch to using the asynchronous reset interface while dropping the
+redundant and synchronous stopping of the interrupt urb (write()
+callbacks are supposed to be atomic and USB core, USB serial core and
+the driver itself will unlink and kill all URBs during disconnect).
 
-Fixes: fd3ae7a9f21c ("iio: imu: kmx61: Add support for any motion trigger")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://lore.kernel.org/2026102733-prayer-drainer-56f3@gregkh
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/kmx61.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/garmin_gps.c |   12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
---- a/drivers/iio/imu/kmx61.c
-+++ b/drivers/iio/imu/kmx61.c
-@@ -946,7 +946,7 @@ static int kmx61_write_event_config(stru
- 	struct kmx61_data *data = kmx61_get_data(indio_dev);
- 	int ret = 0;
+--- a/drivers/usb/serial/garmin_gps.c
++++ b/drivers/usb/serial/garmin_gps.c
+@@ -822,10 +822,9 @@ static void priv_status_resp(struct usb_
+  * Garmin specific driver functions
+  ******************************************************************************/
  
--	if (state && data->ev_enable_state)
-+	if (state == data->ev_enable_state)
- 		return 0;
+-static int process_resetdev_request(struct usb_serial_port *port)
++static void process_resetdev_request(struct usb_serial_port *port)
+ {
+ 	unsigned long flags;
+-	int status;
+ 	struct garmin_data *garmin_data_p = usb_get_serial_port_data(port);
  
- 	mutex_lock(&data->lock);
+ 	spin_lock_irqsave(&garmin_data_p->lock, flags);
+@@ -834,13 +833,8 @@ static int process_resetdev_request(stru
+ 	garmin_data_p->serial_num = 0;
+ 	spin_unlock_irqrestore(&garmin_data_p->lock, flags);
+ 
+-	usb_kill_urb(port->interrupt_in_urb);
+-	dev_dbg(&port->dev, "%s - usb_reset_device\n", __func__);
+-	status = usb_reset_device(port->serial->dev);
+-	if (status)
+-		dev_dbg(&port->dev, "%s - usb_reset_device failed: %d\n",
+-			__func__, status);
+-	return status;
++	dev_dbg(&port->dev, "%s - usb_queue_reset_device\n", __func__);
++	usb_queue_reset_device(port->serial->interface);
+ }
+ 
+ 
 
 
