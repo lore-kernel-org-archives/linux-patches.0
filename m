@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795719785;
-	b=2FIg+J0gvlRa9RJpl0rJhQVxIuKw6fJvw80RqqdJpeGgeWPyXrIjfZIx8UfHvefTKhm/
-	 3nVv4VsWzFadyrWznXB0ZCGfJbA3Hov8lL4uvtoYhY2kVjCqhmZt51nPW/O+jmr33O0Cd
-	 D4EUPmhE4tkRmFlXps3z/7T82SvaTaxntmYkP2Q6u0ZDf4eALGF37RS6NFH7j0TyZiKAj
-	 fc3ch+2q78Xr9onwAQA8Hktb/U+V/XRW+81cFQaTtyxwEKAsggO6DeJZo68B3936BqPOf
-	 o4HxbXy5hs9X9TKCAou8uWxjoNX6wccE5ISYzyoSkXG/FPeWbm11Ar+YVegNUWCO1BQ==
+	t=1795719889;
+	b=Hd5kNPqokN4a+b8JQEi6/t6jwQHPcRKBwywmkv/5Q90PbNGHsXI9nPSLq1wM8WHTIa5G
+	 r62sFMi7et124YNeDKLBdHWOyAN5a67hiXy/YjGkiMdetMwR6CbjajxVTR6qdOLl7RzvB
+	 hRg8RJzi9d9CfhnkYkBb8j47QET2cB5qxi25+GVpH1TtnLZS4ybVF6OUtbO2lY5kcKYCi
+	 2nsY9asKuy+Qqrw2hxRb+t2/kBzaL1uRmdxnH8Rpo7vOikLh526pf4udM5GZr3O3t2LbJ
+	 GKNA3YsY0ux36KILIBZQjBNu3v53BsMi4UbtTEwLrlZc5MeVncMRtiEwIXI714tIOkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795719785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795719889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=HmjQrWvxLls3MlEJQ5GdIn7aGxNBuBuEn/WzLZMf50Y=;
-	b=BW9fh6F1enOq29+CWTNc1l9ItmrBtbHCoaDtUNyGRy5tmL11UvmBHbwBoxnELhhzStO4
-	 YHGBmbphtU9sbMUe/KIe98BUO4INGmBYgCp76etkwtSee8yxvhKSLB2Ztu2NafQnDzl2X
-	 QujXg2x/fNNSnpyguT4XybhLh/eIziKd1PD3n7NQyELHiPNwTSAMIWz0clmLGxtrDcjFh
-	 J7Td1zzD3g3zwobh5fd1ua4NAAt7wTE0EjjyCvqeW7baAXQu1lg4I4AF5ZTpnrjWmsKGT
-	 B1GMcAu9o+mVSt60yv3/km38hVoG67uOpJHpoKlHJ5KULN7e9XrIe+U+W1o+XA2feag==
+	bh=1ctk+fL6PfkLhV/dsGiKFfYsEV93GnfIM2lI38MnYwI=;
+	b=RMwP211eC4VmV/zfuzQjqDlV6/6rTOs0mglcOE5scQMuh+LviuNjd0lT1+mP10Im8NG2
+	 jPbG2EjhuY9v+62NFZ2vzyF068jd8zpMKmyNvVKe9sdcB0J+af8q63OTAARq1roKFKx4p
+	 BhXGm4cDi5iT17wlKAwpW8azA7aiRU8kxfGt3DAnxGSmYAVtXdLOmtcg8wQcfA5MOfbpL
+	 O0Aq1rNpabQjizQ944sBHnBg5Or+q0l+HDT1s+bl7+XhSMXI9PfVdzwNuHcK5TNr0JGuI
+	 Wv/NBu1U8GJ/qN+yANPm3FFgGBkqpKMfyRHBJASBo6YpJ7GpdAnBf0STgmSnpzsYDCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nea6AAhi;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ELPyyP7h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99021606A31C;
-	Thu, 26 Nov 2026 19:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92971606A327;
+	Thu, 26 Nov 2026 19:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nea6AAhi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECC31F000CA;
-	Thu, 26 Nov 2026 19:02:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ELPyyP7h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0875D1F000E0;
+	Thu, 26 Nov 2026 19:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795719785;
-	bh=HmjQrWvxLls3MlEJQ5GdIn7aGxNBuBuEn/WzLZMf50Y=;
+	s=k20260515; t=1795719889;
+	bh=1ctk+fL6PfkLhV/dsGiKFfYsEV93GnfIM2lI38MnYwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nea6AAhiWTvR2A6x0svD1jM1joKlXq9GNmxtglkeaXQqdxPheAOXMtk9izTVvEzwS
-	 F3ct8DHz6cwg3gDIaaFCC5PZqb7s15Z45zhVR+4GRTnCGRrW9n32f6DfmAkG5MQdFl
-	 kXew8hh3jJP8g1o7mGqnIaXvkdG6yweCoo8fmxrSIB2DXjGHDS+rkIU6qfR0c8d0+S
-	 BGWo23SAvNE8vBzVvdAFRXEOT4LQC7Ie3M+G8JAK43iqBCcxFcZM1wboURsx1fORPt
-	 alDN/ThGGiRxjGvxVqSMgVbAlNKSsJ1HEIEU8LD26Q20y/ehiXN9A5dA4rbzLsPJtD
-	 zngFYyWDVhQzQ==
+	b=ELPyyP7hVMh0/g3BN0EPouCpHxSVlPg2qC8KK5w339Xge6VbncRU1rFYEx2q/3Um5
+	 D7v3tWoLPh3WeRjOlAIGdUQVnKmhlEOjtu3986HOcsuEidSOe2MGWF8eRDFmvxX6Dg
+	 Z14MX/Ln0cyD14UGzdenen71u6x1P+CZxhbmtuhhgmDrhhz91g3+LqGxaeTaYHGdrl
+	 XTIAAdQQ8Ab0VQKbgs3+kSN9s5tvGuKYuwFtiGzpiVS/YP6eIUTPvM+i5ot29Bi4rm
+	 GP0+9l82scEc93XAS5wF/Pc8FDyN4wKH1mraexD8DezKYgszG1RRblPxGWgWFFJ6/p
+	 IIbZCpHnolt7g==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: achill@achill.org,
@@ -61,11 +61,11 @@ Cc: achill@achill.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.12 000/815] 6.12.120-rc2 review
-Date: Thu, 26 Nov 2026 20:02:53 +0100
-Message-ID: <20261126190253.95119-1-ojeda@kernel.org>
-In-Reply-To: <20261126105709.009001842@linuxfoundation.org>
-References: <20261126105709.009001842@linuxfoundation.org>
+Subject: Re: [PATCH 6.18 000/990] 6.18.66-rc2 review
+Date: Thu, 26 Nov 2026 20:04:37 +0100
+Message-ID: <20261126190437.95251-1-ojeda@kernel.org>
+In-Reply-To: <20261126105725.767748294@linuxfoundation.org>
+References: <20261126105725.767748294@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -77,10 +77,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 26 Nov 2026 11:58:31 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Thu, 26 Nov 2026 11:58:43 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.12.120 release.
-> There are 815 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.18.66 release.
+> There are 990 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -88,12 +88,12 @@ On Thu, 26 Nov 2026 11:58:31 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > Anything received after that time might be too late.
 
 Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+for loongarch64 and arm32:
 
 Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-I don't see anymore the NFS build error that Brett and KernelCI reported
-in -rc1 (I saw it too on x86_64).
+I don't see Peter's `offset_readdir` warning in my QEMU boots, though
+they use a minimal userspace.
 
 Thanks!
 
