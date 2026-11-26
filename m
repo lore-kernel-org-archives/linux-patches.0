@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704567;
-	b=KoghYU5pBKlA9jtYf0PXNoUcxqEHNPWGQ/yeEeSyFvwc6JcUWE24pVo2Q4auWFJNwUeP
-	 q6NWgzQBFP7iquu7d5DwhFI/Hwv9J9wcEccQrX5HnHiAuna6A6m/8HVKc1xeB2O3r9otX
-	 Y+MqhDMWWs3+gxf5hPxLgDrD/ydYCWJsYeAhiLHjOu9ORiSK888A2tELdHJ1ve++sUI/G
-	 TQuRPxbixQZKt5sLfex+XKw9X+8w9fQ1yDmmfz8e5RFLD5X8s3IO6jg81688oXjSrL1QS
-	 eBMSNVgiyPK3b8CE1SrQi8D8tukcLz+Ze1hFQA4bKMGrqY6D2VLktPPAZqquiTjm7Wg==
+	t=1795704570;
+	b=Jw/KXsysXGi1iBtts1Fz6EWEX/gMkEmMYnHUbjAZWD+QIAj7/yBp8hg77byvB4kU/hh6
+	 zxAzcdPTtlvPb+8lCOvPF3GvAg3zTEWr7meqrWT12rwlpFh1GIKrxr2Zcp1uEACIE4rCc
+	 bcn/EntsU13+g2YSQuOdks+AOUHUus1iUXU0sRJ1moWBEpvkai2npgxxGjMhHwzbuWcnC
+	 3RUraWV3dHUcOKnpFvtPAl3/IlszYLFV1BFoa2FCIzh+wTNVY0XwBrP+MgR9K47tjbiKi
+	 RUcXNZgytPEwr/K7YI3r4rWNC6p0G8w8lJW9XNAoZQke5lIBPxC8zdg8yn3SQ8dQI6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2eRT/WdqDBtaqfkXRYt0u3iHNSQcooYzlkT4RVcUZoE=;
-	b=QmL68hizoEGbvVGSe15++FZmFEaSuJDjWhFuOhOg/x8uOH+WH09OAVLEgzrtnklDzEzr
-	 Jwvdj57JnFl2k4UcXmbpyqDdOj01nk5SLT/wtNfiUXC26LnKK/XDUQ/e2eJ3AtrIyVk6s
-	 NjB7/Py6MuDSzcwbl4selTPVZDHAmqDI1a6jH7lhtWv21NGfNWxsCgfTL8zdVf8zXgiVg
-	 +Jl/u+A8ij3YFbn3NRPt0vQy8PmeTE8mKxD/noXQrOyUCofVo4B3l9NX/rOtufU/niWeA
-	 hxyaXCFolbxJU5olYhsSI2eEs3/eUBvMz+y7p3FOaLLwqkEa/LomBBNzSi7xe6J1IBA==
+	bh=+6zMCtymXeep0Jr4oU+qX2Djay8Cfrio/53gLVJMFgo=;
+	b=Fu/VIhe6NNHyrBRZwPsCvOHc7k/TP7thavZot4SkA27FEKOlqJh7NEUBDeEvG6Ibu2qC
+	 hrIGRpLFTno55hZeHapiZX28p1XvzLb6ervN6CExnKG+tkSVsgTGE0xU2yRqF/O7KeYmH
+	 E5nnwGaYDrrhwBxi0m51etpQ6m7ijptPbaVE6mGfdsxsqfCjBHL9LkiYrYh0Twa7YY5w7
+	 7kpS1/ZHA26b5++xocTDWt4jhTIqsyCimCYeGKdbU2hC8Yn18TF6r0hx9hpDz5ZNIT56l
+	 WB/W6GTXfgGFtBcbEeSNnfsl1jHEe6+YDWTFsHnHAM1Gb9IxAZnhuUSvm8CfgBNBZ5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iks4kCXH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnSNi+bG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B35606A32D;
-	Thu, 26 Nov 2026 14:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DBF606A321;
+	Thu, 26 Nov 2026 14:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iks4kCXH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF801F000C6;
-	Thu, 26 Nov 2026 14:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnSNi+bG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2A41F000C6;
+	Thu, 26 Nov 2026 14:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704566;
-	bh=2eRT/WdqDBtaqfkXRYt0u3iHNSQcooYzlkT4RVcUZoE=;
+	s=korg; t=1795704569;
+	bh=+6zMCtymXeep0Jr4oU+qX2Djay8Cfrio/53gLVJMFgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iks4kCXH4E/n5RhgGlHGajuDdlvWHTniqDS1Joo0N7FSuB+mGecMZ9x4D+cQppnzc
-	 ZKA9YXmZyLPIxSEUC5Rl6rbvSKFlnA78x18sqMtJ2uje2R9lAODbJJUBU8a1r6x9PA
-	 mBxnBC8N3U4l+rTGw9AYzLubuXVqD6WqM8DrIaYY=
+	b=LnSNi+bG8/B3mDFmCRAKJH2GrE22AVikGgiWhdp23bY4QTYOvUefoxRXza2bIym87
+	 5QYRbn030o3ayx1xcxH3eugbjTbhuL5HCmAIgRKc9+GM9gsdf44NFjxuevw2yA1y8D
+	 eII8muxbllOFUNbQaNTiMBBr0/vQLjg3gNyaTAoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 169/265] Bluetooth: hci_qca: fix use-after-free in ibs debugfs files
-Date: Thu, 26 Nov 2026 15:38:19 +0100
-Message-ID: <20261126143616.984204097@linuxfoundation.org>
+	Sergei Nizovtsev <snizovtsev@cloudlinux.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 143/265] ALSA: caiaq: Kill EP1 URB before unregistering the input device
+Date: Thu, 26 Nov 2026 15:37:53 +0100
+Message-ID: <20261126143615.019927452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,62 +67,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
 
-commit eeca795cec6d9c6c193c2c1bd0cb26cde44f9fc3 upstream.
+commit 5d325345185015024a86abca4cc5fa6a3f75294e upstream.
 
-qca_debugfs_init() creates an "ibs" directory under hdev->debugfs and
-stores pointers to fields of struct qca_data in the debugfs files.
-qca_close() frees qca_data without removing that directory, while
-hdev->debugfs is only removed when the HCI device is released. The HCI
-device can outlive the driver data, for example when an HCI socket still
-references it, so reading or writing one of the ibs files then
-dereferences freed memory.
+snd_disconnect() unregisters the input device via
+snd_usb_caiaq_input_disconnect() and only afterwards kills the EP1
+command URB (cdev->ep1_in_urb). The EP1 completion handler
+usb_ep1_command_reply_dispatch() feeds snd_usb_caiaq_input_dispatch()
+for EP1_CMD_READ_{ERP,ANALOG,IO} replies, which report into
+cdev->input_dev. Since commit b04dcbb7f7b1 ("ALSA: caiaq: Use
+snd_card_free_when_closed() at disconnection") the input device is
+unregistered from snd_usb_caiaq_input_disconnect() but cdev->input_dev
+is cleared only later, in snd_usb_caiaq_input_free() from the card
+destructor. As the dispatch guard only tests cdev->input_dev for NULL,
+an EP1 reply that completes after input_unregister_device() but before
+cdev->ep1_in_urb is killed reports into an input device that has
+already been unregistered and, with no evdev client holding it open,
+freed.
 
-Store the directory dentry in struct qca_data and remove the directory
-with debugfs_remove_recursive() before qca_data is freed.
-debugfs_remove() waits for callers that are already inside the file
-operations, and any later access fails with -EIO instead of reaching the
-debugfs helpers. This covers the two writable files as well.
+Normally the window is closed by the USB core: usb_unbind_interface()
+calls usb_disable_interface() before ->disconnect(), which flushes the
+EP1 URB as long as endpoint 0x81 belongs to the interface being
+unbound. But caiaq addresses EP1 through the device-wide pipe
+usb_rcvbulkpipe(usb_dev, 0x1) without checking which interface owns
+the endpoint. If a device declares it in another interface, the URB
+stays live across snd_disconnect() of the interface that owns the card.
 
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261102113654.8724-1-25031212351%40stu.xidian.edu.cn
-Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
+This needs a crafted device descriptor; a device that has EP1 in the
+interface caiaq is bound to is not affected.
+
+Kill cdev->ep1_in_urb (and the paired midi_out_urb) before the input
+and audio disconnect helpers, so no EP1 completion can run once the
+input device has been unregistered.
+
+Reproduced under KASAN with raw-gadget + dummy_hcd emulating an Audio
+Kontrol 1 (17cc:0815) with the EP1 bulk pair in interface 1: only
+interface 0 was bound to snd-usb-caiaq and then unbound through sysfs
+while the gadget flooded EP1 with EP1_CMD_READ_ERP replies. With no PCM
+stream running the window is very short and was only hit by stalling
+the unbinding CPU with a kgdb breakpoint at
+snd_usb_caiaq_audio_disconnect(). With the fix applied, the same test
+runs clean.
+
+  BUG: KASAN: slab-use-after-free in input_event+0x3a/0xc0
+  Read of size 8 at addr ffff8880151a4028 by task sh/118
+
+  Call Trace:
+   <IRQ>
+   input_event+0x3a/0xc0
+   snd_usb_caiaq_input_dispatch+0xab2/0xf00
+   usb_ep1_command_reply_dispatch+0x1f3/0x580
+   __usb_hcd_giveback_urb+0x246/0x400
+   dummy_timer+0x1415/0x3380
+   __hrtimer_run_queues+0x39d/0x800
+   hrtimer_run_softirq+0x187/0x2d0
+   handle_softirqs+0x1ff/0x930
+   __irq_exit_rcu+0x15b/0x210
+   irq_exit_rcu+0xe/0x20
+   sysvec_apic_timer_interrupt+0x81/0xb0
+   </IRQ>
+   <TASK>
+   asm_sysvec_apic_timer_interrupt+0x1a/0x20
+  RIP: 0010:snd_usb_caiaq_audio_disconnect+0x0/0x70
+   snd_disconnect+0x81/0x110
+   usb_unbind_interface+0x1a0/0x860
+   device_release_driver_internal+0x2c5/0x470
+   unbind_store+0xde/0x100
+   </TASK>
+
+  Allocated by task 80:
+   input_allocate_device+0x47/0x340
+   snd_usb_caiaq_input_init+0x4c/0x1ac0
+   snd_probe+0xab3/0x1160
+   usb_probe_interface+0x2ea/0x810
+
+  Freed by task 118:
+   kfree+0x1ea/0x5c0
+   input_dev_release+0xab/0xd0
+   device_release+0xcf/0x250
+   kobject_put+0x169/0x320
+   snd_disconnect+0x79/0x110
+   usb_unbind_interface+0x1a0/0x860
+
+Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
 Cc: stable@vger.kernel.org
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sergei Nizovtsev <snizovtsev@cloudlinux.com>
+Assisted-by: Claude:claude-opus-4-8
+Link: https://patch.msgid.link/20261112094904.2430318-1-snizovtsev@cloudlinux.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ sound/usb/caiaq/device.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -161,6 +161,7 @@ struct qca_data {
- 	struct delayed_work ctrl_memdump_timeout;
- 	struct qca_memdump_data *qca_memdump;
- 	unsigned long flags;
-+	struct dentry *debugfs_ibs_dir;
- 	struct completion drop_ev_comp;
- 	wait_queue_head_t suspend_wait_q;
- 	enum qca_memdump_states memdump_state;
-@@ -637,6 +638,7 @@ static void qca_debugfs_init(struct hci_
- 		return;
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -601,14 +601,19 @@ static void snd_disconnect(struct usb_in
  
- 	ibs_dir = debugfs_create_dir("ibs", hdev->debugfs);
-+	qca->debugfs_ibs_dir = ibs_dir;
+ 	snd_card_disconnect(card);
  
- 	/* read only */
- 	mode = S_IRUGO;
-@@ -706,6 +708,9 @@ static int qca_close(struct hci_uart *hu
- 
- 	hu->priv = NULL;
- 
-+	debugfs_remove_recursive(qca->debugfs_ibs_dir);
-+	qca->debugfs_ibs_dir = NULL;
++	/*
++	 * Kill the EP1 URB before disconnecting the input device: its
++	 * completion reports into cdev->input_dev, which input_disconnect()
++	 * frees without clearing the pointer.
++	 */
++	usb_kill_urb(cdev->ep1_in_urb);
++	usb_kill_urb(cdev->midi_out_urb);
 +
- 	kfree(qca);
+ #ifdef CONFIG_SND_USB_CAIAQ_INPUT
+ 	snd_usb_caiaq_input_disconnect(cdev);
+ #endif
+ 	snd_usb_caiaq_audio_disconnect(cdev);
  
- 	return 0;
+-	usb_kill_urb(cdev->ep1_in_urb);
+-	usb_kill_urb(cdev->midi_out_urb);
+-
+ 	snd_card_free_when_closed(card);
+ }
+ 
 
 
