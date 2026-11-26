@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704124;
-	b=WhU9xntE9lU1QG7J+Z2I4UhJZ8sz4CjjKNEnxtME/2fC0STlUQJqcYQDQ+IQSZjkgZGX
-	 KoPmzumkwHL4O3NPrn0+3hDFWVyADhuc/Ue0+M5Zgkwov1kwlH/9vMqxjpi0PGCg3O148
-	 99Q8Da71IRoHi6tsDZ+1El5d3v8TeM3M6ABgxsfZruW2WMT970kkfVoE8u5mOCIR0M+va
-	 Xau6IjKDc1wHvwdU+VgKbsXjcxANPYFM1KfnGAvfbG8rI2qo+P2c6L0rzvPUgJB9vwKty
-	 ufMiC5iYHio7LnXLl+2ptrbyFxwdgZ0eoSTMlkoiQ5efjeRpUO/liehOCleAqTLOlZQ==
+	t=1795704127;
+	b=QVJe/WICbtkNalyvEOPlXtq/9gXMSoWUYMLBWr1vTnMlo+JrIOSzo454J+Sl0vI5S3yN
+	 zWIWEAapp28JLFjBjiLs2uIfXuIXb4UmlMRKYXZdU3ltRijKHjt7AHdPkmuTeyndvzCGq
+	 2ABoLhWGcaasQEXx6WPwq1hTFJ5NGM0k/KBYp80KamhsQPgdOycSZUbkEAVzZhtHPmyVl
+	 P0CPAAvbLoEaLpwao3djfZ8n6gRsQGY5czd54a7KIl5Kt40NpSl8Q9vP1pO52Z6CIQbT3
+	 3JHsoOdeBphTUjr9A+n8hJRfEXLoMta+SR1FvFwV/drXgxGoMdprVAnzJYRtrLxZ2aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jkwMWHeZ6a+idRACinLUV5t914P6cBksXZ7zU+HI9/c=;
-	b=X5ysKAH1q/DOfGP0IFmvlu8IRZKbOwWdNz0lgWaewoyIyDWxI4FXi3Ap/EYnhrUBLHuf
-	 4pHj5wmmS/iwN/TU5CJgblv2ZOjxR2skqdZCANIbHFT4l4MsgAo7n+srhkKsKJvcxKgEK
-	 uvla5UJ4vJbaMhHq93NapjfBBtzp7ZEUzqawadz77iicTK7Bj2M+F/rL+WBtjkvtYm8cm
-	 T/owsviKaUGUyWa0wbMOwfDWRoefco1rq7oQR//0WyhsHUbIWYlGTTUzdbpevMWHRG3aJ
-	 0/1NM4+DBsS9hiHwuZ78NsKQfmgKl/DQZ9+ygBLM36xKJ+jUrpOYhDbzlHudFsS6fLQ==
+	bh=kRleMK44b4DgUR+QQf3VJJG6VMEBfLlKXZBYMPvn8DY=;
+	b=rVYJbwl3XSmJbQCGXa3qGU1EO9dAAcuWdXD2SYlkLoJ1BLctq/bUZC3HMetKnIqctJBY
+	 tY9JU+BPqy1KC9DRYJdP8CRop6Zm5K83Lk836n5TzO3wU+UCnN++ViIPvHwcHl/KdIOm8
+	 V2KazH7sjN0Ace6soGneM5rbPPtsW2+ydAGPuFjo2k1znBSJLEs7GLkzc9FKp+K0yzH8B
+	 4DlUwZr5rjxQ2m6rFWUOABWgPaT0RmZNw8RJev6ku8FRw/mDf6doWOYGr/ihbvNKFPXqe
+	 rNKzdOoBU5PRbwrupiK7LS9mq89cj5hM7fX/fiwGxKr3uIbNjaArBvVdZ+90jNOfOoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wu+Y17Lt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yr7/yX38";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C293606A326;
-	Thu, 26 Nov 2026 14:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727E4606A31C;
+	Thu, 26 Nov 2026 14:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wu+Y17Lt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EEB1F000C4;
-	Thu, 26 Nov 2026 14:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr7/yX38
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D821F000C0;
+	Thu, 26 Nov 2026 14:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704124;
-	bh=jkwMWHeZ6a+idRACinLUV5t914P6cBksXZ7zU+HI9/c=;
+	s=korg; t=1795704127;
+	bh=kRleMK44b4DgUR+QQf3VJJG6VMEBfLlKXZBYMPvn8DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wu+Y17Ltd5gtH2SwRZcMFuAv6lLDmW+LKyKkQ9KvpSoB72GqfjsUPVUeGKjVk4cCQ
-	 JE6XWJOHbbBtyCbkuU9d3FbrKK5EGscbIRhfOn35yPy8QZaoQJJUX9CeGOnFwtZDFb
-	 fhOiFynmBg8H9ADb+rYrhRz1xhwUgd9rjenqedBQ=
+	b=Yr7/yX38AH3VnDEkXeFhL+YCgdHmC5LassP954gy5nY3y60DGaNmUQqX/4SWMc/Fh
+	 H4h/tqLlnUXN9Y19SLA0lJiqg9rryJQjpzHZBqwbIEcR7pprOl998Seceza6rkHPMN
+	 /gp7RygdSbMtwa7NifiUaO5bw+fjq/C1oYSDfCqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/265] remoteproc: imx_rproc: Fix refcount leak in imx_rproc_addr_init
-Date: Thu, 26 Nov 2026 15:35:45 +0100
-Message-ID: <20261126143606.145215230@linuxfoundation.org>
+Subject: [PATCH 5.10 016/265] fs: aio: reject partial mremap to avoid Null-pointer-dereference error
+Date: Thu, 26 Nov 2026 15:35:46 +0100
+Message-ID: <20261126143606.206280807@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,43 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-commit 61afafe8b938bc74841cf4b1a73dd08b9d287c5a upstream.
+[ Upstream commit 3adf7ae18bf42601246031002287c103a27df307 ]
 
-of_parse_phandle() returns a node pointer with refcount
-incremented, we should use of_node_put() on it when not needed anymore.
-This function has two paths missing of_node_put().
+[BUG]
+Recently, our internal syzkaller testing uncovered a null pointer
+dereference issue:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+...
+[   51.111664]  filemap_read_folio+0x25/0xe0
+[   51.112410]  filemap_fault+0xad7/0x1250
+[   51.113112]  __do_fault+0x4b/0x460
+[   51.113699]  do_pte_missing+0x5bc/0x1db0
+[   51.114250]  ? __pte_offset_map+0x23/0x170
+[   51.114822]  __handle_mm_fault+0x9f8/0x1680
+...
+Crash analysis showed the file involved was an AIO ring file. The
+phenomenon triggered is the same as the issue described in [1].
 
-Fixes: 6e962bfe56b9 ("remoteproc: imx_rproc: add missing of_node_put")
-Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20220512045558.7142-1-linmq006@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
+[CAUSE]
+Consider the following scenario: userspace sets up an AIO context via
+io_setup(), which creates a VMA covering the entire ring buffer. Then
+userspace calls mremap() with the AIO ring address as the source, a smaller
+old_len (less than the full ring size), MREMAP_MAYMOVE set, and without
+MREMAP_DONTUNMAP. The kernel will relocate the requested portion to a new
+destination address.
+
+During this move, __split_vma() splits the original AIO ring VMA. The
+requested portion is unmapped from the source and re-established at the
+destination, while the remainder stays at the original source address as
+an orphan VMA. The aio_ring_mremap() callback fires on the new destination
+VMA, updating ctx->mmap_base to the destination address. But the callback
+is unaware that only a partial region was moved and that an orphan VMA
+still exists at the source:
+
+  source(AIO):
+  +-------------------+---------------------+
+  |  moved to dest    |  orphan VMA (AIO)   |
+  +-------------------+---------------------+
+  A                 A+partial_len        A+ctx->mmap_size
+
+  dest:
+  +-------------------+
+  |  moved VMA (AIO)  |
+  +-------------------+
+  B                 B+partial_len
+
+Later, io_destroy() calls vm_munmap(ctx->mmap_base, ctx->mmap_size), which
+unmaps the destination. This not only fails to unmap the orphan VMA at the
+source, but also overshoots the destination VMA and may unmap unrelated
+mappings adjacent to it! After put_aio_ring_file() calls truncate_setsize()
+to remove all pages from the pagecache, any subsequent access to the orphan
+VMA triggers filemap_fault(), which calls a_ops->read_folio(). Since aio
+does not implement read_folio, this results in a NULL pointer dereference.
+
+[FIX]
+Note that expanding mremap (new_len > old_len) is already rejected because
+AIO ring VMAs are created with VM_DONTEXPAND. The only problematic case is
+a partial move where "old_len == new_len" but both are smaller than the
+full ring size.
+
+Fix this by checking in aio_ring_mremap() that the new VMA covers the
+entire ring. This ensures the AIO ring is always moved as a whole,
+preventing orphan VMAs and the subsequent crash.
+
+[1]: https://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/
+
+Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Link: https://patch.msgid.link/20260418060634.3713620-1-wozizhi@huaweicloud.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/aio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index 373fce8b91064..95b17eaa216e4 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -290,9 +290,12 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
- 		if (!node)
- 			continue;
- 		/* Not map vdevbuffer, vdevring region */
--		if (!strncmp(node->name, "vdev", strlen("vdev")))
-+		if (!strncmp(node->name, "vdev", strlen("vdev"))) {
-+			of_node_put(node);
- 			continue;
-+		}
- 		err = of_address_to_resource(node, 0, &res);
-+		of_node_put(node);
- 		if (err) {
- 			dev_err(dev, "unable to resolve memory region\n");
- 			return err;
+diff --git a/fs/aio.c b/fs/aio.c
+index 8ba65b4ec8fc2..2e68b964f01a6 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -343,7 +343,8 @@ static int aio_ring_mremap(struct vm_area_struct *vma)
+ 
+ 		ctx = rcu_dereference(table->table[i]);
+ 		if (ctx && ctx->aio_ring_file == file) {
+-			if (!atomic_read(&ctx->dead)) {
++			if (!atomic_read(&ctx->dead) &&
++			    (ctx->mmap_size == (vma->vm_end - vma->vm_start))) {
+ 				ctx->user_id = ctx->mmap_base = vma->vm_start;
+ 				res = 0;
+ 			}
 -- 
 2.53.0
 
