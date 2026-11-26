@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704634;
-	b=YBzx23egwKV8f6mKNErFlRDuxAzRHaMDXY/qJ4h08iQ8ZADEbvBiLgCI2Vh/QPFEGYUR
-	 42djuyZmdTBawMZINQSSakv0dqXGsc8VQ8PvMrsv/aiC5ha7c/fvQxVt7LGgD/fKw/5Z3
-	 WiYJz4m8L8hUG9NI9HHNDTNU/I6EpeNun6lyxm4b+jJI2naJnYxlCkObuT3qsicFf6Myj
-	 vUzn2nA0SbBrsRWVptqxXSNHgYS1eq78B63xhbEWk/qlLng2Ob6IzBHDhiSEGQDkVXh9i
-	 a72DfLaVtNeqhvpCcdAKYXanO3ry8HSCMfrmFiMNpfeTqzYp/7QhCBrbLOG5HC6ZIGA==
+	t=1795704637;
+	b=PoCcF4ibbLOrLNm3qsDpkapciRqvBeBIhp9Txl3K0L9sHfRCd4GCPspVfTQSaGH8pOa9
+	 XDPOLS1ZjRizQa69kYx9/EKSjb0qvGc2iWQvYqqnoQScmPSzmGj1ieIU63xdh28aWtqIb
+	 /F/eD138BCusjweYg327QRh8x10MC+luUdMz3BUWHdjnRBkS+thcgGJu4yQM5qXsTsM5x
+	 qi84SqYjd1EyTg6dIHlSMa+vIt+P+dap4BikdC06VZ6z9ovUc4VGbdwVCFNZMHAwP1/YR
+	 cha8s8UIb3mGBH0xcw+Cl1Xgkdbx4wBRTCY+RBmbv17Lx2ElJ2cNK8mLwdki3TnBjOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704637;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3b55i0hAZST4XahsxqGcrgCWZxRBXWR+oN1d5R4jIno=;
-	b=RVT/FTTKa+//SI2O3J5+i22om0o3ApgSaJJAIO3ChjirZbksXqwPQ38Yc48cswzU98Th
-	 2ju8eKFoqvdzAkqyjHe0WSK914pb7VdMn/FYkeWCb4mxlz7tJftqRKNYD1clXthC7GMrb
-	 2AtdtYarf1i4x/FOFjPb+GWICnp83GX7I+Bgxkg8Rc6o99D5zM0K6RZe/egWekf8BLwXa
-	 S1cCfd0E5rWpeByVZMEwVTj8zYruqZxcnGW34h4WJl5HAt0Zz/5XfRQuSf+4mT/1+gY4e
-	 fredhm2loyo/pN7jLQOjCKJBkxwNE3QHSEjfnoIQVrhz1MXRbSOM2IvrEhx/1dwJ9wg==
+	bh=wbok1n179ZSLNR8ISjMpU4jhhxeN56E6RLEztZ+3+ZE=;
+	b=O2dHgrNvV2L/XtpPNNCJsM8JCKu9nGBbU1/MqP1NvxlcLCaOKulCCty4O6EwtfVjudiU
+	 ROcloFicxm96fmbPTQBZKOJGa8RUNJpFV35ut0jZvT2KeRcerq/cTmKw9MaCc9YChnmdb
+	 ZLQx52VqfbO/bI3djv92kp6oHsLwVt6PRR14g7DBDWhKVsgEBx1kLXMQC0aU1JeqHzfT6
+	 rteRTOKZf4bjrIS5qQoTcNTi1hElh6Vfc6Y5cYX6yH+3/JCoyY+wplztowcIbofkbxbzz
+	 0sTvFvAZAR6uYUxjcsTSIMxkB1p0UWaRuimtrvmcZuG85vKP4xZ7iCet6yjquHENv9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tLQZoEKK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IULc81TM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95F0606A32D;
-	Thu, 26 Nov 2026 14:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB449606A329;
+	Thu, 26 Nov 2026 14:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tLQZoEKK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32E91F000C0;
-	Thu, 26 Nov 2026 14:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IULc81TM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E737E1F000C0;
+	Thu, 26 Nov 2026 14:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704634;
-	bh=3b55i0hAZST4XahsxqGcrgCWZxRBXWR+oN1d5R4jIno=;
+	s=korg; t=1795704637;
+	bh=wbok1n179ZSLNR8ISjMpU4jhhxeN56E6RLEztZ+3+ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tLQZoEKKW86flKOoicJspZZ4U1DcyQaXG/zAFNAL8aQYZKal6CelRsUIL7ZeYM5OE
-	 3d5nIItu78HZ7bL+7wYOQzJ8MZiPSpoOen5Huy4oIqgcFA3hfDBMqgodNbcp2FQQ4F
-	 +NRpruKdSJsjXJbrQjP4AhI4JsZe2pZGpw4ss064=
+	b=IULc81TMZmobkrxN7SErJ1ZHtZd9/ipFO0U9mfm6cui+Os7ak/sHMZURUUb/Pba6F
+	 RkaD7XCfx7C0pPNZ39QPrbdlvd5gyBbQE8NfB/jTNwDIut0gHCwG8MeEwNCvDZspsy
+	 1RFVDNJuaSOSQSLgD6YdyJpbGPn5z1KuIhfahZMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anfernee Cao <anferneemelokc5@gmail.com>,
+	Igor Velkov <iav@iav.lv>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.10 146/265] mmc: mmci: fix DMA channel leak when mmc_add_host() fails
-Date: Thu, 26 Nov 2026 15:37:56 +0100
-Message-ID: <20261126143615.259210070@linuxfoundation.org>
+Subject: [PATCH 5.10 147/265] mmc: meson-gx: report busy from DAT0 alone
+Date: Thu, 26 Nov 2026 15:37:57 +0100
+Message-ID: <20261126143615.338489637@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,48 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anfernee Cao <anferneemelokc5@gmail.com>
+From: Igor Velkov <iav@iav.lv>
 
-commit 2d8927fadbf95e2d2dfa95bcc73882d6e19c2ce4 upstream.
+commit 318fdb75f4dc9d18ae621b9fb25eb11160c95649 upstream.
 
-mmci_probe() calls mmci_dma_setup(), which acquires the RX and TX DMA
-channels via dma_request_chan(). These channels are not managed by
-devres, and are released only by mmci_dma_release().
+meson_mmc_card_busy() reports busy only while DAT0..3 are all low. A
+busy card drives DAT0 low and leaves DAT1..3 to the pull-ups, and the
+callback is defined as "Check if the card is pulling dat[0] low". So a
+busy card is reported free, and the core, which prefers card_busy over
+CMD13 in mmc_busy_cb(), stops polling after CMD6 and erase at once. The
+controller hides this on R1b commands, where it waits for busy itself.
+Once max_busy_timeout is reported, the core sends the longer waits, the
+120 s BKOPS and 240 s sanitize switches among them, as R1 and has only
+the polling left.
 
-If the following mmc_add_host() fails, probe jumps to the clk_disable
-label, which only disables the clock. As probe then fails,
-mmci_remove() is never called, so both DMA channels are leaked.
+Look at DAT0 only, as sdhci_card_busy() does. The checks around the
+voltage switch in mmc_set_uhs_voltage() still hold: the card drives
+DAT0..3 low together after CMD11 and keeps them low together on
+failure.
 
-Release them by adding a dedicated unwind label, reached only after
-mmci_dma_setup().
-
-This issue was found by manual code inspection.
-
-Fixes: b38a20f29a49 ("mmc: mmci: fix return value check of mmc_add_host()")
+Fixes: 186cd8b7f586 ("mmc: meson-gx: implement card_busy callback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anfernee Cao <anferneemelokc5@gmail.com>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/meson-gx-mmc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2194,11 +2194,13 @@ static int mmci_probe(struct amba_device
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -1075,8 +1075,8 @@ static int meson_mmc_card_busy(struct mm
  
- 	ret = mmc_add_host(mmc);
- 	if (ret)
--		goto clk_disable;
-+		goto dma_release;
+ 	regval = readl(host->regs + SD_EMMC_STATUS);
  
- 	pm_runtime_put(&dev->dev);
- 	return 0;
+-	/* We are only interrested in lines 0 to 3, so mask the other ones */
+-	return !(FIELD_GET(STATUS_DATI, regval) & 0xf);
++	/* The card signals busy on DAT0 alone. */
++	return !(FIELD_GET(STATUS_DATI, regval) & BIT(0));
+ }
  
-+dma_release:
-+	mmci_dma_release(host);
-  clk_disable:
- 	clk_disable_unprepare(host->clk);
-  host_free:
+ static int meson_mmc_voltage_switch(struct mmc_host *mmc, struct mmc_ios *ios)
 
 
