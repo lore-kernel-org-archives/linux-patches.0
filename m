@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704233;
-	b=VdpjRXYU/oytHm050LvzZu9bQLGksZ29A9ugs45l4Sn9QEv+oqmwMxTJ03EzsKV9gBDm
-	 439e4PquvzfbsKDsyMJJUa75C55NMxc9a8kimTkbbYoTq46gP0jEbpl6ZH77kbSGbYm+F
-	 7fQj9lvcD9N2+vF+L2YYXoAe9SJy20ZYk6QFXl326yB2kqgznGDEAOBrzpWMO/8te2jZz
-	 Pm5cdQ2e6+7wyXGhoLs/8RvJQzfKkJo2utQ8SN0Sjt303jrbsveXYsfPq0unuTLWVOyu0
-	 8hGEj3Ab2hdvp101COr+nkrB7j/UtZtiN3ZwPtGFI+4FQCBc4ifXZPUQxZUeC8ESUNg==
+	t=1795704236;
+	b=Tpj3dZw+ZAc13uR3t6ph22djPRySI01SMrgTaQyD9Cg7MmmnPtuB7fQuE9DSY9vMBSMv
+	 5lJALprsOqLYVe0oJTHqaoxEe7ULsqDGtVXo4qLaC+vZ7tQwbadRnjhmZ6bKErHaqFJr/
+	 5NFG7CyaKbzJ9CuJJcHbn9V9+WkzBweMMOmdtu6FGhZNlAfkF1V0QqnOiUzE3V+mC+5IB
+	 iN/EHsTeWTLiivudCoBEVyvArk3jA8BEEKdt+Wa0klbSG5mwOnHvnZcnd5iahRxVCdBlP
+	 nLQZyHzjWILKSteTU3EUmp7vWvehzXArl/IUEP3pnmn14XyLYtQkN+S0HdWorWVTZig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704236;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2sK2yplJkSu8LRm8NTer97TDwrN314siHaCDLtK/Hm4=;
-	b=1oMAhkC8pAkG1e2c2Q0iqrNcDnvjgGg+zy8qje84zbFqzKMnUPZECsrpv9vbUZZbdFVG
-	 sat5fnq+KVLa07vCqzllemKRjI8HL2p/GWo7rR2zfqc4LLTBDzMVZfK1MeP/KPXvL8kEl
-	 6goReLMHC1JrXifLTChYFiP9qh31iG8+7t8LNo5PgX17agzTjiKd2SWo/f62Kan+KGszQ
-	 Ypz0f9t/iEnYcvzuGCtsL+zkZcfZMOli/k3On3I/XELsUzkWYYbgAIztaJ3ebu54UCcFP
-	 NntSEZE8fNRmbTs9+lL9a45XPfN37CLOH15vlPqla3EiOX+sWJWjavGddmW/pKjo7dQ==
+	bh=G2yU55V+6D1QHG3vT5nqfr6s+EdsZZTX/G1gBEpeVIA=;
+	b=Im28poyO+XObqB+c9V2wmJBFM9E0ASjFZUgsKr4hBBIHtG7ObqXsoOU05sycy6bVoz2s
+	 UaZ46yiH4Rs0C8R6kXcLwjZEkOrRS4GQXIC2ibP4TtpGlu8TJ3Bj3fQT7W9dk1Pp7F+Xg
+	 u4G0x1oPCokQWtdWu2HM8SOlySEDMmyLlLIle6L/xxHaMxTwOBCRQv5X+MOZEarF4ydN1
+	 UXBV0BtFS3EnTB3JJbTHCRpv2HMuW2ROJaqClcz0FJrq6ykW7AxDdnCC1Iu2t7RAwANBW
+	 /S1UxhbMMkEV2BA0Ha8aWbYRfQM1oUZidrXsomL3tvcwu5jeD4x0Pto44ngf/tPYDTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zA5RpCH4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sHwnPm6+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2CE606A683;
-	Thu, 26 Nov 2026 14:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBF9606A31C;
+	Thu, 26 Nov 2026 14:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zA5RpCH4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABAD1F000C6;
-	Thu, 26 Nov 2026 14:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sHwnPm6+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0E61F000C6;
+	Thu, 26 Nov 2026 14:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704232;
-	bh=2sK2yplJkSu8LRm8NTer97TDwrN314siHaCDLtK/Hm4=;
+	s=korg; t=1795704235;
+	bh=G2yU55V+6D1QHG3vT5nqfr6s+EdsZZTX/G1gBEpeVIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zA5RpCH4nGdXKf3uTbvp+ZKZYRTRXFiQOwPBQL3KuVmLe17AlXZfSEFyufqsh17Wb
-	 wa57cFDx5e7Y/RUBdZ1xGtqZ5CDoq7h6JWTKpYpzfmiXRvsftSAX8jagL2tee92HQb
-	 +DxuvdyZzna9/S0ZZ/Au6x3pQ3Zq1wC2fqV2YFkA=
+	b=sHwnPm6+yqiWkhc92E4aAY6IhqFtCnDT5nbCZboovNC1grEIY3hBsCoUcQBH5YMRB
+	 l6LZzmUee1G5XSvmNck0peMQDCxopHjzNxn5PevVTjITWheVD/SkFznOUovF8t8iWO
+	 bm4CvGBzfzWT9jHqmRoc0T5gEAGGK4btvy3Mq+so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/265] vhost-scsi: preserve event ordering
-Date: Thu, 26 Nov 2026 15:36:15 +0100
-Message-ID: <20261126143608.241876218@linuxfoundation.org>
+Subject: [PATCH 5.10 054/265] net/iucv: take a private, writable frame before rewriting it in place
+Date: Thu, 26 Nov 2026 15:36:24 +0100
+Message-ID: <20261126143608.884840198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,41 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit a9a428115b7d8aa45e12e41899f90f60551bfa82 ]
+[ Upstream commit f38bce9af9e2a3cced7d303a1476f21c1f42bcb7 ]
 
-vhost_scsi_send_evt() uses llist_add(), so pending events are LIFO.
-vhost_scsi_complete_events() walks the detached list directly.
-This can deliver a later hotplug or hotunplug event before an earlier
-one.
+afiucv_hs_rcv() rewrites the frame in place -- EBCASC() on four name
+fields, then afiucv_swap_src_dest() swaps them and pushes an Ethernet
+header -- and can hand the same skb to dev_queue_xmit(), without making
+it private first, so a packet socket that also gets the frame reads the
+rewritten names. An ETH_P_ALL tap runs first and leaves af_iucv a
+cloned skb; a socket opened for ETH_P_AF_IUCV sits on a ptype_specific
+list, walked after ptype_base[], so deliver_skb() takes a reference and
+af_iucv runs on an skb that is shared but not cloned.
 
-Reverse the detached list before processing it.
-This keeps delivery in enqueue order.
+Unshare, then cow, in that order: skb_cow() can reach
+pskb_expand_head(), which has BUG_ON(skb_shared()). skb_cow() tests
+skb_cloned(), which is what a rewrite of the data needs; skb_cow_head()
+tests only the header. Asking for ETH_HLEN also covers the unchecked
+push in afiucv_swap_src_dest(); on the ordinary path eth_type_trans()
+has already pulled that much, so it only compares.
 
-Fixes: a6c9af87363c ("tcm_vhost: Add hotplug/hotunplug support")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260915094244.7900-2-physicalmtea@gmail.com>
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Closes: https://sashiko.dev/#/patchset/20260813-b4-disp-60433a46-v1-1-509e1200533e@proton.me?part=1
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261028-b4-disp-1edbbc34-v3-1-13495411f5b9@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/iucv/af_iucv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 3b15955751fa2..a32520fe5a828 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -532,7 +532,7 @@ static void vhost_scsi_evt_work(struct vhost_work *work)
- 	struct llist_node *llnode;
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index 034c4c79b898d..c21a0326951f2 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -2065,11 +2065,20 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	int err = NET_RX_SUCCESS;
+ 	char nullstring[8];
  
- 	mutex_lock(&vq->mutex);
--	llnode = llist_del_all(&vs->vs_event_list);
-+	llnode = llist_reverse_order(llist_del_all(&vs->vs_event_list));
- 	llist_for_each_entry_safe(evt, t, llnode, list) {
- 		vhost_scsi_do_evt_work(vs, evt);
- 		vhost_scsi_free_evt(vs, evt);
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb)
++		return NET_RX_SUCCESS;
++
+ 	if (!pskb_may_pull(skb, sizeof(*trans_hdr))) {
+ 		kfree_skb(skb);
+ 		return NET_RX_SUCCESS;
+ 	}
+ 
++	if (skb_cow(skb, ETH_HLEN)) {
++		kfree_skb(skb);
++		return NET_RX_SUCCESS;
++	}
++
+ 	trans_hdr = iucv_trans_hdr(skb);
+ 	EBCASC(trans_hdr->destAppName, sizeof(trans_hdr->destAppName));
+ 	EBCASC(trans_hdr->destUserID, sizeof(trans_hdr->destUserID));
 -- 
 2.53.0
 
