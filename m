@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704264;
-	b=xE7l9EkIXPAuFae280MUzvinMLGls6d1JqvNkVZzHrr5w0nEwwNnv+0RWLfM7LL5EF0Y
-	 8YD0D2FxSmCjejsUTSaZxE5OGo2XXwuSLlUTnhOPqG89joL4G3wT7eTFqo7tIhVNpmvY9
-	 KYf3ov+Yr7vhKy6x78gzS8sEPZfnLGsf1cavzg7uhMRY0Chzant1JDRPy8/Rmw/eMrkrm
-	 fGcUUcD269qwSrKBUe7IbjMoYtnQqDj0kvZyJelbZ6W00XNALExr2qBwMAufhySvi5xu/
-	 oqrtcJ1MVs+bCiOL8IDJ3ySiYmNXQFRts5JJozh0i13q3qD4YzAtVzGOJeNmoxp9gSw==
+	t=1795704267;
+	b=khIbDr4fVT/hEFSNLLttaNJN3+rOLIGH1g+UoBfBq+HVEp1TvASusRRQUwenom1H84mB
+	 2kUv7zXjcYOZRU3zRwfqVUOodAr2wfu4lLNyuOBiXkmo/OW06lTnvlxYSB9baiz1KfV2t
+	 N5rFX3JyCe04SAORr/NOgGrXC8roCwQOUd2gNl3IjNuCOcTkDuyVEGZYFyuKG1Pe2KHem
+	 ra4UXVA0snFMmhqHTwX6GqpJ74IMGPmfRpFi+7x0skqHgyEt0h87s9usuDwAty/Tk/bFH
+	 FoMRluRb5lfQr74Llbu3w/mCLBWusEs9ZGMnbsqkc3L1im+kY0ym73bVuLJNj3/HAMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704264;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704267;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uwltSV97ySIRWhrVXfyPYE1AsaCtKWtmuREdDMWwLQc=;
-	b=zxkBq5ijv2q8h9tFl3pAl8eHr3YkLA4RU6o1NbWYWFD65Gw7qtnDuxEMQRaCwPu3UMwH
-	 WhjvgB2DA2+muBIrCH9nhr16hnyhnQWAgDyROgg6CINVGOXolw4sETiZuqy3Cgtb8FB3b
-	 1CPyO46vBClXyPH8n53N5UnSnJdBi33YA8m6G2nqNmRCNlv+HYzalGfq5qawKj2SJ3T6/
-	 DeG2VAycdXpDaQdX6Iz2fuD6+fyAY8eGxuRdSzvIoa5AXQtfAxuUYa4SPCn0Rtvi9K0xu
-	 3uJ86BCexJl6pn3K7TNTJ+K9ZrKRI46xvV70MqECwuJY1yU7q48BQeTm4HzfB9KvZoA==
+	bh=XM6i2mZMOM2DgX2wOwmwXfJyoblak5+6HrxfHMCMrJ0=;
+	b=K9Q35NdACVziTILTHjuFvq4+UA8gm4KJ2ENoXKnyWaQnA2qzjuwjnHtZ+dMk60vsG4oM
+	 zCHl/qfmnX5DR7iahf/G6Yqjeyqx1B+82lwmvFwbjW6hV6SZVEToxbNvjOaoFesK9YOlu
+	 sIBwFSYXZAWyHm5q9PRUVJJJ4U70Kge+c0va17YjBkC/+ZQy3NG8JsitIQtSNPMW8RWUC
+	 4y+jreaie5YgJhC9PhQymvWePmd4p7iOWe1l5+YOHNgH34HykKHfgWtwcdVDaLoRWnmtB
+	 Vr+VC/cBxja0dodBQvdyv/0MfLNGfWXAktXaYEtdAliFCTwOkUuYpOSLv9JkMBB5HpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npSA0MIe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDn9YFUy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401DE606A31C;
-	Thu, 26 Nov 2026 14:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EA2606A31C;
+	Thu, 26 Nov 2026 14:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npSA0MIe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B1D1F000C4;
-	Thu, 26 Nov 2026 14:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDn9YFUy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244891F000C0;
+	Thu, 26 Nov 2026 14:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704263;
-	bh=uwltSV97ySIRWhrVXfyPYE1AsaCtKWtmuREdDMWwLQc=;
+	s=korg; t=1795704266;
+	bh=XM6i2mZMOM2DgX2wOwmwXfJyoblak5+6HrxfHMCMrJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=npSA0MIeAsenkCNZDqYk80/sCHlr8U9y6+fA/U3TnaciDWWKN64GAe5CU9x5SmOcv
-	 eNPBiAn26sjFyuIywJN44N2WlwA+hTu4TXGiOozRoA9V2XM4/KfVMryFU0gBpBQrHB
-	 zH+oKD0FWkHVSzWrPTGcK4XufNOGEacN1mGsmd4c=
+	b=GDn9YFUykTTUGnLElwnvdLFYu7GeSj0JwAAFZW5dsrADByf4ulzVraKG1UfuhBCTf
+	 T3knpAKiO/DZsI0UWdHGE46SgTqGKbbER9VyJwMy6A4HZkYi5Dgxn8dCFMYV5PK7Uk
+	 bgCVMqieMrX37V187pjmAAdEwuAcCjBK9qtVJFl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Damien Le Moal <damien.lemoal@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/265] vhost-iotlb: Add an opaque pointer for vhost IOTLB
-Date: Thu, 26 Nov 2026 15:36:16 +0100
-Message-ID: <20261126143608.303440734@linuxfoundation.org>
+Subject: [PATCH 5.10 064/265] null_blk: improve zone locking
+Date: Thu, 26 Nov 2026 15:36:34 +0100
+Message-ID: <20261126143609.557587332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,100 +70,667 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yongji <xieyongji@bytedance.com>
+From: Damien Le Moal <damien.lemoal@wdc.com>
 
-[ Upstream commit 59dfe4f1e810b5820443c84f9863b04b033143e8 ]
+[ Upstream commit 2b8b7ed7f3fc2b1536a0add3941ae159529d23bd ]
 
-Add an opaque pointer for vhost IOTLB. And introduce
-vhost_iotlb_add_range_ctx() to accept it.
+With memory backing disabled, using a single spinlock for protecting
+zone information and zone resource management prevents the parallel
+execution on multiple queue of IO requests to different zones.
+Furthermore, regardless of the use of memory backing, if a null_blk
+device is created without limits on the number of open and active zones,
+accounting for zone resource management is not necessary.
 
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Xie Yongji <xieyongji@bytedance.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Link: https://lore.kernel.org/r/20210831103634.33-8-xieyongji@bytedance.com
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: b179f21d2d8a ("vhost: reject invalid IOTLB update permissions")
+>From these observations, zone locking is changed as follows to improve
+performance:
+1) the zone_lock spinlock is renamed zone_res_lock and used only if
+   zone resource management is necessary, that is, if either
+   zone_max_open or zone_max_active are not 0. This is indicated using
+   the new boolean need_zone_res_mgmt in the nullb_device structure.
+   null_zone_write() is modified to reduce the amount of code executed
+   with the zone_res_lock spinlock held.
+2) With memory backing disabled, per zone locking is changed to a
+   spinlock per zone.
+3) Introduce the structure nullb_zone to replace the use of
+   struct blk_zone for zone information. This new structure includes a
+   union of a spinlock and a mutex for zone locking. The spinlock is
+   used when memory backing is disabled and the mutex is used with
+   memory backing.
+
+With these changes, fio performance with zonemode=zbd for 4K random
+read and random write on a dual socket (24 cores per socket) machine
+using the none schedulder is as follows:
+
+before patch:
+	write (psync x 96 jobs) = 465 KIOPS
+	read (libaio@qd=8 x 96 jobs) = 1361 KIOPS
+after patch:
+	write (psync x 96 jobs) = 456 KIOPS
+	read (libaio@qd=8 x 96 jobs) = 4096 KIOPS
+
+Write performance remains mostly unchanged but read performance is three
+times higher. Performance when using the mq-deadline scheduler is not
+changed by this patch as mq-deadline becomes the bottleneck for a
+multi-queue device.
+
+Signed-off-by: Damien Le Moal <damien.lemoal@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 6f2b59737bf9 ("null_blk: fix opening closed zones at the active zone limit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/iotlb.c       | 20 ++++++++++++++++----
- include/linux/vhost_iotlb.h |  3 +++
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ drivers/block/null_blk/null_blk.h |  28 ++-
+ drivers/block/null_blk/zoned.c    | 280 +++++++++++++++++-------------
+ 2 files changed, 188 insertions(+), 120 deletions(-)
 
-diff --git a/drivers/vhost/iotlb.c b/drivers/vhost/iotlb.c
-index 0fd3f87e913c7..5c99e1112cbb7 100644
---- a/drivers/vhost/iotlb.c
-+++ b/drivers/vhost/iotlb.c
-@@ -36,19 +36,21 @@ void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
- EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
+diff --git a/drivers/block/null_blk/null_blk.h b/drivers/block/null_blk/null_blk.h
+index 7de703f28617b..1c23a864a8266 100644
+--- a/drivers/block/null_blk/null_blk.h
++++ b/drivers/block/null_blk/null_blk.h
+@@ -12,6 +12,8 @@
+ #include <linux/configfs.h>
+ #include <linux/badblocks.h>
+ #include <linux/fault-inject.h>
++#include <linux/spinlock.h>
++#include <linux/mutex.h>
  
- /**
-- * vhost_iotlb_add_range - add a new range to vhost IOTLB
-+ * vhost_iotlb_add_range_ctx - add a new range to vhost IOTLB
-  * @iotlb: the IOTLB
-  * @start: start of the IOVA range
-  * @last: last of IOVA range
-  * @addr: the address that is mapped to @start
-  * @perm: access permission of this range
-+ * @opaque: the opaque pointer for the new mapping
-  *
-  * Returns an error last is smaller than start or memory allocation
-  * fails
-  */
--int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
--			  u64 start, u64 last,
--			  u64 addr, unsigned int perm)
-+int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
-+			      u64 start, u64 last,
-+			      u64 addr, unsigned int perm,
-+			      void *opaque)
- {
- 	struct vhost_iotlb_map *map;
+ struct nullb_cmd {
+ 	struct request *rq;
+@@ -33,6 +35,26 @@ struct nullb_queue {
+ 	struct nullb_cmd *cmds;
+ };
  
-@@ -71,6 +73,7 @@ int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
- 	map->last = last;
- 	map->addr = addr;
- 	map->perm = perm;
-+	map->opaque = opaque;
- 
- 	iotlb->nmaps++;
- 	vhost_iotlb_itree_insert(map, &iotlb->root);
-@@ -80,6 +83,15 @@ int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(vhost_iotlb_add_range_ctx);
++struct nullb_zone {
++	/*
++	 * Zone lock to prevent concurrent modification of a zone write
++	 * pointer position and condition: with memory backing, a write
++	 * command execution may sleep on memory allocation. For this case,
++	 * use mutex as the zone lock. Otherwise, use the spinlock for
++	 * locking the zone.
++	 */
++	union {
++		spinlock_t spinlock;
++		struct mutex mutex;
++	};
++	enum blk_zone_type type;
++	enum blk_zone_cond cond;
++	sector_t start;
++	sector_t wp;
++	unsigned int len;
++	unsigned int capacity;
++};
 +
-+int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
-+			  u64 start, u64 last,
-+			  u64 addr, unsigned int perm)
+ struct nullb_device {
+ 	struct nullb *nullb;
+ 	struct config_item item;
+@@ -46,10 +68,10 @@ struct nullb_device {
+ 	unsigned int nr_zones_imp_open;
+ 	unsigned int nr_zones_exp_open;
+ 	unsigned int nr_zones_closed;
+-	struct blk_zone *zones;
++	struct nullb_zone *zones;
+ 	sector_t zone_size_sects;
+-	spinlock_t zone_lock;
+-	unsigned long *zone_locks;
++	bool need_zone_res_mgmt;
++	spinlock_t zone_res_lock;
+ 
+ 	unsigned long size; /* device size in MB */
+ 	unsigned long completion_nsec; /* time in ns to complete a request */
+diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
+index 2bad11424734b..68712a2c42484 100644
+--- a/drivers/block/null_blk/zoned.c
++++ b/drivers/block/null_blk/zoned.c
+@@ -13,9 +13,49 @@ static inline unsigned int null_zone_no(struct nullb_device *dev, sector_t sect)
+ 	return sect >> ilog2(dev->zone_size_sects);
+ }
+ 
++static inline void null_lock_zone_res(struct nullb_device *dev)
 +{
-+	return vhost_iotlb_add_range_ctx(iotlb, start, last,
-+					 addr, perm, NULL);
++	if (dev->need_zone_res_mgmt)
++		spin_lock_irq(&dev->zone_res_lock);
 +}
- EXPORT_SYMBOL_GPL(vhost_iotlb_add_range);
++
++static inline void null_unlock_zone_res(struct nullb_device *dev)
++{
++	if (dev->need_zone_res_mgmt)
++		spin_unlock_irq(&dev->zone_res_lock);
++}
++
++static inline void null_init_zone_lock(struct nullb_device *dev,
++				       struct nullb_zone *zone)
++{
++	if (!dev->memory_backed)
++		spin_lock_init(&zone->spinlock);
++	else
++		mutex_init(&zone->mutex);
++}
++
++static inline void null_lock_zone(struct nullb_device *dev,
++				  struct nullb_zone *zone)
++{
++	if (!dev->memory_backed)
++		spin_lock_irq(&zone->spinlock);
++	else
++		mutex_lock(&zone->mutex);
++}
++
++static inline void null_unlock_zone(struct nullb_device *dev,
++				    struct nullb_zone *zone)
++{
++	if (!dev->memory_backed)
++		spin_unlock_irq(&zone->spinlock);
++	else
++		mutex_unlock(&zone->mutex);
++}
++
+ int null_init_zoned_dev(struct nullb_device *dev, struct request_queue *q)
+ {
+ 	sector_t dev_capacity_sects, zone_capacity_sects;
++	struct nullb_zone *zone;
+ 	sector_t sector = 0;
+ 	unsigned int i;
  
- /**
-diff --git a/include/linux/vhost_iotlb.h b/include/linux/vhost_iotlb.h
-index 6b09b786a7623..2d0e2f52f9388 100644
---- a/include/linux/vhost_iotlb.h
-+++ b/include/linux/vhost_iotlb.h
-@@ -17,6 +17,7 @@ struct vhost_iotlb_map {
- 	u32 perm;
- 	u32 flags_padding;
- 	u64 __subtree_last;
-+	void *opaque;
- };
+@@ -44,26 +84,12 @@ int null_init_zoned_dev(struct nullb_device *dev, struct request_queue *q)
+ 	if (dev_capacity_sects & (dev->zone_size_sects - 1))
+ 		dev->nr_zones++;
  
- #define VHOST_IOTLB_FLAG_RETIRE 0x1
-@@ -29,6 +30,8 @@ struct vhost_iotlb {
- 	unsigned int flags;
- };
+-	dev->zones = kvmalloc_array(dev->nr_zones, sizeof(struct blk_zone),
+-			GFP_KERNEL | __GFP_ZERO);
++	dev->zones = kvmalloc_array(dev->nr_zones, sizeof(struct nullb_zone),
++				    GFP_KERNEL | __GFP_ZERO);
+ 	if (!dev->zones)
+ 		return -ENOMEM;
  
-+int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb, u64 start, u64 last,
-+			      u64 addr, unsigned int perm, void *opaque);
- int vhost_iotlb_add_range(struct vhost_iotlb *iotlb, u64 start, u64 last,
- 			  u64 addr, unsigned int perm);
- void vhost_iotlb_del_range(struct vhost_iotlb *iotlb, u64 start, u64 last);
+-	/*
+-	 * With memory backing, the zone_lock spinlock needs to be temporarily
+-	 * released to avoid scheduling in atomic context. To guarantee zone
+-	 * information protection, use a bitmap to lock zones with
+-	 * wait_on_bit_lock_io(). Sleeping on the lock is OK as memory backing
+-	 * implies that the queue is marked with BLK_MQ_F_BLOCKING.
+-	 */
+-	spin_lock_init(&dev->zone_lock);
+-	if (dev->memory_backed) {
+-		dev->zone_locks = bitmap_zalloc(dev->nr_zones, GFP_KERNEL);
+-		if (!dev->zone_locks) {
+-			kvfree(dev->zones);
+-			return -ENOMEM;
+-		}
+-	}
++	spin_lock_init(&dev->zone_res_lock);
+ 
+ 	if (dev->zone_nr_conv >= dev->nr_zones) {
+ 		dev->zone_nr_conv = dev->nr_zones - 1;
+@@ -86,10 +112,12 @@ int null_init_zoned_dev(struct nullb_device *dev, struct request_queue *q)
+ 		dev->zone_max_open = 0;
+ 		pr_info("zone_max_open limit disabled, limit >= zone count\n");
+ 	}
++	dev->need_zone_res_mgmt = dev->zone_max_active || dev->zone_max_open;
+ 
+ 	for (i = 0; i <  dev->zone_nr_conv; i++) {
+-		struct blk_zone *zone = &dev->zones[i];
++		zone = &dev->zones[i];
+ 
++		null_init_zone_lock(dev, zone);
+ 		zone->start = sector;
+ 		zone->len = dev->zone_size_sects;
+ 		zone->capacity = zone->len;
+@@ -101,8 +129,9 @@ int null_init_zoned_dev(struct nullb_device *dev, struct request_queue *q)
+ 	}
+ 
+ 	for (i = dev->zone_nr_conv; i < dev->nr_zones; i++) {
+-		struct blk_zone *zone = &dev->zones[i];
++		zone = &dev->zones[i];
+ 
++		null_init_zone_lock(dev, zone);
+ 		zone->start = zone->wp = sector;
+ 		if (zone->start + dev->zone_size_sects > dev_capacity_sects)
+ 			zone->len = dev_capacity_sects - zone->start;
+@@ -147,33 +176,18 @@ int null_register_zoned_dev(struct nullb *nullb)
+ 
+ void null_free_zoned_dev(struct nullb_device *dev)
+ {
+-	bitmap_free(dev->zone_locks);
+ 	kvfree(dev->zones);
+ 	dev->zones = NULL;
+ }
+ 
+-static inline void null_lock_zone(struct nullb_device *dev, unsigned int zno)
+-{
+-	if (dev->memory_backed)
+-		wait_on_bit_lock_io(dev->zone_locks, zno, TASK_UNINTERRUPTIBLE);
+-	spin_lock_irq(&dev->zone_lock);
+-}
+-
+-static inline void null_unlock_zone(struct nullb_device *dev, unsigned int zno)
+-{
+-	spin_unlock_irq(&dev->zone_lock);
+-
+-	if (dev->memory_backed)
+-		clear_and_wake_up_bit(zno, dev->zone_locks);
+-}
+-
+ int null_report_zones(struct gendisk *disk, sector_t sector,
+ 		unsigned int nr_zones, report_zones_cb cb, void *data)
+ {
+ 	struct nullb *nullb = disk->private_data;
+ 	struct nullb_device *dev = nullb->dev;
+-	unsigned int first_zone, i, zno;
+-	struct blk_zone zone;
++	unsigned int first_zone, i;
++	struct nullb_zone *zone;
++	struct blk_zone blkz;
+ 	int error;
+ 
+ 	first_zone = null_zone_no(dev, sector);
+@@ -183,19 +197,25 @@ int null_report_zones(struct gendisk *disk, sector_t sector,
+ 	nr_zones = min(nr_zones, dev->nr_zones - first_zone);
+ 	trace_nullb_report_zones(nullb, nr_zones);
+ 
+-	zno = first_zone;
+-	for (i = 0; i < nr_zones; i++, zno++) {
++	memset(&blkz, 0, sizeof(struct blk_zone));
++	zone = &dev->zones[first_zone];
++	for (i = 0; i < nr_zones; i++, zone++) {
+ 		/*
+ 		 * Stacked DM target drivers will remap the zone information by
+ 		 * modifying the zone information passed to the report callback.
+ 		 * So use a local copy to avoid corruption of the device zone
+ 		 * array.
+ 		 */
+-		null_lock_zone(dev, zno);
+-		memcpy(&zone, &dev->zones[zno], sizeof(struct blk_zone));
+-		null_unlock_zone(dev, zno);
+-
+-		error = cb(&zone, i, data);
++		null_lock_zone(dev, zone);
++		blkz.start = zone->start;
++		blkz.len = zone->len;
++		blkz.wp = zone->wp;
++		blkz.type = zone->type;
++		blkz.cond = zone->cond;
++		blkz.capacity = zone->capacity;
++		null_unlock_zone(dev, zone);
++
++		error = cb(&blkz, i, data);
+ 		if (error)
+ 			return error;
+ 	}
+@@ -211,7 +231,7 @@ size_t null_zone_valid_read_len(struct nullb *nullb,
+ 				sector_t sector, unsigned int len)
+ {
+ 	struct nullb_device *dev = nullb->dev;
+-	struct blk_zone *zone = &dev->zones[null_zone_no(dev, sector)];
++	struct nullb_zone *zone = &dev->zones[null_zone_no(dev, sector)];
+ 	unsigned int nr_sectors = len >> SECTOR_SHIFT;
+ 
+ 	/* Read must be below the write pointer position */
+@@ -225,11 +245,9 @@ size_t null_zone_valid_read_len(struct nullb *nullb,
+ 	return (zone->wp - sector) << SECTOR_SHIFT;
+ }
+ 
+-static blk_status_t null_close_zone(struct nullb_device *dev, struct blk_zone *zone)
++static blk_status_t __null_close_zone(struct nullb_device *dev,
++				      struct nullb_zone *zone)
+ {
+-	if (zone->type == BLK_ZONE_TYPE_CONVENTIONAL)
+-		return BLK_STS_IOERR;
+-
+ 	switch (zone->cond) {
+ 	case BLK_ZONE_COND_CLOSED:
+ 		/* close operation on closed is not an error */
+@@ -262,7 +280,7 @@ static void null_close_first_imp_zone(struct nullb_device *dev)
+ 
+ 	for (i = dev->zone_nr_conv; i < dev->nr_zones; i++) {
+ 		if (dev->zones[i].cond == BLK_ZONE_COND_IMP_OPEN) {
+-			null_close_zone(dev, &dev->zones[i]);
++			__null_close_zone(dev, &dev->zones[i]);
+ 			return;
+ 		}
+ 	}
+@@ -311,7 +329,8 @@ static blk_status_t null_check_open(struct nullb_device *dev)
+  * it is not certain that closing an implicit open zone will allow a new zone
+  * to be opened, since we might already be at the active limit capacity.
+  */
+-static blk_status_t null_check_zone_resources(struct nullb_device *dev, struct blk_zone *zone)
++static blk_status_t null_check_zone_resources(struct nullb_device *dev,
++					      struct nullb_zone *zone)
+ {
+ 	blk_status_t ret;
+ 
+@@ -335,7 +354,7 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
+ {
+ 	struct nullb_device *dev = cmd->nq->dev;
+ 	unsigned int zno = null_zone_no(dev, sector);
+-	struct blk_zone *zone = &dev->zones[zno];
++	struct nullb_zone *zone = &dev->zones[zno];
+ 	blk_status_t ret;
+ 
+ 	trace_nullb_zone_op(cmd, zno, zone->cond);
+@@ -346,26 +365,12 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
+ 		return null_process_cmd(cmd, REQ_OP_WRITE, sector, nr_sectors);
+ 	}
+ 
+-	null_lock_zone(dev, zno);
++	null_lock_zone(dev, zone);
+ 
+-	switch (zone->cond) {
+-	case BLK_ZONE_COND_FULL:
++	if (zone->cond == BLK_ZONE_COND_FULL) {
+ 		/* Cannot write to a full zone */
+ 		ret = BLK_STS_IOERR;
+ 		goto unlock;
+-	case BLK_ZONE_COND_EMPTY:
+-	case BLK_ZONE_COND_CLOSED:
+-		ret = null_check_zone_resources(dev, zone);
+-		if (ret != BLK_STS_OK)
+-			goto unlock;
+-		break;
+-	case BLK_ZONE_COND_IMP_OPEN:
+-	case BLK_ZONE_COND_EXP_OPEN:
+-		break;
+-	default:
+-		/* Invalid zone condition */
+-		ret = BLK_STS_IOERR;
+-		goto unlock;
+ 	}
+ 
+ 	/*
+@@ -390,60 +395,69 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
+ 		goto unlock;
+ 	}
+ 
+-	if (zone->cond == BLK_ZONE_COND_CLOSED) {
+-		dev->nr_zones_closed--;
+-		dev->nr_zones_imp_open++;
+-	} else if (zone->cond == BLK_ZONE_COND_EMPTY) {
+-		dev->nr_zones_imp_open++;
++	if (zone->cond == BLK_ZONE_COND_CLOSED ||
++	    zone->cond == BLK_ZONE_COND_EMPTY) {
++		null_lock_zone_res(dev);
++
++		ret = null_check_zone_resources(dev, zone);
++		if (ret != BLK_STS_OK) {
++			null_unlock_zone_res(dev);
++			goto unlock;
++		}
++		if (zone->cond == BLK_ZONE_COND_CLOSED) {
++			dev->nr_zones_closed--;
++			dev->nr_zones_imp_open++;
++		} else if (zone->cond == BLK_ZONE_COND_EMPTY) {
++			dev->nr_zones_imp_open++;
++		}
++
++		if (zone->cond != BLK_ZONE_COND_EXP_OPEN)
++			zone->cond = BLK_ZONE_COND_IMP_OPEN;
++
++		null_unlock_zone_res(dev);
+ 	}
+-	if (zone->cond != BLK_ZONE_COND_EXP_OPEN)
+-		zone->cond = BLK_ZONE_COND_IMP_OPEN;
+ 
+-	/*
+-	 * Memory backing allocation may sleep: release the zone_lock spinlock
+-	 * to avoid scheduling in atomic context. Zone operation atomicity is
+-	 * still guaranteed through the zone_locks bitmap.
+-	 */
+-	if (dev->memory_backed)
+-		spin_unlock_irq(&dev->zone_lock);
+ 	ret = null_process_cmd(cmd, REQ_OP_WRITE, sector, nr_sectors);
+-	if (dev->memory_backed)
+-		spin_lock_irq(&dev->zone_lock);
+-
+ 	if (ret != BLK_STS_OK)
+ 		goto unlock;
+ 
+ 	zone->wp += nr_sectors;
+ 	if (zone->wp == zone->start + zone->capacity) {
++		null_lock_zone_res(dev);
+ 		if (zone->cond == BLK_ZONE_COND_EXP_OPEN)
+ 			dev->nr_zones_exp_open--;
+ 		else if (zone->cond == BLK_ZONE_COND_IMP_OPEN)
+ 			dev->nr_zones_imp_open--;
+ 		zone->cond = BLK_ZONE_COND_FULL;
++		null_unlock_zone_res(dev);
+ 	}
++
+ 	ret = BLK_STS_OK;
+ 
+ unlock:
+-	null_unlock_zone(dev, zno);
++	null_unlock_zone(dev, zone);
+ 
+ 	return ret;
+ }
+ 
+-static blk_status_t null_open_zone(struct nullb_device *dev, struct blk_zone *zone)
++static blk_status_t null_open_zone(struct nullb_device *dev,
++				   struct nullb_zone *zone)
+ {
+-	blk_status_t ret;
++	blk_status_t ret = BLK_STS_OK;
+ 
+ 	if (zone->type == BLK_ZONE_TYPE_CONVENTIONAL)
+ 		return BLK_STS_IOERR;
+ 
++	null_lock_zone_res(dev);
++
+ 	switch (zone->cond) {
+ 	case BLK_ZONE_COND_EXP_OPEN:
+ 		/* open operation on exp open is not an error */
+-		return BLK_STS_OK;
++		goto unlock;
+ 	case BLK_ZONE_COND_EMPTY:
+ 		ret = null_check_zone_resources(dev, zone);
+ 		if (ret != BLK_STS_OK)
+-			return ret;
++			goto unlock;
+ 		break;
+ 	case BLK_ZONE_COND_IMP_OPEN:
+ 		dev->nr_zones_imp_open--;
+@@ -451,35 +465,57 @@ static blk_status_t null_open_zone(struct nullb_device *dev, struct blk_zone *zo
+ 	case BLK_ZONE_COND_CLOSED:
+ 		ret = null_check_zone_resources(dev, zone);
+ 		if (ret != BLK_STS_OK)
+-			return ret;
++			goto unlock;
+ 		dev->nr_zones_closed--;
+ 		break;
+ 	case BLK_ZONE_COND_FULL:
+ 	default:
+-		return BLK_STS_IOERR;
++		ret = BLK_STS_IOERR;
++		goto unlock;
+ 	}
+ 
+ 	zone->cond = BLK_ZONE_COND_EXP_OPEN;
+ 	dev->nr_zones_exp_open++;
+ 
+-	return BLK_STS_OK;
++unlock:
++	null_unlock_zone_res(dev);
++
++	return ret;
+ }
+ 
+-static blk_status_t null_finish_zone(struct nullb_device *dev, struct blk_zone *zone)
++static blk_status_t null_close_zone(struct nullb_device *dev,
++				    struct nullb_zone *zone)
+ {
+ 	blk_status_t ret;
+ 
+ 	if (zone->type == BLK_ZONE_TYPE_CONVENTIONAL)
+ 		return BLK_STS_IOERR;
+ 
++	null_lock_zone_res(dev);
++	ret = __null_close_zone(dev, zone);
++	null_unlock_zone_res(dev);
++
++	return ret;
++}
++
++static blk_status_t null_finish_zone(struct nullb_device *dev,
++				     struct nullb_zone *zone)
++{
++	blk_status_t ret = BLK_STS_OK;
++
++	if (zone->type == BLK_ZONE_TYPE_CONVENTIONAL)
++		return BLK_STS_IOERR;
++
++	null_lock_zone_res(dev);
++
+ 	switch (zone->cond) {
+ 	case BLK_ZONE_COND_FULL:
+ 		/* finish operation on full is not an error */
+-		return BLK_STS_OK;
++		goto unlock;
+ 	case BLK_ZONE_COND_EMPTY:
+ 		ret = null_check_zone_resources(dev, zone);
+ 		if (ret != BLK_STS_OK)
+-			return ret;
++			goto unlock;
+ 		break;
+ 	case BLK_ZONE_COND_IMP_OPEN:
+ 		dev->nr_zones_imp_open--;
+@@ -490,27 +526,35 @@ static blk_status_t null_finish_zone(struct nullb_device *dev, struct blk_zone *
+ 	case BLK_ZONE_COND_CLOSED:
+ 		ret = null_check_zone_resources(dev, zone);
+ 		if (ret != BLK_STS_OK)
+-			return ret;
++			goto unlock;
+ 		dev->nr_zones_closed--;
+ 		break;
+ 	default:
+-		return BLK_STS_IOERR;
++		ret = BLK_STS_IOERR;
++		goto unlock;
+ 	}
+ 
+ 	zone->cond = BLK_ZONE_COND_FULL;
+ 	zone->wp = zone->start + zone->len;
+ 
+-	return BLK_STS_OK;
++unlock:
++	null_unlock_zone_res(dev);
++
++	return ret;
+ }
+ 
+-static blk_status_t null_reset_zone(struct nullb_device *dev, struct blk_zone *zone)
++static blk_status_t null_reset_zone(struct nullb_device *dev,
++				    struct nullb_zone *zone)
+ {
+ 	if (zone->type == BLK_ZONE_TYPE_CONVENTIONAL)
+ 		return BLK_STS_IOERR;
+ 
++	null_lock_zone_res(dev);
++
+ 	switch (zone->cond) {
+ 	case BLK_ZONE_COND_EMPTY:
+ 		/* reset operation on empty is not an error */
++		null_unlock_zone_res(dev);
+ 		return BLK_STS_OK;
+ 	case BLK_ZONE_COND_IMP_OPEN:
+ 		dev->nr_zones_imp_open--;
+@@ -524,12 +568,15 @@ static blk_status_t null_reset_zone(struct nullb_device *dev, struct blk_zone *z
+ 	case BLK_ZONE_COND_FULL:
+ 		break;
+ 	default:
++		null_unlock_zone_res(dev);
+ 		return BLK_STS_IOERR;
+ 	}
+ 
+ 	zone->cond = BLK_ZONE_COND_EMPTY;
+ 	zone->wp = zone->start;
+ 
++	null_unlock_zone_res(dev);
++
+ 	return BLK_STS_OK;
+ }
+ 
+@@ -538,19 +585,19 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_opf op,
+ {
+ 	struct nullb_device *dev = cmd->nq->dev;
+ 	unsigned int zone_no;
+-	struct blk_zone *zone;
++	struct nullb_zone *zone;
+ 	blk_status_t ret;
+ 	size_t i;
+ 
+ 	if (op == REQ_OP_ZONE_RESET_ALL) {
+ 		for (i = dev->zone_nr_conv; i < dev->nr_zones; i++) {
+-			null_lock_zone(dev, i);
+ 			zone = &dev->zones[i];
++			null_lock_zone(dev, zone);
+ 			if (zone->cond != BLK_ZONE_COND_EMPTY) {
+ 				null_reset_zone(dev, zone);
+ 				trace_nullb_zone_op(cmd, i, zone->cond);
+ 			}
+-			null_unlock_zone(dev, i);
++			null_unlock_zone(dev, zone);
+ 		}
+ 		return BLK_STS_OK;
+ 	}
+@@ -558,7 +605,7 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_opf op,
+ 	zone_no = null_zone_no(dev, sector);
+ 	zone = &dev->zones[zone_no];
+ 
+-	null_lock_zone(dev, zone_no);
++	null_lock_zone(dev, zone);
+ 
+ 	switch (op) {
+ 	case REQ_OP_ZONE_RESET:
+@@ -581,7 +628,7 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_opf op,
+ 	if (ret == BLK_STS_OK)
+ 		trace_nullb_zone_op(cmd, zone_no, zone->cond);
+ 
+-	null_unlock_zone(dev, zone_no);
++	null_unlock_zone(dev, zone);
+ 
+ 	return ret;
+ }
+@@ -589,29 +636,28 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_opf op,
+ blk_status_t null_process_zoned_cmd(struct nullb_cmd *cmd, enum req_opf op,
+ 				    sector_t sector, sector_t nr_sectors)
+ {
+-	struct nullb_device *dev = cmd->nq->dev;
+-	unsigned int zno = null_zone_no(dev, sector);
++	struct nullb_device *dev;
++	struct nullb_zone *zone;
+ 	blk_status_t sts;
+ 
+ 	switch (op) {
+ 	case REQ_OP_WRITE:
+-		sts = null_zone_write(cmd, sector, nr_sectors, false);
+-		break;
++		return null_zone_write(cmd, sector, nr_sectors, false);
+ 	case REQ_OP_ZONE_APPEND:
+-		sts = null_zone_write(cmd, sector, nr_sectors, true);
+-		break;
++		return null_zone_write(cmd, sector, nr_sectors, true);
+ 	case REQ_OP_ZONE_RESET:
+ 	case REQ_OP_ZONE_RESET_ALL:
+ 	case REQ_OP_ZONE_OPEN:
+ 	case REQ_OP_ZONE_CLOSE:
+ 	case REQ_OP_ZONE_FINISH:
+-		sts = null_zone_mgmt(cmd, op, sector);
+-		break;
++		return null_zone_mgmt(cmd, op, sector);
+ 	default:
+-		null_lock_zone(dev, zno);
++		dev = cmd->nq->dev;
++		zone = &dev->zones[null_zone_no(dev, sector)];
++
++		null_lock_zone(dev, zone);
+ 		sts = null_process_cmd(cmd, op, sector, nr_sectors);
+-		null_unlock_zone(dev, zno);
++		null_unlock_zone(dev, zone);
++		return sts;
+ 	}
+-
+-	return sts;
+ }
 -- 
 2.53.0
 
