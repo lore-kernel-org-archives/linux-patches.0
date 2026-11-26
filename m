@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705261;
-	b=OQyDSNXOA+ZNRUVoHsKBg+hQUtKKjHPha2jc64Slym+Wi3eijhrjiHjR7CJbPUDZAnT4
-	 M+saWNqJ3Mi1IUQDX/VpisLzQnC/eZOWeiPslBKUOjnIyHTbuM1jd12fS4S+Uc8wVmQBV
-	 AhMDySKe45qWkSozZzCCaQX1IXr0W3PpnqjDCotWWfoGHD56/0/uzXMUtVIMOnrLznfQI
-	 hslE9dQE3xdJDp3hhJTYPDz2VIbAxlQAdC5+bIPyRpqUnFcP5PCPBBVLzKpCpSCRHa232
-	 Ij5EsEIig+8d7VeGgu/EcdhETtUcfgyr+y0ZJ/MBggY/jQyFmMAgluBI+ffub8LqLxA==
+	t=1795705265;
+	b=Gwf8f25C2aNedlM7VpQopZT9TuSUK4UR1EyuuwDbxGidcZhFr+NJ4SQPfahZBGyIXrsQ
+	 9wMibQbJUyYzDX6U37qUHpD+1yRuaVR6JWHsTZeiIvmbYA2Ue0Stdsfq06vBD1+nydYjo
+	 Xn6ZWsEE+0rdXdWGw9B+byGzFSSU/b66OCaMTkouY7WKLXaeRw7qCiKiOgWpkatcaUg1B
+	 koAs3n67Vqu99xsqyKTdr20puUPOoDDMZFi+xkvyGYdYuw9jTk5Bl+CwY1Me2+4+U56SI
+	 k7iunG4THcrMz2e3m35VdMy5IMB9+xTpxEkUzBFeYZJjFhpMm0kHi4BqPvAtEHCv7WQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kyvNZAaFcqtFNCizcRHhiESSmM9vsKfkHlMrWgAncAY=;
-	b=PV5sBeTLlS6yLeLwXhD/RgpE/Bfiy6VtR77Uqk9+uIZqW+zXfDevLWnqccQ6jIY8dPMF
-	 tT+mGtRVg4NQ3zGsyXrvn1OLRygZtIV69HHUsSgPS2p1YM5nr3uKrI7nyyMjCKc4C0cwk
-	 YMY67MLOxkXXpWJADdTdoQo93DiNntckeipQRAxLVE/g66uQQrCgnzRF/27Knw3HDv1N1
-	 Bwcy/6Yd6Z29MZGeKl27nTZ/3ZSQI5LIhpqhqaFrtNYf56BZ/3DRanzOkMoJ2AVM8rhHX
-	 vt4pztOQ2m6SqHsODAKDKEcEXafVTSxU5q1vpOi7TeRjzUS8rC/uAS1BhcaQQI0YlWg==
+	bh=Uz2Hb5/I8k2kdeJAQjSVkp14YH62fh9NIAqks0T21kY=;
+	b=0rbojdkt4ZgXum22zAZ1FfO3FtbzdsCYyrZCNB8Ppq1wujwXZyPEuL1FK+82sFu2Y7jr
+	 0oqBV2SY07MVcQUkRJm4UNs4AsPd8jxqDW25EKQdyoyqfiJ8dMh4vquXxgDkR8yVxlhTh
+	 X3EaPwWHPLPm91s8uCYolBcogi+6i8vl0Tp4aAPfpqFLdzlPtNMo3tPbaLxD4eccwxB2s
+	 0U5H+mJHLg1kD2tx/23qKdEj3o+Ndiyu0sEFnLSOziVJZdUKcMj4h/uSMsEkbKSMndbwf
+	 YPuFNFXg3jM8IIk86VJHpP22qEbRYHXsUTX5HF0QuyajaCHGP0YRpagfHnGybmC4+sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0w7GWHli;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gCfEaGfT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD51606A321;
-	Thu, 26 Nov 2026 15:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B3A606A32C;
+	Thu, 26 Nov 2026 15:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0w7GWHli
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17061F000EB;
-	Thu, 26 Nov 2026 15:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gCfEaGfT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE711F000F2;
+	Thu, 26 Nov 2026 15:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705261;
-	bh=kyvNZAaFcqtFNCizcRHhiESSmM9vsKfkHlMrWgAncAY=;
+	s=korg; t=1795705264;
+	bh=Uz2Hb5/I8k2kdeJAQjSVkp14YH62fh9NIAqks0T21kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0w7GWHliLcynZ83XFOc44AdVzTGm8n9C+uDvAr8Uiu+c4kn/plkGxeaX7ASnQUNru
-	 pZ8BGuLN9NTvuAe3F9E4aofCXKREwK8wMEayxlsUlvrUn2aLXhF1ZKf5nHilEZhGXP
-	 6z6bfTgAPcJNJNuSm/9A0FaQ6Ta8s4/cfm2AXR9g=
+	b=gCfEaGfTto0coKEmFqG1ITtCVm2aEjv/ctfFSZ3COIhwZRQIAb+sJB21HEk5tgrT6
+	 fh38d2lXHWSb9/NvZyJXDeLi4obOAoSZDkzWhiQFRMKm3gAoqhq15erfU0PIfsGH4Z
+	 fPDbLZJrP0OtArg5MVmdsAjI4G/4KMMS2bV6E+ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/319] SUNRPC: Balance queue accounting when relocating a task
-Date: Thu, 26 Nov 2026 15:38:28 +0100
-Message-ID: <20261126144009.907559286@linuxfoundation.org>
+Subject: [PATCH 5.15 141/319] ipv6: ignore link state in gateway check
+Date: Thu, 26 Nov 2026 15:38:29 +0100
+Message-ID: <20261126144009.930734338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,45 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
 
-[ Upstream commit f14b157168ac106cfac6d577e08726488b1b886c ]
+[ Upstream commit b76bcf3fff9332076d92de47a80d12fd3d5268e2 ]
 
-When rpc_task_set_transport() relocates a movable task from an
-offline transport, it releases the request and drops the
-transport reference without decrementing the old transport's
-queuelen or the switch's xps_queuelen. Releasing the task
-later only accounts for the replacement transport.
+IPv6 route cannot be added in table when all
+following conditions are true:
+- gateway is not link-local address
+- ignore_routes_with_linkdown=1 on device
+- nexthop has no carrier
+- gateway is not present or covered by any route in table already
+Also multipath routes addition is invalidated by kernel even
+if only one of added nexthops satisfies all above conditions.
 
-The stale counts affect transport selection and can prevent
-xprt_delete_locked() from removing an otherwise idle transport.
+Reproducer:
 
-Use rpc_task_release_xprt() to balance the previous assignment
-before selecting a replacement. Pass clnt explicitly because
-rpc_task_set_client() can assign a transport before tk_client
-is initialized.
+  ip netns add t
+  ip -n t link add va type veth peer name vb
+  ip -n t link set va up
+  ip -n t addr add fd00::1/64 dev va nodad
+  ip netns exec t sysctl -w \
+    net.ipv6.conf.va.ignore_routes_with_linkdown=1
+  ip -n t -6 route add 2001:db8::/64 via fd00::2 dev va
+  # added
+  ip -n t -6 route add 2001:db8::/64 table 100 via fd00::2 dev va
+  # RTNETLINK answers: No route to host
+  ip -n t -6 route show table all
+  ip netns del t
 
-Fixes: 82ee41b85cef ("SUNRPC don't resend a task on an offlined transport")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Route should be added because:
+- RT6_LOOKUP_F_IGNORE_LINKSTATE in commit d5d32e4b7668
+("net: ipv6: Do not consider link state for nexthop validation")
+was added for this
+- the same route is valid in main table (when no specifying table id
+while adding route)
+- fib6_nh_init() initializes nexthops with no carrier
+- IPv4 already does this (fib_check_nh_v4_gw() ignores link state
+using the FIB_LOOKUP_IGNORE_LINKSTATE flag)
+
+Before commit b2c709cce682 ("ipv6: Convert gateway validation to
+use fib6_info") rt6_lookup() was used for checking if nexthop is
+valid, rt6_lookup called rt6_device_match() which does not check the
+link state. After change rt6_lookup() to fib6_lookup()
+find_match() under fib6_lookup() started to invalidate linkdown
+devices, because RT6_LOOKUP_F_IGNORE_LINKSTATE is not passed to it.
+
+Adding RT6_LOOKUP_F_IGNORE_LINKSTATE to flags for ip6_route_check_nh()
+solves the problem. RT6_LOOKUP_F_IGNORE_LINKSTATE is already used
+inside the first search ip6_nh_lookup_table() and fixes the
+bug in second search fib6_lookup(). Also RT6_LOOKUP_F_IGNORE_LINKSTATE
+isn't read inside fib6_select_path().
+
+Fixes: b2c709cce682 ("ipv6: Convert gateway validation to use fib6_info")
+Signed-off-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104195655.1406837-2-aroslavdudkov622@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 +-
+ net/ipv6/route.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 7d7950068b030..799b61a1be010 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1084,7 +1084,7 @@ void rpc_task_set_transport(struct rpc_task *task, struct rpc_clnt *clnt)
- 		      (task->tk_flags & RPC_TASK_MOVEABLE)))
- 			return;
- 		xprt_release(task);
--		xprt_put(task->tk_xprt);
-+		rpc_task_release_xprt(clnt, task->tk_xprt);
- 	}
- 	if (task->tk_flags & RPC_TASK_NO_ROUND_ROBIN)
- 		task->tk_xprt = rpc_task_get_first_xprt(clnt);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index ef00ace1fed6f..125fd319d14ba 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3389,9 +3389,9 @@ static int ip6_route_check_nh(struct net *net,
+ 			      struct net_device **_dev,
+ 			      struct inet6_dev **idev)
+ {
++	int flags = RT6_LOOKUP_F_IFACE | RT6_LOOKUP_F_IGNORE_LINKSTATE;
+ 	const struct in6_addr *gw_addr = &cfg->fc_gateway;
+ 	struct net_device *dev = _dev ? *_dev : NULL;
+-	int flags = RT6_LOOKUP_F_IFACE;
+ 	struct fib6_result res = {};
+ 	int err = -EHOSTUNREACH;
+ 
 -- 
 2.53.0
 
