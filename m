@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705332;
-	b=xWEOI742DOZtP7m4t/Mv/9j7IIJwQL0gpt+MeTwpbg8MEJzevTz+p2IJSksF4a6oqOT/
-	 EFC8PBgjvO8cCHOj/1usB0yCVIjBog7vhL2kpsyWbVVgMbf4nZRqxo1O6Q+yzavKe8aP5
-	 eda703RdHbwtDiFYEgnmmIfUHipdO7G255UgJ/UQ38z41lJ+RiyZO7lLlZJ1rJQu5kSv5
-	 wQ6v8Zqte2E47KxqAMp4ytaV8vgOfdalm0og0CJmdNI/lgUimsbEeb9DDbjiyau3c1PGE
-	 cM0s3wt49GwV35v/Dlin91JRo68XbD5JTvPECxWeMmQqyRZakMXTgFTXvja1ttsqGmg==
+	t=1795705337;
+	b=j5nHOaRu35gtX4Cxk+Cdc31dLSZYlZHWDIbETmB/nraTuejYWUEFEb0qlbJAsNukGPSP
+	 u+uRlgO6N5WNd1iixQDpDAh/9QYIu9IAoDJq0m+byuC4KbJgBgesJRq7Bpab1aFgIlaMW
+	 Ns71E7NbV9Ut1N7W8DPq4bVQEvZaJNFCpmsZ+ofpObUA1OXDDhMHsqmJDkFZcCSN6tXun
+	 8n5Cwin2gK6TKIS+VEwC+iTcwD0hYuE8zdsTyfK/1jbQgtmE5fFw8ir/kZ7e83l6Lmoez
+	 92VbR7NwXG24b6t8w3C5ITtrJD9o1UQZZCuxleNIOU1Fxkak9jEhA4kIrBd0tyZp5Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705332;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4lZaRZerT0TO0HdGRLVO052WB+WoqBpeN8seFB5I+3s=;
-	b=IDvrFafciwWOFziH1QQPKyHTC2OjyaE4Oe9bwjEHKpQvQnWK13JUIe0K2Gue6zA/BYLO
-	 Xsbc3R5Y0fnJBTR0ZReqEJiWlKhgnRjHmjCNsSZciJsh0QyAx5mR/nKTggKY0HL/+qPwc
-	 nnZeo9COPPY6kJQ6KntkWsyCHy5NfVcq32asBXTqXyj/7esmKAtzaI5LEQVqU7enAvuE1
-	 jttmX9f7itOa6LrAeIu/hvG2hZ4w1cb3O5zQBM1fcdWenhmarvxsDda5HpU0bP474xTHv
-	 lbEQ1S0KmcUxa02rNLZvDrJ3xc/EmX/Vx9gyQXVH6yhCJYDY8ecwNNIwdzmhiNInIMA==
+	bh=a7NSQ37eomNxnb4CmnfF4NN25k87c4Xl3YT/rMtPuHo=;
+	b=hk109eUwel7duQh6qPgE9mxvV1eb1JGoy5v7/R6OyOBrjY6pHQcLnl4UcMiB5gnjINbz
+	 3GjhRy9R3trP6pY9VSgVhtbB08UcI20KTv8Pof+/flg7F87n0WxB1TNmJKgJVtBLj52s9
+	 UR1HUzb+Rhw+ig8GcCPMG5/27jTgzlrerLmKxsR64dXtqPPoNcVW/yMtrJ/PBSbe8yMOo
+	 lUrQNHWUn7wzXDv+gvSzO2agnoGYr4ToS1ZdhF/QrjTKaOOV+Q6ScpsgECnjK9Lb62iWn
+	 a+WPYRd+50EDIuPLFcmeKbx3v8ZkXvifR4RC8E/cADaw6NH3AOw/qwwGyUEgcXuEXEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuMl532Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQpS7Nzf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E883F606A32C;
-	Thu, 26 Nov 2026 15:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6EC606A323;
+	Thu, 26 Nov 2026 15:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuMl532Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1381F000E0;
-	Thu, 26 Nov 2026 15:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQpS7Nzf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D131F000D3;
+	Thu, 26 Nov 2026 15:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705331;
-	bh=4lZaRZerT0TO0HdGRLVO052WB+WoqBpeN8seFB5I+3s=;
+	s=korg; t=1795705337;
+	bh=a7NSQ37eomNxnb4CmnfF4NN25k87c4Xl3YT/rMtPuHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EuMl532Ynquj4x5HYQZfyyVMkZ1EAKqo18ngq0YXTx4ZbY3WGcjoUl8YdzWdiAi+e
-	 FnpGtAXF6sFSdrmeNLDH5w6SA6byFHSVzLSFx51Th572kYVydCf3tbwnlnzdzZjtaN
-	 XZTpkvI3GCamwKQaNlIVxkAsIdKrcfhDAzgRZr8E=
+	b=DQpS7Nzfz+iYeM1F7sIpAEFxVFj0qqFnTjd4wx5JtWPSPhT9HRGAYow2wvswvJ1fs
+	 0uh6x4s1CsKr3lV3ZPvhWe8geV0H/IMODrkXQDFt7ImB4m9ZoX8keJM38HiFkAVJh+
+	 4Sixsgj2MjkvTAr3dlpGyIVbAVYoQBour0L0G04w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com,
+	Jiahao Xu <xujiahao@cmss.chinamobile.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/319] tcp: Pass req->rsk_listener to inet_csk_reqsk_queue_drop() in tcp_check_req().
-Date: Thu, 26 Nov 2026 15:38:49 +0100
-Message-ID: <20261126144010.380159364@linuxfoundation.org>
+Subject: [PATCH 5.15 162/319] net: usb: cdc_ncm: dont underflow the NDP room check
+Date: Thu, 26 Nov 2026 15:38:50 +0100
+Message-ID: <20261126144010.403772383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,77 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Jiahao Xu <xujiahao@cmss.chinamobile.com>
 
-[ Upstream commit a9782a6f2bbd0c444689725a710d8b21eab61bc5 ]
+[ Upstream commit b507828c7b6135ff7a4b69eba6e33502b4839fb9 ]
 
-When connection migration happens in tcp_v[46]_rcv(), a new
-listener is passed to tcp_check_req().
+cdc_ncm_ndp16() and cdc_ncm_ndp32() verify that the new NDP and the
+datagram fit into the NTB with an unsigned subtraction:
 
-When either of the following is true,
+	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
+		return NULL;
 
-  * the new listener queue is full and
-    net.ipv4.tcp_abort_on_overflow is set
+Nothing guarantees that skb->len plus the reserve stays below
+tx_curr_size, and when it does not the subtraction wraps around to a
+huge value, the check passes, and the skb_put_zero() of max_ndp_size
+bytes that follows overruns the NTB:
 
-  * the packet has RST or (not stripped) SYN
+  skbuff: skb_over_panic: text:ffff80000db33558 len:428 put:172
+  head:ffff0000c2c66100 tail:0x1ac end:0x140
+  kernel BUG at net/core/skbuff.c:200
+  skb_put_zero include/linux/skbuff.h:2595 [inline]
+  cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1132 [inline]
+  cdc_ncm_fill_tx_frame+0xdf0/0x30e0 drivers/net/usb/cdc_ncm.c:1309
 
-tcp_check_req() sends RST and calls inet_csk_reqsk_queue_drop().
+Here tx_curr_size is 0x140 = 320, skb->len is already 256 and the
+skb_put_zero() wants another 172 bytes.
 
-Here, the new listener is passed, and its qlen is decremented
-wrongly while reqsk is tied to the old listener.
+Two device controlled settings make this reachable:
 
-Once qlen underflows, inet_csk_reqsk_queue_is_full() always
-return true, and the new listener stops serving.
+  - dwNtbOutMaxSize = 320 caps tx_max at 320.  The lower bound computed
+    in cdc_ncm_check_tx_max() is max_datagram_size + max_ndp_size + the
+    NTH header, but cdc_ncm_setup() clamps tx_max before
+    cdc_ncm_set_dgram_size() runs, so max_datagram_size is still 0 and
+    the bound is only max_ndp_size + the NTH header.  It does not
+    reserve room for one datagram plus one NDP.
 
-Without the patch, this script times out while waiting for SYN+ACK
-since the new listener drops SYN, but with the patch, 3WHS completes.
+  - wNdpOutAlignment = 256 is accepted by cdc_ncm_fix_modulus() as long
+    as it is smaller than tx_max, and cdc_ncm_align_tail() then pads the
+    12 byte NTH header up to 256 bytes right before this check.
 
-    0 `sysctl -q net.ipv4.tcp_migrate_req=1`
-   +0 `sysctl -q net.ipv4.tcp_syncookies=0`
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-   +0 setsockopt(3, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
-   +0 bind(3, ..., ...) = 0
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
-   +0 setsockopt(4, SOL_SOCKET, SO_REUSEPORT, [1], 4) = 0
-   +0 bind(4, ..., ...) = 0
-   +0 listen(4, 128) = 0
-   +0 < S 0:0(0) win 32792 <mss 1000>
-   +0 > S. 0:0(0) ack 1 <...>
-   +0 listen(3, 128) = 0
-   +0 close(4) = 0
- +.01 < R 1:1(0) win 0
-   +0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 5
-   +0 listen(5, 1) = 0
- +.01 < S 0:0(0) win 32792 <mss 1000>
-   +0 > S. 0:0(0) ack 1 <...>
-   +0 < . 1:1(0) ack 1 win 32792
-   +0 fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK) = 0
-   +0 accept(3, ..., ...) = 6
+An NDP can also be added to an NTB that already holds datagrams through
+cdc_mbim_tx_fixup(), which uses a different signature per MBIM session.
+On plain cdc_ncm the chain lookup in cdc_ncm_ndp16() returns the
+existing NDP for the single signature, so there the create path is
+normally reached for the first datagram of each NTB.
 
-Let's pass req->rsk_listener instead.
+Rewrite the test as an addition, which cannot underflow and gives the
+same answer whenever the original subtraction did not wrap.
 
-Fixes: d4f2c86b2b7e ("tcp: Migrate TCP_NEW_SYN_RECV requests at receiving the final ACK.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261111020304.1532064-2-kuniyu@google.com
+Fixes: c78b7c586657 ("net: cdc_ncm: refactoring for tx multiplexing")
+Fixes: 0fa81b304a79 ("cdc_ncm: Implement the 32-bit version of NCM Transfer Block")
+Reported-by: syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1994e2ecf323ed90f255
+Signed-off-by: Jiahao Xu <xujiahao@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20261111124156.637661-1-xujiahao@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/cdc_ncm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index be4fb0ce2574c..1abe28b8bfc5e 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -810,7 +810,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 		tcp_reset(sk, skb);
- 	}
- 	if (!fastopen) {
--		bool unlinked = inet_csk_reqsk_queue_drop(sk, req);
-+		bool unlinked = inet_csk_reqsk_queue_drop(req->rsk_listener, req);
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index 7c9108205743a..6c2aa3aae7716 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -1120,7 +1120,7 @@ static struct usb_cdc_ncm_ndp16 *cdc_ncm_ndp16(struct cdc_ncm_ctx *ctx, struct s
+ 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
  
- 		if (unlinked)
- 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_EMBRYONICRSTS);
+ 	/* verify that there is room for the NDP and the datagram (reserve) */
+-	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
++	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
+ 		return NULL;
+ 
+ 	/* link to it */
+@@ -1175,7 +1175,7 @@ static struct usb_cdc_ncm_ndp32 *cdc_ncm_ndp32(struct cdc_ncm_ctx *ctx, struct s
+ 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
+ 
+ 	/* verify that there is room for the NDP and the datagram (reserve) */
+-	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
++	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
+ 		return NULL;
+ 
+ 	/* link to it */
 -- 
 2.53.0
 
