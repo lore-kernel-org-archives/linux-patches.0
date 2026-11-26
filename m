@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705371;
-	b=2YLGHI7SFeIABw9IfIJiey/sBh3dWWa+JLDgqQg8Xuyr1Y60ynqOnlLZJcgDS0Mgld9K
-	 vb4dnKBc01bK5vLl2MTimsu7rYoSSEL6+ZOKGzRulOVrDJ7lFrZEYpeprr8OsmzK91hWC
-	 f6M6xTppb4XTHhoz+l31Ayww+zjjrpBloVAYhBIwnmx5mRrvYPrA0uljXhG+Y/jqDg54I
-	 sJjTIXvifLA00EjLdDMNPWIVCWgPxpggAMa1Z59oKlF1Gik1lGQCr6iVzs/TJZO2kEl3M
-	 3qVe6OOG8qKeJMrGKeH8LREJs4/F0X2JXZ/4wbR7//uRIugrQQkciifDlkzwJ0UnRwg==
+	t=1795705374;
+	b=ocWWw9sCtwcm4KI84cxYwM5sbfAkFAwYQlj0Lib0xf/qAfwHATyEjzR6q/RKe878ZKR8
+	 76f/1vB/eBxef27+1uoT2p+FBzEkG84tLXXpR5Qe1XkY6/8/Vhdhc7SeuLGAt0DXfG6ij
+	 kMq4uf2pt7fSwL/23pGsSn9NqjEFL+qzjG6iCxw9aUqbo0kizF/OAI8BC9lp2KxhoK/ha
+	 Me+n4erZXwhLgQeAy2RVL2qZ0P8CmcmrFPRlYJoD1OjIyB7hD/Vhu1o6fvBMVJX0B0i84
+	 Vyv259P//gPMWxedouGk6g4v9CuPtel4qEpVq1Up7o1eumHgNbFaf8fm3GYe//22Blg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IXyFJsPItRTwhgosdaYh6fMTKCDxec1V4x3DUClr5YQ=;
-	b=m1aFBIRclUvinkZgdvSBaTtq6RP9IViIVTO3eu/lzSL4J27u65OZy59SBfJ0CFKaLsrb
-	 Il61JXczoCtvYAFh9qO0JJQQk6iNg1qa1bwmBgFxMB9PzmN782d4em/I2jlkFB8EKusoi
-	 5D/Ew/IMe3PFCwLFkTeOsiJFIkDe0LA81wbuLO2lAu8m2pbVBBrvC2zx8t5IKIOPVMfTr
-	 jyBmJJRejyF/VwUFB98NmQlde7ZrsrUVQHtTkkiuXNLxTvVQsiudDSXZXVvXnmcUkFHko
-	 DBGuE4qgffEUe8c5zV5gkr2fSwtq61aSPKlqIzpf6SjhIY/No1dtQp3Bc1GKmIkvp6w==
+	bh=kbXVmJxsjucOhAcxv1Hr9eJdgAsYp+Bq3gHLK9QZ75w=;
+	b=ufnKWtDwXBFYYrvzRGiXOhPxBXNJOzn85ZCFSiyGaDE7Jex8bGWOWW/+apBpqON7el08
+	 wTY9rulNC5PEwyMNVkf0PHeuzORnjbTj/4XRz1qYy4dfYUBiLO46XNc2nxENVaY5g7wdO
+	 qk0OtRwhW1vlZmVHjEvLp/UWGfNfXJaR2llnRJTdLinJNCLQ4h8IZPzAvYtPfWIYyyykJ
+	 FOa/+aia9/AtdZ2yqEIhMKw4kz4ierVu3v4SMZxIZQyI4MymmqXbdfq0sOdzpGoweDqJh
+	 YiWz7rBGlKzaDtK6WKnKMIBXxkw1BcX/tJNCsUTyvooT3D9EtzxeyfhaeYSz0HIQglQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K9/yoVVa";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9Oq9j0e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40B7606A326;
-	Thu, 26 Nov 2026 15:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFEE606A323;
+	Thu, 26 Nov 2026 15:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9/yoVVa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95A51F000D0;
-	Thu, 26 Nov 2026 15:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9Oq9j0e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA491F000C0;
+	Thu, 26 Nov 2026 15:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705371;
-	bh=IXyFJsPItRTwhgosdaYh6fMTKCDxec1V4x3DUClr5YQ=;
+	s=korg; t=1795705374;
+	bh=kbXVmJxsjucOhAcxv1Hr9eJdgAsYp+Bq3gHLK9QZ75w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9/yoVVareDBj1WaabmXB/QEApZGGrgXNjGz5AiBgTcPea0trderaSSpP7WldpPH/
-	 09Ah/8Lee5JS3ceYWGfR4SnP0ZeaqZs1stPuoXLz9uam6xDTbwTR5eVcOvN/x0WZ/P
-	 0MtOAraqK8a4OP/O/lmEWg9I7Mt8ssmy6I2A0tvc=
+	b=S9Oq9j0eZOiFfJuMS2NAlhukcbXkeTtaq5ZTWZfnq0UJosKeQ/z0tCwxpPVbVRZgU
+	 lIbLMNidRXENCFao0K5fScy8Ei/UNoGriOjizVe6SJitvhHX4Ewfr9G9wnAw0z5bxE
+	 u3zUZbbLGKTex4Fg2by4uDCZrPhtZM2uVpjx0BNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Hannes Reinecke <hare@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/319] ata: libata-scsi: fix MODE SELECT handling of data after the mode page
-Date: Thu, 26 Nov 2026 15:38:18 +0100
-Message-ID: <20261126144009.679841295@linuxfoundation.org>
+Subject: [PATCH 5.15 131/319] ata: libata-scsi: Simplify ata_scsi_mode_select_xlat()
+Date: Thu, 26 Nov 2026 15:38:19 +0100
+Message-ID: <20261126144009.702726301@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,79 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 6fde0444d07ec954f3d885375e0402ff2f2e5064 ]
+[ Upstream commit 261e150799305e546753554babccab83a0d50627 ]
 
-ata_scsi_mode_select_xlat() only supports one mode page per MODE SELECT
-command, and rejects a parameter list with data after the mode page with
-INVALID FIELD IN PARAMETER LIST. However:
+Use get_unaligned_be16() instead of using hardcoded accesses to
+16-bits big endian cdb fields.
 
-- It does not set the field pointer, so the sense data reports 0xffff as
-  the FIELD POINTER.
-
-- It only checks for data after the mode page after the mode page
-  handler has been called. ata_mselect_control_ata_feature() has then
-  already updated the CDL enabled flag of the device, even though the
-  command is rejected and the CDL setting of the device is not changed.
-
-- For the control mode page, ata_mselect_control_spg0() does not need an
-  ATA command, so the check is skipped, and the data after the mode page
-  is silently ignored.
-
-Check for data after the mode page before calling the mode page
-handlers, and set the FIELD POINTER to the first byte after the mode
-page, i.e. to the first byte of the next mode page.
-
-The reason why only one mode page per command is supported is that a
-MODE SELECT command is translated into at most one ATA command, so
-update the comment accordingly.
-
-Fixes: 1b26d29ccd59 ("[libata] scsi: implement MODE SELECT command")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261103205448.931471-11-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Stable-dep-of: a1eb72c477ec ("ata: libata-scsi: reject MODE SELECT mode pages with a wrong SPF bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/ata/libata-scsi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 231e1d2faa2fe..7433be9adc016 100644
+index 7433be9adc016..f162a2bea70eb 100644
 --- a/drivers/ata/libata-scsi.c
 +++ b/drivers/ata/libata-scsi.c
-@@ -3805,6 +3805,17 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 	if (pg_len > len)
- 		goto invalid_param_len;
+@@ -3730,7 +3730,7 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 			goto invalid_fld;
+ 		}
  
-+	/*
-+	 * A MODE SELECT command is translated into at most one ATA command, so
-+	 * only one mode page per command is supported. Reject any data after
-+	 * the mode page before calling the mode page handlers, which may
-+	 * already update the device flags.
-+	 */
-+	if (len > pg_len) {
-+		fp = p - buffer + pg_len;
-+		goto invalid_param;
-+	}
-+
- 	switch (pg) {
- 	case CACHE_MPAGE:
- 		if (ata_mselect_caching(qc, p, pg_len, &fp) < 0) {
-@@ -3825,13 +3836,6 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
- 		goto invalid_param;
+-		len = (cdb[7] << 8) + cdb[8];
++		len = get_unaligned_be16(&cdb[7]);
+ 		hdr_len = 8;
  	}
  
--	/*
--	 * Only one page has changeable data, so we only support setting one
--	 * page at a time.
--	 */
--	if (len > pg_len)
--		goto invalid_param;
--
- 	return 0;
+@@ -3756,7 +3756,7 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 	if (six_byte)
+ 		bd_len = p[3];
+ 	else
+-		bd_len = (p[6] << 8) + p[7];
++		bd_len = get_unaligned_be16(&p[6]);
  
-  invalid_fld:
+ 	len -= hdr_len;
+ 	p += hdr_len;
+@@ -3780,7 +3780,7 @@ static unsigned int ata_scsi_mode_select_xlat(struct ata_queued_cmd *qc)
+ 			goto invalid_param_len;
+ 
+ 		spg = p[1];
+-		pg_len = (p[2] << 8) | p[3];
++		pg_len = get_unaligned_be16(&p[2]);
+ 		p += 4;
+ 		len -= 4;
+ 	} else {
 -- 
 2.53.0
 
