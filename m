@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705476;
-	b=Ob2+9ihcUOlimXfpGEaACYq4k9dFSaIoG5qDbZpbQ+cNljXPtgYzCbIEtBECw+Y0rTQH
-	 3uf2sPXxnVMqsx7RurpS5iyrdVcHKmQQp77mF6JgC53TFZhqbWWqK9b5W52VHLk9NSoXY
-	 iTK0GBAcPfTg09irMDVJbShw42wo28/NjXGJnOMeJLmETKB2XunPY2QvVn5ZC/kZAFRSD
-	 GN6Nz+sOKdUxKRcLeq3zsloiWgKeQfwGDIDN08W2DYaWsW1B+ZeoMXIvWudHTnUpK52Og
-	 cYQOHrts0Szceia02R9V2iinJj3rIpBhKIr5egLrmLhy54AqfxC00yPqnmUgRyHVAyg==
+	t=1795705479;
+	b=qX0H864k1Ch91Qcplr/Gw8moevTUyycIN3A5YNY4JqsAMn+Vo8aGIzw8hvaEXhiWcDdA
+	 UIPgGNaPjyEdX5UbUXHUcJDnH+O0Yt8axYzzlxGeCLlEQPq9e62s+ZB/N3vuN/9mhacBO
+	 3mlj1s1+pTuHp1s1ODYEQRe/tB5d/c2CUx40+S9VAOKCU7bL5GONBIVYeVOklzLjbPdKU
+	 UkWxl2JeufRclpfKEXWb0iiBlvd3ynKmgSLsk5oASI2VqMqDAbFxQ2U4JxcvwgIoY67Aa
+	 PeGIW/Xl19cM8LD/z/CL6QX9ego7lJOXjA4FzCsNyeXOpkE18OQJpNGRZLYStGIw6pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WF5ayepRMMp6vPorBsJooguvE0hJoipLIs8TSJ4irvY=;
-	b=PI8mb25+4QMyS7TOZAEEMRGem7BQ2bvDThbiNo7bhwBZk3XEF9LWs8yK0PPoHS2cdYwS
-	 jiUlTIZyznuLDpli+f9vVV3Jvz3BwB80/u0nmoFh0WybA6RDELLRY5MjUPUnKo+bMYcCB
-	 n/7kgzLr2jk6d64iWG8RF8RedwyYbeoBn6rWG1opD0FrtTA/d5RXZQfbEwy8YgopEMK2e
-	 HaVTOnGxSX8mlR+6S7pWlqSuI1CP7yHQl9s7UZYVXX8kXBvKO05RLiy3vAYJvymW0PLvT
-	 RdlnvfGeo4KhqJzhBv3CZcd8nmumg9bCXP66/0UhxgLUTidbu5LQuJrwlfJE+EN4l3w==
+	bh=NEyVe67LDKOgzDRQR0OHbEjUZ1GDhgEubdlC836JuNU=;
+	b=QPt24WgNxxW3PfPtbiyOJSockz7vSh1RG+4mvIZ1IuS7oS9/9uRq38oSJnD3YZLsu51q
+	 QbvZEzmxudl6vBgGJVP4yCZVhs2uwdOo9rD5bm84E+0WVWkmfx5wJtT6M00+leQAIHwKN
+	 Tk3lhfHdUC8LhV7X4W6Eup1fvqbzgp4y2lPbVOxPim0VjXhxN7R2taD29B3O3nGMMA9xE
+	 JY5XFhflTfMpS49PLldji4YtquAldJ0X4n1YkoQ7b2IYlC/M/XJFtAtxZtB3IUEbR2275
+	 bSNMQkE6/C19hjeiTAtvjy63vu17uHGzMmKiyZa1JCYuyxoLs2QteoNDAvjtPCUws6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXuz+0aL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AXTDQFJY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA3606A31E;
-	Thu, 26 Nov 2026 15:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6B0606A31C;
+	Thu, 26 Nov 2026 15:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXuz+0aL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0FB1F000ED;
-	Thu, 26 Nov 2026 15:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AXTDQFJY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7351C1F000CF;
+	Thu, 26 Nov 2026 15:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705476;
-	bh=WF5ayepRMMp6vPorBsJooguvE0hJoipLIs8TSJ4irvY=;
+	s=korg; t=1795705478;
+	bh=NEyVe67LDKOgzDRQR0OHbEjUZ1GDhgEubdlC836JuNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXuz+0aLonMnFMMHYA7qgX8AwLmY4NDCeKCvXROZuqOPFt+b2jDy1lBDmzIXertq0
-	 1dTsSspV872ZVuVlLw5SlkCP2NZYgjnWb81gy+Ae8AknYIQY63KSVelAR8u0BXViW2
-	 LQo4Of+gtXQJAoBF732t9gX12ufvXngScYcpkGU4=
+	b=AXTDQFJYB19sy0wI2Tshmipy1gV4BXSTRF6K2jYSnCH0hf7V6VmKkcRWp0BAm7wzv
+	 2RLl375Z0Gfy49x9tzFd3Rf5+S1twLQxL0LpkPENfKO8C/2UICA7sf0Z92ZptxeGmY
+	 QbYSIJ0jeje5bSdsIo/b1MauIjJUTHSRLMoc6h+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anfernee Cao <anferneemelokc5@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 174/319] mmc: mmci: fix DMA channel leak when mmc_add_host() fails
-Date: Thu, 26 Nov 2026 15:39:02 +0100
-Message-ID: <20261126144010.673303472@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 5.15 210/319] cpufreq: Cache post-resolution target frequency in __resolve_freq()
+Date: Thu, 26 Nov 2026 15:39:38 +0100
+Message-ID: <20261126144011.485288980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,48 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anfernee Cao <anferneemelokc5@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 2d8927fadbf95e2d2dfa95bcc73882d6e19c2ce4 upstream.
+commit 166207cac45191637c47a457a5c16ca6b6773a16 upstream.
 
-mmci_probe() calls mmci_dma_setup(), which acquires the RX and TX DMA
-channels via dma_request_chan(). These channels are not managed by
-devres, and are released only by mmci_dma_release().
+get_next_freq() in the schedutil governor returns the resolved
+frequency from cpufreq_driver_resolve_freq(), and that resolved value
+is then passed to cpufreq_driver_fast_switch().  The only reader of
+cached_target_freq, acpi_cpufreq_fast_switch(), compares it with the
+post-resolution target frequency, but it holds the pre-resolution
+clamped frequency, so any request that falls between table entries
+misses the cache and falls back to a table scan.
 
-If the following mmc_add_host() fails, probe jumps to the clk_disable
-label, which only disables the clock. As probe then fails,
-mmci_remove() is never called, so both DMA channels are leaked.
+Address this by making __resolve_freq() store the post-resolution
+frequency in cached_target_freq.
 
-Release them by adding a dedicated unwind label, reached only after
-mmci_dma_setup().
-
-This issue was found by manual code inspection.
-
-Fixes: b38a20f29a49 ("mmc: mmci: fix return value check of mmc_add_host()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Anfernee Cao <anferneemelokc5@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: e3c062360870 ("cpufreq: add cpufreq_driver_resolve_freq()")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/14161745.uLZWGnKmhe@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2257,11 +2257,13 @@ static int mmci_probe(struct amba_device
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -539,8 +539,8 @@ static unsigned int __resolve_freq(struc
  
- 	ret = mmc_add_host(mmc);
- 	if (ret)
--		goto clk_disable;
-+		goto dma_release;
+ 	idx = cpufreq_frequency_table_target(policy, target_freq, relation);
+ 	policy->cached_resolved_idx = idx;
+-	policy->cached_target_freq = target_freq;
+-	return policy->freq_table[idx].frequency;
++	policy->cached_target_freq = policy->freq_table[idx].frequency;
++	return policy->cached_target_freq;
+ }
  
- 	pm_runtime_put(&dev->dev);
- 	return 0;
- 
-+dma_release:
-+	mmci_dma_release(host);
-  clk_disable:
- 	clk_disable_unprepare(host->clk);
-  host_free:
+ /**
 
 
