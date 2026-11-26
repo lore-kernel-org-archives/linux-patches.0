@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705662;
-	b=nNinKTGwNy08Lm+Z3piZgBU8Uclv3IlScVNc6vxw003bRyTGsfzjsaAwdUhtl26uFQ5+
-	 17jj/wEKLVL5/Hf2GTC/ntkr2UxjhoRQqZjx8R6VQ+Dg8IP9mvtWfoI/Gg0hDhXKN2JBB
-	 NH0suVY2U5IRbe28MO2jR4QWC7XArOQvX7GfbpOj7SKc9tWmUr/rhWYk2oI7h3v/OtQrp
-	 ukr3AwBiuUc4aMMRz5u/q6x0Bm6zjH0J5Dbvamms7dbCi9htdJiy9gU9lHX1jsmSmx3aL
-	 DsUT1EAx8+aG3hI+81QUzRID80GENdxdWwjv08KSdTNa3Y69ZPTzLMm4OUrdkn2L/fA==
+	t=1795705664;
+	b=gcuKPlLbTt9nGn274PeRimKqw8MThJAX7XNZ11kIsWoI4YlVLmCJHdPerQEHHbn62oAQ
+	 xWN3/sVu61Kfzdt5pDIBzW2q14naYXIpG4y1p4uoDRPf8MiBehSz57IbYQub07bAFGTKg
+	 7dTf9nYRFf6jM0syshMnjC9PZ1C6GyFbQZoEqov235rpLBeMQQXm4TbexvTqfsciW0uQ5
+	 Lq5r/zV9F4rus3pXTgjyGqHG1+g2vs8e8EVBDRLvnfbvWXxaUEe1DHueG+njFuqNht0jd
+	 RCny0azmQ9fzp+n58F5bHs05zSPi9NMQkAy3HeZ+0lGh92VIQNVcegn3P+z008j0PRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=16nCsy5I7RgCiCpicn4vtu+6nzyfKOECxEGozk74L+8=;
-	b=mpze0Xu0RX3vbpJ0/r1XGCbA9TvFY7leBITGNXdh/mZZI6nxH01ZGrDKsfO+VjQlQ9Tl
-	 OihVB3TDALoAXV0241a058pxdhShXChtgnM8ke9Ccrfn1aAuanhO60pztqm6PHj8FnTHN
-	 a+acKEmwQGFVPu3JHYKL6S5vY6Jip+urAMR1QzTPJE5pRlOZZrg5OI21iSQFI3o/EfoLQ
-	 rBzcqcIHvi1BhIo35JqcIoMxiRj+1tCgn2P7BUtpR0k+rzXKhw73TeB7K7Ar7J8U5TQnz
-	 9oPmnauv+hMYvrN40P4xClCFSYQFymPeWhwhEnsR/tmmXoRCWOwlj7mmuwS5T7d1LIw==
+	bh=QCm729bbtIghVQiyj7MovCg074tKOO+ZavpRMW0aciE=;
+	b=JY06HQ0XPAsviQNBqWal9ZWA2GwH53bCXnPwu6brqJEH4V8PvpBYDSvsAisKm7zIk1ye
+	 QUmZetAVvdB/hNJHwAfywCRuRh5CWvAa0GEVDPvUPSq4IZ/nkrDKZcTs8TEhFgbDydklX
+	 fC5CaBPw/S58e43jTTokX85OUIudhmTKE5YxiiVAVrDi6kFgX6L0POarmYmG7x0vrA8Hg
+	 n3kkjaOnaOCW2NJrpY8HFDBKPUCX0wpxLthFTT/9BvnvVWCuVk/TyhWEDXOR5CEVPIGr6
+	 GbPfmlS4Yq+j3LdGR9sbPfKT410J61pazPMaU+vEce6O4eZElDQW2TUHrFB7NakyRag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DA9NwpO/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKL3+LYL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E6D606A326;
-	Thu, 26 Nov 2026 15:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEFD606A32C;
+	Thu, 26 Nov 2026 15:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DA9NwpO/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6951F000CA;
-	Thu, 26 Nov 2026 15:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKL3+LYL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB60B1F000D2;
+	Thu, 26 Nov 2026 15:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705661;
-	bh=16nCsy5I7RgCiCpicn4vtu+6nzyfKOECxEGozk74L+8=;
+	s=korg; t=1795705664;
+	bh=QCm729bbtIghVQiyj7MovCg074tKOO+ZavpRMW0aciE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DA9NwpO/cHDAlOK9XHvrXbBuz1Om/kmFimvpWKpzpadssqnXkkdHC6ThKjH0Lxoo/
-	 0zYv9onWff59WkLLpTVIgfy4gnJR6mu4Ninw6eGZtdt81Na8IHvVxdqAGbA/3Viafa
-	 rC30uHv5F/nl4s+oNI7DXsZ6sAtr1WFyOCEa/ceg=
+	b=AKL3+LYL45i9NyLh2ulWmdxofJ/+dol1k6diX0K6rrcZC3VTycx+XQ+uN4BiHKoV6
+	 I0md4anz2e/Iz1iS0hIITkSqf37wB0Z57j5FSYWuMhqtiTcQ6dJvyZTokH0znBDlWQ
+	 uFO85QKMSyQFkDs2bXP2YJjTq4YdSMhn58uRinu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 218/319] xen/pvcalls: destroy the per-socket workqueue on release
-Date: Thu, 26 Nov 2026 15:39:46 +0100
-Message-ID: <20261126144011.667273142@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Robert Baldyga <r.baldyga@samsung.com>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 5.15 267/319] serial: samsung: dont leak the tty on an RX IRQ
+Date: Thu, 26 Nov 2026 15:40:35 +0100
+Message-ID: <20261126144012.774363509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,49 +72,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 6b3feb6bfa9ac384f7a3ec25c40b9b4d3da96d25 upstream.
+commit 7ada442f5ef77f8d53f608a0141a5e88a888ca9f upstream.
 
-pvcalls_new_active_socket() gives every active socket its own ordered
-workqueue:
+s3c24xx_serial_rx_chars_dma() starts by taking a reference to the tty.
+If the interrupt is not a receive timeout, it switches the port from PIO
+back to DMA and leaves through the "finish" label, which does not drop
+the reference.
 
-	map->ioworker.wq = alloc_ordered_workqueue("pvcalls_io", 0);
+A port with RX DMA changes to PIO on every receive timeout, that is at
+the end of every burst of data, and comes back this way when the next
+burst starts.  So each burst takes a reference which is never dropped,
+and the tty structure is not freed when the port is closed for the last
+time.
 
-and nothing ever destroys it.  pvcalls_back_release_active() flushes
-map->ioworker.register_work and frees map, but the workqueue and its
-pool_workqueues stay allocated, so a frontend leaks a workqueue per socket
-it connects and releases - a loop a guest can run as long as it likes.
+Drop the reference on both paths.
 
-Destroy it right after flush_work(): the IRQ is disabled and sk_data_ready
-restored by then, so nothing can queue new work, and the rings are still
-mapped while it drains - pvcalls_conn_back_read() reads map->ring and
-map->data, which xenbus_unmap_ring_vfree() takes away a few lines later.
-pvcalls_back_ioworker() does not take fedata->socket_lock, which the
-backend_disconnect() caller holds here - only the socket's own
-sk_receive_queue lock - so draining it from this point is safe; the
-flush_work() just above already has the same requirement.
-
-Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
-Cc: stable@vger.kernel.org
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261110125002.46683-3-yhlee@isslab.korea.ac.kr>
+Fixes: b543c301c2c5 ("serial: samsung: add DMA support for RX")
+Cc: stable <stable@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Peter Griffin <peter.griffin@linaro.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: Robert Baldyga <r.baldyga@samsung.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20261027-tty-llm-v1-21-99b0202ae546@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/pvcalls-back.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/samsung_tty.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -448,6 +448,7 @@ static int pvcalls_back_release_active(s
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -737,14 +737,13 @@ static irqreturn_t s3c24xx_serial_rx_cha
  
- 	atomic_set(&map->release, 1);
- 	flush_work(&map->ioworker.register_work);
-+	destroy_workqueue(map->ioworker.wq);
+ 	s3c24xx_serial_rx_drain_fifo(ourport);
  
- 	xenbus_unmap_ring_vfree(dev, map->bytes);
- 	xenbus_unmap_ring_vfree(dev, (void *)map->ring);
+-	if (tty) {
++	if (tty)
+ 		tty_flip_buffer_push(t);
+-		tty_kref_put(tty);
+-	}
+ 
+ 	wr_regl(port, S3C2410_UTRSTAT, S3C2410_UTRSTAT_TIMEOUT);
+ 
+ finish:
++	tty_kref_put(tty);
+ 	uart_port_unlock(port);
+ 
+ 	return IRQ_HANDLED;
 
 
