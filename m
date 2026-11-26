@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705503;
-	b=BGX1zGPPLeTNq+WA+FrqRxGF1q7R9mhpOdOMlgjxIFHMS2fie+L+Z2v8cgbNQOzgrQlZ
-	 4cDmrd636t5I1aBO54hA6Zuz+4SxTC++0eMaGK/VdjditcvsetAYcqZi2nIvheVG9smhN
-	 wjRKHa8l7fLynMcVYCcpxU39tD1Zkk1kT6YfeCN6EQrUW1RT6ZTKkF4w/G4RNP8v3G6UM
-	 uIlveDHMe570turfGR/j2wiKTHjBP1ZON1UnzcYefKspfyhzBJNSu4B4eGc2Yz3qFBEMG
-	 F67xFwm29cpzT2hqIs2IShvpHLvOwrdHy8kT+xMpoLnbwRQPpKm1C4shtf1CVhiuUpg==
+	t=1795705506;
+	b=JNmcmYjfiSpu55vi4gA0EJVCRFj7IbWOVOzcrSTQqvJ72RhkLQqsRoIcqSeFA/7G1tZ6
+	 D605zpvw16IOjWnCLftatrZC0qwtOXr1Ein8r5+K80bY0o5y5le6FscTnrqUHigtoE/zy
+	 Py2x/ZyEwuSkduldVmiYKu3j8U44F2olgBH+bWJDHvYSjrNv9age69/RnlEn3A3BfreLS
+	 ++MkG/SfEdAZle93WnGGWuSM6EM7Qct0/2zKqwUeCP6cquFJo9YS7/ScDp+ly7RfgoUvS
+	 vnRLMNLULg55dWLGS494Ay0zQTFMpJdHmrLZkC6/f8E9jLxFzm+td3tHxQMCqefRTDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PtheW4PEnV1W7VnhZUhL4kEcUpQqT9NIfYR2DnZ48i8=;
-	b=FMgXBHxLlhOTkvSr6ccw7596C/GcBaTLgJmykg1sk6rnYstM2CEUnCQZK70Qyt5CLXds
-	 oajngcV3OGW0QRZ5lkjqcsRR5Hw+PtgI5422ydctWepiie9oy1vPg37UH45eEHAhIGXV6
-	 02qhXzh3A6ZBOG4n1a/vXD9tOBdRcQhKXkWt5EAbf4OEAzIgnYryOvXYrdlj9+K6d5X0l
-	 ehNYYr6MYXUgrFd16Xel6uC3zAp2qnN5vEdaV3xHj3H6KnR/0N5miW/CWr4LxiP2EcxsO
-	 2vHQhfxA1cYjqSxoQxytBgMVReJgD3JHIBAoHvd9lso/W9KNgh5TA4nHEZYeSmpDy9Q==
+	bh=q9dr5/UselDcdqOHjMrWZBlryct8GKnWH3+EMfwfyZM=;
+	b=PvKsSvU21pGdHYhYJUnq6KUa5b2qpXUfl8aoVZ+Ssnqc5dvG49Zp+BRGb6FpyvtjxuOg
+	 Y2WUASh2Mwcu1v16bHgbB+f3sZus6zPnuGa15OEYvXbvstm78fyp48XxSGe/NnMp/6DSt
+	 NAy/71I78uWjJwWOuT7ejS9XPANhfwsUV9mw0zvhjcL2z4ksRzBJdF/UL8GngemkoJ3IK
+	 v7gCxqr9O0tynJbBSiGGIXcxi8ImM07TZbsgwtz5sSwuVFh1vJ45yQ1mA2L5ze5qrZuGz
+	 UlrnL56R32vVMs1LYKJWHvvLyLq1/l+DdlkXu+mBMEyZ69sZBL5k87N14vcM9mL5WzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qYH0/VJT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ho5BVBHN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E60606A329;
-	Thu, 26 Nov 2026 15:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06248606A68F;
+	Thu, 26 Nov 2026 15:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qYH0/VJT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19421F000D2;
-	Thu, 26 Nov 2026 15:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ho5BVBHN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8121F008B2;
+	Thu, 26 Nov 2026 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705502;
-	bh=PtheW4PEnV1W7VnhZUhL4kEcUpQqT9NIfYR2DnZ48i8=;
+	s=korg; t=1795705505;
+	bh=q9dr5/UselDcdqOHjMrWZBlryct8GKnWH3+EMfwfyZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qYH0/VJTWHCKhCTJxFKvpj9zERuroVRivo4mx3AaoMmkXpf8xSvlQY8lZbqK2G55b
-	 LDg6C3BVwVSHFRyqW3mGbwT8MUOfxDhhDwGGS0CTBq1JoNavQNHu2w9Oxc2UPD8VSf
-	 iHLqx8iqQblSKQo/59nhZhEgzZmGUzrjEu85UbvQ=
+	b=ho5BVBHNf7knNrBlyXQev/mW9lLnrQoQl+6sqJJwqh2CCzH4fvzvlR7WTLiD7hIs5
+	 j6eI1iiKbRvxFe6Y1GNpGSvWEdr1dV1oBpjtW3F73ml4AE9i0Sbj/LicrOSIbFUQoo
+	 flSeKMNj5F6zIsd5bPLEiVdgVL5Y+AfwYvXdaq8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Igor Velkov <iav@iav.lv>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 175/319] mmc: meson-gx: report busy from DAT0 alone
-Date: Thu, 26 Nov 2026 15:39:03 +0100
-Message-ID: <20261126144010.696050092@linuxfoundation.org>
+Subject: [PATCH 5.15 176/319] mmc: meson-gx: honour the busy timeout for R1b commands
+Date: Thu, 26 Nov 2026 15:39:04 +0100
+Message-ID: <20261126144010.719277783@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,45 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Igor Velkov <iav@iav.lv>
 
-commit 318fdb75f4dc9d18ae621b9fb25eb11160c95649 upstream.
+commit 7e3cc541aa5855bc36e6cbffa82efc2795955a10 upstream.
 
-meson_mmc_card_busy() reports busy only while DAT0..3 are all low. A
-busy card drives DAT0 low and leaves DAT1..3 to the pull-ups, and the
-callback is defined as "Check if the card is pulling dat[0] low". So a
-busy card is reported free, and the core, which prefers card_busy over
-CMD13 in mmc_busy_cb(), stops polling after CMD6 and erase at once. The
-controller hides this on R1b commands, where it waits for busy itself.
-Once max_busy_timeout is reported, the core sends the longer waits, the
-120 s BKOPS and 240 s sanitize switches among them, as R1 and has only
-the polling left.
+For a command without data the driver programs a fixed 1024 ms into the
+CMD_CFG timeout field, and for R1b the controller waits for the card to
+release busy within that time. The core sends erase and cache flush as
+R1b with busy timeouts of up to 60 s and 30 s, and the controller gives
+up after one second:
 
-Look at DAT0 only, as sdhci_card_busy() does. The checks around the
-voltage switch in mmc_set_uhs_voltage() still hold: the card drives
-DAT0..3 low together after CMD11 and keeps them low together on
-failure.
+  mmc_erase: erase error -110, status 0x0
+  mmc1: cache flush error -110
 
-Fixes: 186cd8b7f586 ("mmc: meson-gx: implement card_busy callback")
+Program the timeout from cmd->busy_timeout, kept between 1024 ms, the
+fixed value until now, and 32768 ms, the most the field holds, and
+rounded up to a power of two. The clamp comes first: MMC_IOC_CMD passes
+cmd_timeout_ms from user space straight into busy_timeout, and
+roundup_pow_of_two() of a value above 2^31 does not fit in unsigned
+int. sdhci takes its command timeout from cmd->busy_timeout in the
+same way.
+
+Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
 Cc: stable@vger.kernel.org
 Signed-off-by: Igor Velkov <iav@iav.lv>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/meson-gx-mmc.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 --- a/drivers/mmc/host/meson-gx-mmc.c
 +++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -1086,8 +1086,8 @@ static int meson_mmc_card_busy(struct mm
- 
- 	regval = readl(host->regs + SD_EMMC_STATUS);
- 
--	/* We are only interrested in lines 0 to 3, so mask the other ones */
--	return !(FIELD_GET(STATUS_DATI, regval) & 0xf);
-+	/* The card signals busy on DAT0 alone. */
-+	return !(FIELD_GET(STATUS_DATI, regval) & BIT(0));
+@@ -212,6 +212,20 @@ static unsigned int meson_mmc_get_timeou
+ 	return min(timeout, 32768U); /* max. 2^15 ms */
  }
  
- static int meson_mmc_voltage_switch(struct mmc_host *mmc, struct mmc_ios *ios)
++/* For R1b the controller waits for busy to be released within this timeout. */
++static unsigned int meson_mmc_get_cmd_timeout_msecs(struct mmc_command *cmd)
++{
++	unsigned int timeout = cmd->busy_timeout;
++
++	if (!timeout)
++		return SD_EMMC_CMD_TIMEOUT;
++
++	timeout = clamp_t(unsigned int, timeout, SD_EMMC_CMD_TIMEOUT,
++			  SD_EMMC_CMD_TIMEOUT_MAX);
++
++	return roundup_pow_of_two(timeout);
++}
++
+ static struct mmc_command *meson_mmc_get_next_command(struct mmc_command *cmd)
+ {
+ 	if (cmd->opcode == MMC_SET_BLOCK_COUNT && !cmd->error)
+@@ -850,7 +864,7 @@ static void meson_mmc_start_cmd(struct m
+ 		cmd_data = host->bounce_dma_addr & CMD_DATA_MASK;
+ 	} else {
+ 		cmd_cfg |= FIELD_PREP(CMD_CFG_TIMEOUT_MASK,
+-				      ilog2(SD_EMMC_CMD_TIMEOUT));
++				      ilog2(meson_mmc_get_cmd_timeout_msecs(cmd)));
+ 	}
+ 
+ 	/* Last descriptor */
 
 
