@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705158;
-	b=AKtdR2DwOOrV0xI4TV6HZsmf38V0IN4CxOpTGtICpdBvjPhqAs667hzAOrnvvGkkAL5C
-	 ro70ihSpXFjfm3hUTruupY+zfGVSMHBM/t1215H3x5tJBOw1jzj/rAXe+99aIxJx38DZX
-	 jx4vuvTu/p4kIR0YBiuXrSzMpsbflOAZ5D9TS8d8aeoEhfWIMOL810eeHuejkCa4N4k+2
-	 UuNTJJzAyMHAL6dL+0uT6ev3/ZsV1doFzCU2dJJaEmImKxKmmeoBXV0cOdhzmRKQedizF
-	 ES0gS2ufY8X8IixMyYANmqN/T3bjbgUq92TdfPNgP5zEpZInNV0r1+B/ZtC4M03A6GQ==
+	t=1795705161;
+	b=ax4vxh/xRq7gTpLYpSple7l+7iQRxhVjlCkxzbmfLDi+aa1qKgi9HEWxUlQxHPKCh5Aw
+	 G2lfb8PbZfBBkXL3jOhnsdjsJrDRrRsPrB/Hu9VCW5MpSHGyFSbxB/qgBrK8WuUsDwdZC
+	 VaVjMXQohS4BNLCH6uK50dfZf/PFkyGjkjOp/ZhOJlbq3ndA/JnivPOwauR6MyW0Pncg2
+	 id99pVCf8Hpags6gKL1cSb/zigOAO35PvDbH25XboUC/68bavVh/l34JgZ0zOjCqKREa4
+	 sXfCK+m7B0zYABI7t4QhHfk8drvRimiWENPfEcT7Gpk1o33eWnwlYtt3cd7AEkrY3gA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705158;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705161;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=STfNeVd6QDXOUcLPE28DkW6L0rTVWCEWgqLJRCZuGMs=;
-	b=xwnc98xG9xJDybe0PWeOmWvPoIPh8Ql4+k0RwK6Rr5wnHVSkCp6r2C5JzH4/KgXMhCEf
-	 5LYeAXhFi1FdLqXkcrHD9yMnPVWVlRKU8uZ0nMmUQFUvXQeoOHHnxsZ4G4akomNRl3pMR
-	 cDHPpwmZ9RQ1hMf/dLH4lVtNEofvMDPuwkP1wJ2cbTnaZscYs3NfXyIAhxY3vm0c+0W+7
-	 oxSTqfbCHbIIoiyyyIEVs7CAg2axsQC3DY/59NcbroByNyYSIwm/PIu9R2qNLDVb5GwgN
-	 ReHME3KlwkfWCGQgfxxKa7k7HrgIpty0Gx+j6qkakXaeMwpfEav1SXJZrV/JXAe4z+g==
+	bh=B6O/TJe7ZmyP2ZvOT5YhH22v3YmmfCaxNb1zuER34Ak=;
+	b=pF7Ai9icEKDZyXGRE2uQwrIIqzJclrVhXS3KM/WzjggAHDl8CP03QbrPmrif/mJ+pmmb
+	 qxLjVAWdaFj3l2NKX3p8BD5LJfyXHJUI7OsoVRRVB7zdUAb3WMoBophjNuaAOPQFXOzVK
+	 sc2AiRomKQPGQD/43cEs3B9WGbBm0xkBZ8eJi4N5dUlz/sMAmEo6PY1jY59rQCvNbrXsl
+	 X8MPVW82E4Iee3axDv/B6GqSzMf38Q1QhIKZoyuhGiooIcJloCstEs960XKVzTC1l0sbt
+	 Lr3vJ6ZknRluw0Ewtk0w/dvmxG5v2yQYmOvFzXxLBPA2M1ZZnqo/xL7XiaK7yE4ZuAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sC1tc/NK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YunrP5Az;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86966606A31C;
-	Thu, 26 Nov 2026 14:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3B7606A321;
+	Thu, 26 Nov 2026 14:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sC1tc/NK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6057F1F000C4;
-	Thu, 26 Nov 2026 14:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YunrP5Az
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8E21F000C4;
+	Thu, 26 Nov 2026 14:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705157;
-	bh=STfNeVd6QDXOUcLPE28DkW6L0rTVWCEWgqLJRCZuGMs=;
+	s=korg; t=1795705161;
+	bh=B6O/TJe7ZmyP2ZvOT5YhH22v3YmmfCaxNb1zuER34Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sC1tc/NKc53jlxTtbc89X88tdsr7iNHY8IfAoRmB8n3OxUIPagRmm2ODFhaemXqh4
-	 gOO2sOmRY369Owe6eZ+eqE/QSvkwwYdr5YlfaMT0mQ9eTi/yKrxCOXEamkNs9Eq7ID
-	 Quc4NQioSbtMxTNzuFz2RhyzcytkX2sooas8Rtgo=
+	b=YunrP5Azq6dGYCKPqmgIjBCdZ4KSLsjpQ1lw+cro2mIcUXLY/fCBY4Ukv30pj29/1
+	 pqDEjCj3OqngLSfLwKyOzzek5YpimsKjLiKXhexKFf4BaRvKCtgTj4eV1vM/Ti8oRZ
+	 jzAtAVApBgS5WDjpBvWK3ztA4BWL3AEejlcxNnxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Cheng Yongkang <teel4res@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/319] net: bridge: disable MRP ports before the FDB flush in del_nbp()
-Date: Thu, 26 Nov 2026 15:37:51 +0100
-Message-ID: <20261126144009.069701691@linuxfoundation.org>
+Subject: [PATCH 5.15 077/319] null_blk: fix opening closed zones at the active zone limit
+Date: Thu, 26 Nov 2026 15:37:25 +0100
+Message-ID: <20261126144008.478635306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,82 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 37dfd0efbfffc20a57e41c2eb349ac49b1ca1ff8 ]
+[ Upstream commit 6f2b59737bf9cf3623719857ac149f0d431db109 ]
 
-del_nbp() flushes the port's FDB entries before it unregisters the RX
-handler. For a normal port, br_stp_disable_port() moves the port to
-BR_STATE_DISABLED before this cleanup.
+When the open zone limit is reached, null_check_open() closes an
+implicitly open zone only if the active zone limit is not reached.
 
-That does not hold for an MRP ring port. br_set_state() ignores state
-changes while BR_MRP_AWARE_BIT is set, so br_stp_disable_port() leaves
-the port state alone. br_mrp_port_del() then restores forwarding when
-the bridge is up before clearing the bit. A frame received between
-br_fdb_cleanup_by_dst() and netdev_rx_handler_unregister() can therefore
-create a new FDB entry referencing the dying port. Nothing removes that
-entry before destroy_nbp_rcu() frees the port, so a later frame to the
-learned MAC can be forwarded through the freed port.
+Closing an implicitly open zone does not change the number of active
+zones, so this check is wrong. For an empty zone, the active zone limit
+was already checked by null_check_zone_resources(). For a closed zone,
+the check makes writing to, opening or finishing the zone fail with
+BLK_STS_ZONE_OPEN_RESOURCE at the active zone limit, whereas ZBC-3
+(4.5.3.2.7.2) and NVMe ZNS (2.1.1.4.1) require closing an implicitly
+open zone instead.
 
-Remove the MRP and CFM instances before disabling the port, so that
-br_stp_disable_port() actually transitions it to BR_STATE_DISABLED.
-With CONFIG_BRIDGE_VLAN_FILTERING=y, synchronize_net() in
-nbp_vlan_group_unpublish() also drains receive paths that could still
-learn with the old state before the final FDB cleanup.
+Remove the check, and update the comment above
+null_check_zone_resources() accordingly.
 
-Found through an LLM-assisted source code analysis workflow and
-reproduced on net with KASAN and CONFIG_BRIDGE_VLAN_FILTERING=y in QEMU.
-A diagnostic switchdev module accepts MRP objects and delays the
-NETDEV_CHANGEUPPER callback for 1.5 s, holding del_nbp() after the FDB
-cleanup and before RX handler removal. The reproducer floods the MRP
-port with rotating source MACs, waits for the port's RCU callback
-through the module's rcu_barrier(), then sends frames to those MACs
-from another port. The unpatched kernel reports:
-
-  BUG: KASAN: slab-use-after-free in br_forward+0xb1/0x820
-  Call Trace:
-   <IRQ>
-   br_forward+0xb1/0x820
-   br_handle_frame_finish+0x148b/0x1e50
-   br_handle_frame+0x90a/0x15c0
-
-With this patch, three runs of six cycles each reach the delay without
-a KASAN report.
-
-Fixes: 6536993371fa ("bridge: mrp: Integrate MRP into the bridge")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/netdev/20261012123051.GA714215@shredder/
-Closes: https://lore.kernel.org/netdev/20261022090431.3641707-1-teel4res@gmail.com/
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261101044840.1595584-1-1020691186@qq.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: dc4d137ee3b7 ("null_blk: add support for max open/active zone limit for zoned devices")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://patch.msgid.link/20261022092158.2248831-6-cassel@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_if.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/block/null_blk/zoned.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/bridge/br_if.c b/net/bridge/br_if.c
-index 7fb8014b84699..fd11b04173893 100644
---- a/net/bridge/br_if.c
-+++ b/net/bridge/br_if.c
-@@ -330,13 +330,13 @@ static void del_nbp(struct net_bridge_port *p)
+diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
+index e41ec5096a631..d0c882a121c32 100644
+--- a/drivers/block/null_blk/zoned.c
++++ b/drivers/block/null_blk/zoned.c
+@@ -338,10 +338,8 @@ static blk_status_t null_check_open(struct nullb_device *dev)
+ 		return BLK_STS_OK;
  
- 	nbp_delete_promisc(p);
+ 	if (dev->nr_zones_imp_open) {
+-		if (null_check_active(dev) == BLK_STS_OK) {
+-			null_close_imp_open_zone(dev);
+-			return BLK_STS_OK;
+-		}
++		null_close_imp_open_zone(dev);
++		return BLK_STS_OK;
+ 	}
  
-+	br_mrp_port_del(br, p);
-+	br_cfm_port_del(br, p);
-+
- 	spin_lock_bh(&br->lock);
- 	br_stp_disable_port(p);
- 	spin_unlock_bh(&br->lock);
- 
--	br_mrp_port_del(br, p);
--	br_cfm_port_del(br, p);
--
- 	br_ifinfo_notify(RTM_DELLINK, NULL, p);
- 
- 	list_del_rcu(&p->list);
+ 	return BLK_STS_ZONE_OPEN_RESOURCE;
+@@ -357,8 +355,11 @@ static blk_status_t null_check_open(struct nullb_device *dev)
+  *
+  * ZBC states that an implicit open zone shall be closed only if there is not
+  * room within the open limit. However, with the addition of an active limit,
+- * it is not certain that closing an implicit open zone will allow a new zone
+- * to be opened, since we might already be at the active limit capacity.
++ * it is not certain that closing an implicit open zone will allow an empty
++ * zone to be opened, since we might already be at the active limit capacity.
++ * Therefore, the active limit is checked first for an empty zone. A closed
++ * zone already holds an active zone resource, so only the open limit has to
++ * be checked for a closed zone.
+  */
+ static blk_status_t null_check_zone_resources(struct nullb_device *dev,
+ 					      struct nullb_zone *zone)
 -- 
 2.53.0
 
