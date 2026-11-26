@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705047;
-	b=c5yh8y0ACSswFWdXRH85XSG6Sgz6I3TsQt3PIjZEwML61OmpS1HHU1sTlXCON6Z/m10c
-	 r2gzwWpGTgAtCC83wzqR0QpQ4RXlIENR9X4lCwSle2H5j8aclvO+bU3vUpvyaaxL6LwRv
-	 3VrW8+W7Mhgzm0/IpY4PdaBrY8ZIlBwovnVuRO2Pyry5BynUFE0zG5tJXbI+7Z2LabYBN
-	 jzFlbgUPHU9scuwmQmfadCZfWv/GCCUZKHh++DqIzirse7WNJF2e25PZukTWEY1JEEzSa
-	 Lh7Dnbna08D4lt5BCEyy5Ze6FaSbUozpYRogbW58MFAtlU81jVi8Foe+zeM3MNEPDNQ==
+	t=1795705050;
+	b=SlKvtHNBuwqsSUlNtGt+CloB0IVe4pXSPcgdHpR1/SUNwZOuFOAwLHjYhsqY1V4OJO0p
+	 qh5azOB9CyQxLS7YFlm44P6nqZ0ojciec/bXUA3ImiLY8pbtGoz22xsO1ujMjGGxk9bsi
+	 MnzTDL4u/zwKGAK2D8Sef9aAbD5ppPMoHc/fgbGlsjbWOJgrlgI+pDqHPSPsM45uHLLOb
+	 ZE3zuZ/nhVOpqpU/UnGt3xytLYBEw7QD8gjNY68GaNXhv5zdvYtnPtBQ+2c55nuRen+79
+	 +pCsAbufWj/cMXpNM9f7cWiXKWN6/Fq5JazuDd1eaOkl+Z+sDjdJcoQe1dbwzL71TGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9GgSlj1+2Cj7Kb3P1dUHwPZf0GrxwIb8CEgahJjnvkI=;
-	b=wfaofufQkokdhS/Z7DTlBEha7ICbWrh36ASnu0KyLdMsVaWNEebOBZtErdnqaMo8kwN+
-	 JzIQIIKmMhi8TIzjRiFSk7muuTt03YkuC9T/32Fuymhy8+v+Gq8Q+4Id26meZpaPNNd/V
-	 vT+qY86jxo+xhg+pWB9+7gp4Dp5Sn3FcdeEfchAv9/uIvxC8yhp/s05o4m0ThCrja4sYL
-	 tOSqgwLl/ZgvZeCvVcB8QoLh8/nBpoZ5avgKim+ICt2nBJBP+h81gat0kn+ocjzzlMVRN
-	 mabDIoOqeB9NJY5HCa4Gnz2m8Be7iiANYaZ4h8uXsGzUeFdIhBsZwWEtk3vdEt9guyw==
+	bh=Imci1/6BvYRNpSN6RofebgbP4jDbzXFDcyegMb4Nw8c=;
+	b=2p0Oyp+W5OFQVKExP2GlCe6LUfiyQO/XTp+2/SxCCiDbm5i4cpZRavJTfZQy+rWOF4xf
+	 5pUNXle7J6l3Dv74DC5w3V/2Eyuz5uX7eI9ckvld5T3vLMt3SDXcAwf1dwMjCl6RZhnnF
+	 +7XYWthyeBCiUX6tUZa6jGigNwAOhtA4rM8fzaXRNzzzVbg0FnJbtuqXr7YZepsIQz7nP
+	 UghyYDLDM/1a/daTg+LW/y2XKedDrESpf41eO9uE0c99boMrpBDkAxop8XdLIT4u2elkH
+	 P7Vh4gEzUfbkhqyvp5Kkw7BcsH1Q6bbIrpKFQa+VnL8YkdfHhaOc6O98+Koub/4qNbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T106dF+M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ebKr+Ee/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A0B606A31E;
-	Thu, 26 Nov 2026 14:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A96E606A338;
+	Thu, 26 Nov 2026 14:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T106dF+M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D725F1F000F4;
-	Thu, 26 Nov 2026 14:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ebKr+Ee/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C9B1F000CF;
+	Thu, 26 Nov 2026 14:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705047;
-	bh=9GgSlj1+2Cj7Kb3P1dUHwPZf0GrxwIb8CEgahJjnvkI=;
+	s=korg; t=1795705050;
+	bh=Imci1/6BvYRNpSN6RofebgbP4jDbzXFDcyegMb4Nw8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T106dF+MwfXjY1yUmA/eQXWJqrVUBPFTMHg/nznmxqQWM/NCDR4/Gmj1Genb+zB8V
-	 MAwYw5bcE9IT/t69VoRjpBir7EoiYbD3T+Lt3r0d+plI6hhv8BjWmOkLtThslq4nq0
-	 xOyW1UdMr9b+deGviBkClTLBpsk+XjqC8ToxOO1I=
+	b=ebKr+Ee/bVK65/ZH2PyZxp4bArk+XYXbgCxQ+0KHmmU5JRafbCxkbLj5OdgbbHRS7
+	 KGo9jolc+hhFmZmAxL/dyWmTbNqlU3ylKiaAVWrWdyTv+RmkdXA51/chVvmJ7fvEsE
+	 NfFP2bYGNPIMNtqp/jZ3g0etKIQSZwUaqFarq08o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Binbin Deng <18983559317@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/319] ASoC: meson: axg-fifo: request the irq with the clock enabled
-Date: Thu, 26 Nov 2026 15:37:12 +0100
-Message-ID: <20261126144008.183416536@linuxfoundation.org>
+Subject: [PATCH 5.15 065/319] Bluetooth: hci_core: Initialize IRK before publication
+Date: Thu, 26 Nov 2026 15:37:13 +0100
+Message-ID: <20261126144008.205969985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,95 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit 82fa7bfab6b961a03d6575348334e0ec15fdc712 ]
+[ Upstream commit f0cf5a24cefeb629876bd15d668ff062c8655e28 ]
 
-The fifo irq handler accesses registers which need pclk, but the irq is
-requested before pclk is enabled on open and freed after it is disabled
-on close.
+hci_add_irk() initializes the identity address and address type of a newly
+allocated IRK, publishes it on hdev->identity_resolving_keys, and only then
+initializes its value and RPA.  RCU readers such as hci_find_irk_by_rpa()
+and the debugfs identity_resolving_keys_show() can traverse the new entry
+during that window and see a zero or partially initialized IRK.
 
-Request the irq after enabling pclk and masking the fifo irqs.
-Free it before disabling pclk.
+The race is reachable by racing an IRK addition with another CPU resolving
+or dumping IRKs.  In particular, userspace can issue MGMT_OP_LOAD_IRKS
+while another process reads the corresponding debugfs file or triggers RPA
+resolution.
 
-Fixes: 6dc4fa179fb8 ("ASoC: meson: add axg fifo base driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-30e88a8a-f33a-40f0-92aa-9ea62c5b7299
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20261030-asoc-axg-fifo-irq-clock-v1-1-f8c170ac8b0d@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Initialize the IRK value and RPA before publishing a newly allocated IRK.
+Existing IRKs remain published and continue to be updated in place.
+
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
+
+Fixes: adae20cb2d20 ("Bluetooth: Convert IRK list to RCU")
+Assisted-by: GLM-5.3 coccinelle
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-fifo.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ net/bluetooth/hci_core.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
-index 5218e40aeb1bb..4a81aa3f384f0 100644
---- a/sound/soc/meson/axg-fifo.c
-+++ b/sound/soc/meson/axg-fifo.c
-@@ -244,17 +244,10 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
- 	if (ret)
- 		return ret;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index cae27a76f44df..b544dc030904b 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2554,9 +2554,10 @@ struct smp_ltk *hci_add_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ struct smp_irk *hci_add_irk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			    u8 addr_type, u8 val[16], bdaddr_t *rpa)
+ {
+-	struct smp_irk *irk;
++	struct smp_irk *irk, *old_irk;
  
--	/* Use the threaded irq handler only with non-atomic links */
--	ret = request_threaded_irq(fifo->irq, NULL,
--				   axg_fifo_pcm_irq_block,
--				   IRQF_ONESHOT, dev_name(dev), ss);
--	if (ret)
--		return ret;
--
- 	/* Enable pclk to access registers and clock the fifo ip */
- 	ret = clk_prepare_enable(fifo->pclk);
- 	if (ret)
--		goto free_irq;
-+		return ret;
+-	irk = hci_find_irk_by_addr(hdev, bdaddr, addr_type);
++	old_irk = hci_find_irk_by_addr(hdev, bdaddr, addr_type);
++	irk = old_irk;
+ 	if (!irk) {
+ 		irk = kzalloc(sizeof(*irk), GFP_KERNEL);
+ 		if (!irk)
+@@ -2565,12 +2566,14 @@ struct smp_irk *hci_add_irk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 		bacpy(&irk->bdaddr, bdaddr);
+ 		irk->addr_type = addr_type;
  
- 	/* Setup status2 so it reports the memory pointer */
- 	regmap_update_bits(fifo->map, FIFO_CTRL1,
-@@ -271,17 +264,24 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
- 	/* Clear any pending interrupt */
- 	axg_fifo_ack_irq(fifo, FIFO_INT_MASK);
+-		list_add_rcu(&irk->list, &hdev->identity_resolving_keys);
+ 	}
  
-+	/* Use the threaded irq handler only with non-atomic links */
-+	ret = request_threaded_irq(fifo->irq, NULL,
-+				   axg_fifo_pcm_irq_block,
-+				   IRQF_ONESHOT, dev_name(dev), ss);
-+	if (ret)
-+		goto free_clk;
+ 	memcpy(irk->val, val, 16);
+ 	bacpy(&irk->rpa, rpa);
+ 
++	if (!old_irk)
++		list_add_rcu(&irk->list, &hdev->identity_resolving_keys);
 +
- 	/* Take memory arbitror out of reset */
- 	ret = reset_control_deassert(fifo->arb);
- 	if (ret)
--		goto free_clk;
-+		goto free_irq;
- 
- 	return 0;
- 
--free_clk:
--	clk_disable_unprepare(fifo->pclk);
- free_irq:
- 	free_irq(fifo->irq, ss);
-+free_clk:
-+	clk_disable_unprepare(fifo->pclk);
- 	return ret;
+ 	return irk;
  }
- EXPORT_SYMBOL_GPL(axg_fifo_pcm_open);
-@@ -295,12 +295,12 @@ int axg_fifo_pcm_close(struct snd_soc_component *component,
- 	/* Put the memory arbitror back in reset */
- 	ret = reset_control_assert(fifo->arb);
  
--	/* Disable fifo ip and register access */
--	clk_disable_unprepare(fifo->pclk);
--
- 	/* remove IRQ */
- 	free_irq(fifo->irq, ss);
- 
-+	/* Disable fifo ip and register access */
-+	clk_disable_unprepare(fifo->pclk);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(axg_fifo_pcm_close);
 -- 
 2.53.0
 
