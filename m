@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705599;
-	b=hIIaG78TQpPHhivMnim+QE0NYNxo6Znw9DEn4AP9WDLtt8iUSbHBTCp1hFor1ALLCigx
-	 u6DAYcGGTUfe8BrpploOAXeDeV+K2sSanFl/Dn8a4CyNk4YB/k3KoHRk5Jj3ruTapLIVT
-	 nYVHtS1jtZXPa0XRn8PWNGKvkVzJThk4kdptGQz73+W4gxEGHg4imdr8NX1cd0WRqbptZ
-	 00hYLq7YGkJaUzrTa2jcAFVspW+TXZzxdPo1BjQYk4w3QrWl/q42JRy1N1tTOG0hCe63r
-	 U18lkKy41BX/8VREdyXpwuHJiCqDHP5gCh7NK1qBNM9uJxZMdRB4ALdHiC3uz/dzfqg==
+	t=1795705602;
+	b=TY/Qxmxy9kLq+eaekJwJiLpaNRCWIf5/sjgbCs9w2KLM6578mT0kLbPr+mi8g4iJH8X/
+	 JVBiQz6I0oJEgHbLByDGYOUETD85dr6DSn/5s3iprFl+QFjspR5m/dwtkgQGW/cHbcF9J
+	 cCR/KaGKG4mKCNSGmuGMOqJL1xtgWBOwM5PAaheewF+pIuCTYqdPmxms0OxtDXeMfGCa/
+	 jF0F0Bxj09iCRstkRlXj8l4JKQC9ADXvuiFG6c6cXw2eexYbb3sCn7AtP/A3Oq3wNZcuB
+	 5XjG2wrirLkNNm0btCWR88DcZSP4MfYrYtA8k5Ujb/6AGbod+iNxdXbSdFWnTOUDjYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RS2Nc4FHAjCgd2H3zgvPyAnX5SxHVtG6isjxPB0kaL0=;
-	b=sEsRQ2cc7dJcbTeG8dMo85R6GN7154EqFHcu9SsZscMDstxlmg1ZusIVgZrlZPwwrz+4
-	 Br4fj6jauQaMk6z2csf4PCaByv5VPjahrLmvGE+VgLLKddj3B6VXEpcAgH8fkYr5/KQ5v
-	 D8zhbZmew94EZu7ogw7MOHRS7SgZCHROAu7O0lg/UFvsKmZ6WljfQ8phRdcpucwYPl2wf
-	 PcVClT7fovRTMTQieCZ2rkbtFyjgymss0NvL6NCvkyj99mup88wK9ZCVhGgHD6PWCpoHf
-	 UfVEovKoOJPUpto+oLI2L4VOdru0gB2N5ZCWca2u4xtoZda4hrYQuP+txOltK6u72Fg==
+	bh=dT76koQ744mikKqt+M4s0wy81w6kNwRSuXfVyxwMKVg=;
+	b=zSXNDfWjHAL0rosZ5/4iwLrg9aLYQ1L1v2b9XB8+DfHoVkKG7WN2w5xtdoHy4pHN5L/b
+	 JgGJmuRKlqAlKYlPSiv5u6E2T+aayFrOPg5gpGR+ksR0VAu5L4OGuwaQz71FLvX40eg+L
+	 XOmJr+B6aaKLLVOdVR4odF7ldL4wGRPZhTLILfupIp1VO4hrsvo/EqHNqL9KT75G1lQbQ
+	 1arOL8jj3GLJPaXbABT+f068qwcFdJZGCrQiYzjuQ2JN1vNPKY1m86DREPIkrL+qTbqIN
+	 cFZq/J+eaRpoNJrILqAZ8ucvJqXy7uUb3cTCsvU2iT7cQRZ3jTVSIHSVbdqi++t3uRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cyuaRXQw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3ppDV+C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E4B606A31E;
-	Thu, 26 Nov 2026 15:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7C7606A326;
+	Thu, 26 Nov 2026 15:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cyuaRXQw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968E91F000E6;
-	Thu, 26 Nov 2026 15:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3ppDV+C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACDB1F0093E;
+	Thu, 26 Nov 2026 15:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705599;
-	bh=RS2Nc4FHAjCgd2H3zgvPyAnX5SxHVtG6isjxPB0kaL0=;
+	s=korg; t=1795705602;
+	bh=dT76koQ744mikKqt+M4s0wy81w6kNwRSuXfVyxwMKVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cyuaRXQwVXHrpH9eQDfuMYiOn46ISOOab8NQHxrPBfoJ/tdLcvTitcpg4jMDrS8kC
-	 vVtDJ6FEPGDEjnL5RhZaPJ/6OHYt4f2fzZuOmyQ236KYRVrW0uqls/sRXZDYmdXI0X
-	 jQG44qAWOYk7LXGQluKfuUtM1yY7BZh8p+APnorQ=
+	b=a3ppDV+Cgu547rFjayhDzEhhQuS5leThD81w5A0HPcmozPAh3HXnww6iUxYYWcNAx
+	 Pf70VNMdvTCr5Ut3j3KpOwLBulb4P/XsgpkGaSa+LYQLY3GWvTDn8mYCLR/KF9cDWV
+	 1G3IKEBS+YyN0C/g12FxxhZRenGTRbVOK4q7jok4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.15 251/319] dm-cache: fix NULL pointer dereference on open failure
-Date: Thu, 26 Nov 2026 15:40:19 +0100
-Message-ID: <20261126144012.409618260@linuxfoundation.org>
+Subject: [PATCH 5.15 252/319] dm-cache: fix ending a cursor that never began
+Date: Thu, 26 Nov 2026 15:40:20 +0100
+Message-ID: <20261126144012.431756056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,33 +68,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit d12afc2f9ed6e14019fed9c02a74ad699915dc85 upstream.
+commit 421420758be348cb90715bfaa26e1211a12ff1d0 upstream.
 
-When __begin_transaction_flags in metadata_open fails,
-dm_cache_metadata_close is called. dm_cache_metadata_close attempts to
-execute list_del(&cmd->list);, but the "cmd" object is not on any list
-yet, thus it crashes with NULL pointer dereference.
-
-Fix this by initializing cmd->list after cmd is allocated.
+If dm_bitset_cursor_begin fails, dm_array_cursor_end(&cmd->hint_cursor)
+is called. However, cmd->hint_cursor was only initialized if the variable
+hints_valid is true. Thus, we must also destroy hint_cursor only if
+hints_valid is true.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Fixes: 9b1cc9f251af ("dm cache: share cache-metadata object across inactive and active DM tables")
+Fixes: 629d0a8a1a10 ("dm cache metadata: add "metadata2" feature")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-metadata.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-cache-metadata.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/md/dm-cache-metadata.c
 +++ b/drivers/md/dm-cache-metadata.c
-@@ -760,6 +760,7 @@ static struct dm_cache_metadata *metadat
- 		return ERR_PTR(-ENOMEM);
- 	}
- 
-+	INIT_LIST_HEAD(&cmd->list);
- 	cmd->version = metadata_version;
- 	refcount_set(&cmd->ref_count, 1);
- 	init_rwsem(&cmd->root_lock);
+@@ -1444,7 +1444,8 @@ static int __load_mappings(struct dm_cac
+ 					   from_cblock(cmd->cache_blocks),
+ 					   &cmd->dirty_cursor);
+ 		if (r) {
+-			dm_array_cursor_end(&cmd->hint_cursor);
++			if (hints_valid)
++				dm_array_cursor_end(&cmd->hint_cursor);
+ 			dm_array_cursor_end(&cmd->mapping_cursor);
+ 			return r;
+ 		}
 
 
