@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704258;
-	b=kSlxIH/bM66tBUekw/8a5X1bMzia8Jd+7iZZY7mM5EWsXKc3e2Y+ewaz1bpp71Gww6kH
-	 W+1g3HlYsVUzl/O1XpUeE8/QACLTz+MRGJa/PCooJCfFdsCMedEKKXju6dWNMQgAnOLVR
-	 KMchHIPoezDXTuwF2Qw8SpZ2nGkZMoygVAhXg/wtLL0kNnuX7CBaR/OT3pdPE30d1xtu1
-	 XA6egmS66Nk8WkW1NyaCYkoNzWuEC7vnhCM6ykFm1/gEiDpHV5xvdSGnar7lSauUIASih
-	 xxf10PHX4efbBwyHiJ+PhUqvKpu5U4X6R4gGttWSZIdRDCVD7s88/NO0yUO5hduom7g==
+	t=1795704261;
+	b=QAGzZoc1sNW7W9otQ6e7Eky95h2+2I1SDiYiSlRl+9zmAhJxwyghihMNbvE2uKiKcb/j
+	 LaLXFWTkMnoLYafEW1WgJ1QLSvzS/v+nUGsHIpzKi5Vp0fhITDlAXv/5DpV3ZSBBIeL7U
+	 pW2cO3BKNzjldWEjScfvhU7zV2+I+b5/YvJZFRRQXd4QjC94uDKckG07Yl2md1817Brck
+	 tutO8xkRzdzG+wh+4MGozoXD0TtalMQ3KUcYTckBuvSNLQmZoRDwsL38IjSxPUuIyR7ZR
+	 /bmoD45KmC0GiK0K3+hOexAT7lYxHMVNwjRgQtc3guHGCZxfK2jrXk0Rw4mUp4f2Qug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JedIdT+vcKNzs1/0WphvkI8aYgDR0E80NZVfXGHnoI8=;
-	b=tUiNy+P7tddQiY4L+AIfq3of/QWcPLUJxXG79F/mVTlj7HkZ26kE9mBDJx893jalU4Bh
-	 8Mt2MLyr4SbuNBbPKY+nwoRdrDXY5u+LoRt7p7HObO0jwj/WTdl9IKosX0odAI5ial9md
-	 dGcG26Oavv6MUAkA0XMQtEg7EtSJbckDqmtoTUZRM5n3mcMARI1XgfTWQ+nB1xZRrCMKC
-	 zIH+alLw+YdHCCQOz4jienrVQ3J67GWdKXisHxIN1Th6TdF3IL803hk23VXyl8a7pnjMN
-	 oRnIq52ezwKt4uwg5xtoicbultrPpchHo0ZH2nT4jxdrjLXyhUYYOpAd50SPc4ZiqVQ==
+	bh=4rpiT3e5To7FpF1nmxwYBm9wNIAs/NnFo/d6ryE6LQk=;
+	b=FnyjuQpg8hiU1ULctvlWZiHy8pds3dZSWNqH/uFODbxkBJpluWPiUXGRljew5MbpxQXx
+	 Z+mOfPL0gxcL4+Lunh8sLz3N8wQc/lQFhQ6aynx1RPkgcJIrXcaBrqwAgwXTf8QpC17Z8
+	 GbqXJVgizFJc3lGd4luCTCD1c122PPXWbM2g6EUA3dwVjOO8CNvFbcR0/3TbjN/wwP2Px
+	 2dUfE0RndUITbZMMceYHj+rrl4ZMCOu0ja2doX24IZ04hmPrIfhdasICJ0wWo7bRI4hNi
+	 rhVn/6p8oRNtnc5Zyk0QjpBBijy4F7OKIoyWqUwwsVnPwH+FHDgjZv86d2xh/M2yzZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UuKfQqlU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKyU+vTE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249DA606A31C;
-	Thu, 26 Nov 2026 14:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61329606A321;
+	Thu, 26 Nov 2026 14:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UuKfQqlU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D7D1F000CA;
-	Thu, 26 Nov 2026 14:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKyU+vTE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512BA1F000C4;
+	Thu, 26 Nov 2026 14:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704257;
-	bh=JedIdT+vcKNzs1/0WphvkI8aYgDR0E80NZVfXGHnoI8=;
+	s=korg; t=1795704260;
+	bh=4rpiT3e5To7FpF1nmxwYBm9wNIAs/NnFo/d6ryE6LQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UuKfQqlU6pbUFBKixyoXUJ/PU7WCsiu11n76kagFGFRJLtYgL+27AaEnSqV/GhFg1
-	 u6qF9HKqI/ks0Qx1n7REwhJdPWnl05TpsRzGCnV/mN8BuD9KOAiV1fgOWmy5sVk7eB
-	 E1L3MCQezwwis8JgQFyXFl+wVmKZcUfPCrwCbMqE=
+	b=rKyU+vTEu0vl+ZIkWUCR1ErpaXCwXgj7RBzP1E4WH48N/BYu9GlkZ4OMJ250mdaXZ
+	 vpZh3guGwAgMrN7plN5t9QoAhMlzXXZ0yXrjxTIbRwhHcHnHftLobnyQbjJbHcspMr
+	 1tG1UeAvzwVmk/ksc9YnfBI3KwJEDiB7wD2YihPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/265] vhost: reject backend enable without a kick file
-Date: Thu, 26 Nov 2026 15:36:32 +0100
-Message-ID: <20261126143609.422980635@linuxfoundation.org>
+Subject: [PATCH 5.10 063/265] block: partitions: reject GPT entries with starting_lba > ending_lba
+Date: Thu, 26 Nov 2026 15:36:33 +0100
+Message-ID: <20261126143609.489376607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,38 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 509f6bd229e94fc39506e01be692c4aa22338b49 ]
+[ Upstream commit 7e3801d12ebabaa3db6e2685ccc80b6e6f6d1ff7 ]
 
-Enabling a backend without VHOST_SET_VRING_KICK dereferences a NULL
-vq->kick in vhost_poll_start(). Reject the request with -EINVAL.
+A GPT entry whose starting_lba is greater than its ending_lba is accepted,
+and the kernel creates a partition with a bogus size. The bogus sector
+count defeats the end-of-device check, so I/O through that partition is not
+confined to it and can access sectors outside the partition on the same
+disk.
 
-Fixes: 264ee5aa81ec ("tools/virtio: Add --reset")
-Assisted-by: OpenAI-Codex:GPT-5.6
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261011-fix-null-pointer-in-vhost_test_set_backend-v1-1-60b2f12d64c6@gmail.com>
+is_pte_valid() only rejects an entry when its type is NULL or when
+starting_lba or ending_lba is greater than lastlba; it never checks that
+starting_lba <= ending_lba. For a reversed entry both field checks still
+pass, but efi_partition() computes size = ending_lba - starting_lba + 1 in
+u64, which underflows to a huge value. That value also wraps in the
+end-of-device check in blk_add_partition() (from + size) and does not fit
+the signed i_size, which turns negative.
+
+Reject entries with starting_lba > ending_lba in is_pte_valid(), matching
+the head-level check against last_usable_lba < first_usable_lba.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261102080442.3775061-1-wozizhi@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/test.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ block/partitions/efi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vhost/test.c b/drivers/vhost/test.c
-index a09dedc79f682..e68611a566272 100644
---- a/drivers/vhost/test.c
-+++ b/drivers/vhost/test.c
-@@ -288,6 +288,10 @@ static long vhost_test_set_backend(struct vhost_test *n, unsigned index, int fd)
- 		r = -EFAULT;
- 		goto err_vq;
- 	}
-+	if (enable && !vq->kick) {
-+		r = -EINVAL;
-+		goto err_vq;
-+	}
- 	if (!enable) {
- 		vhost_poll_stop(&vq->poll);
- 		backend = vhost_vq_get_backend(vq);
+diff --git a/block/partitions/efi.c b/block/partitions/efi.c
+index 2de016565ae55..64f98bbc4bd63 100644
+--- a/block/partitions/efi.c
++++ b/block/partitions/efi.c
+@@ -463,6 +463,7 @@ static inline int
+ is_pte_valid(const gpt_entry *pte, const u64 lastlba)
+ {
+ 	if ((!efi_guidcmp(pte->partition_type_guid, NULL_GUID)) ||
++	    le64_to_cpu(pte->starting_lba) > le64_to_cpu(pte->ending_lba) ||
+ 	    le64_to_cpu(pte->starting_lba) > lastlba         ||
+ 	    le64_to_cpu(pte->ending_lba)   > lastlba)
+ 		return 0;
 -- 
 2.53.0
 
