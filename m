@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705273;
-	b=1kSHLVu04AUUD/GY5hNPpY1sPBe4OIEIv4t8W5mD5HcTWqVABz+TTs394I0KdVV0ito2
-	 GSC+phrMdP+P+WO166aFoVELl2buHCbRUl5wKU3ZCwqrrtM4TZ8NTHi3KCqNYJdPkgEPZ
-	 bSlu5gci0SnFzbvXq2tx3mcSH5nGenPOhwVKFKcx7rsYMEhiiGgZTM/a5lC62RByEkHKU
-	 LD6Yxn1Lw/5Ow1hHkjSaFbth0nhedib09ycbeV0h+TrSI8/ufBX2il9aiG7dF/YMgKbWT
-	 yPPaoRZ/03tkqq3wMV5ftqmFqfdQHfGrBDiVixD7NwDwBL9owaUULozl2dZxAmaxCUg==
+	t=1795705276;
+	b=ZSIpGv6stGcRbV8rB4/hRGy44XC+A6N37ZxJJLH2NrEZLf9bGwrprxFxMhm3IXKl023j
+	 WnC0GDSNZW2ELjWr2GxnIECpCG2pwCguax89zg3JGy07TCy1zzsiTEE6N0pqJc8OxfoB+
+	 x70qiZqOrN42LBFdI3JulqM9Pm/LuykwOA+zNZUpU0jJdszYqSnsS0t/qdSFGfRXh1/SP
+	 Pdxdtju/u+Mq7wisViWmG24imRI3SC+EVye/zfk2N4kkEwaZCf/i1QaVvtxRrVGeO9jsd
+	 36yYXqZQ5zEAofLyu2YLZZZHFatWQklCNBVwnVVcLQj9J9d8Ts8jiWuoAMfl6/D5XZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zU2X/xuE7yGhfVv8HcD+JsjgCuuowapJYpkYvVlRUUw=;
-	b=LswRcnBmbYrCa5dJSUePtIMO6Ol0PpHuDGOP7qm93O6Bw14LfHe00Di0TdZ5CH6CHvjD
-	 rqBJIGpmi5HK7Z05Eb+iiiavvNxz7N+a9BBld2t4ZJOwUViUbsIpHFyCgAz1reNEtmp6A
-	 WC4RJrNLt+AWwmlLxaje0ET+Sb12IUY+qIYp/0r6KzNgr69fSk4ud7voA3ZuwaAuWMvtw
-	 26z8C7JReEg+kB0ltfFyUVhsROSJXSqS70OORlPdIj2jDL89GVs1MY+6VAWTYfDTqibAu
-	 zFZektral577d26RvgCslehpACW3yh8qDgBY1IJzcGi0m1YT5CNpbQAB+zx4HJvhV9g==
+	bh=l7ZM+rtRPeBt+MOnsbYJF1kjsX4Dr/2oHBUEyMB+aJ0=;
+	b=tfrpk6S7B3tjygHUSEOAA3Te9xqO9Wu/3mZ3QBKy2mkIWlyY4MfPZwI7i4i7pq3332vk
+	 GGwrCEpGJBDyKp7QatBs0dlqvB8q7AAWxJRpz6QWyNUwtVhwCweaStZKUyi8pVKGfyvAA
+	 6lMR8QeIr4DJESQ6bDiwMK40sCp3HSf8YP2bZc+LxaUePX7zfiw/nGJ4Y2ozLpFHgw53y
+	 Pr4jUQ9dK+W0kAvEVa8uivCLZ/Wr0ixDRsaEzp+UlR7WAIpxT6wkOA1p/hKaamhpMWNkz
+	 utexRbNPQjtAFGy6AvTbL+epMQRxEm95fmdUSu96bQ6B+WW1hUnmRoKdyotRgGm+NJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TImuP70d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gQftBmSw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CC1606A31E;
-	Thu, 26 Nov 2026 15:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B88606A31C;
+	Thu, 26 Nov 2026 15:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TImuP70d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070271F000C0;
-	Thu, 26 Nov 2026 15:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gQftBmSw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2BA1F000C0;
+	Thu, 26 Nov 2026 15:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705273;
-	bh=zU2X/xuE7yGhfVv8HcD+JsjgCuuowapJYpkYvVlRUUw=;
+	s=korg; t=1795705276;
+	bh=l7ZM+rtRPeBt+MOnsbYJF1kjsX4Dr/2oHBUEyMB+aJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TImuP70dXG3BZGyP5v85KjLODW2MiGUHWgRLkTTFoEv9zaekleHmErqqJ4IXSNOTl
-	 80LxkuYRS46iPw3gsHmbB0rG3SAfe0yOdPoXe/lU2sq2fdH4SPzM3ghhOMVu/NErKJ
-	 KZwNbMm76n8nKckPbgcpVtgQnBQaYz4/0bV1BdlA=
+	b=gQftBmSwdLgiNN5Yq+YxF5lbgdTEVmsfyXqhbqSUGAchcLnYfp5KpBo4IuFcut3R8
+	 im8hLH+JnVGiOqFsomkw6S2eK2KWQH6jaLLDlmiLzidv+d3W/Hm3h4/Lj9NaL7jXL4
+	 IiCEsU87H9nszuEOeR793DYepwftLfx4/Pxjmv2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/319] team: fix promisc/allmulti leak in team_port_add error path
-Date: Thu, 26 Nov 2026 15:38:31 +0100
-Message-ID: <20261126144009.976156720@linuxfoundation.org>
+Subject: [PATCH 5.15 144/319] net: protect negative destination advice with RCU
+Date: Thu, 26 Nov 2026 15:38:32 +0100
+Message-ID: <20261126144009.999107696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,68 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit ff618cb00a645f1e3f89068c5fbda3f3a7f4ae63 ]
+[ Upstream commit 4b77d2792c3e482afa108c08f224ea6fa396d80b ]
 
-team_port_add() increments the port's promiscuity and allmulti
-counts before calling team_dev_type_check_change(). If the latter
-fails, the error path does not undo these increments, leaving the
-port in promiscuous and allmulti mode even though it was not
-successfully added to the team.
+SO_CNX_ADVICE calls __dst_negative_advice() while holding the socket
+lock. Connected UDP sends can still invalidate or replace sk_dst_cache
+without that lock. A concurrent sk_dst_check() can drop the final
+destination reference and allow an RCU callback to destroy it while
+__dst_negative_advice() retains only a borrowed pointer. This can cause
+a use-after-free while accessing dst->ops or running the negative_advice
+callback.
 
-Undo the promiscuity increment under err_set_slave_allmulti and the
-allmulti increment under err_set_dev_type, so each error label only
-reverts what was successfully applied, matching the cleanup performed
-by team_port_del().
+The writer-side ordering fixed by commit 92f1655aa2b2 ("net: fix
+__dst_negative_advice() race") does not protect this reader from an
+independent cache replacement.
 
-With the promiscuity rollback now living under err_set_slave_allmulti,
-the inline dev_set_promiscuity(port_dev, -1) in the dev_set_allmulti()
-failure branch becomes redundant: that branch already jumps to
-err_set_slave_allmulti, which undoes the promiscuity increment. Drop
-the inline call to avoid doing it twice.
+Hold an RCU read-side critical section across the lookup and callback.
+This follows the datagram release callbacks and covers IPv4, IPv6, and
+XFRM advice without changing cache-reset or reference-ownership rules.
 
-Found by source code audit.
-
-Fixes: 0ae9cfc454ea ("team: Move team device type change at the end of team_port_add")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261104015217.2222-1-lirongqing@baidu.com
+Fixes: a87cb3e48ee8 ("net: Facility to report route quality of connected sockets")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261104131744.1056562-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ include/net/sock.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 359eca9f75e10..9d7d4bf5caf38 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -1304,11 +1304,8 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	/* set allmulti level to new slave */
- 	if (dev->flags & IFF_ALLMULTI) {
- 		err = dev_set_allmulti(port_dev, 1);
--		if (err) {
--			if (dev->flags & IFF_PROMISC)
--				dev_set_promiscuity(port_dev, -1);
-+		if (err)
- 			goto err_set_slave_allmulti;
--		}
- 	}
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 2b13a41cd99a9..77cef68c56335 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2159,10 +2159,13 @@ sk_dst_get(struct sock *sk)
  
- 	err = team_dev_type_check_change(dev, port_dev);
-@@ -1334,7 +1331,11 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	return 0;
+ static inline void __dst_negative_advice(struct sock *sk)
+ {
+-	struct dst_entry *dst = __sk_dst_get(sk);
++	struct dst_entry *dst;
  
- err_set_dev_type:
-+	if (dev->flags & IFF_ALLMULTI)
-+		dev_set_allmulti(port_dev, -1);
- err_set_slave_allmulti:
-+	if (dev->flags & IFF_PROMISC)
-+		dev_set_promiscuity(port_dev, -1);
- err_set_slave_promisc:
- 	__team_option_inst_del_port(team, port);
++	rcu_read_lock();
++	dst = __sk_dst_get(sk);
+ 	if (dst && dst->ops->negative_advice)
+ 		dst->ops->negative_advice(sk, dst);
++	rcu_read_unlock();
+ }
  
+ static inline void dst_negative_advice(struct sock *sk)
 -- 
 2.53.0
 
