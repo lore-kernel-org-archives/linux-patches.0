@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705664;
-	b=gcuKPlLbTt9nGn274PeRimKqw8MThJAX7XNZ11kIsWoI4YlVLmCJHdPerQEHHbn62oAQ
-	 xWN3/sVu61Kfzdt5pDIBzW2q14naYXIpG4y1p4uoDRPf8MiBehSz57IbYQub07bAFGTKg
-	 7dTf9nYRFf6jM0syshMnjC9PZ1C6GyFbQZoEqov235rpLBeMQQXm4TbexvTqfsciW0uQ5
-	 Lq5r/zV9F4rus3pXTgjyGqHG1+g2vs8e8EVBDRLvnfbvWXxaUEe1DHueG+njFuqNht0jd
-	 RCny0azmQ9fzp+n58F5bHs05zSPi9NMQkAy3HeZ+0lGh92VIQNVcegn3P+z008j0PRg==
+	t=1795705667;
+	b=YzQV4wRLo8zbyO/zyw/CNFBE8MhbVGr4gqT23Ti00CRfIg+hQkknNumBZbZo5GacccsG
+	 Fq1WJ3l2AEQ9K/pKK1xPqmAGyj0KseT73A5DISS0C+qZG8jUu+G0FkkjPBzHE1+Oz4Hxq
+	 loFNkPNtflCPB2LD3AK9NWK+172+icgxLXaV3zHem6N9vMJ5TWIxVX/kPvO2sQI71TtmT
+	 tgYOBA4BYO619K71Md33WYIos6qlhNJTi2BBOL7V32+7OakKSLlG0/Cxd3Qyph3rUkiAj
+	 J2qmrDVcq5AC2mXWU5yZG1ohkx9JkTBJr2StOoT2A8+ZzR1YbvoCJiNK7WR5N2MuURA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705667;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QCm729bbtIghVQiyj7MovCg074tKOO+ZavpRMW0aciE=;
-	b=JY06HQ0XPAsviQNBqWal9ZWA2GwH53bCXnPwu6brqJEH4V8PvpBYDSvsAisKm7zIk1ye
-	 QUmZetAVvdB/hNJHwAfywCRuRh5CWvAa0GEVDPvUPSq4IZ/nkrDKZcTs8TEhFgbDydklX
-	 fC5CaBPw/S58e43jTTokX85OUIudhmTKE5YxiiVAVrDi6kFgX6L0POarmYmG7x0vrA8Hg
-	 n3kkjaOnaOCW2NJrpY8HFDBKPUCX0wpxLthFTT/9BvnvVWCuVk/TyhWEDXOR5CEVPIGr6
-	 GbPfmlS4Yq+j3LdGR9sbPfKT410J61pazPMaU+vEce6O4eZElDQW2TUHrFB7NakyRag==
+	bh=orxylLcDhPF7+h4xpJnxeg+PYQ6An2WrTHRfraW2VHA=;
+	b=1fCtw8ToyVnL0/Ft8xcKUxaDnmEW4t7pNkPPSh0cstrY3KqktcitmxB1Nr6GvqkaAp5V
+	 soM6HGqu1kzJMruu7skR1tqL7r424vbCxfKvwIoHxVYrmEAJZ0UbxFWbn+G/DM85W0Vac
+	 kBMgRkWZNvntJ0o7az92ZBJ7ZH+LgJyl/ni8H3zJ1ixpL26xoRnDYplmm8mUwyTQyLmLS
+	 L0sY7Mmww0oHc8qF+tAL7ncGEElCrx9yEyxoRCdV+GP1/zib1VHUi/HA7OfSrSICxOnzD
+	 2LiopeVPpwZ4TjyXZ/2pwSdbV7wq+S7iUXcgGpKudSVEDtHsQGQKgE//2/HefbLNZCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKL3+LYL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8ikvGNF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEFD606A32C;
-	Thu, 26 Nov 2026 15:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC2D606A32E;
+	Thu, 26 Nov 2026 15:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKL3+LYL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB60B1F000D2;
-	Thu, 26 Nov 2026 15:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8ikvGNF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323A21F0093C;
+	Thu, 26 Nov 2026 15:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705664;
-	bh=QCm729bbtIghVQiyj7MovCg074tKOO+ZavpRMW0aciE=;
+	s=korg; t=1795705667;
+	bh=orxylLcDhPF7+h4xpJnxeg+PYQ6An2WrTHRfraW2VHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AKL3+LYL45i9NyLh2ulWmdxofJ/+dol1k6diX0K6rrcZC3VTycx+XQ+uN4BiHKoV6
-	 I0md4anz2e/Iz1iS0hIITkSqf37wB0Z57j5FSYWuMhqtiTcQ6dJvyZTokH0znBDlWQ
-	 uFO85QKMSyQFkDs2bXP2YJjTq4YdSMhn58uRinu0=
+	b=G8ikvGNFOXj9AVU4H3e+M1EmfZauKM3pYnh5kJ1LGUUtenGdPVqIHGeQtkm5EkleR
+	 ph79YMJmQBREFLOl7amQn2+0dSmfPKX7aDXqugKqg7krX4EL3bgdomZo6zptsNxyLi
+	 bZntFke8QKWWo6eoyMrevuhxZwADvOG/ZRXG58AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Robert Baldyga <r.baldyga@samsung.com>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 5.15 267/319] serial: samsung: dont leak the tty on an RX IRQ
-Date: Thu, 26 Nov 2026 15:40:35 +0100
-Message-ID: <20261126144012.774363509@linuxfoundation.org>
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
+	Leonardo Costa <leonardo.costa@toradex.com>,
+	Hiago De Franco <hiago.franco@toradex.com>
+Subject: [PATCH 5.15 276/319] usb: gadget: f_ncm: restart the TX timer if the TX freelist is empty
+Date: Thu, 26 Nov 2026 15:40:44 +0100
+Message-ID: <20261126144012.983806618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -72,57 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-commit 7ada442f5ef77f8d53f608a0141a5e88a888ca9f upstream.
+commit 78585f90feb3bbaf3b1c642294c8c47e451dc3cf upstream.
 
-s3c24xx_serial_rx_chars_dma() starts by taking a reference to the tty.
-If the interrupt is not a receive timeout, it switches the port from PIO
-back to DMA and leaves through the "finish" label, which does not drop
-the reference.
+ncm_wrap_ntb() aggregates datagrams into a pending NTB, which is sent
+either when it becomes full, or after 300us since the NTB was started,
+using ndo_start_xmit() (eth_start_xmit()).
 
-A port with RX DMA changes to PIO on every receive timeout, that is at
-the end of every burst of data, and comes back this way when the next
-burst starts.  So each burst takes a reference which is never dropped,
-and the tty structure is not freed when the port is closed for the last
-time.
+ndo_start_xmit() returns NETDEV_TX_BUSY when the TX freelist is empty.
 
-Drop the reference on both paths.
+For regular packets this is fine since the networking core will requeue
+them, but for timer-flushed packets there is no logic to handle this
+situation, and HRTIMER_NORESTART is returned from ncm_tx_timeout()
+without checking eth_start_xmit()'s return value.
 
-Fixes: b543c301c2c5 ("serial: samsung: add DMA support for RX")
+Under sustained TX saturation the request freelist is empty most of the
+time. Since the timer is never restarted, small packets keep getting
+accumulated into the NTB, until either TX_MAX_NUM_DPE packets are stored
+or NTB_DEFAULT_IN_SIZE is reached, which is an unknown amount of time.
+
+Check the return value of ndo_start_xmit() and restart the timer after
+another 300us.
+
 Cc: stable <stable@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Peter Griffin <peter.griffin@linaro.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Robert Baldyga <r.baldyga@samsung.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20261027-tty-llm-v1-21-99b0202ae546@linuxfoundation.org
+Fixes: 6d3865f9d41f ("usb: gadget: NCM: Add transmit multi-frame.")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Tested-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
+Tested-by: Leonardo Costa <leonardo.costa@toradex.com>
+Reported-by: Hiago De Franco <hiago.franco@toradex.com>
+Closes: https://lore.kernel.org/all/20231204183751.64202-1-hiagofranco@gmail.com/
+Link: https://patch.msgid.link/20260817192638.437798-1-cosmin-gabriel.tanislav.xa@renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -737,14 +737,13 @@ static irqreturn_t s3c24xx_serial_rx_cha
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1157,6 +1157,7 @@ static enum hrtimer_restart ncm_tx_timeo
+ {
+ 	struct f_ncm *ncm = container_of(data, struct f_ncm, task_timer);
+ 	struct net_device *netdev = READ_ONCE(ncm->netdev);
++	netdev_tx_t ret;
  
- 	s3c24xx_serial_rx_drain_fifo(ourport);
- 
--	if (tty) {
-+	if (tty)
- 		tty_flip_buffer_push(t);
--		tty_kref_put(tty);
--	}
- 
- 	wr_regl(port, S3C2410_UTRSTAT, S3C2410_UTRSTAT_TIMEOUT);
- 
- finish:
-+	tty_kref_put(tty);
- 	uart_port_unlock(port);
- 
- 	return IRQ_HANDLED;
+ 	if (netdev) {
+ 		/* XXX This allowance of a NULL skb argument to ndo_start_xmit
+@@ -1167,7 +1168,11 @@ static enum hrtimer_restart ncm_tx_timeo
+ 		 *
+ 		 * This will call directly into u_ether's eth_start_xmit()
+ 		 */
+-		netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
++		ret = netdev->netdev_ops->ndo_start_xmit(NULL, netdev);
++		if (ret == NETDEV_TX_BUSY) {
++			hrtimer_forward_now(data, TX_TIMEOUT_NSECS);
++			return HRTIMER_RESTART;
++		}
+ 	}
+ 	return HRTIMER_NORESTART;
+ }
 
 
