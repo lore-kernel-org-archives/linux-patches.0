@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705056;
-	b=R056+ejn+jLi63wxDH4WRlWtCClsF2CX5lNDtRQxiztfIaUPge2StpDmSaGI3FKEZ0Ux
-	 oOQsPsOS+LyJ+gMlMTa/DsIsooOEF5SCBS7QNmUekBGwKh+gMAD8MrRREG5wWb7VIUbZy
-	 3fyplC2fsFDtMFTbXDAxfo+j3VAM63wBwNc8NXofYdxBIvuxMUQj8VVBlEDb+8J8avtWK
-	 B5UQ0sErxRTz7Ixt7B5t5lkSTvj5omzmM2OBq6eVSOqUi/LxgbC5oojR1Q4xQblGx6UWJ
-	 oXGHeL4aZrsM2lGb15Pfwfvt4lqS6gvcPSaDBiM1j+7OBZrgIUy5UIXiWHtIHDDHC7g==
+	t=1795705059;
+	b=owffeiTPcsc0E0CpeqOaVPX2zWLMscnxpW6xC7U2OS8XPMxbO9sZ8lNqaU8D+KRltnpT
+	 TwHg6stUdQ7aIg+1B7t8W6Ds4iyAEPzi8VADKzjm0sbyJhWZAssjGSdong3LWPJlDurI6
+	 0HwzaRYRXHcgtvaSWW0HT9+tUVBdmlFHqYkFhFRZa8DN8Z4rGHX6rbII/hVrd3BKpvajM
+	 x25T8moDOMyDtax6qyYoofAIB+EU+0VoKP0nMqBtb4/dH6UfNAmQjkPt9g3BKQ6TWVTq3
+	 OpxdgkfVAzo+HteB7sA/Wv5Oohm+NLdzEnJKeZVxPiZriiBVzzBxvPAzfrcvaUjfzzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705056;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tOMoTsRvS55YHpw4iJ12WRv5pKxNkcKDcksiB4bb5fA=;
-	b=racheR2g0Ya/ygaEme3ErHck/kRh9ZqFZokoPBO3ur4c4HXjBeulhksecNQ6vImFp4RI
-	 jwwV73GUhSELcwJbE+6DcqQea90caPdaBPLZLzYcBC5Yj33lA504wO9RbikVu7uUW7TVO
-	 hsApw5U9HxOzpSFntd6EwEZ2UqHTikU6NENLb8tW8F8Jrga7hATAXDxUEKRsHil5/ARm6
-	 wSfwlHp7vBK46X95XHosq4tKpvZgxMgyY7A5iKzNeamE8UuHVixBG6znSBhFBSpNIezlb
-	 OYDVimhQlNmJpBq8ofTQCPXpNipYeCizFmtqNy7dZ08X+YSxCUHqhThfIawaUQ9my2A==
+	bh=aYehoLzGdVIelOCDcy6oxjb2D34iWwTHOPTVtEtp1LE=;
+	b=tVGNiglS6R9EskiUBNsH55zgz3/jQRdggTNlx5cbebyZJdK8dOzYb0ssTRe9VWMS8Sb4
+	 hAKU+kYC2ZkVDLrFGzDFKTXekuiiz+thCHF6DWH5NTdClmofmd/bUazKQSBQVdxsaI/TT
+	 P76Rn4nclUpzYZXU5YMBkWCH1lllZWhT8KkH4ShN/oATHuLPQ/ysKOLh311IzCCWd2OFg
+	 RzNt4LjinKYwwd/aVsveuuE/T8S5bwhwbxVUaUPfGxMSESqSVHyTLi2KpSjKgoJs3uL2s
+	 I4/0fsJ05i1vr7vX4rIc5yEVbOWks0gbX+RRin33bHDnilCKa5P8uy+54mZ5bWSoufA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a32P4myl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZMUXBU4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789A2606A687;
-	Thu, 26 Nov 2026 14:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD92606A6A0;
+	Thu, 26 Nov 2026 14:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a32P4myl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F23B1F000EE;
-	Thu, 26 Nov 2026 14:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZMUXBU4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B6D1F000E1;
+	Thu, 26 Nov 2026 14:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705056;
-	bh=tOMoTsRvS55YHpw4iJ12WRv5pKxNkcKDcksiB4bb5fA=;
+	s=korg; t=1795705058;
+	bh=aYehoLzGdVIelOCDcy6oxjb2D34iWwTHOPTVtEtp1LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a32P4myldJj+4ZPim1UBy2GdoVfmCNh98KMdgy92ARtA9IeP9xMVWmpFkImh5f8xu
-	 JyCBlscqJ0STZfHRf7brXfwGqqgYW/LamYyO9uNkaKoM/yrCd8cPpojmRstQm7wWX9
-	 mHVYTXd0kkaC3JiwV+sdYJ/fqqp5gSNO7X3ww+SA=
+	b=0ZMUXBU4v1cXgBOwUPQc4eH91K9r0tKV1/O0xZPpbnkAs2zuDEIyilCDLrQCAkk3X
+	 wRUM/JMu61cdozwe2glyBCBlJJpnjdMzC/bvQo5HNPfOCnm2PSHpnyZD4wwGVzFOlD
+	 Jm9lnWu3y4aOqKfpSXCVrbGG1UGzvM9RndOArmhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Binbin Deng <18983559317@163.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/319] Bluetooth: hci_core: Initialize link key before publication
-Date: Thu, 26 Nov 2026 15:37:14 +0100
-Message-ID: <20261126144008.227842033@linuxfoundation.org>
+Subject: [PATCH 5.15 067/319] Bluetooth: hci_core: Initialize LTK before publication
+Date: Thu, 26 Nov 2026 15:37:15 +0100
+Message-ID: <20261126144008.249970425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -70,30 +70,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit ae9c8df1ffb84560ac01cbdc26cfb19027f4d25f ]
+[ Upstream commit 4335849380aa1081ee9a1c2b934cbdda0961fa57 ]
 
-hci_add_link_key() allocates a new link key with kzalloc(), inserts it into
-hdev->link_keys with list_add_rcu(), and only then initializes its address,
-value, type, and PIN length.  RCU readers such as hci_find_link_key()
-and the debugfs link_keys_show() do not take hci_dev_lock, so they can
-traverse the new entry during that initialization window and observe
-a zero or partially initialized key.
+hci_add_ltk() publishes a newly allocated LTK on hdev->long_term_keys
+before initializing its address, type, value, authentication state,
+encryption size, EDIV, and random value.  hci_find_ltk() and the debugfs
+long_term_keys_show() traverse this list under RCU and can therefore see
+a zero or partially initialized key before those stores complete.
 
-This can be triggered by racing a link-key update with another CPU looking
-up or dumping keys.  In particular, userspace can issue
-MGMT_OP_LOAD_LINK_KEYS while another process reads the corresponding
+The race is reachable by racing an LTK addition with another CPU looking
+up or dumping long-term keys.  For example, userspace can issue
+MGMT_OP_LOAD_LONG_TERM_KEYS while another process reads the corresponding
 debugfs file.
 
-Complete all fields of a newly allocated key before publishing it with
-list_add_rcu().  Existing keys remain visible and keep their current
-in-place update behavior.
+Initialize all fields of a new LTK before list_add_rcu() makes it visible
+to RCU readers.  Existing LTKs remain published and continue to be updated
+in place.
 
 Found during a static-analysis-assisted audit: candidate sites were
 surfaced by a Coccinelle rule, and the reader/writer paths were
 confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
 not observed at runtime; it is identified by code inspection only.
 
-Fixes: 0378b5977013 ("Bluetooth: Convert link keys list to use RCU")
+Fixes: 970d0f1b2803 ("Bluetooth: Convert LTK list to RCU")
+Assisted-by: GLM-5.3 coccinelle
 Signed-off-by: Binbin Deng <18983559317@163.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -102,27 +102,27 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index b544dc030904b..c5e4616edb04c 100644
+index c5e4616edb04c..ee68241c1181d 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -2491,7 +2491,6 @@ struct link_key *hci_add_link_key(struct hci_dev *hdev, struct hci_conn *conn,
+@@ -2538,7 +2538,6 @@ struct smp_ltk *hci_add_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr,
  		key = kzalloc(sizeof(*key), GFP_KERNEL);
  		if (!key)
  			return NULL;
--		list_add_rcu(&key->list, &hdev->link_keys);
+-		list_add_rcu(&key->list, &hdev->long_term_keys);
  	}
  
- 	BT_DBG("%s key for %pMR type %u", hdev->name, bdaddr, type);
-@@ -2515,6 +2514,9 @@ struct link_key *hci_add_link_key(struct hci_dev *hdev, struct hci_conn *conn,
- 	else
- 		key->type = type;
+ 	bacpy(&key->bdaddr, bdaddr);
+@@ -2550,6 +2549,9 @@ struct smp_ltk *hci_add_ltk(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 	key->enc_size = enc_size;
+ 	key->type = type;
  
 +	if (!old_key)
-+		list_add_rcu(&key->list, &hdev->link_keys);
++		list_add_rcu(&key->list, &hdev->long_term_keys);
 +
- 	if (persistent)
- 		*persistent = hci_persistent_key(hdev, conn, type,
- 						 old_key_type);
+ 	return key;
+ }
+ 
 -- 
 2.53.0
 
