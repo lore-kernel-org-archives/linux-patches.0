@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704460;
-	b=1Hzhsoee7lxClnU3BKb2lu06JuNwL7ZIlU7wOpyWrk91rY/tnpxnglfi/r6HOymKrGrT
-	 1nGLZBTNtGXAIARP5u9kanzycwVxS19PR6YREdOIEUYvpVG820VTE+K9v770G6tJq/qsn
-	 ZVmoYCi7RqEKhZ29sLJT5rrzFJKffaoMqnb4XBTWpGppHVljEZ8PNZJ46F0MmxBWRwTQ2
-	 vkUREqLnTNAWv8se2CfpJaAaaDCpG0xffgjhZsE/wFOPrauSCtjYOBWH3FXZxzT+D6Gp9
-	 zowLflp9DaPLg9TFZw/7Czdffb3zmA7f0kqEBK1B8JiARLuN5/Mgz1SCPLQMBJiNNvQ==
+	t=1795704463;
+	b=M6sfnfKxW8sUklQ5z7sh1Orv8yAPltC3OTInx3IHOrclXMjAtV/HHniC+lpSYPWlWRp9
+	 pDNFgoJP+P+ojC38orATxlB2N/iD8fCBaCvB8SYA7eLNK/OaPRj76C8OIHY5ew24MiboM
+	 Lkv4jLFEzyLAASF3xMZTOcSNDIGSPvcRfuuVulg3mSDDJuOrnxQ0dJpWmMocQ3sq7o1UJ
+	 CR9UCcF8AGj8ETKbrNUbq/0Qp5YVfQjShhXHs+PJCjNK8wEiMStGVUj10u+k6C0yRGB7P
+	 XSTIfhV+jC7WLhFBWvgBCG49+JKquYqprbZran5TpQH6FN34FBZy0XP3nWnZVOHz+UA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vwNjNn7RrhRVyR/Ha6HGCAjAeaTQtm71JqYxeoE/sfw=;
-	b=SYaBcNfbPQaj877iLEcVb5dUK6l9ONIGxUhFkZDDRG/dSUHI5U0DupuIhAodvGXRiEaP
-	 XvOp9trexJp/9A0/W4kN8xLWI5yxqDhpMaKVBBMWE/Z7XT4zXWf5bH12KZ5bJeZjDGua1
-	 xDw8qqQlhwzvmMD50ddIbQ7cl/2NYuBJtqTEkXImtFj6AeVib+bJQ8Rkh5OrThmTd7pdL
-	 78e89xNPMWSVmLOEl1qw02x+0oNiWYkGldAuAoyOWSWBRdLNk5uWYlZw4wLgL7ZYJHE9f
-	 45fzk6SSsdL2WEsyei5fR5Xpokr8vnH+rsMi/0xFIovGkDbwzEgN1PozB1WaYcWc5pg==
+	bh=mqKH/PH6ZqptXwLeXfrHTYVFqXWRCi07f3TAzMwCxlk=;
+	b=Bnjd72UVQVn3uuOtP3/G3wJ34S7RGO1qHr+qHDyCfMJdrigpWFK+2EHyzKhHPV6B2N3l
+	 KY7RMPM4lr9XdxMdabcMe2tA3XZ2bLTQJLltxBfi71RmtKJz69Dn/Ak24XjklG3b7hIzC
+	 o+3nLTiq9rqo+c9i/QxYGalTuAgPxLDAnXRCuGMc/FsNBnkWHXbljETsLoH83B9XpfCIV
+	 DAAmKdHL+tzSbsKFUoD/PBV1Qf7EiH+KsjEimGGls4R2aswYvFqcYi4xgz1oeNxluLl1T
+	 3+C9gUuuDJbaX2WmxOLpb80JZIRT6fnVvtltYd3SZNgSd2cJSP3lMqvERDWXQnCF9oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EE1UuVKz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NxN1Po3C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD5A606A31C;
-	Thu, 26 Nov 2026 14:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5279606A329;
+	Thu, 26 Nov 2026 14:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EE1UuVKz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5071F000D0;
-	Thu, 26 Nov 2026 14:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NxN1Po3C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C6B1F000CA;
+	Thu, 26 Nov 2026 14:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704460;
-	bh=vwNjNn7RrhRVyR/Ha6HGCAjAeaTQtm71JqYxeoE/sfw=;
+	s=korg; t=1795704463;
+	bh=mqKH/PH6ZqptXwLeXfrHTYVFqXWRCi07f3TAzMwCxlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EE1UuVKz8VJ+NQgsvzChsk/+JEvtytH/4NDwWem/6jXXpdU9IbvVtOih1EbozGiMe
-	 F9z6oxZudfVXHi7qDttKK8jsxr09LGkIVNJTnlIxuR3V//GVkB33sBX19K/QJuuydc
-	 C1Xz6VcrRQ77mqmPZfX+06NEN/vpVodlkXu4VjQ4=
+	b=NxN1Po3CT92iUYMpAb/h6l8NccPxXvyGakqSSQsATj5EmA81DyHF1aZOkD8nuyZXv
+	 JFjnQm4bvwxdivb9h4Dj8M9q7RPrIN2cMkpe3TX5IVm8JLSWYuQ5p/k7TYe1ybNwut
+	 kMGgk6KLvpdiNGP53dJhTlaPZQtGBj+78C8L6XgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Ofri Zangi <ofriz@xsightlabs.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 096/265] fs/read_write: make default_llseek() killable
-Date: Thu, 26 Nov 2026 15:37:06 +0100
-Message-ID: <20261126143611.692084212@linuxfoundation.org>
+Subject: [PATCH 5.10 132/265] tls: fix async encryption race on weakly ordered architectures
+Date: Thu, 26 Nov 2026 15:37:42 +0100
+Message-ID: <20261126143614.249160431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,36 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Ofri Zangi <ofriz@xsightlabs.com>
 
-[ Upstream commit 2e1a8fbff51bb9bdf0fe9c6602855e308efcfcdb ]
+[ Upstream commit a2fd526d644233d6a892c28173f07c61e21e4c93 ]
 
-Allows killing processes that are waiting for the inode lock.
+With async encryption, a record can be transmitted without its TLS
+header on weakly ordered architectures such as arm64, because the
+consumer may observe rec->tx_ready set while still seeing the old
+scatterlist entry.
 
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Link: https://lore.kernel.org/20250513150327.1373061-4-max.kellermann@ionos.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 7a5783cfac71 ("fs: reject negative offsets for SEEK_DATA and SEEK_HOLE in default_llseek()")
+tls_encrypt_done() restores the TLS header in the scatterlist entry
+(sge->offset -= prot->prepend_size, sge->length += prot->prepend_size)
+and then publishes the record with smp_store_mb(rec->tx_ready, true).
+On another CPU, tls_tx_records() checks rec->tx_ready with READ_ONCE()
+and then reads the entry in tls_push_sg().
+
+Nothing orders these accesses. The barrier in smp_store_mb() comes
+after the tx_ready store, so it does not order the earlier scatterlist
+update before it. On the reader side, READ_ONCE() does not order the
+later loads of sge->offset and sge->length. The reader can therefore
+see tx_ready set together with the old offset and length, and pushes
+the record without its header.
+
+Publish tx_ready with smp_store_release() in tls_encrypt_done() and read
+it with smp_load_acquire() in tls_tx_records(), so that observing
+tx_ready guarantees the restored scatterlist entry is visible. Keep the
+full barrier that smp_store_mb() provided as an explicit smp_mb(), as
+it is still needed to order the tx_ready store before the tx_list head
+check.
+
+The issue was discovered during development on an arm64 system.
+A curl download test over kTLS failed with:
+
+  curl: (56) OpenSSL SSL_read: error:0A00010B:SSL routines::wrong version number, errno 0
+
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Signed-off-by: Ofri Zangi <ofriz@xsightlabs.com>
+Link: https://patch.msgid.link/20261108-tls-async-tx-ordering-v1-1-f9a1844ca88e@xsightlabs.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/read_write.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/read_write.c b/fs/read_write.c
-index 1e02faeb652b5..1a450f569e80f 100644
---- a/fs/read_write.c
-+++ b/fs/read_write.c
-@@ -238,7 +238,9 @@ loff_t default_llseek(struct file *file, loff_t offset, int whence)
- 	struct inode *inode = file_inode(file);
- 	loff_t retval;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index c2344a46dddda..7e71fe2c2f305 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -408,7 +408,8 @@ int tls_tx_records(struct sock *sk, int flags)
  
--	inode_lock(inode);
-+	retval = inode_lock_killable(inode);
-+	if (retval)
-+		return retval;
- 	switch (whence) {
- 		case SEEK_END:
- 			offset += i_size_read(inode);
+ 	/* Tx all ready records */
+ 	list_for_each_entry_safe(rec, tmp, &ctx->tx_list, list) {
+-		if (READ_ONCE(rec->tx_ready)) {
++		/* Pairs with smp_store_release() in tls_encrypt_done() */
++		if (smp_load_acquire(&rec->tx_ready)) {
+ 			if (flags == -1)
+ 				tx_flags = rec->tx_flags;
+ 			else
+@@ -472,8 +473,14 @@ static void tls_encrypt_done(struct crypto_async_request *req, int err)
+ 	if (rec) {
+ 		struct tls_rec *first_rec;
+ 
+-		/* Mark the record as ready for transmission */
+-		smp_store_mb(rec->tx_ready, true);
++		/* Mark the record as ready for transmission. Pairs with
++		 * smp_load_acquire() in tls_tx_records(): the sge
++		 * offset/length update above must be visible before tx_ready.
++		 */
++		smp_store_release(&rec->tx_ready, true);
++
++		/* Order the tx_ready store before the tx_list head check */
++		smp_mb();
+ 
+ 		/* If received record is at head of tx_list, schedule tx */
+ 		first_rec = list_first_entry(&ctx->tx_list,
 -- 
 2.53.0
 
