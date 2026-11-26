@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705024;
-	b=mbeMvT9bCBVP+aQ1YJllxs3yyiMnuIELldN76fwi4snTTabogvD57dZVf0b6SgTMKND2
-	 /Ur6fud6hzfrAz2uAdy8UmHQ/z9TfL697eOID/Hhj+jly+38an0OWWlYCd/2jnDKkMgxo
-	 5BKwHNxu4DbGJhtdi7UQA/Ot3yRVqgjUgcJ5cxE9DsXXOJIyqy7bR4twMH1GSBx/E4f+z
-	 wz/92grmeXDzeAsrSIfy7wLsvKCayMmZuc/EwSMRo5OhUDD84DNMREfJCCSY1/+Z2+kCG
-	 68p3qi2E58jyXbD2T6THBhanaX5FIjHuerHj36SJM7M3X3fWsV0SNOjtjnAxDxROuvg==
+	t=1795705027;
+	b=kKXfyUBblwI9fyVgwnRwLonGg76+m/TWs5+h7IvYn7QrKU9/nFP6CnmxWxndUUPr42wM
+	 INZFCDxRjHJLvhBJTj/MCUQY67BjPrWJJgojSuzKuOZCRAcVrc+wMnllDG7nmXSvD13IX
+	 ctQa0KDzaNU+zBrhaGS/aEP+xqWRRCU07DqeqHdrxDltN64GxPgvm8DYA5IE66MoZLCjJ
+	 4ABVGjlgvjyw1Dia+KNJnkai5QnwOAqveILwdKooBz2B7kRviuE962wQk8NxHjWlHtcr6
+	 /1aOz6ddbr/i0Tri2jFCQVAglYJgSMGdcpY1iwwq+NJ108qsErhgzswEa3c7/X4ED+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vpfgYztnK1O5uwhjO6HIBdp/vqfq7VmMsKhqIbb9my4=;
-	b=KLlC75T/pgUvp/GEq2RJN7Py/o+IHyq5sPUN2aJ7HZxF2/ln7DNpHxhPGGPt5xsuiCD3
-	 h0WwBaHLM/sFWb5bRMqBYHveNCCa6/7yeNSWVGMwOORXlIcaTX7q2ZNeb6Rj9HraHMhFn
-	 iJpL6Xkwp/YbksdAOt1t0WxpR8eNS7FMw8L9ODJSIbRvmmL0c8DXsZKR+k9jKHCp57h1H
-	 G+WuZztWS8OKhvfLFpkMRSllkS1DxOa2bT//VHMZ/QMabwhrNE/Dwt5/13I89iwuZqwSw
-	 UEqmO+Pw0U8yDirsQTdLVTlbmZEQGr1jojQg1uYcEtK9jlQ3p3mCjz90/sqjeynj4kw==
+	bh=4pfvzO4xOFJPP6FPwgLYzhTrcK2rHL27FDfPUjdGpZ8=;
+	b=qaMnSjf1UMZz9tftqw+nmwAr+K5vDQgKiT8U4Axph275hb+dm2W0xLqKTF4MEYfH4eGe
+	 +MvIcBVz1h1SVNBPNJM0rNsDfIUTFJBv7x2T1pyJUjfZpUn89lfNgNWz1w2KBBPC4ySfU
+	 3IJemxPpIoHUetWFwOeKt0GeqlIqAQysBd64JcZNXmpbwPP6xOFuKtWFXOZfPaGfC8YUz
+	 tTikLvoHWpXZRWS+XuJO766Guracp5QS26GthYqDXNabLknpzTAc4GOF89MGXLs33Dfj5
+	 2neYhk5mCssDB6XMtKiuM//Azmg6NqZ2OniYV/xiUoNtEQXsss7eSSLlshod2H39+6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fArxERMe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0+pUGLS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7544F606A31C;
-	Thu, 26 Nov 2026 14:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D547606A31E;
+	Thu, 26 Nov 2026 14:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fArxERMe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897191F000C0;
-	Thu, 26 Nov 2026 14:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0+pUGLS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1151F000C0;
+	Thu, 26 Nov 2026 14:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705024;
-	bh=vpfgYztnK1O5uwhjO6HIBdp/vqfq7VmMsKhqIbb9my4=;
+	s=korg; t=1795705027;
+	bh=4pfvzO4xOFJPP6FPwgLYzhTrcK2rHL27FDfPUjdGpZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fArxERMeda3eqlyH4WPtAbO19GL28JUAH1XvD3MoEe0pbQyR5JzE8eMQqYnhGAiSm
-	 ZdS505lV0e12IZ/fogNVu69ZVYB64guHXNcd3ASRYAH5x0e7l3qDyjxHytdNKmqZBa
-	 73TrLgz18NBnkdlRpt/C8E2fP5LeW8cIROwCsntc=
+	b=L0+pUGLSU5mMG4tBRGTr3taJwGHzUVePW6bwsP6fjSmO7cyAQglaoj+u3mn5eESPP
+	 8fyOBGkwgyy6BeVSbj3Ev8K1zdLNWeRSZ/EFqF3NaF65hxi47bPmCiLD83qV7cauk+
+	 Wkwa8MhLS/QrzWDhUESlZDmoOtHJTlGdfOXLGNMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/319] vhost: reject invalid IOTLB update permissions
-Date: Thu, 26 Nov 2026 15:37:04 +0100
-Message-ID: <20261126144008.003069750@linuxfoundation.org>
+Subject: [PATCH 5.15 057/319] regulator: qcom_spmi: Drop unnecessary of_find_property() call
+Date: Thu, 26 Nov 2026 15:37:05 +0100
+Message-ID: <20261126144008.025203510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,40 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit b179f21d2d8a60ede29a00472bffdefb0284ef39 ]
+[ Upstream commit 7540bd3398675e54cbd7324c47be8cd3c7a6d9c5 ]
 
-vhost_chr_write_iter() validates the type and size of an IOTLB update, but
-does not validate its permission field. An invalid permission can therefore
-reach perm_to_iommu_flags() and trigger its warning in vhost_vdpa_map().
+There's no need to check for presence of "qcom,saw-reg" before parsing
+it. If the property doesn't exist, parsing it will return NULL.
 
-Reject IOTLB UPDATE messages whose permission field is empty or contains
-bits outside VHOST_ACCESS_RW before dispatching them to a backend.
-
-Fixes: 4c8cf31885f6 ("vhost: introduce vDPA-based backend")
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260913-fix-vhost_chr_write_iter-v1-1-76bf1f436cfe@gmail.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20240828130056.3481050-1-robh@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 053c50a70525 ("regulator: qcom_spmi: don't take a sleeping lock in the SAW IPI")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/qcom_spmi-regulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index d8c81c25b7475..15ded95d4117a 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1171,7 +1171,8 @@ ssize_t vhost_chr_write_iter(struct vhost_dev *dev,
- 		goto done;
- 	}
+diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
+index 41424a3366d0e..56db0ccd57d80 100644
+--- a/drivers/regulator/qcom_spmi-regulator.c
++++ b/drivers/regulator/qcom_spmi-regulator.c
+@@ -2139,8 +2139,8 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
+ 	if (!match)
+ 		return -ENODEV;
  
--	if (msg.type == VHOST_IOTLB_UPDATE && msg.size == 0) {
-+	if (msg.type == VHOST_IOTLB_UPDATE &&
-+	    (!msg.size || !msg.perm || (msg.perm & ~VHOST_ACCESS_RW))) {
- 		ret = -EINVAL;
- 		goto done;
- 	}
+-	if (of_find_property(node, "qcom,saw-reg", &lenp)) {
+-		syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
++	syscon = of_parse_phandle(node, "qcom,saw-reg", 0);
++	if (syscon) {
+ 		saw_regmap = syscon_node_to_regmap(syscon);
+ 		of_node_put(syscon);
+ 		if (IS_ERR(saw_regmap))
 -- 
 2.53.0
 
