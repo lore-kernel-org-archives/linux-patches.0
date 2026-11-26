@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705788;
-	b=4Js2lJkDOhzgChzbv1iEDt2b3MBvzKxfXxf53D0ZbsVSaltrIVpwucYa80+R8G9aJA0G
-	 iCZu+4eBhRlOtSzlYRzZt3tG2dq5hLEkK+hw4GgJcWcA5+coqYaDtLfIEeXtHldKytaFm
-	 agfROveXJFvH0DccU7ISQ+xXJyUH1M2ezR46PHwIXo58CKGO6X4z7bx7n+gYcpdmTdgd/
-	 hQXDqWxhbscNjeS9RtsWaj8NgVj5eyL7RT6PTRhln45pEVccupBSjt36i/BqNzyNEUpnR
-	 xU2tByjWdaTB3Hi1kIDsWTJ+ltUIwX6pbrpRGMOmn+hacOEDNTeMZGFPh8Fh2m4joRQ==
+	t=1795705791;
+	b=QUy5AnN2Dnd6ck8oeUBf4/hu6HBiqLo4rI3PW0Ga1kisVBwXJ3xFWPpGT1IbOaUlMXaE
+	 L4Y9iUx0yegYLtTT4p6aT4LmSGkkq2R2mLShx8OawgpiK1aIq+24QbgC5e75oP8EKl3BD
+	 7RRR+rd4oO4icuM7IkPrswO79G0wu2UBog0uUEDA7hcWXRn+AT7oUtDMipnkSYAEnPCzn
+	 Hj0Ntie+bvhJxuXPOP95jhQWcvJBTomCw08ZS62jJTeJMjzREMmuc+/JebZR1+OZPzc6h
+	 JFf0TJB1WXeGn5qydzv+S0E8OTnVTgfVL+y4dTGkVccy9i1UZfiL8akyrs3wimZXsTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qj632JQ+Hfaq7i3fGJf21Pybqt1ArkTJfT3BXJsZrFI=;
-	b=dKe1qp4eLBSYEhBbqj8uztMg1L37iegxyO1w3DH7kjcYylSuYHVfitpRKfmWSvj6yW3O
-	 RoZndW8QXjmDd6/T6PXCO0Q7X6BWOTKjwunSsDmCtNLaDciRDHoL8s5/eSvvH771kBlXC
-	 TxSb9Y5nAf1ViRmY6QMeKU8GHgTfLc/fH/0JodHt0ld5U5Paezty5LNLf2z0i4puneNed
-	 khutJc1eIpf/0bxJ/00kcshT1f05pfybV6jWEsShZi3Gv3x/A+lQx6ZevCSi1U9Ze5rA+
-	 skK40t8UlhMzutVLJDssH3RCI8Se+u0d2wCbCddyDgzQmaxxEBVTGqdumcNz0qtZCXw==
+	bh=DUT8lUTQg3gZlNZverr7iUx0WGQ0qIvbSzLxuVfc/OI=;
+	b=drcLjYsYv7lPBSMf/NaphC0bs5z6lQUKPP9kep8ENFOR3XUCSVdgvDCnzLWybhRtNYme
+	 qkM53bZ+7d9wOqp8zOeohay1/E1aB5AO2RfgEhccjgn/iXhYVledFfSMcErlXNxdz//oI
+	 wgrKYnWzcyDnG5bu+6Jxzz39JPpuqLA++xnPxU/CZs+/UYl3qUqLKRspqDtnto3msrlsL
+	 MLHdNqaY4YyfZyjjC5panGliIH/jkrThYbHJg/ehRpD7pJCTwsvNx5nmfqAMc6qS39yGh
+	 AY17ZDSQRTENe419ekDWr9k+HPdDAAuRWvplwo22LcAwr1856fNBUGr0vkb/82RYjzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sklrZVpf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlIjaVpC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A8B606A31C;
-	Thu, 26 Nov 2026 15:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6E8606A321;
+	Thu, 26 Nov 2026 15:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sklrZVpf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852191F000C6;
-	Thu, 26 Nov 2026 15:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlIjaVpC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A661F000C6;
+	Thu, 26 Nov 2026 15:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705788;
-	bh=qj632JQ+Hfaq7i3fGJf21Pybqt1ArkTJfT3BXJsZrFI=;
+	s=korg; t=1795705790;
+	bh=DUT8lUTQg3gZlNZverr7iUx0WGQ0qIvbSzLxuVfc/OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sklrZVpfqQTa7xydrxXMwhjY2PXzVs/Wpp3K1YimLs10a+tA8tjhF1ox/BIZECNZu
-	 rOhQNraz82FiLVoZRp1J0bJgUKQnPx/wD3ccAuodGs32cjlXaKCS7220ijwTf/0x5X
-	 e1Vre0OX+P4TAKL0cJoQslI6SxLkVKOMlwZYd6Vc=
+	b=xlIjaVpC7Ucf1u/a9dYso/Mz2G8XFL/ji/VIdfAQfeq84wiboBwJOyRQ2y7U6R/8Q
+	 F6TYeNWVduwsn5/6JcpwekQyJ61yR4zLD9E0PpL1sSAu5VdDQvz+3d7/hehgpzVgXh
+	 BnSzKTqVlPAB1E3gT+tVata1t23iDSwWcbCgrHFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
-	Michael Ellerman <mpe@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.15 313/319] powerpc/watchdog: disable watchdog when watchdog_thresh=0
-Date: Thu, 26 Nov 2026 15:41:21 +0100
-Message-ID: <20261126144013.825657293@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 5.15 271/319] USB: serial: oti6858: fix the teardown order in close
+Date: Thu, 26 Nov 2026 15:40:39 +0100
+Message-ID: <20261126144012.866541213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,90 +68,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
+commit f184ae84a5d19554d980a918a9c8baaef87ac301 upstream.
 
-On powerpc, trying to disable the hardlockup detector with:
+The driver passes a baton around: the completion handler of the
+interrupt urb either resubmits the urb, submits the read urb or
+schedules one of the two delayed works, and the works and the bulk
+completion handlers submit the interrupt urb again.
 
- # echo 0 > /proc/sys/kernel/watchdog_thresh
+oti6858_close() cancels the works first and kills the urbs afterwards.
+An interrupt urb that completes in between schedules a work again:
 
-causes an immediate and endless hardlockup detection, eventually leading
-to an unusable system (splat example below). This happens because
-watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
-and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
-the timer (with expiry=0) in this code path:
+	oti6858_close()
+	  cancel_delayed_work_sync(setup)
+	  cancel_delayed_work_sync(write)
+				oti6858_read_int_callback()
+				  schedule_delayed_work(setup)
+	  usb_kill_urb(interrupt_in_urb)	/* not in flight */
+				setup_line()
+				  usb_submit_urb(interrupt_in_urb)
 
-proc_watchdog_thresh()
-  proc_watchdog_update()
-    __lockup_detector_reconfigure()
-      watchdog_hardlockup_start()
-        start_watchdog_on_cpu()
-          start_watchdog()
-            hrtimer_start() /* wd_timer_period_ms=0 */
+The port is now closed with the baton still going round. The next open
+fails because the interrupt urb is already submitted, and if the device
+is unplugged, oti6858_port_remove() frees the private data while a work
+may be pending or running.
 
-However, according to Documentation/admin-guide/sysctl/kernel.rst,
-setting watchdog_thresh=0 should disable both the soft and hard lockup
-detectors.
+Poison the interrupt urb first: that waits for the handler and makes all
+further submissions fail, so nothing schedules the works any more. Then
+cancel the works, after which only the bulk urbs are left, kill those,
+and make the interrupt urb usable again for the next open. Don't print
+an error for the submissions that fail with -EPERM in this window, as
+oti6858_read_bulk_callback() already does.
 
-This condition is already checked in __lockup_detector_reconfigure() for
-the soft lockup detector and the arch-independent hardlockup detector,
-what's missing is powerpc performing the same check in start_watchdog().
-
-[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
-[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
-[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
-[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
-[  278.110109] Tainted: [E]=UNSIGNED_MODULE
-[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
-[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
-[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
-[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
-[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
-GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
-GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
-GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
-GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
-GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
-GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
-GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
-[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
-[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
-[  278.110333] Call Trace:
-[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
-[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
-[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
-[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
-[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
-[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
-[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
-[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
-[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
-[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
-
-Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
-Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
-Reviewed-by: Michael Ellerman <mpe@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
+Fixes: 49cdee0ed0fc ("USB: oti6858 usb-serial driver (in Nokia CA-42 cable)")
+Cc: stable <stable@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/watchdog.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/oti6858.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/kernel/watchdog.c
-+++ b/arch/powerpc/kernel/watchdog.c
-@@ -380,6 +380,9 @@ static void start_watchdog(void *arg)
- 	if (!(watchdog_enabled & NMI_WATCHDOG_ENABLED))
- 		return;
+--- a/drivers/usb/serial/oti6858.c
++++ b/drivers/usb/serial/oti6858.c
+@@ -251,7 +251,7 @@ static void setup_line(struct work_struc
  
-+	if (!watchdog_thresh)
-+		return;
+ 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
+ 	result = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
+-	if (result != 0) {
++	if (result != 0 && result != -EPERM) {
+ 		dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
+ 			__func__, result);
+ 	}
+@@ -303,7 +303,7 @@ static void send_data(struct work_struct
+ 
+ 		dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
+ 		result = usb_submit_urb(port->interrupt_in_urb, GFP_NOIO);
+-		if (result != 0) {
++		if (result != 0 && result != -EPERM) {
+ 			dev_err(&port->dev, "%s(): usb_submit_urb() failed with error %d\n",
+ 				__func__, result);
+ 		}
+@@ -564,6 +564,13 @@ static void oti6858_close(struct usb_ser
+ 
+ 	dev_dbg(&port->dev, "%s(): after buf_clear()\n", __func__);
+ 
++	/*
++	 * The interrupt urb schedules the works, and the works and the bulk
++	 * urbs resubmit the interrupt urb: keep it from being submitted until
++	 * all of them are gone.
++	 */
++	usb_poison_urb(port->interrupt_in_urb);
 +
- 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
- 		return;
+ 	/* cancel scheduled setup */
+ 	cancel_delayed_work_sync(&priv->delayed_setup_work);
+ 	cancel_delayed_work_sync(&priv->delayed_write_work);
+@@ -572,7 +579,8 @@ static void oti6858_close(struct usb_ser
+ 	dev_dbg(&port->dev, "%s(): shutting down urbs\n", __func__);
+ 	usb_kill_urb(port->write_urb);
+ 	usb_kill_urb(port->read_urb);
+-	usb_kill_urb(port->interrupt_in_urb);
++
++	usb_unpoison_urb(port->interrupt_in_urb);
+ }
  
+ static int oti6858_tiocmset(struct tty_struct *tty,
+@@ -829,7 +837,7 @@ static void oti6858_write_bulk_callback(
+ 	/* schedule the interrupt urb if we are still open */
+ 	dev_dbg(&port->dev, "%s(): submitting interrupt urb\n", __func__);
+ 	result = usb_submit_urb(port->interrupt_in_urb, GFP_ATOMIC);
+-	if (result != 0) {
++	if (result != 0 && result != -EPERM) {
+ 		dev_err(&port->dev, "%s(): failed submitting int urb,"
+ 					" error %d\n", __func__, result);
+ 	}
 
 
