@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704193;
-	b=Wy+79kR6fP8Byl4jEdaCwI/d0BqEiitarWCiB6B7aanJoze9gwyXCRl17d77hyURbvNs
-	 CkgGhRvINoBV694g0FdA3IhCnW1b2SUjQi/S6ObZ+OKRKgIQ3m7NjveeonGMZ88B//A6U
-	 aNOmTL/bhvw9Ts5v0f6KyCP6slHmNx2fe5nujM517U9v8gHJD4KJnbFwTYCJhk/nIYVqT
-	 VlWlqidmOJg2FSYEzIsS+6x0BdiyWthnhghTgu4m7WYfmEnb9E/U14/y+izWlcF7lFFia
-	 AwHQM1eVBkbGOKTMAJrNEAOGLvBjDBbt59CMcGdILY9nCX3lDqnip35we17RKsetzbA==
+	t=1795704196;
+	b=U4Xi0Llv8awm8sa6DDDGJepiabom36oZUtdcIECVr8fofPtYE3RWTvgVjyesJSqHDA4Q
+	 55CCd1WlT41gTn4+mjZ+wEXL0FMovtIFzfkpShHe50gj8vc/vUivqMaP8FL2hINcv0oVV
+	 561YHM1gLjLM8XeHfKQDjArhQi3+uNzYTVETS73cd8gh8tZyLyUiGluMVZit7uoDXAQ1l
+	 N7E0ptWNo6OWErLGlOKK5/mNs0j5i2lTak39ZUB04Sp03qJa+ZxW8i7xdQEsiJiZkwGZm
+	 bU48Oqo9PIJHbNBWVHJmL65SVbnQNHfygpnXKFghSIyaeeb4lqiBOlTflEiF2FIyUWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZIxIeE2REYUDdnT+sWRk0f9ylDZYQSZjqUV5VDJUbWs=;
-	b=oB0u/6LLI6VoOuYtgM7pQDunrzG9uVQVSwo301rii+xmQGDhoRdyuNvKgdQQrLeUI6fp
-	 7yPpgW0sLK17jZ8DuSXQJxHmSOyGQgXeYQxfXKEXkC5X1dwFJrt2eMNFXPKiTV1Z2rdGx
-	 rvHDdlTjWqs/9TW4A1EGMgFfVp4UDmpg5NreMZ19KX84zhHOAVDh+BDKWCrCc4dzs1zAS
-	 wGtmF9CCt7W0ah1wCjWeapsgNIFvQgEaFX596hjqK3UXr8YzrllCpY600xzaRVYkrcaPP
-	 AAkepPbOu00U72N0D55MaHy8tLm6vzr3vtSVCQr0RpzusVtJlmdi6y+m/+54Oa3spuw==
+	bh=QO/ZU67RCXqJj4E9QAwaLB2yu0xHAyUHmeOvMbhWfsk=;
+	b=YdUKUbYIYlRkGK/zOhjZ1QKjQaFyc2YPuuUiKqx/ZO5CCQVqRlPegipWI6NgbBsnKwVi
+	 zZ/2p+pCwxz8D/cuHjP+5q96FZvXuMtibJA4+lDXGnHapOqzSMQu7H5t48ckF9j6iyFvw
+	 nZW1qBXeBFryklLHoxJ5hv5kUVcA5gzg8BxvAt9PM6/vGZaSTr064dnOFYB1UiFFZhKjx
+	 PFP+eEA3BK5gb+lwbGrdyZUAnGfDKsS6mP3q3YMK0tFK2eFowS6IYjEpskG5ybC7+lbzk
+	 FmNHS0w0feTyJRzTuhK5M1MhEGV6BKNi44RMj4E/vul3O/N9dlKuV47kRBTGEby1q/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfWenlNY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ug1ue+9e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E34E606A326;
-	Thu, 26 Nov 2026 14:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D53606A31C;
+	Thu, 26 Nov 2026 14:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfWenlNY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0091F000C0;
-	Thu, 26 Nov 2026 14:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ug1ue+9e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719BB1F000C4;
+	Thu, 26 Nov 2026 14:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704193;
-	bh=ZIxIeE2REYUDdnT+sWRk0f9ylDZYQSZjqUV5VDJUbWs=;
+	s=korg; t=1795704195;
+	bh=QO/ZU67RCXqJj4E9QAwaLB2yu0xHAyUHmeOvMbhWfsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xfWenlNYBd988NFdCkLl24E6OKVtUybM9Q1A4fNZ2ULvoHIH9AB0+yHfyXWUChSJY
-	 wMYItzw5yLjKtnzFIEuEjF3mgLo3fGmilQ+UGjrUBcaqNqHusbInBc7DKvnGZcreDL
-	 rpj4HNTIpAE8e49hc2Wntnbgq3DmxU6MgoEHml3s=
+	b=Ug1ue+9ewwG7DHimlY8YwzgZKjSAUYdA+9YY077e2Pnje3MND+v9LB3xRMTi82WTC
+	 I98HPWeiYdtG+sngUwqv2G7FTV7VhvfpYNqQCi8rSKHfhO/xAbdyTSbEKtRRUgd5kJ
+	 1czAhZqajZaqbdeitYAPVovxk5oZbBVB2TjOTfPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chris Mason <mason@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/265] bpf: Limit the SRH length in bpf_lwt_seg6_adjust_srh()
-Date: Thu, 26 Nov 2026 15:36:07 +0100
-Message-ID: <20261126143607.719478365@linuxfoundation.org>
+Subject: [PATCH 5.10 038/265] bpf: Move the MAC header in bpf_lwt_seg6_adjust_srh()
+Date: Thu, 26 Nov 2026 15:36:08 +0100
+Message-ID: <20261126143607.781993236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -70,44 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit ac159f39b252971141c49b68a27de0b637debfad ]
+[ Upstream commit 0fcb3f11a93d740e7f9ae1aeb48fe4d25838be18 ]
 
-bpf_lwt_seg6_adjust_srh() lets an End.BPF prog change the size of the TLVs
-in the SRH. The helper keeps the SRH length in srh_state->hdrlen, in bytes
-and without the first 8 bytes. Later seg6_bpf_has_valid_srh() writes it to
-srh->hdrlen, an 8-bit field in units of 8 bytes. But srh_state->hdrlen has
-no upper limit, and the cast to u8 can truncate it. After that,
-seg6_validate_srh() gets the SRH length from srh->hdrlen, and thus it can
-accept the SRH. Then srh->hdrlen is too small, and a parser reads TLVs as
-the subsequent header.
+bpf_skb_net_hdr_push() and bpf_skb_net_hdr_pop() change skb->data and
+skb->mac_header by len. That is correct in a tc prog, where skb->data is
+the MAC header. But bpf_lwt_seg6_adjust_srh() calls them in an End.BPF
+prog, where skb->data is the network header. The MAC header does not move:
 
-Return -EFAULT when the new srh_state->hdrlen is larger than 2040, the
-largest length that srh->hdrlen can hold. To replace a TLV in the largest
-SRH, a prog can no longer add bytes first. It must remove bytes first.
+  before push  |       free       | MAC header   | IPv6 | SRH | payload
+               ^ head             ^ mac_header   ^ data
+  today        |       free       | MAC h| IPv6 | SRH   + len | payload
+               ^ head     ^ mac_header   ^ data
+  this patch   |   free   | MAC header   | IPv6 | SRH   + len | payload
+               ^ head     ^ mac_header   ^ data
+
+Users of skb_mac_header() get incorrect bytes until __dev_queue_xmit() sets
+skb->mac_header again. skb_cow_head() reserves only len bytes. Thus the
+16-bit offset skb->mac_header can wrap. A push also changes the "not set"
+value. In both cases skb_mac_header() points after the skb.
+
+Move the MAC header too. Pass len + skb->mac_len to skb_cow_head(). Keep
+the "not set" value. The second Fixes tag is for this case. Since that
+commit an End.BPF prog can get an skb with skb->mac_header not set.
 
 Fixes: fe94cc290f53 ("bpf: Add IPv6 Segment Routing helpers")
+Fixes: 20a081b7984c ("seg6: add VRF support for SRv6 End.DT6 behavior")
 Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261101190535.1454146-19-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261101190535.1454146-21-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/filter.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index c58b4f8aa57c1..2cb67c6f24e62 100644
+index 2cb67c6f24e62..ec9a74985ab1a 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -5982,6 +5982,9 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
+@@ -5963,6 +5963,7 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
+ {
+ 	struct seg6_bpf_srh_state *srh_state =
+ 		this_cpu_ptr(&seg6_bpf_srh_states);
++	bool mac_set = skb_mac_header_was_set(skb);
+ 	struct ipv6_sr_hdr *srh = srh_state->srh;
+ 	void *srh_end, *srh_tlvs, *ptr;
+ 	struct ipv6hdr *hdr;
+@@ -5986,20 +5987,38 @@ BPF_CALL_3(bpf_lwt_seg6_adjust_srh, struct sk_buff *, skb, u32, offset,
+ 	if (unlikely(len > (U8_MAX << 3) - srh_state->hdrlen))
  		return -EFAULT;
- 	if (unlikely(len < 0 && (void *)((char *)ptr - len) > srh_end))
- 		return -EFAULT;
-+	/* The length field of the SRH has 8 bits, in units of 8 bytes. */
-+	if (unlikely(len > (U8_MAX << 3) - srh_state->hdrlen))
-+		return -EFAULT;
  
++	/*
++	 * skb->data is the network header here. The MAC header is in front of
++	 * it, so bpf_skb_net_hdr_push() and bpf_skb_net_hdr_pop() do not move
++	 * it with the other headers.
++	 */
  	if (len > 0) {
- 		ret = skb_cow_head(skb, len);
+-		ret = skb_cow_head(skb, len);
++		ret = skb_cow_head(skb, len + skb->mac_len);
+ 		if (unlikely(ret < 0))
+ 			return ret;
+ 
++		/* The push can write over the MAC header, so move it first. */
++		if (mac_set)
++			memmove(skb->data - len - skb->mac_len,
++				skb_mac_header(skb), skb->mac_len);
+ 		ret = bpf_skb_net_hdr_push(skb, offset, len);
+ 	} else {
+ 		ret = bpf_skb_net_hdr_pop(skb, offset, -1 * len);
++		/* The pop has added -len to skb->mac_header. */
++		if (likely(!ret) && mac_set)
++			memmove(skb->data - skb->mac_len,
++				skb_mac_header(skb) + len, skb->mac_len);
+ 	}
+ 
+ 	bpf_compute_data_pointers(skb);
+ 	if (unlikely(ret < 0))
+ 		return ret;
+ 
++	if (mac_set)
++		skb_set_mac_header(skb, -skb->mac_len);
++	else
++		skb_unset_mac_header(skb);
++
+ 	hdr = (struct ipv6hdr *)skb->data;
+ 	hdr->payload_len = htons(skb->len - sizeof(struct ipv6hdr));
+ 
 -- 
 2.53.0
 
