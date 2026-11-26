@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705479;
-	b=qX0H864k1Ch91Qcplr/Gw8moevTUyycIN3A5YNY4JqsAMn+Vo8aGIzw8hvaEXhiWcDdA
-	 UIPgGNaPjyEdX5UbUXHUcJDnH+O0Yt8axYzzlxGeCLlEQPq9e62s+ZB/N3vuN/9mhacBO
-	 3mlj1s1+pTuHp1s1ODYEQRe/tB5d/c2CUx40+S9VAOKCU7bL5GONBIVYeVOklzLjbPdKU
-	 UkWxl2JeufRclpfKEXWb0iiBlvd3ynKmgSLsk5oASI2VqMqDAbFxQ2U4JxcvwgIoY67Aa
-	 PeGIW/Xl19cM8LD/z/CL6QX9ego7lJOXjA4FzCsNyeXOpkE18OQJpNGRZLYStGIw6pg==
+	t=1795705482;
+	b=vMUNnX2+8GF+O3k/eKFF6GXXEW8C8ZB+lL47x8LpYEoCr/YXthTVUp/BjKvtu6L0tMgt
+	 blUdu7sVwLps66mY7bHD46301K2ey64WG9wGFUlSXwYs2JvSEVD/+tbPTfZvYd2FbfTFb
+	 tw9ApJFut1UrwsVM0QIiEgbTOyEeH9idKis9hk1MhWa0hQCsUYoBRpz47PvYP/E5fIXLI
+	 x9AhWoKFd7TnxdnoI+bMfy99IPkm6W+M1Kiqn6xk4+LFlN4+8iZ7FGDGhxgd7DFpMmqKq
+	 c7SoJGyvcQni0qCkxnt2f5cTjNPBHcKOiSs8t9CKEz+fssxi2StqP/PZG42/ym7Tl8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NEyVe67LDKOgzDRQR0OHbEjUZ1GDhgEubdlC836JuNU=;
-	b=QPt24WgNxxW3PfPtbiyOJSockz7vSh1RG+4mvIZ1IuS7oS9/9uRq38oSJnD3YZLsu51q
-	 QbvZEzmxudl6vBgGJVP4yCZVhs2uwdOo9rD5bm84E+0WVWkmfx5wJtT6M00+leQAIHwKN
-	 Tk3lhfHdUC8LhV7X4W6Eup1fvqbzgp4y2lPbVOxPim0VjXhxN7R2taD29B3O3nGMMA9xE
-	 JY5XFhflTfMpS49PLldji4YtquAldJ0X4n1YkoQ7b2IYlC/M/XJFtAtxZtB3IUEbR2275
-	 bSNMQkE6/C19hjeiTAtvjy63vu17uHGzMmKiyZa1JCYuyxoLs2QteoNDAvjtPCUws6w==
+	bh=eJKKrgNpxpAIP4peTMSc12sRQAuFHUPFBzay4tWWtbw=;
+	b=PaDKC0m8o0P3PdZF/jk0RfKp29Zt3L3rasl8+7gGlwIomQS8S9IHEXlINs+DZsdOg7GB
+	 s8CJRbabOPgqKH9R1bRs/S1LNbSb7G5pMlQZIiDG/R+pN63bIe/tZyUdRqDBFCS6R2CwR
+	 6qYv5j9cKU5SFVGH4xcyudKX0pzDSkxNmuG39/UyKZRA08eUDXsxSKtS58/GN8ChpVuy7
+	 KS/97xdXz7VF+w8qQobN9L0riRFBOKQi5NAQoKUeXcLQKpxeq+cCCp9KsL2CqdYv7MUx9
+	 J5j3bYHUcIvj8rhFK/BjXeamyd08yu9DDyitNMalC5KqRYNybtb78j9UNg88B93AzZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AXTDQFJY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2Q4KDH9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6B0606A31C;
-	Thu, 26 Nov 2026 15:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8EA606A31C;
+	Thu, 26 Nov 2026 15:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AXTDQFJY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7351C1F000CF;
-	Thu, 26 Nov 2026 15:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g2Q4KDH9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738AE1F000C0;
+	Thu, 26 Nov 2026 15:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705478;
-	bh=NEyVe67LDKOgzDRQR0OHbEjUZ1GDhgEubdlC836JuNU=;
+	s=korg; t=1795705481;
+	bh=eJKKrgNpxpAIP4peTMSc12sRQAuFHUPFBzay4tWWtbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AXTDQFJYB19sy0wI2Tshmipy1gV4BXSTRF6K2jYSnCH0hf7V6VmKkcRWp0BAm7wzv
-	 2RLl375Z0Gfy49x9tzFd3Rf5+S1twLQxL0LpkPENfKO8C/2UICA7sf0Z92ZptxeGmY
-	 QbYSIJ0jeje5bSdsIo/b1MauIjJUTHSRLMoc6h+A=
+	b=g2Q4KDH9iJepFZE6EPNp7tt7afA+rnGLQ6DkjWJ6cuPAip9gP8LNHwHk0Tyn7mELp
+	 Xb35D6c0Srp6vbVYnWbwGLLVFrs8KF7vNqKgnI/XGpMRdWCMy3G0Dk+exnXF6tVwL4
+	 Za/QONELIilwo4CZodpj8VUBMpw/n27Vp8qc7OmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH 5.15 210/319] cpufreq: Cache post-resolution target frequency in __resolve_freq()
-Date: Thu, 26 Nov 2026 15:39:38 +0100
-Message-ID: <20261126144011.485288980@linuxfoundation.org>
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 211/319] software node: only let the owner release a managed node
+Date: Thu, 26 Nov 2026 15:39:39 +0100
+Message-ID: <20261126144011.507803691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,45 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 166207cac45191637c47a457a5c16ca6b6773a16 upstream.
+commit f8623ce596492d2e96ca57eeec992938d3d79f00 upstream.
 
-get_next_freq() in the schedutil governor returns the resolved
-frequency from cpufreq_driver_resolve_freq(), and that resolved value
-is then passed to cpufreq_driver_fast_switch().  The only reader of
-cached_target_freq, acpi_cpufreq_fast_switch(), compares it with the
-post-resolution target frequency, but it holds the pre-resolution
-clamped frequency, so any request that falls between table entries
-misses the cache and falls back to a table scan.
+device_create_managed_software_node() creates a node whose lifetime is
+tied to the device it was created for. software_node_notify_remove() is
+called for every device that has the node as its fwnode (primary OR
+secondary) and, if the node is managed, unconditionally detaches it from
+that device and drops the creation reference.
 
-Address this by making __resolve_freq() store the post-resolution
-frequency in cached_target_freq.
+This breaks when the node is shared with another device. Example: the
+i2c-designware copies the parent's fwnode to the adapter's struct device.
+When the adapter is deleted, it releases the reference that belongs to
+the owner and the latter ends up with a dangling pointer.
 
-Fixes: e3c062360870 ("cpufreq: add cpufreq_driver_resolve_freq()")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/14161745.uLZWGnKmhe@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Record the device's "manager" and only perform the actual release when
+notify is called for that "owner" device.
+
+Note that it was never the intention that managed software nodes would
+be shared, but descendants reusing ancestor firmware nodes is not
+uncommon and such use is hard to predict when allocating software nodes.
+
+Reported-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Closes: https://lore.kernel.org/all/20261009164241.923756-2-balasubramani.vivekanandan@intel.com/
+Fixes: 151f6ff78cdf ("software node: Provide replacement for device_add_properties()")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 0f485f88656a ("drm/xe/i2c: use device_create_managed_software_node()")
+Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Tested-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261102-swnode-only-owner-release-v1-1-ee4c9022a629@oss.qualcomm.com
+[ johan: drop temporary variable; skip clearing owner field;
+         mention reuse not intended in commit message ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/swnode.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -539,8 +539,8 @@ static unsigned int __resolve_freq(struc
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -18,6 +18,8 @@ struct swnode {
+ 	struct fwnode_handle fwnode;
+ 	const struct software_node *node;
+ 	int id;
++	/* Device the managed node's lifetime is tied to. */
++	struct device *owner;
  
- 	idx = cpufreq_frequency_table_target(policy, target_freq, relation);
- 	policy->cached_resolved_idx = idx;
--	policy->cached_target_freq = target_freq;
--	return policy->freq_table[idx].frequency;
-+	policy->cached_target_freq = policy->freq_table[idx].frequency;
-+	return policy->cached_target_freq;
- }
+ 	/* hierarchy */
+ 	struct ida child_ids;
+@@ -26,7 +28,6 @@ struct swnode {
+ 	struct swnode *parent;
  
- /**
+ 	unsigned int allocated:1;
+-	unsigned int managed:1;
+ };
+ 
+ static DEFINE_IDA(swnode_root_ids);
+@@ -1116,7 +1117,7 @@ int device_create_managed_software_node(
+ 	if (IS_ERR(fwnode))
+ 		return PTR_ERR(fwnode);
+ 
+-	to_swnode(fwnode)->managed = true;
++	to_swnode(fwnode)->owner = dev;
+ 	set_secondary_fwnode(dev, fwnode);
+ 
+ 	if (device_is_registered(dev))
+@@ -1160,7 +1161,7 @@ void software_node_notify_remove(struct
+ 	sysfs_remove_link(&dev->kobj, "software_node");
+ 	kobject_put(&swnode->kobj);
+ 
+-	if (swnode->managed) {
++	if (swnode->owner == dev) {
+ 		set_secondary_fwnode(dev, NULL);
+ 		kobject_put(&swnode->kobj);
+ 	}
 
 
