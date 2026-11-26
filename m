@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704127;
-	b=QVJe/WICbtkNalyvEOPlXtq/9gXMSoWUYMLBWr1vTnMlo+JrIOSzo454J+Sl0vI5S3yN
-	 zWIWEAapp28JLFjBjiLs2uIfXuIXb4UmlMRKYXZdU3ltRijKHjt7AHdPkmuTeyndvzCGq
-	 2ABoLhWGcaasQEXx6WPwq1hTFJ5NGM0k/KBYp80KamhsQPgdOycSZUbkEAVzZhtHPmyVl
-	 P0CPAAvbLoEaLpwao3djfZ8n6gRsQGY5czd54a7KIl5Kt40NpSl8Q9vP1pO52Z6CIQbT3
-	 3JHsoOdeBphTUjr9A+n8hJRfEXLoMta+SR1FvFwV/drXgxGoMdprVAnzJYRtrLxZ2aw==
+	t=1795704130;
+	b=od2jlQu9gH5KYKwjb5DJwdi9VL4gVfnC94y6GWyUzB3JSedQxEFhCobk9M35q7LjeWJ7
+	 axxXjhpudu8IoJ/688FPqEJAPONStWcEqFcSZVC6ybD9JedBmlHOzSe/YlAdpDPw+Cnwu
+	 1dv5tA73pWZLqANlRahDvynn4u4y0XCU6kmzO0sy9vlCFA6Si6GMP3i+9ohN1OVZPViNS
+	 vnHbA2u83yO5moKLRYDD93aUyIaT11t9kNr0tRmQmXH6bsCZUcDvZQOJpMIEuO1trLRUL
+	 5n7UfzXUeXVztFY+Y+U1DPDccXVLoAyjjQ+N7zSt74IzghJL/jcgvUhEQViPSuyxj3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kRleMK44b4DgUR+QQf3VJJG6VMEBfLlKXZBYMPvn8DY=;
-	b=rVYJbwl3XSmJbQCGXa3qGU1EO9dAAcuWdXD2SYlkLoJ1BLctq/bUZC3HMetKnIqctJBY
-	 tY9JU+BPqy1KC9DRYJdP8CRop6Zm5K83Lk836n5TzO3wU+UCnN++ViIPvHwcHl/KdIOm8
-	 V2KazH7sjN0Ace6soGneM5rbPPtsW2+ydAGPuFjo2k1znBSJLEs7GLkzc9FKp+K0yzH8B
-	 4DlUwZr5rjxQ2m6rFWUOABWgPaT0RmZNw8RJev6ku8FRw/mDf6doWOYGr/ihbvNKFPXqe
-	 rNKzdOoBU5PRbwrupiK7LS9mq89cj5hM7fX/fiwGxKr3uIbNjaArBvVdZ+90jNOfOoA==
+	bh=K+1TBbUWjeFsfqWOSKPv1YmM8cJjjL7W2h+EXchykws=;
+	b=5QT7FDzZYujW99MttfsiVDhs4xFuMz8DKX2gXnCxX3OvD5lHK0mWNKqY9s9GIfUTgCLY
+	 NI+n48pZqHxkvsJhkbeKuxVf1UmP49B9wieD5FaOJkRSWcdHPRm71OVawwtobIrnHnksk
+	 OM7wRjAysM0hqy7QMzjbUPSvd0n1OGM6k/TXOAUnMALOxiTOCFG/ewDYXsjL7WerT6Bb+
+	 SN1dF27fgdkX3exeHwcPomcdCLEIx7oBkPoAL2iQddenpIWV2ELKRrUooSJ01PA7VmUE+
+	 Ck5LCi4+y9V4ClO572YpEb0tJM4tk9wls/XH8ciHaV1JvkE9DgwRL94xcB3UwnFe6og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yr7/yX38";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFmKm4ad;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727E4606A31C;
-	Thu, 26 Nov 2026 14:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069F0606A31C;
+	Thu, 26 Nov 2026 14:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr7/yX38
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D821F000C0;
-	Thu, 26 Nov 2026 14:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFmKm4ad
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369111F000C0;
+	Thu, 26 Nov 2026 14:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704127;
-	bh=kRleMK44b4DgUR+QQf3VJJG6VMEBfLlKXZBYMPvn8DY=;
+	s=korg; t=1795704129;
+	bh=K+1TBbUWjeFsfqWOSKPv1YmM8cJjjL7W2h+EXchykws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yr7/yX38AH3VnDEkXeFhL+YCgdHmC5LassP954gy5nY3y60DGaNmUQqX/4SWMc/Fh
-	 H4h/tqLlnUXN9Y19SLA0lJiqg9rryJQjpzHZBqwbIEcR7pprOl998Seceza6rkHPMN
-	 /gp7RygdSbMtwa7NifiUaO5bw+fjq/C1oYSDfCqc=
+	b=bFmKm4adU6FJOgImR+Hk910CqRvGgIzZGszRSuGTzYhoOWU91vW+ayWlgUFlQ3tT+
+	 OtXW4Z5IocrSricj4Q0i/9rJ6qwwZSfOBV1yQjImJQn9nVoQkBYmp4xpUApDqwbtD9
+	 7htG3s3B6HUwJpYD9XpGZqgpzv6jCCiD9+I++feY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huaweicloud.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro.iwamatsu.x90@mail.toshiba>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/265] fs: aio: reject partial mremap to avoid Null-pointer-dereference error
-Date: Thu, 26 Nov 2026 15:35:46 +0100
-Message-ID: <20261126143606.206280807@linuxfoundation.org>
+Subject: [PATCH 5.10 017/265] ASoC: rt7*-sdw: harden jack_detect_handler
+Date: Thu, 26 Nov 2026 15:35:47 +0100
+Message-ID: <20261126143606.266214977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,96 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 3adf7ae18bf42601246031002287c103a27df307 ]
+commit 0484271ab0ce50649329fa9dc23c50853c5b26a4 upstream.
 
-[BUG]
-Recently, our internal syzkaller testing uncovered a null pointer
-dereference issue:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-...
-[   51.111664]  filemap_read_folio+0x25/0xe0
-[   51.112410]  filemap_fault+0xad7/0x1250
-[   51.113112]  __do_fault+0x4b/0x460
-[   51.113699]  do_pte_missing+0x5bc/0x1db0
-[   51.114250]  ? __pte_offset_map+0x23/0x170
-[   51.114822]  __handle_mm_fault+0x9f8/0x1680
-...
-Crash analysis showed the file involved was an AIO ring file. The
-phenomenon triggered is the same as the issue described in [1].
+Realtek headset codec drivers typically check if the card is
+instantiated before proceeding with the jack detection.
 
-[CAUSE]
-Consider the following scenario: userspace sets up an AIO context via
-io_setup(), which creates a VMA covering the entire ring buffer. Then
-userspace calls mremap() with the AIO ring address as the source, a smaller
-old_len (less than the full ring size), MREMAP_MAYMOVE set, and without
-MREMAP_DONTUNMAP. The kernel will relocate the requested portion to a new
-destination address.
+The rt700, rt711 and rt711-sdca are however missing a check on the
+card pointer, which can lead to NULL dereferences encountered in
+driver bind/unbind tests.
 
-During this move, __split_vma() splits the original AIO ring VMA. The
-requested portion is unmapped from the source and re-established at the
-destination, while the remainder stays at the original source address as
-an orphan VMA. The aio_ring_mremap() callback fires on the new destination
-VMA, updating ctx->mmap_base to the destination address. But the callback
-is unaware that only a partial region was moved and that an orphan VMA
-still exists at the source:
-
-  source(AIO):
-  +-------------------+---------------------+
-  |  moved to dest    |  orphan VMA (AIO)   |
-  +-------------------+---------------------+
-  A                 A+partial_len        A+ctx->mmap_size
-
-  dest:
-  +-------------------+
-  |  moved VMA (AIO)  |
-  +-------------------+
-  B                 B+partial_len
-
-Later, io_destroy() calls vm_munmap(ctx->mmap_base, ctx->mmap_size), which
-unmaps the destination. This not only fails to unmap the orphan VMA at the
-source, but also overshoots the destination VMA and may unmap unrelated
-mappings adjacent to it! After put_aio_ring_file() calls truncate_setsize()
-to remove all pages from the pagecache, any subsequent access to the orphan
-VMA triggers filemap_fault(), which calls a_ops->read_folio(). Since aio
-does not implement read_folio, this results in a NULL pointer dereference.
-
-[FIX]
-Note that expanding mremap (new_len > old_len) is already rejected because
-AIO ring VMAs are created with VM_DONTEXPAND. The only problematic case is
-a partial move where "old_len == new_len" but both are smaller than the
-full ring size.
-
-Fix this by checking in aio_ring_mremap() that the new VMA covers the
-entire ring. This ensures the AIO ring is always moved as a whole,
-preventing orphan VMAs and the subsequent crash.
-
-[1]: https://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/
-
-Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
-Link: https://patch.msgid.link/20260418060634.3713620-1-wozizhi@huaweicloud.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20220606203752.144159-6-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[iwamatsu: Drop patch for sound/soc/codecs/rt711-sdca.c]
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro.iwamatsu.x90@mail.toshiba>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/aio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt700.c | 2 +-
+ sound/soc/codecs/rt711.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index 8ba65b4ec8fc2..2e68b964f01a6 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -343,7 +343,8 @@ static int aio_ring_mremap(struct vm_area_struct *vma)
+diff --git a/sound/soc/codecs/rt700.c b/sound/soc/codecs/rt700.c
+index 80acf0daabf84..7d221f93523bb 100644
+--- a/sound/soc/codecs/rt700.c
++++ b/sound/soc/codecs/rt700.c
+@@ -162,7 +162,7 @@ static void rt700_jack_detect_handler(struct work_struct *work)
+ 	if (!rt700->hs_jack)
+ 		return;
  
- 		ctx = rcu_dereference(table->table[i]);
- 		if (ctx && ctx->aio_ring_file == file) {
--			if (!atomic_read(&ctx->dead)) {
-+			if (!atomic_read(&ctx->dead) &&
-+			    (ctx->mmap_size == (vma->vm_end - vma->vm_start))) {
- 				ctx->user_id = ctx->mmap_base = vma->vm_start;
- 				res = 0;
- 			}
+-	if (!rt700->component->card->instantiated)
++	if (!rt700->component->card || !rt700->component->card->instantiated)
+ 		return;
+ 
+ 	reg = RT700_VERB_GET_PIN_SENSE | RT700_HP_OUT;
+diff --git a/sound/soc/codecs/rt711.c b/sound/soc/codecs/rt711.c
+index 0e343ad205fc1..e0117e576fd3a 100644
+--- a/sound/soc/codecs/rt711.c
++++ b/sound/soc/codecs/rt711.c
+@@ -242,7 +242,7 @@ static void rt711_jack_detect_handler(struct work_struct *work)
+ 	if (!rt711->hs_jack)
+ 		return;
+ 
+-	if (!rt711->component->card->instantiated)
++	if (!rt711->component->card || !rt711->component->card->instantiated)
+ 		return;
+ 
+ 	reg = RT711_VERB_GET_PIN_SENSE | RT711_HP_OUT;
 -- 
 2.53.0
 
