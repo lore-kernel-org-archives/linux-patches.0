@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704784;
-	b=g4FA7AJsR1FmVMn3kklE29z2mnC9slA7tmbnKc2FNc0rS//+2Ii5EL7rw6ObtTJQEvth
-	 x5gNU0a6pxKFR+4PsgQ5Wa6azs3XW5dpTE817+dAbQrJMoGX+qB530w1Ptqj8SRAqwKws
-	 sVWNcinXm5Bge4g8I8SrAbO/iYPpb25PJEgs+0ON3OH8C+wIApBXaa8voaaQL4n9N/IUL
-	 FtOQjO3bbzPg64zQD+r+k3rpnjimFCZEdTqzs87DM8noKDzC+ciFIko6Oq0N6UZ8Z3pDZ
-	 GTO5isC/ThL7VytCdko5CaRFSebw7usVppGa++Ofqicwcj+kr/rBzJqFKvFVeEv4NfA==
+	t=1795704787;
+	b=NZATs95ScftOIB7ME9hrLwkyM6Hg/pJG9Oet4EFZR8HWAQOqt0aoXLBrBAgy3JufT23T
+	 vtZqQBq0Oww81gSLZK0BjEJxDullX9trt9jj0W5TJg+chDgsK+hPcb5UMVoieZ7O5koUS
+	 aHF1bm2dQUK3jCRsitJcar8PecX7ri9pA2r5ccl8iCZPz2PfdI8hMGZBbc+j6u4FUXROy
+	 fhmol/u20HEtnHKoWqUlMvRSIw4Jac0U3CkYsvY3i6INdr7rmkjQfY8tKgqflbEULt1Rm
+	 GlsdTdjKFWt8yhefxrBVq3SwlPQXYzKmPBwKlQ6iJ1qntXLlqGZ3UStFL9zfskfljIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=49ndpgsZrtSWG4qUudxOHQ36p9QIs3jzOQzOVYpW19A=;
-	b=msb/8TZuv7phpUen7Koz9H3TlOXginEC2VUsGvlg1DR+CYwojXFVyWxJPuCKcbKQlvpd
-	 xv39K7fTmyuItD9hsll5dFhu/b2NX5iO5fpcmiO8Zmwo/xcfbUNMXTUh7W+MBFilf51Fw
-	 6PINtdLHkDUlj0U0LBtsuXZYvg04DMgOvK8+HmiaJe/m2tvoGKO5LVFw6uQ/gEaf4miVd
-	 A0b1vm8/8HrYzRj6OS1ufWiNxTa1XrM4nMLojWUNiV2XeYt+MCPpt9Frib6ClB6hhl/P/
-	 BWDrvbhpuNFOZr+3gWkj1axU3+mm3plKXnPZEYP5HvFKk2sPorH7YBSQMWpy0G6gl5A==
+	bh=T6JCWqvQXcw+uL6dSzt9iC26QGint5c3nH70vXxumOU=;
+	b=R2EgTb5yLxqs3Ex2Tkilki3x5qVMdn3Hx2h+L8KgLZDJrE0FBr9Bi+pIFaA0ThEdgdho
+	 2yCpnhtAR6+ySwwDz5OvIqK1gjDXDsOa3KLxSHMnQPMqJOgAJxMHBiFUT6UDQYNw4Zdr6
+	 V8SZJiT5bEcXBd/jccYWIzacR/I29PyMonHN+zuuAz4UogrxLyquE8XAVNeG0IXMkWfnf
+	 rgn0/tBVqWCgkwSl942zmFg2olSms5cAwIdrcJEQStUxiTSA3OAiX5C4EUaqL5V+KGUfF
+	 vhqRCNdq04JtOzJ7Z+p3U6plBrJCMzcpw+rDS2gIAsL3Xh1vCmP0G5xZgCpONXQ4XqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1+4TLTu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+ODnmkc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD39606A327;
-	Thu, 26 Nov 2026 14:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0B3606A69E;
+	Thu, 26 Nov 2026 14:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1+4TLTu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595591F000C0;
-	Thu, 26 Nov 2026 14:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+ODnmkc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03C51F000CA;
+	Thu, 26 Nov 2026 14:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704783;
-	bh=49ndpgsZrtSWG4qUudxOHQ36p9QIs3jzOQzOVYpW19A=;
+	s=korg; t=1795704787;
+	bh=T6JCWqvQXcw+uL6dSzt9iC26QGint5c3nH70vXxumOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e1+4TLTu52aLNJmjjCIEbTKvnJl3MmoSeitYlfSEnvTI3iiiOWGGsXCdEI8iR+eTs
-	 0leNunrB/AgxQIzADeaBT5IkklgVxeZqxX2V1FTjE8rLTONAr12A5q8woos8R+EUFA
-	 dqlbMLA9eO05iKkVh4DD1fr47bU5ac5ZBpDYCRjU=
+	b=r+ODnmkcHJ/TUyQir+wzCFbuNaGK/UT20V3cQyT74+fzIeFhJWmd8TCihs4DTaCoC
+	 zkv6wTTNadgVZW82PCBSKmQghJNghwo+cXoZ30uwRmHbjMdffkA6hA4C1LT+U+L7x0
+	 VE5Q9uYZttK2fMe/SWcS8z6I9jmBFDpj2XClccfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 198/265] dm log userspace: drop the device reference on error
-Date: Thu, 26 Nov 2026 15:38:48 +0100
-Message-ID: <20261126143619.054308701@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 189/265] wifi: cfg80211: release rejected nontransmitted BSS reference
+Date: Thu, 26 Nov 2026 15:38:39 +0100
+Message-ID: <20261126143618.415190150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,49 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shao.mingyin@zte.com.cn <shao.mingyin@zte.com.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 0550d3b14e008b033b02cfce668008ec6addffe4 upstream.
+commit f3c45d5b741a7d7586e639c2f55d2557029f2e1a upstream.
 
-userspace_ctr() takes a reference on the log device with
-dm_get_device().  When the integrated-flush workqueue allocation fails it
-jumps to the shared error path, which frees the log context without
-dropping that reference, so the device stays busy and cannot be removed.
+Repeated MBSSID reports without an SSID can leak BSS entries outside the
+scan cache, where the BSS entry limit cannot account for them.
 
-userspace_dtr() drops the reference correctly; do the same here.
+__cfg80211_bss_update() returns a referenced BSS. If adding it to the
+transmitting BSS list fails, unlinking drops the cache reference, but the
+caller reference is lost when res is cleared.
 
-Fixes: 5066a4df1f42 ("dm log userspace: allow mark requests to piggyback on flush requests")
+Release the caller reference before discarding the unlinked BSS.
+
+LLM assistance was used to find the bug and review.
+
+Fixes: 0b7808818cb9 ("wifi: cfg80211: fix BSS refcounting bugs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20261028141731.6185-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-log-userspace-base.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/wireless/scan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-log-userspace-base.c
-+++ b/drivers/md/dm-log-userspace-base.c
-@@ -293,9 +293,11 @@ static int userspace_ctr(struct dm_dirty
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2104,6 +2104,7 @@ cfg80211_inform_single_bss_data(struct w
+ 					       &res->pub)) {
+ 			if (__cfg80211_unlink_bss(rdev, res)) {
+ 				rdev->bss_generation++;
++				bss_ref_put(rdev, res);
+ 				res = NULL;
+ 			}
  		}
- 		r = dm_get_device(ti, devices_rdata,
- 				  dm_table_get_mode(ti->table), &lc->log_dev);
--		if (r)
-+		if (r) {
- 			DMERR("Failed to register %s with device-mapper",
- 			      devices_rdata);
-+			goto out;
-+		}
- 	}
- 
- 	if (lc->integrated_flush) {
-@@ -313,6 +315,8 @@ static int userspace_ctr(struct dm_dirty
- out:
- 	kfree(devices_rdata);
- 	if (r) {
-+		if (lc->log_dev)
-+			dm_put_device(lc->ti, lc->log_dev);
- 		mempool_exit(&lc->flush_entry_pool);
- 		kfree(lc);
- 		kfree(ctr_str);
 
 
