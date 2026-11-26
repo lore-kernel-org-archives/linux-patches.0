@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704835;
-	b=RZk7tGpKlk21l/zr4ZECZwuIkLwk6ePYN/yFWV5SU42Cab8L1hXRYbtx/4IF+VmE9SA0
-	 YmWyr5sfbJy30gSKUySYi+gWVj9GP9oNwB62B3PjVMbr4K2NzHMNUAFpf6NerNQmJtebY
-	 ke5ULWK/vBuHc3p3I/mqBhiBSDCGoM/monhbqRtY0oEDS4KArxU0qoQGcdrXBvM78nfWn
-	 tvc1DVJzfchUhGCzTwrgD16t3nag8yFOtyuLxaxZh0vrem+C8B5CrAC2y+plRkJkf1riT
-	 TCC9RvKwRAmSo/D8k1NCWNmphbH26Oq3H91Oh73g8otLdL5f5kYiOmkoZtbNvh4GYLQ==
+	t=1795704839;
+	b=IcGgctOk2QelnpZpvtRMxREwuGSw8sTyXjqeziFrv18tP9hApUM9EpYZXJsskgbdhiav
+	 7H5P6fm9+ezytppvos75H1u3htY2Vo8CUBqK8kBjkNBgLoYBL+OauJayUCH9ZFLMb+kqq
+	 1UQiVzyvPVtbtSbRyecz3eiIEUn+gj29URDB8m0y6uLg3VyAlj0DaRKP0RgZ4ISbQtaMf
+	 JZOpyQqVxD+wWfm3XXYHcOS7ekqE0RUDE8CmzEXEsl8T8+gCfBDErOMV8sr7SgRXl7GIS
+	 M+k16/3b3ED3vVqarCp2fxvIsXsRZcDSnY52fxAiuNV10TunpaAiPWxuZi9hr0T14cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VP3lnA9xfFxUW6bc4hmi4ntuifG1uIkSp6vKKG0tuLU=;
-	b=K3iOEvD6PhcT6/P5yONROZXZl1hJvYyoJRdyE6KErunj64NySO+YiFBEDBTkdheL6LSM
-	 wN8zvi7AHlXcCu92hQf+yt7kWrVrgymClvrgsqBeag3IJntbbDOYuTKLGewegEHqv5Ofo
-	 9lJJHXThKqgomr7DF487g3m0PktFXY4FU0jaztAVgcxsstTjAnnGWZqdZebtdYdcWiTXL
-	 QO/53uR4+Kpf58BEWTmZdEVt7s1jCN5a1IACSgspUzgSHLc1pBbFolxUuwOcmd1QXYQMy
-	 rlcCWEY5ZxpUYmSWYaaDpSfuOCkbSqNJ0Mz2OGGHZzOzOrvnIlpzlyGYacObb5Uv9DA==
+	bh=j1JP0MCfr9hC7aGOZ2QtK/PD2PGjSXgOrFtwoojD9+M=;
+	b=dGvrAOESL0vKtpxMk6Eg/eJTc0vMuoM+MVFdYvO1zCF0gWhCelMdnJcrMEdJGVOwSvn1
+	 9MWbBj/SXH+4vYhFUxq0aOlrzlCdHLZxkc/WmMgp86Rj8Ku9RBiDxbFsyK6OeNrP0VNPZ
+	 XUkV5rhqu30ee7Xi85sPYHdXqoRoMmrEGvR/6YXao2gsd+KXqROKfw3rUXnmE+3P0VipE
+	 iaP2mF+ZDN5aa7CpG2KI/2pVdEJVCZCxuA44UdAgBucpi43nn350f2d1j6jc3wmdkgE7C
+	 KcVbAZWW5w0RMWUehsy+Ws9mjyYCiTWts2m6qhG3kwUEDYuOwtT5tPDhM05ZpWOhFTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xYVGax8i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsIlPkvg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E037606A31C;
-	Thu, 26 Nov 2026 14:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D5A606A31C;
+	Thu, 26 Nov 2026 14:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xYVGax8i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73E71F000E0;
-	Thu, 26 Nov 2026 14:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsIlPkvg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17331F000C4;
+	Thu, 26 Nov 2026 14:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704835;
-	bh=VP3lnA9xfFxUW6bc4hmi4ntuifG1uIkSp6vKKG0tuLU=;
+	s=korg; t=1795704838;
+	bh=j1JP0MCfr9hC7aGOZ2QtK/PD2PGjSXgOrFtwoojD9+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xYVGax8iD5kqzp44gHQqjksDdZ/z0HsUV+v868+0l997SaL5QUcBoNqUnI6KEC2WQ
-	 aogf+rFZGNnyAGCata4cf1NdsTsqTxhy/r1mgteuV2Z5JP3+tBFxGtj7ofvP53AQCX
-	 cSV/bkve+RTHcNG4AFKD8taTUxODrrwH8OR6FO4g=
+	b=zsIlPkvgduBq8MlZNuvinma2Sx8N/uW5zghD1anNm87mFD9q1Q+gBYRWZJk0S0AUb
+	 IIZ4YeqaTUSB3deAfTtuAqOQmLt3xlENHx5u3udf3hZswr12yAo42kFDJPRPS5yawD
+	 RVKeHVBnYbZi7RZe/jMp9aP91zY5CaHy4uFjq6c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luiz Capitulino (Red Hat)" <luiz.capitulino@linux.dev>,
-	Michael Ellerman <mpe@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 5.10 258/265] powerpc/watchdog: disable watchdog when watchdog_thresh=0
-Date: Thu, 26 Nov 2026 15:39:48 +0100
-Message-ID: <20261126143623.296788483@linuxfoundation.org>
+	Anirudh Rayabharam <mail@anirudhrb.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH 5.10 259/265] vhost: handle error while adding split ranges to iotlb
+Date: Thu, 26 Nov 2026 15:39:49 +0100
+Message-ID: <20261126143623.364296052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,90 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
+From: Anirudh Rayabharam <mail@anirudhrb.com>
 
-commit d513ec3c907b067d4a32b14ec6f73c3e041cb136 upstream.
+commit 03a91c9af2c42ae14afafb829a4b7e6589ab5892 upstream.
 
-On powerpc, trying to disable the hardlockup detector with:
+vhost_iotlb_add_range_ctx() handles the range [0, ULONG_MAX] by
+splitting it into two ranges and adding them separately. The return
+value of adding the first range to the iotlb is currently ignored.
+Check the return value and bail out in case of an error.
 
- # echo 0 > /proc/sys/kernel/watchdog_thresh
-
-causes an immediate and endless hardlockup detection, eventually leading
-to an unusable system (splat example below). This happens because
-watchdog_calc_timeouts() sets wd_timer_period_ms, wd_panic_timeout_tb
-and wd_smp_panic_timeout_tb to zero, but start_watchdog() still starts
-the timer (with expiry=0) in this code path:
-
-proc_watchdog_thresh()
-  proc_watchdog_update()
-    __lockup_detector_reconfigure()
-      watchdog_hardlockup_start()
-        start_watchdog_on_cpu()
-          start_watchdog()
-            hrtimer_start() /* wd_timer_period_ms=0 */
-
-However, according to Documentation/admin-guide/sysctl/kernel.rst,
-setting watchdog_thresh=0 should disable both the soft and hard lockup
-detectors.
-
-This condition is already checked in __lockup_detector_reconfigure() for
-the soft lockup detector and the arch-independent hardlockup detector,
-what's missing is powerpc performing the same check in start_watchdog().
-
-[  278.110085] watchdog: CPU 0 detected hard LOCKUP on other CPUs 1
-[  278.110086] watchdog: CPU 1 became unstuck TB:33050716089564575
-[  278.110097] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Kdump: loaded Tainted: G            E       7.4.0-rc1 #1 PREEMPT(full)
-[  278.110103] watchdog: CPU 0 TB:33050716089564185, last SMP heartbeat TB:33050716089563885 (0ms ago)
-[  278.110109] Tainted: [E]=UNSIGNED_MODULE
-[  278.110126] Hardware name: IBM,8375-42A POWER9 (architected) 0x4e0202 0xf000005 of:IBM,FW940.00 (VL940_027) hv:phyp pSeries
-[  278.110136] NIP:  c0000000001bd518 LR: c0000000014dedf8 CTR: 0000000000000000
-[  278.110145] REGS: c000000004b17a80 TRAP: 0900   Tainted: G            E        (7.4.0-rc1)
-[  278.110155] MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 22000224  XER: 20040004
-[  278.110189] CFAR: 0000000000000000 IRQMASK: 0
-GPR00: 0000000000000000 c000000004b17d20 c000000001c38100 0000000000000000
-GPR04: 000000000000ffff 0000000000000000 0000000000000000 0000000000000000
-GPR08: 0000000000000000 0000000000000080 0000000000000080 ffffffffffffffff
-GPR12: 0000000000000000 c000000017fff300 0000000000000000 000000002ef3d820
-GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
-GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000001
-GPR24: 0000000000000001 00000040c0a6075e 0000000000000000 0000000000000001
-GPR28: c0000001fdb5b140 0000000000000001 c000000002291968 c000000002291970
-[  278.110306] NIP [c0000000001bd518] plpar_hcall_norets_notrace+0x18/0x2c
-[  278.110319] LR [c0000000014dedf8] check_and_cede_processor+0x48/0x60
-[  278.110333] Call Trace:
-[  278.110338] [c000000004b17d20] [c000000004b17dd0] 0xc000000004b17dd0 (unreliable)
-[  278.110354] [c000000004b17d80] [c0000000014df020] shared_cede_loop+0x70/0x170
-[  278.110367] [c000000004b17dc0] [c0000000014de460] cpuidle_enter_state+0x2f0/0x748
-[  278.110381] [c000000004b17e70] [c000000000fe43b8] cpuidle_enter+0x48/0x70
-[  278.110397] [c000000004b17eb0] [c0000000002cdcf8] call_cpuidle+0x48/0x90
-[  278.110409] [c000000004b17ed0] [c0000000002d6300] cpuidle_idle_call+0x160/0x2d0
-[  278.110422] [c000000004b17f20] [c0000000002d6578] do_idle+0x108/0x1f0
-[  278.110434] [c000000004b17f60] [c0000000002d6938] cpu_startup_entry+0x48/0x50
-[  278.110446] [c000000004b17f90] [c0000000000615c0] start_secondary+0x290/0x2a0
-[  278.110459] [c000000004b17fe0] [c00000000000e258] start_secondary_prolog+0x10/0x14
-
-Fixes: 2104180a5369 ("powerpc/64s: implement arch-specific hardlockup watchdog")
-Cc: stable@vger.kernel.org
-Signed-off-by: Luiz Capitulino (Red Hat) <luiz.capitulino@linux.dev>
-Reviewed-by: Michael Ellerman <mpe@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20261104034018.2676750-1-luiz.capitulino@linux.dev
+Signed-off-by: Anirudh Rayabharam <mail@anirudhrb.com>
+Link: https://lore.kernel.org/r/20220312141121.4981-1-mail@anirudhrb.com
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: e2ae38cf3d91 ("vhost: fix hung thread due to erroneous iotlb entries")
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/watchdog.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/vhost/iotlb.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/watchdog.c
-+++ b/arch/powerpc/kernel/watchdog.c
-@@ -376,6 +376,9 @@ static void start_watchdog(void *arg)
- 	if (!(watchdog_enabled & NMI_WATCHDOG_ENABLED))
- 		return;
- 
-+	if (!watchdog_thresh)
-+		return;
+--- a/drivers/vhost/iotlb.c
++++ b/drivers/vhost/iotlb.c
+@@ -62,8 +62,12 @@ int vhost_iotlb_add_range_ctx(struct vho
+ 	 */
+ 	if (start == 0 && last == ULONG_MAX) {
+ 		u64 mid = last / 2;
++		int err = vhost_iotlb_add_range_ctx(iotlb, start, mid, addr,
++				perm, opaque);
 +
- 	if (!cpumask_test_cpu(cpu, &watchdog_cpumask))
- 		return;
++		if (err)
++			return err;
  
+-		vhost_iotlb_add_range_ctx(iotlb, start, mid, addr, perm, opaque);
+ 		addr += mid + 1;
+ 		start = mid + 1;
+ 	}
 
 
