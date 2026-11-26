@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705424;
-	b=J3j2pZ43RJq7NhhkwnqpEeFXJf1VYHDW4MG+Vf6jTQn2rjxTwMUWRuWYZIcFpNiJovvM
-	 p2B0T6i64D3pj5yWR57CWUS9Y+VUsKvuOENALh9WV46IITmqN5lQMBRWTc1fFyGZwalGe
-	 uLcznTwowguDPpLiB8zVLZmDYBkJtF1aUuZ0SFJfH8KQqnciNrEvgVwBtbvtLr1XrWBFb
-	 CqZm8nZJv9wkgsyoUdwA8Io0JbRGdss46iUpwdNge4V4801SzBawzKqGoIIbz8onukRqJ
-	 NLawb0MzA6At9jvBwV+R4QHkrcAPDDeRqgr5LbR1B8FPhkj/2B8s2w9iyj8dyoLPLLA==
+	t=1795705427;
+	b=mIRYm5KkpCa8qKRXEeESvh37tr/QbL3VJx+ZUx4jGBcQl1W5CldNpNQ1+jl3BayzvhHD
+	 P6OfOQZM273ZzxGVlo1fyVW2Emudb5wzWlfjintJNpsTu3oYYYQzfIUh2s3oowY+G7zBV
+	 2TM5AVtHXdZtiB4OBL97Sju2+EPccK02O3jRnYZ3azygitsIpLWNpMfvBOLkOMHlRvT0o
+	 MgOQFmMtL1OoqHyiTT7TetyHe4GoBCRuH4ci1UcFUYoZi6hpeFF77k35ULiu67nLTmY5A
+	 ae/F3mgbSY4umcHT/paWpPbEoPwtvbQaKA0IJ5W8IKm7KrIPIFmkYGnKe8fctPRLf2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705424;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=G0nvdmCWF2038y7S0lSggXbRbRVTKw8hVQoCZ14mlD4=;
-	b=Z3BDZGilStcPn5rmL7uUInmcMoGdlaYe8Bv3WdZ3Or2iwZbPA/rawGqYI0xCM81zlM23
-	 SFB2xHia4XjXWKHU3CKKoJbgkzRs06g4T1jm0lpvmQ+sWl8zUhhPgoPIKSAQ5i8+/I9bJ
-	 Sf1k+ElvkowoGvFgfAXHCilGzH9an/gNxLw3TH1/Pya8iLBrGkVWXDSa6wkPxlw5nnV6v
-	 erMnsRhDkg2yi0Smkoau0KJ2xdi67stPrWCG1usA+Dk3P2E6T7e5Mr9e+X+Zj0NCkAXpE
-	 UkUZINygRhAJMLv8WZ+dlkJV71QTQrZbsF0MipnU4I/zZjYt/wZJ2GajjOEnIPGz+2w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=fw+XaxP3e33Hi5LVf7gD9shKVkoOyX19rKkfN+K0nYs=;
+	b=VpedxYyzwy+EpHYoID98rP1EzAPSgUpvPls3p50xmQg90TzYVGTPpuRZWhFgPGAQc1k0
+	 9AHMIyMl1YhxQ7bLiOiGN+TSDROCoXrNN3BZclEZKmLU37VKYLLk57ReVxt4mPaBB2Kjt
+	 z43tU8bSMX2ofom6T1zEuVkSka1P1qUhDgva5MKwgIEkZCBGDjiZdLaK7q/8wXOusSnkA
+	 JlIvDxIDbzbYRDGnEnNwPH5Et01g9x3tCvD5QyqnTwiCrfYGfGdorJh43GQq5N5GYXbzj
+	 jtjSxOgop4J6Pp+C4CwVwzX8TC2JEBj6pD+1XzsEGITUpPiniMoucNdgsz4iJvjQdZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZUSKjbI/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PTkuviZX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC14C606A31C;
-	Thu, 26 Nov 2026 15:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7842A606A31E;
+	Thu, 26 Nov 2026 15:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZUSKjbI/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4671F000CA;
-	Thu, 26 Nov 2026 15:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PTkuviZX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45DA1F000CA;
+	Thu, 26 Nov 2026 15:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705424;
-	bh=G0nvdmCWF2038y7S0lSggXbRbRVTKw8hVQoCZ14mlD4=;
+	s=korg; t=1795705427;
+	bh=fw+XaxP3e33Hi5LVf7gD9shKVkoOyX19rKkfN+K0nYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZUSKjbI/QWIeAXvTL81DUEP+eIE+r3MecfCL/SQXkg3AzJUolsNVZQX3xh7N7CNi9
-	 a49NVzHvwYRwi/oD/IOKWbDNd1a73j1sHJPws6x2NcDzVbLlz9FWms0V44y6Uu0NmW
-	 C8w4zLXBdK7ukQOUw6czur7kSMbeGnNpBzhAR4OI=
+	b=PTkuviZXJolCOIGiO9839TGA5xSOTPJRNQQ3T8nk5xKhW/v6dJyjc0Y/YKV4bhSCk
+	 M8/uWp5BwB85RVWAekTYFd2oTcpO1bSQOT8uivmhE4gHtfZk1K9/sw/wxn73xcaNsx
+	 qSw4iyxsOqTEne3hYbywlzPJx4yaz8DcPKHrgFqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	=?UTF-8?q?Dani=C3=ABl=20Trujillo?= <datrujillo@nvidia.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 194/319] ipv4: fib_trie: prevent speculative out-of-bounds child access
-Date: Thu, 26 Nov 2026 15:39:22 +0100
-Message-ID: <20261126144011.123399966@linuxfoundation.org>
+Subject: [PATCH 5.15 195/319] ipv6: fix cached route reuse for control messages
+Date: Thu, 26 Nov 2026 15:39:23 +0100
+Message-ID: <20261126144011.146343020@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -62,126 +63,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniël Trujillo <datrujillo@nvidia.com>
+From: Xia Yan <yanxia@cmss.chinamobile.com>
 
-commit fd3d73286662950656f54616d0b3fea29e2dc99a upstream.
+commit f778e80b3daf5033fb996f45c2b5d0ce1e82c0a7 upstream.
 
-fib_table_lookup() checks the child index against the bounds before
-passing it to get_child_rcu().
+A connected IPv6 UDP or ping socket can reuse its cached route when an
+SO_MARK cmsg requests another mark. A packet can then bypass a prohibit
+rule instead of failing with EACCES.
 
-The index is derived from the lookup key, which in turn is derived from
-flp->daddr. A userspace process can therefore influence the index by
-triggering lookups for chosen destination IPv4 addresses.
+ip6_sk_dst_lookup_flow() reads the cache even when connected is false.
+UDP clears connected after parsing IP or socket control messages. Ping
+always passes false.
 
-If this bounds check is mispredicted as in-bounds, an out-of-bounds index
-can be transiently passed to get_child_rcu(). The value loaded beyond the
-child array is then treated as a node pointer. A later transient
-dereference of that pointer can cause a data-dependent cache footprint.
+Only read the cache when connected is true. Ordinary connected UDP
+sends keep using the cache. Ping sends do a fresh lookup.
 
-This was found during Spectre-v1 research. Leakage was demonstrated with
-instrumentation that delays branch resolution with a CLFLUSH before the
-mispredicted branch and makes the leaked location deterministic for
-reproducible measurement. In that setup, a userspace-controlled IPv4
-lookup key was able to trigger a transient out-of-bounds child access.
-The transient use of the loaded value as a pointer caused a
-data-dependent cache footprint that was recoverable from userspace using
-Prime+Probe. A real-world attacker would likely need to delay branch
-resolution, which was not demonstrated end-to-end without the added
-CLFLUSH.
+Found during code review of IPv6 UDP route caching. On UML, the same
+connected-socket selftest fails four IPv6 cases before the fix and
+passes all 54 with it.
 
-Sanitize the index with array_index_nospec() before accessing the child
-array. This removed the observed leakage in the described setup.
-
-Apply the hardening before setting cindex in fib_table_lookup(), because
-cindex can later be used by the backtrace path to load another child
-pointer. fib_find_node() has the same pattern, with the checked index
-derived from a user-provided key in fib_table_insert() and
-fib_table_delete(). leaf_walk_rcu() has a similar checked cindex before
-get_child_rcu(), and the traversed state can be influenced by userspace
-actions. fib_find_node() runs under RTNL and leaf_walk_rcu() is not on
-the packet lookup hot path, so harden those analogous accesses in the
-same way. Also harden fib_trie_get_next(), where a mispredicted loop
-condition could transiently read one child past the array.
-
-I see a slowdown of roughly 10% in a microbenchmark where we call
-fib_table_lookup() with 64 routes directly from inside the kernel. I
-observed no slowdown in a loopback UDP sendto() microbenchmark.
-
-Fixes: 9f9e636d4f89 ("fib_trie: Optimize fib_table_lookup to avoid wasting time on loops/variables")
+Fixes: c6af0c227a22 ("ip: support SO_MARK cmsg")
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Link: https://lore.kernel.org/netdev/willemdebruijn.kernel.1e0038bcc3ef8@gmail.com/
 Cc: stable@vger.kernel.org
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Signed-off-by: Daniël Trujillo <datrujillo@nvidia.com>
-Link: https://patch.msgid.link/20261106-fib-trie-nospec-v3-1-53da6550dcf8@nvidia.com
+Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261109014400.9025-1-yanxia@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_trie.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_output.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -60,6 +60,7 @@
- #include <linux/export.h>
- #include <linux/vmalloc.h>
- #include <linux/notifier.h>
-+#include <linux/nospec.h>
- #include <net/net_namespace.h>
- #include <net/ip.h>
- #include <net/protocol.h>
-@@ -965,6 +966,8 @@ static struct key_vector *fib_find_node(
- 			break;
- 		}
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1257,7 +1257,7 @@ EXPORT_SYMBOL_GPL(ip6_dst_lookup_flow);
+  *	@sk: socket which provides the dst cache and route info
+  *	@fl6: flow to lookup
+  *	@final_dst: final destination address for ipsec lookup
+- *	@connected: whether @sk is connected or not
++ *	@connected: whether the flow can use and update the socket dst cache
+  *
+  *	This function performs a route lookup on the given flow with the
+  *	possibility of using the cached route in the socket if it is valid.
+@@ -1274,11 +1274,14 @@ struct dst_entry *ip6_sk_dst_lookup_flow
+ 					 const struct in6_addr *final_dst,
+ 					 bool connected)
+ {
+-	struct dst_entry *dst = sk_dst_check(sk, inet6_sk(sk)->dst_cookie);
++	struct dst_entry *dst;
  
-+		index = array_index_nospec(index, 1ul << n->bits);
-+
- 		/* keep searching until we find a perfect match leaf or NULL */
- 	} while (IS_TNODE(n));
+-	dst = ip6_sk_dst_check(sk, dst, fl6);
+-	if (dst)
+-		return dst;
++	if (connected) {
++		dst = sk_dst_check(sk, inet6_sk(sk)->dst_cookie);
++		dst = ip6_sk_dst_check(sk, dst, fl6);
++		if (dst)
++			return dst;
++	}
  
-@@ -1465,6 +1468,8 @@ int fib_table_lookup(struct fib_table *t
- 		if (IS_LEAF(n))
- 			goto found;
- 
-+		index = array_index_nospec(index, 1ul << n->bits);
-+
- 		/* only record pn and cindex if we are going to be chopping
- 		 * bits later.  Otherwise we are just wasting cycles.
- 		 */
-@@ -1762,6 +1767,8 @@ static struct key_vector *leaf_walk_rcu(
- 		if (cindex >> pn->bits)
- 			break;
- 
-+		cindex = array_index_nospec(cindex, 1ul << pn->bits);
-+
- 		/* descend into the next child */
- 		n = get_child_rcu(pn, cindex++);
- 		if (!n)
-@@ -1783,6 +1790,8 @@ static struct key_vector *leaf_walk_rcu(
- 			continue;
- 		}
- 
-+		cindex = array_index_nospec(cindex, 1ul << pn->bits);
-+
- 		/* grab the next available node */
- 		n = get_child_rcu(pn, cindex++);
- 		if (!n)
-@@ -2430,7 +2439,10 @@ static struct key_vector *fib_trie_get_n
- 
- 	while (!IS_TRIE(pn)) {
- 		while (cindex < child_length(pn)) {
--			struct key_vector *n = get_child_rcu(pn, cindex++);
-+			struct key_vector *n;
-+
-+			cindex = array_index_nospec(cindex, child_length(pn));
-+			n = get_child_rcu(pn, cindex++);
- 
- 			if (!n)
- 				continue;
+ 	dst = ip6_dst_lookup_flow(sock_net(sk), sk, fl6, final_dst);
+ 	if (connected && !IS_ERR(dst))
 
 
