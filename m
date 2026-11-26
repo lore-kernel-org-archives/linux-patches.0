@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704150;
-	b=LaRgBO5h5xGpO4nyFyTf1NzlsAXzskolPTa635pQ1sm9PS+j8boDZte1Z9lAqZV8VIg/
-	 aXCnwVGNIowgOwKrba9SCKhLbff9bSxZZwdO9QH8Hmsa07nlNoRPZ+BuI4P9ldbnQmfr6
-	 bAfU8Rk/lElUEPqlyDrDgxngkUF4F/j/1OxKhMmYKiJWHj1cJ4rtg2H0hDq3HdboY0b4f
-	 JPlLt6CQEJVN2RW+Rh7arRQvhuleaReS4PeKy7uH5wuu8G0a+dsSTyP90gSdlucodoJtM
-	 qny4yMRVr10CC8q+4u8ETK41+pdRyJW7ybkaPJn0lxIYrVt9rwmuAtTRBF7Z34b1pAQ==
+	t=1795704153;
+	b=ZYa40YVzihZLrqVQXVFtLbJcSqAX0HibdLZubFZQk7uXUEge47hEZ5B4uco3AVV0wTtU
+	 P7mnztm71X9d/6zlTq7zJKHHHF1H+SAJcbWHryG3Z++CpUwXe/Lr3iRwY4ockC8hpmt1P
+	 XRMOSpJyexBl2GPcXjkstoRtBP0WypsyiL1fvntfjFD8dunw5iGeEdAQkniQnUgONgZzg
+	 6CwXFP8qScpA4iqq631RZUCkPF9UFV/ZQtx6/OO8d+AsbpiWuXM0h0IfRiDXA408EEi/S
+	 x3YV0Eu58u0b6o3eDUv7r7WMhEz+hJkmMSMWP9hZvWzt6noQopDHLCKLeGWs1smXUEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ipjC/eskKFH+RFv8V5XNDd4Wfbbg3Z150aNvqdHtQi8=;
-	b=J+tPL4ZcX3gpRx7bS8WKYb4j28wRYJiba7nVn431zEGhD+aOEKbih0oBelA/okVdSkhz
-	 /OFWANvi5/yxWf3RZClY62j3TUm6NAHw5dAOgU+eFWmJo/f6/1FkVwS8BQREaD7ajv+uk
-	 oLB00zrHNMhLh1c/VfJnI8DG5cO+H021pi/1vFiUVE7wI+lFDg8zDZs4qr5ZgUyTaD37I
-	 c0epzRZ0zhjr3i0FkkGw3FVfzn4J+sX5V+PeFcqYcMYjjszYnbWqtyA0WrzpQC8ULoXYb
-	 xNJxO8e9VErYHhnVOZKCYwP6e1kxdla/HhUkD0JpF8Yf0LHhJAS4wxRWgD3z2Q2kWvg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=hXqCFsGrkWFckrNotJ7FkZkGUGjpGUdCyq4gfhFbljo=;
+	b=iEbU0hTbOpdKnb2X8K9TmHPGCRxyDRzPove7hsPYeEGUqcqAoN6h6qITcYj+CIkif1mo
+	 bEfZq1ehOJ8Y6xkXNRlqwWwgFSU0WNFBYdqBcS3iZFgVxtRyNIVjNvLFrOnsbu/nEgxq0
+	 M2PZ06QElA87/hFcVaFIH6/guNH3nGrAnvY/rtU0L7xQ5FPZ1Gpn/pNlEvj41NASxWpV/
+	 /Fgx9yxoV3kK3hKpufUSR0TF0PuM2tsPbT3eZXbq1KWyHrvF3t7U91rsrW0jDOU7AgTmK
+	 5tGvwilqCT3BfYUlMvbmMeynmWdfFzNmCnR6WjV0TzHtwQBPpe4N2FZSegQmAYMlWTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XB/CMelp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msHx3Bqz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CCF606A321;
-	Thu, 26 Nov 2026 14:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B05606A31C;
+	Thu, 26 Nov 2026 14:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XB/CMelp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5E81F000CA;
-	Thu, 26 Nov 2026 14:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msHx3Bqz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD171F000C4;
+	Thu, 26 Nov 2026 14:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704150;
-	bh=ipjC/eskKFH+RFv8V5XNDd4Wfbbg3Z150aNvqdHtQi8=;
+	s=korg; t=1795704152;
+	bh=hXqCFsGrkWFckrNotJ7FkZkGUGjpGUdCyq4gfhFbljo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XB/CMelpd5W5gS+toJqBb/nY2/mdW/4erEHq5rie0wh0AzblqoiyMOmoxkgoOQsGB
-	 9JGTYLfHJQ8xkV3o6HNX5mzRv93FAl99HygbNIfR6gXELy9xijjxPEYPL9OSQg7gBS
-	 p3Y0mp/KCVMoj3+Cp5RZc7Uf7Oy1ZHX7kBCHdwCk=
+	b=msHx3Bqz2BxLk8ZjLkKm9lZHlkJq2slfU7YVy7Pzrttg8bv2iAkBgJExi6tXbA+bH
+	 6S7T7cNlLeYRpXxwc4RS+ufKDBaVuIAPBkNVyjyc20OkOcvCYXmcPMhSvNc6G/98vG
+	 kzfc1071jCxT9VjGbb+YJ/VMD8PCgtw+fV8x9IpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a079f084653164a652d1@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Sven Eckelmann <sven@narfation.org>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/265] batman-adv: avoid WARN_ON for orig_ifinfo allocation failure
-Date: Thu, 26 Nov 2026 15:35:53 +0100
-Message-ID: <20261126143606.695647104@linuxfoundation.org>
+Subject: [PATCH 5.10 024/265] wifi: ath9k_htc: start ANI when an AP interface begins to beacon
+Date: Thu, 26 Nov 2026 15:35:54 +0100
+Message-ID: <20261126143606.772043146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -63,47 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit dfa953ba5366b0a80c303700dab2bbcbdc5c27e9 ]
+[ Upstream commit 5c1b202d67a212c87e7389aaa093ce77828fa98f ]
 
-batadv_orig_ifinfo_new() returns NULL only when its GFP_ATOMIC
-allocation fails, which is a normal runtime condition and not a bug.
-batadv_v_ogm_forward() already handles this the same way, simply
-checking for NULL without a WARN_ON.
+ath9k_htc_vif_reconfig() re-arms ANI after a channel change when an AP
+interface beacons. mac80211 configures the channel before it enables
+the beacon, so during a normal AP start that never triggers, and the
+start from add_interface that the previous patch removed was cancelled
+by the same channel configuration: with hostapd, ANI and the periodic
+calibration it drives did not run in AP mode until a later channel
+change.
 
-Do the same in batadv_iv_ogm_update_seqnos() to avoid a spurious
-WARN_ON splat when the allocation fails (e.g. under fault injection).
+Start ANI when the beacon is enabled. The channel and its calibration
+data are in place by then, which is the state vif_reconfig() re-arms
+it in, and remove_interface() already stops it with the last AP
+interface.
 
-Fixes: 7351a4822d42 ("batman-adv: split out router from orig_node")
-Reported-by: syzbot+a079f084653164a652d1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a079f084653164a652d1
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: a236254c35f0 ("ath9k_htc: Add ANI for AP mode")
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20261005072209.4101009-3-mehmet.fide@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_iv_ogm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/htc_drv_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
-index 7dd42f91ac2d3..cd6e97bd57564 100644
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -1305,7 +1305,7 @@ batadv_iv_ogm_update_seqnos(const struct ethhdr *ethhdr,
- 		return BATADV_NO_DUP;
- 
- 	orig_ifinfo = batadv_orig_ifinfo_new(orig_node, if_outgoing);
--	if (WARN_ON(!orig_ifinfo)) {
-+	if (!orig_ifinfo) {
- 		batadv_orig_node_put(orig_node);
- 		return 0;
+diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_main.c b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
+index 72ef319feeda7..859fcd59a45df 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_drv_main.c
++++ b/drivers/net/wireless/ath/ath9k/htc_drv_main.c
+@@ -1552,6 +1552,9 @@ static void ath9k_htc_bss_info_changed(struct ieee80211_hw *hw,
+ 		ath9k_htc_set_tsfadjust(priv, vif);
+ 		priv->cur_beacon_conf.enable_beacon = 1;
+ 		ath9k_htc_beacon_config(priv, vif);
++		if (priv->ah->opmode == NL80211_IFTYPE_AP &&
++		    !test_bit(ATH_OP_ANI_RUN, &common->op_flags))
++			ath9k_htc_start_ani(priv);
  	}
+ 
+ 	if ((changed & BSS_CHANGED_BEACON_ENABLED) && !bss_conf->enable_beacon) {
 -- 
 2.53.0
 
