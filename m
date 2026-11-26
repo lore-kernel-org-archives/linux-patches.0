@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704591;
-	b=OgGLyDHg1n9f/shPAnA4+IDpFl2HSgOGQeXVj0buoRCSBLVG9KSp1rD+2KbRX39Y8icm
-	 6hclmK/acRJZ+jpv9SLCvcXQa4geh5mXkYX07xCJQkuI8uEqzSJ4rohXYCXbTyabGdkuF
-	 6aJwislLWGM8PYwDqYUilb9A/7v/D7TYqDzDl5X9bl13zm5tCJphoRCmPSuVpVCSvCjBm
-	 FlREi0/iTI8GmDGwVLu1j3Xeu7ge8cRewSwThNm0fgJt0mz/sbqMFyBm9uG78DxFXcMyF
-	 bdgJyjBf79BGRGR0vuV+/w/iSj+FFWQPjH6flduNvw7yyTbJKoghtRjayu3ZX73Qigw==
+	t=1795704594;
+	b=Iq+HCOKE2+6KklxN1HCbd+9K2KOBIIXXjOnJuSBwRJvs34UT2j0+2udcBdti5l/VxhFj
+	 3/wYc028huSiD3iWV+NCWHlcVWvNHyUgHfWU58WzLzlv/qkYgFJa8hXnCFCkWMA4JYc+G
+	 NICOzeS8nP8PewHMyA3xYLKUemAcSg80V7vZiAk6UVgW2CsEpM6LUMLyipll91bAm3cLg
+	 fvNBH6p/pVljKGNj2HiGI6tIakF3/eK5JgNeBd9j76CX7D8Od8rnWavLYcMYlut9PYsBX
+	 wKOPovZyjU9//Gnh6lhBSUiryMPk+5WMcDIAF5ZqDB3JFbDB6NNby32T7HJgl8FPHfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m/dBt7Mo8Q281DMvo51UwpeKRywRNAGJTuWgBu5XKYU=;
-	b=Wg3mdS2yJHSz5eTt+6r8x006G6rY4tvM2S24sHQo25pq97e/6djeMPSliB0FaTTP1g3Q
-	 FQQV49JvhMuSNDJ93rg5q9fp6wRkbLjSwk5pNdRH47TOQgwS0DmS3L03BOR+eY/MZnuyf
-	 Qdvw/FvSWkRxLERom/6t2YEiBjxYWTNuzeWgJvBSCnfK0n5r7w+Nrhtzu9ljZUA60hfG6
-	 s/nJBLcKzibD4DYB7mII44oWfgakhfd+NLkwgnG6ZgjL6sOgdbSqffAGVBSKn/XPq1V7X
-	 dUX8b5YRDfPCfqpkiGImAdq0SkuPOsH2NHUGQ2cYC74Ujlo58vLM/m/sCxHSXxDwnyg==
+	bh=ExCPXbg7UVLK5Scsk4uKABkZQNnSS4OI+uXxlxfqdjA=;
+	b=QR2mH09wP6ZYzUgckqWk3+x35O7CbOIQP6QUR7laH0/8yhjxQLYsK/BGbfCUW1xgAu9n
+	 dToGEiJpgupqdWhKlGBJjKiWKFEsSFenBW2qm+VuyEeWMuPy8vfJtwMka8FkYNHt/S72D
+	 deuleSQgVwGnESOwv49U+eltmWnaAVXHcSi6RnEyj2e4FLu7VkTuVbBSNW4I/JZ0s8UEr
+	 e4Wt0LVTlhMpRG0JdOUCmcwATxV5AQEjzmBicpUIKkRDtSO/Srl9rlFJhstkYeWWoQWM3
+	 Y1LbgeFTblHEDtHRyZSJ//ykuTnAi72qXc43J2d8h6q1oxKH02UJTYJkxvgQrLTI0hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/CLBocm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9dWVIyx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97761606A31C;
-	Thu, 26 Nov 2026 14:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F17606A321;
+	Thu, 26 Nov 2026 14:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/CLBocm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1841F000CA;
-	Thu, 26 Nov 2026 14:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9dWVIyx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E6C1F000CA;
+	Thu, 26 Nov 2026 14:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704591;
-	bh=m/dBt7Mo8Q281DMvo51UwpeKRywRNAGJTuWgBu5XKYU=;
+	s=korg; t=1795704594;
+	bh=ExCPXbg7UVLK5Scsk4uKABkZQNnSS4OI+uXxlxfqdjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/CLBocmMvYdTAk5yioBsiyNnkuH6z5O/lrpwpUivC/m7n7lfa/0nvM/MyGT+kVje
-	 ZGAMoapiazerop0QecDlo4EbciLLKbxfPy1Tx5nNTbbVuraTsvei3fZe7ZXc8qZYXI
-	 Gc8fef5m90GJwzj3WnVjm1/3bT5r902YTmPXj/eI=
+	b=t9dWVIyxFMeczIUNu5enuoqaJEtRRRyr7cTJGbnSwjPHwOzeBWYEm9+t8BAVzaITK
+	 IaEK3cOpQqONujnbaZhZbNg3FtVIuv26bi+9kdzcrBYCPfOH7Z2b0R+PNSeW6DxrZJ
+	 izHD9SrURnCewcQaeZ+9rEWc2yyztufgM97XJXQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.10 176/265] tpm: eventlog: check the payload size before reading tag events
-Date: Thu, 26 Nov 2026 15:38:26 +0100
-Message-ID: <20261126143617.473561971@linuxfoundation.org>
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.10 177/265] x86/mm: Ensure write visibility during LDT installation
+Date: Thu, 26 Nov 2026 15:38:27 +0100
+Message-ID: <20261126143617.556010402@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -67,75 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanglei Zhu <zhugl3@xiaopeng.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-commit 0a385f668ba77d29ae167c1668fd452418ebc9d6 upstream.
+commit 0dc2a4dac3d04e9e4479aeb0b46172feab1cca0a upstream.
 
-The EVENT_TAG branch of get_event_name() casts the event payload to
-struct tcpa_pc_event and reads from it:
+During LDT installation, the intent is to overwrite the old per-mm
+LDT value, then send an IPI to the mm user CPUs to have each load
+the new value.
 
-	pc_event = (struct tcpa_pc_event *)event_entry;
+But there is an ordering problem: a new mm user CPU sets itself in
+mm_cpumask() and then reads mm->context.ldt. The LDT-installing CPU
+writes mm->context.ldt and then reads mm_cpumask(). But, there is
+nothing which orders the LDT installation side actions. The CPU
+can read mm_cpumask() before its write becomes visible.
 
-	switch (do_endian_conversion(pc_event->event_id)) {
-	...
-		for (i = 0; i < 20; i++)
-			d_len += sprintf(&data[2*i], "%02x",
-					pc_event->event_data[i]);
+Ensure that new mm user CPUs see the new mm->context.ldt. Make
+mm->context.ldt visible before reading mm_cpumask().
 
-The log iterators only verify that the event header plus the declared
-event_size stays within the log buffer; they do not require the
-payload of an EVENT_TAG entry to be large enough for the fields the
-branch reads. A truncated entry makes the branch read up to 20 bytes
-of event_data[] past the end of the entry, and, for the last entry in
-the log, past the end of the buffer itself.
+Also convert the smp_store_release() over to a WRITE_ONCE().
+smp_store_release() has an internal barrier which is weaker than
+the new smp_mb(). Avoid an extra barrier by converting it to
+WRITE_ONCE().
 
-The legacy PC Client spec defines the EV_EVENT_TAG payload as a
-TCPA_PC_EVENT - event_id, event_size and event-type-specific data -
-so a conformant entry carries the 8-byte header and the hash-type
-ids carry a full digest. The log itself, however, is an ACPI table
-the firmware leaves in memory: the TPM never measures the log, so
-the kernel cannot tell a conformant log from a corrupted one. The
-iterators already work on that assumption - they stop once the
-declared event_size runs past the buffer end - and the readers
-should apply the same rule to what they take off the payload.
+Also refresh/correct misleading comments. READ/WRITE_ONCE() do not
+"synchronize" anything themselves.
 
-Skip entries whose payload cannot even hold the event id, and skip
-the 20-byte digest dump when the payload cannot hold the full
-tcpa_pc_event header plus the digest, so the branch never reads
-beyond the entry it is formatting.
-
-Cc: stable@vger.kernel.org
-Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Acked-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/eventlog/tpm1.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kernel/ldt.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/char/tpm/eventlog/tpm1.c
-+++ b/drivers/char/tpm/eventlog/tpm1.c
-@@ -178,6 +178,10 @@ static int get_event_name(char *dest, st
- 		}
- 		break;
- 	case EVENT_TAG:
-+		if (do_endian_conversion(event->event_size) <
-+		    sizeof(pc_event->event_id))
-+			break;
-+
- 		pc_event = (struct tcpa_pc_event *)event_entry;
+--- a/arch/x86/kernel/ldt.c
++++ b/arch/x86/kernel/ldt.c
+@@ -43,7 +43,7 @@ void load_mm_ldt(struct mm_struct *mm)
+ {
+ 	struct ldt_struct *ldt;
  
- 		/* ToDo Row data -> Base64 */
-@@ -203,6 +207,9 @@ static int get_event_name(char *dest, st
- 			name = tcpa_pc_event_id_strings[do_endian_conversion
- 							(pc_event->event_id)];
- 			n_len = strlen(name);
-+			if (do_endian_conversion(event->event_size) <
-+			    sizeof(struct tcpa_pc_event) + 20)
-+				break;
- 			for (i = 0; i < 20; i++)
- 				d_len += sprintf(&data[2*i], "%02x",
- 						pc_event->event_data[i]);
+-	/* READ_ONCE synchronizes with smp_store_release */
++	/* Pairs with WRITE_ONCE() in install_ldt() */
+ 	ldt = READ_ONCE(mm->context.ldt);
+ 
+ 	/*
+@@ -414,8 +414,14 @@ static void install_ldt(struct mm_struct
+ {
+ 	mutex_lock(&mm->context.lock);
+ 
+-	/* Synchronizes with READ_ONCE in load_mm_ldt. */
+-	smp_store_release(&mm->context.ldt, ldt);
++	/*
++	 * Ensure that new mm user CPUs either see the new LDT value
++	 * or get an IPI. Make the store visible before reading
++	 * mm_cpumask(). New mm users make their mm_cpumask() writes
++	 * visible before reading mm->context.ldt.
++	 */
++	WRITE_ONCE(mm->context.ldt, ldt);
++	smp_mb();
+ 
+ 	/* Activate the LDT for all CPUs using currents mm. */
+ 	on_each_cpu_mask(mm_cpumask(mm), flush_ldt, mm, true);
 
 
