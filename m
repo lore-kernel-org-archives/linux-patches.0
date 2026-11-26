@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705337;
-	b=j5nHOaRu35gtX4Cxk+Cdc31dLSZYlZHWDIbETmB/nraTuejYWUEFEb0qlbJAsNukGPSP
-	 u+uRlgO6N5WNd1iixQDpDAh/9QYIu9IAoDJq0m+byuC4KbJgBgesJRq7Bpab1aFgIlaMW
-	 Ns71E7NbV9Ut1N7W8DPq4bVQEvZaJNFCpmsZ+ofpObUA1OXDDhMHsqmJDkFZcCSN6tXun
-	 8n5Cwin2gK6TKIS+VEwC+iTcwD0hYuE8zdsTyfK/1jbQgtmE5fFw8ir/kZ7e83l6Lmoez
-	 92VbR7NwXG24b6t8w3C5ITtrJD9o1UQZZCuxleNIOU1Fxkak9jEhA4kIrBd0tyZp5Sw==
+	t=1795705335;
+	b=a098NBY+SikHCHJZW4kILIpABIlgKpHRaeBeC7dTBcXxnftNmMeQSuJXuhiPG/2x4lae
+	 xzm7etQyBntMx1TIhyG1ufdIajA9Ue9Jy37+kYOYNao01boH3qzvGlYYksNtlxzKttwIk
+	 5X7kH2iBEzYf/HSNHFJyxyQdRl+olVKDlU+Rl9E4jwpsrlqFJUQ0rAGW0hE4o1ThUuHLJ
+	 vS71JqspAbXc7bEr+jweznrLVMfjVymosiNAtotYPDCOo20VIb1a7GeRDW5gvQ0qgPbnP
+	 fBDGp44y1rBgXjolJLuqBm5sqzuB9DYElEsfOkjRZbT8RCYGWyuqvXQozbqyicxh3Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705337;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705335;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a7NSQ37eomNxnb4CmnfF4NN25k87c4Xl3YT/rMtPuHo=;
-	b=hk109eUwel7duQh6qPgE9mxvV1eb1JGoy5v7/R6OyOBrjY6pHQcLnl4UcMiB5gnjINbz
-	 3GjhRy9R3trP6pY9VSgVhtbB08UcI20KTv8Pof+/flg7F87n0WxB1TNmJKgJVtBLj52s9
-	 UR1HUzb+Rhw+ig8GcCPMG5/27jTgzlrerLmKxsR64dXtqPPoNcVW/yMtrJ/PBSbe8yMOo
-	 lUrQNHWUn7wzXDv+gvSzO2agnoGYr4ToS1ZdhF/QrjTKaOOV+Q6ScpsgECnjK9Lb62iWn
-	 a+WPYRd+50EDIuPLFcmeKbx3v8ZkXvifR4RC8E/cADaw6NH3AOw/qwwGyUEgcXuEXEw==
+	bh=4L9jnopwies3jkYcnJyJgEtG4AQuJgERoEsMPpyMHFg=;
+	b=3pzyXgB6p6we8zS6sPnpijnpVmXY/eHYrMQbIWs5gbyxKvbwBYHneQ7wWFVOlHF0ZzpF
+	 /0XSK6kGgAT7KcJY+1Ti/cen7dcCRdIMLQZdariMMYXKuttUtiwbG3Kn/baKQ1dPwVnvG
+	 icNY1No1kKBw05iBwyQRzoVoL93Z5zZxdhTo5l4XLiBcQqWfyBHisXA6Di1SBwmJ/Xx2z
+	 aYS++MrB8Ab11/fa0NBvS7vZRcEVUnaXrzj+q5KruWMCXi7CNFCJHzd4ZBd6rWgwAR3fL
+	 GM7Z6MrSIiczGy8rRokFKBfEM4GUAiROU2H5dTU4GDyq/dH0vcuI70PaEiYxAcUnO2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQpS7Nzf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6gTX3Qh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6EC606A323;
-	Thu, 26 Nov 2026 15:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09144606A31E;
+	Thu, 26 Nov 2026 15:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQpS7Nzf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D131F000D3;
-	Thu, 26 Nov 2026 15:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6gTX3Qh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07C21F000D3;
+	Thu, 26 Nov 2026 15:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705337;
-	bh=a7NSQ37eomNxnb4CmnfF4NN25k87c4Xl3YT/rMtPuHo=;
+	s=korg; t=1795705334;
+	bh=4L9jnopwies3jkYcnJyJgEtG4AQuJgERoEsMPpyMHFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQpS7Nzfz+iYeM1F7sIpAEFxVFj0qqFnTjd4wx5JtWPSPhT9HRGAYow2wvswvJ1fs
-	 0uh6x4s1CsKr3lV3ZPvhWe8geV0H/IMODrkXQDFt7ImB4m9ZoX8keJM38HiFkAVJh+
-	 4Sixsgj2MjkvTAr3dlpGyIVbAVYoQBour0L0G04w=
+	b=h6gTX3QhkyLSkdsBvT4MT7jXgJstLqLL2wJVTXSPIkrhH5HVKJnwn+txAQhtW8utz
+	 6QpR53bVaxknJi0DW5A+n/YWQoEX8cDPbbaz7sjkpMOZxdgMLWQrgL1lfmWhT3b26+
+	 m07vVPwHPrXoTJJmvg/195v+lMOUQ7UvVxiu5HbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com,
-	Jiahao Xu <xujiahao@cmss.chinamobile.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/319] net: usb: cdc_ncm: dont underflow the NDP room check
-Date: Thu, 26 Nov 2026 15:38:50 +0100
-Message-ID: <20261126144010.403772383@linuxfoundation.org>
+Subject: [PATCH 5.15 126/319] net/mlx5e: IPoIB, Fix QPN lookup race
+Date: Thu, 26 Nov 2026 15:38:14 +0100
+Message-ID: <20261126144009.587222769@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -69,87 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiahao Xu <xujiahao@cmss.chinamobile.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit b507828c7b6135ff7a4b69eba6e33502b4839fb9 ]
+[ Upstream commit 29066b0fc046a2965129a74325b98d9abb4647a9 ]
 
-cdc_ncm_ndp16() and cdc_ncm_ndp32() verify that the new NDP and the
-datagram fit into the NTB with an unsigned subtraction:
+The parent RX completion path can load a QPN hash entry before
+mlx5i_pkey_del_qpn() unlinks and frees it, then dereference freed memory.
 
-	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
-		return NULL;
+Use RCU hlist operations and defer freeing with kfree_rcu(). The existing
+RCU read-side section in mlx5e_napi_poll() covers the lookup. Keep ht_lock
+for writers and acquire it before looking up the entry to delete.
 
-Nothing guarantees that skb->len plus the reserve stays below
-tx_curr_size, and when it does not the subtraction wraps around to a
-huge value, the check passes, and the skb_put_zero() of max_ndp_size
-bytes that follows overruns the NTB:
-
-  skbuff: skb_over_panic: text:ffff80000db33558 len:428 put:172
-  head:ffff0000c2c66100 tail:0x1ac end:0x140
-  kernel BUG at net/core/skbuff.c:200
-  skb_put_zero include/linux/skbuff.h:2595 [inline]
-  cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1132 [inline]
-  cdc_ncm_fill_tx_frame+0xdf0/0x30e0 drivers/net/usb/cdc_ncm.c:1309
-
-Here tx_curr_size is 0x140 = 320, skb->len is already 256 and the
-skb_put_zero() wants another 172 bytes.
-
-Two device controlled settings make this reachable:
-
-  - dwNtbOutMaxSize = 320 caps tx_max at 320.  The lower bound computed
-    in cdc_ncm_check_tx_max() is max_datagram_size + max_ndp_size + the
-    NTH header, but cdc_ncm_setup() clamps tx_max before
-    cdc_ncm_set_dgram_size() runs, so max_datagram_size is still 0 and
-    the bound is only max_ndp_size + the NTH header.  It does not
-    reserve room for one datagram plus one NDP.
-
-  - wNdpOutAlignment = 256 is accepted by cdc_ncm_fix_modulus() as long
-    as it is smaller than tx_max, and cdc_ncm_align_tail() then pads the
-    12 byte NTH header up to 256 bytes right before this check.
-
-An NDP can also be added to an NTB that already holds datagrams through
-cdc_mbim_tx_fixup(), which uses a different signature per MBIM session.
-On plain cdc_ncm the chain lookup in cdc_ncm_ndp16() returns the
-existing NDP for the single signature, so there the create path is
-normally reached for the first datagram of each NTB.
-
-Rewrite the test as an addition, which cannot underflow and gives the
-same answer whenever the original subtraction did not wrap.
-
-Fixes: c78b7c586657 ("net: cdc_ncm: refactoring for tx multiplexing")
-Fixes: 0fa81b304a79 ("cdc_ncm: Implement the 32-bit version of NCM Transfer Block")
-Reported-by: syzbot+1994e2ecf323ed90f255@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1994e2ecf323ed90f255
-Signed-off-by: Jiahao Xu <xujiahao@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261111124156.637661-1-xujiahao@cmss.chinamobile.com
+Fixes: 7e7f4780c340 ("net/mlx5e: IPoIB, Use hash-table to map between QPN to child netdev")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261031225749.14214-1-prathameshdeshpande7@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ncm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../ethernet/mellanox/mlx5/core/ipoib/ipoib.h |  2 +-
+ .../mellanox/mlx5/core/ipoib/ipoib_vlan.c     | 26 +++++++++++--------
+ 2 files changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index 7c9108205743a..6c2aa3aae7716 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -1120,7 +1120,7 @@ static struct usb_cdc_ncm_ndp16 *cdc_ncm_ndp16(struct cdc_ncm_ctx *ctx, struct s
- 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
+index 99d46fda9f82f..69a666d91c643 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
+@@ -78,7 +78,7 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev);
+ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn);
+ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn);
  
- 	/* verify that there is room for the NDP and the datagram (reserve) */
--	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
-+	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
+-/* Get the net-device corresponding to the given underlay QPN */
++/* Get the net-device for a QPN. Caller must hold rcu_read_lock(). */
+ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn);
+ 
+ /* Shared ndo functions */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
+index 5308f23702bca..f0df52aa26a77 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
+@@ -31,6 +31,7 @@
+  */
+ 
+ #include <linux/hash.h>
++#include <linux/rculist.h>
+ #include "ipoib.h"
+ 
+ #define MLX5I_MAX_LOG_PKEY_SUP 7
+@@ -39,11 +40,12 @@ struct qpn_to_netdev {
+ 	struct net_device *netdev;
+ 	struct hlist_node hlist;
+ 	u32 underlay_qpn;
++	struct rcu_head rcu;
+ };
+ 
+ struct mlx5i_pkey_qpn_ht {
+ 	struct hlist_head buckets[1 << MLX5I_MAX_LOG_PKEY_SUP];
+-	spinlock_t ht_lock; /* Synchronise with NAPI */
++	spinlock_t ht_lock; /* Serialize hash table updates */
+ };
+ 
+ int mlx5i_pkey_qpn_ht_init(struct net_device *netdev)
+@@ -68,13 +70,14 @@ void mlx5i_pkey_qpn_ht_cleanup(struct net_device *netdev)
+ 	kfree(ipriv->qpn_htbl);
+ }
+ 
+-static struct qpn_to_netdev *mlx5i_find_qpn_to_netdev_node(struct hlist_head *buckets,
+-							   u32 qpn)
++static struct qpn_to_netdev *
++mlx5i_find_qpn_to_netdev_node(struct mlx5i_pkey_qpn_ht *ht, u32 qpn)
+ {
+-	struct hlist_head *h = &buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
++	struct hlist_head *h = &ht->buckets[hash_32(qpn, MLX5I_MAX_LOG_PKEY_SUP)];
+ 	struct qpn_to_netdev *node;
+ 
+-	hlist_for_each_entry(node, h, hlist) {
++	hlist_for_each_entry_rcu(node, h, hlist,
++				 lockdep_is_held(&ht->ht_lock)) {
+ 		if (node->underlay_qpn == qpn)
+ 			return node;
+ 	}
+@@ -96,7 +99,7 @@ int mlx5i_pkey_add_qpn(struct net_device *netdev, u32 qpn)
+ 	new_node->netdev = netdev;
+ 	new_node->underlay_qpn = qpn;
+ 	spin_lock_bh(&ht->ht_lock);
+-	hlist_add_head(&new_node->hlist, &ht->buckets[key]);
++	hlist_add_head_rcu(&new_node->hlist, &ht->buckets[key]);
+ 	spin_unlock_bh(&ht->ht_lock);
+ 
+ 	return 0;
+@@ -109,16 +112,17 @@ int mlx5i_pkey_del_qpn(struct net_device *netdev, u32 qpn)
+ 	struct mlx5i_pkey_qpn_ht *ht = ipriv->qpn_htbl;
+ 	struct qpn_to_netdev *node;
+ 
+-	node = mlx5i_find_qpn_to_netdev_node(ht->buckets, qpn);
++	spin_lock_bh(&ht->ht_lock);
++	node = mlx5i_find_qpn_to_netdev_node(ht, qpn);
+ 	if (!node) {
++		spin_unlock_bh(&ht->ht_lock);
+ 		mlx5_core_warn(epriv->mdev, "QPN to netdev delete from HT failed\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	spin_lock_bh(&ht->ht_lock);
+-	hlist_del_init(&node->hlist);
++	hlist_del_rcu(&node->hlist);
+ 	spin_unlock_bh(&ht->ht_lock);
+-	kfree(node);
++	kfree_rcu(node, rcu);
+ 
+ 	return 0;
+ }
+@@ -128,7 +132,7 @@ struct net_device *mlx5i_pkey_get_netdev(struct net_device *netdev, u32 qpn)
+ 	struct mlx5i_priv *ipriv = netdev_priv(netdev);
+ 	struct qpn_to_netdev *node;
+ 
+-	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl->buckets, qpn);
++	node = mlx5i_find_qpn_to_netdev_node(ipriv->qpn_htbl, qpn);
+ 	if (!node)
  		return NULL;
  
- 	/* link to it */
-@@ -1175,7 +1175,7 @@ static struct usb_cdc_ncm_ndp32 *cdc_ncm_ndp32(struct cdc_ncm_ctx *ctx, struct s
- 		cdc_ncm_align_tail(skb, ctx->tx_ndp_modulus, 0, ctx->tx_curr_size);
- 
- 	/* verify that there is room for the NDP and the datagram (reserve) */
--	if ((ctx->tx_curr_size - skb->len - reserve) < ctx->max_ndp_size)
-+	if (skb->len + reserve + ctx->max_ndp_size > ctx->tx_curr_size)
- 		return NULL;
- 
- 	/* link to it */
 -- 
 2.53.0
 
