@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704172;
-	b=3OgfTmuUR3Ns5NeMB+h1aWZcqpwYh2FfKgSy1EZ6clhIfedy3xRtDW49XARaCXHMgYq9
-	 azWE6JZrONUBrBvgDpWT9+PeCyO9d/BVdUufqBulE7bmruPxWUfXZZI0rv9dmetkYgcny
-	 ZXOVJgb75Jtcc5Xvw+cfeksVMAFqbpFO+IO1GbOzZLlllyAbyYTBULbz8BfzdrEKWNZHI
-	 AAX93inf8T3p+Oply+11p09h7fNH3oVlU0MmPxZFI2HqjijszzQwJc/ZHvfPgDtXW7zm4
-	 DCBNkXfqi/UfypQYI1kj+ddV4LHjWlT5eS4sN7ippNRT3MLV4hEzM5o1g0Puqj6UuCg==
+	t=1795704175;
+	b=rkR6JXmmPTHP+hFXY23fAT5Dd8suc90ssYiIOLiox2zKcbpezmDlu9KQWa7xl404CwwW
+	 +d0F8CFRxN+h1XhY21e3oW8KqSsht+WIMdG9ayh/MqnP4vqYqrZsxdI8gmfy4xJCjR0Ez
+	 Mbw1NRk2qaPeqsDWcI+2HKjcaU5rSx6cGOVXdhs04EnoKAvpaiOiagvjKJc40+bzzmv+g
+	 UQJhKVmRQexA98RPKBRMAbQmcVnEIimglhIoKU5iRbuddVDg3A5ASqAGh6yuiDddV6Y8F
+	 XyXESx6GxBlVn38Tdam2D/2kirTpMzq81igJkdh5bM8Kq22EMX8tzOCKdujFvMGSqFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bmp1A/257PTm3l7V5BhiSBXE8atWsfJpzvBxgAn/c4g=;
-	b=a9hSGACxUC1H0AzVW2V9eG/lAjCTr20MxM8G9IpaTmSABtEoFMSEhqMbg3XoqpHTwmLj
-	 NsYy0u8FNYSNyalUgWJUue79atHd/zxrjyFVnzL9u/zyd/qlQzQJAz7eQhJPYTBFDY1Ct
-	 wMM01tBQeTt09DkTG85odiu2kGUumwu+N2uHghAxAGzDuqQ5b3B3OWpBAS8OoW1WcXSMq
-	 pG1K16nGFWQI+RNL4YPXjy2Jlz2amGk29Lh0Pyc9oigYiYTHLfGA5nINIIL3DX69zVhK5
-	 qsK5iv3yXXoi5YOgLGoQvTKUZsDCUkw143RSA2gONQC3cYMsK16LG6GxTTctzJkgUOw==
+	bh=+BPYYzDbjoTFLOQXEiqfov4tGn3w19e6BwUwM8XtBgw=;
+	b=t+W4OwfmbQ+ErEKIXqj0+YZmYl7N39iTa0LoDg8DMBnfFL5V9kV1BDeHDl5rJkAIOYDG
+	 TPh9nAsJxIDcUEh7Msau5qFYTkYn4r0Ri/Y4veN3Rsgw/GgJQRkahVWWpSYxMOyNqZRHG
+	 hGFDB2pC4TPTFuiDGDObYNykXHUmKddCyW6VVWs+w/vtFjQFsQmWuKKFO1hBfsnvliii5
+	 pVsmWPzPMlSz6kIRIUE/TzTvVq8kA5gqLZ6uX8fahZbgTZxNiXjrrbKGXlDOCahsywwJW
+	 jaS3vVJitjndOWt1XYOLXd/WI46P15RazmPKcl+/wc3h8b3vcihNK4mITMwwfsnpO/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j0R1E89s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muxqIqYf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FCB606A336;
-	Thu, 26 Nov 2026 14:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CDE606A32A;
+	Thu, 26 Nov 2026 14:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j0R1E89s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A521F000E1;
-	Thu, 26 Nov 2026 14:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muxqIqYf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB851F00A03;
+	Thu, 26 Nov 2026 14:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704172;
-	bh=bmp1A/257PTm3l7V5BhiSBXE8atWsfJpzvBxgAn/c4g=;
+	s=korg; t=1795704175;
+	bh=+BPYYzDbjoTFLOQXEiqfov4tGn3w19e6BwUwM8XtBgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j0R1E89stajXUAt2HeohGbTeCRtLMF8y/+tVj9l7XILf37yInLFdK/HosGyIhajN8
-	 jMkSLxFu3nic5N73Ut6/TjThJz69pzXP8vTkel9R8wtNVACqGCJ6ky4eFKH2NbnKh7
-	 HNk+ISw8Jto0MawBKRdk1kHpdQL3c+k2eUWQ/pkc=
+	b=muxqIqYf3g6f/JEGZ3XjJHgobxg6rA+X2Lf6TLuujTjT1SUmfPBkt02sDzq+knEbv
+	 M6UK9Hws/hpJrW/tXCHvIW8GNk1jia1Cua8u1GzUfzgazD8LP/XzX0jcoCu10ng37D
+	 iMNKavKpCAYzt/c6hBsqzkwE0+fsrRk633HzHqPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/265] gpio: omap: Propagate runtime PM failures in probe and request
-Date: Thu, 26 Nov 2026 15:36:00 +0100
-Message-ID: <20261126143607.190831598@linuxfoundation.org>
+Subject: [PATCH 5.10 031/265] btrfs: scrub: fix lost wakeup and hang when cancelling a scrub that is finishing
+Date: Thu, 26 Nov 2026 15:36:01 +0100
+Message-ID: <20261126143607.268406949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -68,70 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 05be1a99d6d68b24cbe24a191e1af67c70193ac3 ]
+[ Upstream commit bda65e5115fe66ee0d8cf4ade11807f9fca4f0e1 ]
 
-pm_runtime_get_sync() can fail when the OMAP PM domain cannot
-resume a GPIO controller, but omap_gpio_probe() and
-omap_gpio_request() ignore its return value.
+When scrub finishes, it does a wakeup on the fs_info->scrub_pause_wait
+wait queue and then sets dev->scrub_sctx to NULL. On the other hand the
+scrub cancel code (btrfs_scrub_cancel_dev()) waits on that wait queue
+for dev->scrub_sctx to be NULL. So this means if btrfs_scrub_cancel_dev()
+is called right when scrub is finishing and sees the wakeup before the
+NULL is assigned to dev->scrub_sctx by btrfs_scrub_dev(), it hangs.
 
-Consequently, probe can register a GPIO controller despite a failed
-resume, while a GPIO request can report success and modify GPIO
-state even though runtime-PM acquisition failed.
+Fix this by doing the wakeup in btrfs_scrub_dev() after setting
+dev->scrub_sctx to NULL.
 
-Use pm_runtime_resume_and_get() in both paths and propagate
-resume errors. On probe failure, disable runtime PM and unprepare
-the debounce clock when applicable.
-
-Reproduced both failures on QEMU N800 by injecting -EIO from the
-OMAP PM-domain resume callback. The original driver continues
-probe and accepts the GPIO request - while the patched driver
-rejects both operations with -EIO. Normal GPIO controller
-registration continues to work without fault injection.
-
-Fixes: 77640aabd755 ("OMAP: GPIO: Implement GPIO as a platform device")
-Fixes: 55b93c32520d ("gpio/omap: use pm-runtime framework")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Link: https://patch.msgid.link/20261029103626.1527919-2-thnkslprpt@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: a2de733c78fa ("btrfs: scrub")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-omap.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/btrfs/scrub.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-omap.c b/drivers/gpio/gpio-omap.c
-index 19af2480acf72..049ce4c49c5cb 100644
---- a/drivers/gpio/gpio-omap.c
-+++ b/drivers/gpio/gpio-omap.c
-@@ -778,8 +778,11 @@ static int omap_gpio_request(struct gpio_chip *chip, unsigned offset)
- {
- 	struct gpio_bank *bank = gpiochip_get_data(chip);
- 	unsigned long flags;
-+	int ret;
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 6dce695b8aedd..6383102413d4f 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -3971,7 +3971,6 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
  
--	pm_runtime_get_sync(chip->parent);
-+	ret = pm_runtime_resume_and_get(chip->parent);
-+	if (ret < 0)
-+		return ret;
+ 	wait_event(sctx->list_wait, atomic_read(&sctx->bios_in_flight) == 0);
+ 	atomic_dec(&fs_info->scrubs_running);
+-	wake_up(&fs_info->scrub_pause_wait);
  
- 	raw_spin_lock_irqsave(&bank->lock, flags);
- 	omap_enable_gpio_module(bank, offset);
-@@ -1470,7 +1473,13 @@ static int omap_gpio_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, bank);
+ 	wait_event(sctx->list_wait, atomic_read(&sctx->workers_pending) == 0);
  
- 	pm_runtime_enable(dev);
--	pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(dev);
-+		if (bank->dbck_flag)
-+			clk_unprepare(bank->dbck);
-+		return ret;
-+	}
+@@ -3986,6 +3985,13 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	dev->scrub_ctx = NULL;
+ 	mutex_unlock(&fs_info->scrub_lock);
  
- 	if (bank->is_mpuio)
- 		omap_mpuio_init(bank);
++	/*
++	 * We have set dev->scrub_ctx to NULL, now do the wakeup as a concurrent
++	 * scrub cancel (btrfs_scrub_cancel_dev()) waits for dev->scrub_ctx to
++	 * be set to NULL.
++	 */
++	wake_up(&fs_info->scrub_pause_wait);
++
+ 	scrub_workers_put(fs_info);
+ 	scrub_put_ctx(sctx);
+ 
 -- 
 2.53.0
 
