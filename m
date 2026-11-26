@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705518;
-	b=ZsYw5xwBwVYIjGGGTGLHCDLt2l4U+JOuuWPNXGmF4V378x3mbB0l2aLpQNv3tatFwYts
-	 bAlJlTAVylShtDmTgH59YbRm7ZUZGJbt7dUa5/WTHl/M4MJhZCoUEGWp0sDgD31XTIdXr
-	 UlTqc/omFlXmWoeFgEDaLWfi7VhYnUmJET+qL0fqtTAJ/t0FVSb5pxGuHkbcMcxQT3LzQ
-	 dTkcK8gdAac2Ip0AwynpMDG4E2U6phP95MJQmgvOre7hKnU/9UYdXkkXq4uhxbI0foD1/
-	 Ekj1lz/9VQXXWLKTVwWXVdMUE8TghhdIQFZoTofMuJRUN5mOWYJMRi8ZfvtOQmdQtvQ==
+	t=1795705522;
+	b=dKGqGBKB5s+Mu5NX6jJQEk8xzThb7Whc/9K3ajJDDsMRoYxYsze2jemh8YWMdOHKgVrg
+	 75+lUewaFfNu14UeknwMOEhZ/N/L1TAwLf7ukt1/442QENzXBmKaAJ80HM8ZNggJvzNDG
+	 WUXGkfIeUg/WpwukifoHg92gpH83cuLqA3UZhL7p44PEVnGP+A29GASHgO8e3UbedZ54S
+	 CZfFCCpibB2ybf/g2IfTcz+UIWeLPlOiDqW7I3JrVx8gTFXlUVGckTJ54Ug1qGBKaXl/C
+	 ttwcuKeNlCx1p2/Qtsfmlwn5wqkwejYuj6jApPbIIEqZSv5eSt4xAKYUTXlUKCl5VCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5vzmVsxZ0p00PWcgiRFsmD4IfLMXh/NhpNTY+nOc9S4=;
-	b=tYz/5QWVE5ltAgSTjEiuXlze1owrCfWw55lEsKB1OzC/BDVwhr/NuGtFk6h/cMLnV9hg
-	 ulGfvEtkj7EFveEBoQ4KQEBz42qnNQsBVJzPJ04dAfIWU3w4tzKpSDuCZd6N1wCyMjjQl
-	 boP3+uI2ueCUcM0A0S2cP4xKKy9vyrdVhwtsigy/wZxe4t8lj4wjpB1VqqLSnwDVV5vEB
-	 cSvAiR6e4fsssJoJUy1qEWicrIVJ8ofmbpVRSaeg48qxA/z2Jkz/Ex49Rp0c+4JAD4ANQ
-	 p05icXtjkEpxCGttzIFDSwD1VO48KuEqoGOlh3og9O+VGCM1+qQ5NvTe1qS8QZySIlw==
+	bh=QcPnue0gdK2Lp54/x18I/9v5VjcWb4/0kt5VH4fCs1A=;
+	b=LbOMvpl2gnxZ/Hv0IWyPLjBY9KzA5TdxMMndF825mQL/K5HTye8jP1Ewcz3LGbNV/69Z
+	 dPIZq3OWHQTVDdnoxWcgU6jNJUHEsHhy+2pkSEJ60cccsTnnGiP/tGyv3TogLAe8h2nc6
+	 82gPrPLEjM40G2DgQ4rShnkgNSeTsmRStvKV+8xFPzLzh/wZbva37uBYy9o6lLtmm4MIO
+	 mkikKM2WnL6LPIAwG3DpB4vMTahPIAfjvt07D0tifbcgsPZAbYEsxtLbCXWWgyo7uJiTO
+	 UsogRK965V1+0xX2kM2m/BaHuQemdfoWA4LigH+DIiUDQyahuj3Khnb+JWu8/k16/DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zY+hPTSK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdxC3k7t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4818F606A321;
-	Thu, 26 Nov 2026 15:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52557606A332;
+	Thu, 26 Nov 2026 15:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zY+hPTSK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD941F000C4;
-	Thu, 26 Nov 2026 15:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdxC3k7t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9D71F000C0;
+	Thu, 26 Nov 2026 15:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705518;
-	bh=5vzmVsxZ0p00PWcgiRFsmD4IfLMXh/NhpNTY+nOc9S4=;
+	s=korg; t=1795705521;
+	bh=QcPnue0gdK2Lp54/x18I/9v5VjcWb4/0kt5VH4fCs1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zY+hPTSKpF2LHdsAiCK/l0nSrCTTl95ExYYkszBVHMc1SnqCzLJdzC8u22TWWm9Fg
-	 IRmHNe8c+DJfxyJdS0rSalQOfwx/mhgVqbOxf/CjTxFmJIfxulehFOfMZsxFboPC2J
-	 LRIBUuL7p8YvNH99ZlR4WFiIqv2+H/V6PobNThok=
+	b=BdxC3k7t7xRBsdyJVD9x8HwkRh9agjKeioH9vX5AEsOWeZuygvI3cdst5yc0q1hVG
+	 /Lmik0jwvPY1zbUBF2iJIZvG+pfW+9z04PatLVh207RCP5usTSaHWYWoIuqL5nHPgJ
+	 y+H1s6YoD4jSge1qyrD/4zl/6wGvhda0WdyXtB8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Zhang <zhiqizhangg@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.15 170/319] bootconfig: Allow keys with the maximum supported depth
-Date: Thu, 26 Nov 2026 15:38:58 +0100
-Message-ID: <20261126144010.584747381@linuxfoundation.org>
+	Rupesh Majhi <zoone.rupert@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 219/319] hwmon: (aht10) Fix update_interval overflow on 64-bit
+Date: Thu, 26 Nov 2026 15:39:47 +0100
+Message-ID: <20261126144011.689796706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -67,52 +67,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiqi Zhang <zhiqizhangg@gmail.com>
+From: Rupesh Majhi <zoone.rupert@gmail.com>
 
-commit cab697164b47eecfa2f146024f5d661f99a1a1e7 upstream.
+commit b5c5b67e02406fb48acf57cf2c30a570230fd6aa upstream.
 
-xbc_verify_tree() accepts keys with XBC_DEPTH_MAX (16) components,
-but xbc_node_compose_key_after() returns -ERANGE immediately after
-storing the sixteenth component. It rejects the key before discovering
-that there are no more ancestors to collect.
+On 64-bit, update_interval writes are clamped to LONG_MAX ms, but
+ms_to_ktime() overflows above 9223372036854 ms and the interval wraps.
+LONG_MAX becomes -1 ms, so every read starts a new measurement and
+update_interval reads back -1.
 
-For example, a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p = value can be attached
-to an initrd successfully. However, bootconfig -l stops listing and
-prints "Failed to compose key -34". In the kernel, the same error
-propagates through copy_xbc_key_value_list() during its length probe,
-so proc_boot_config_init() returns before creating /proc/bootconfig.
+Clamp to INT_MAX like sht4x, so the limit is the same on all platforms.
 
-Check the array capacity before storing the next component. This lets
-exactly XBC_DEPTH_MAX components be composed while retaining the check
-before any out-of-bounds store.
-
-I found this issue while reviewing bootconfig's depth handling and used
-OpenAI Codex to verify the failure and develop the fix. I reviewed the
-change and wrote and ran the regression tests.
-
-Link: https://lore.kernel.org/all/20261104073742.21202-2-zhiqizhangg@gmail.com/
-
-Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+Fixes: 8c78f0dee437 ("hwmon: Add AHT10 Temperature and Humidity Sensor Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhiqi Zhang <zhiqizhangg@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
+Link: https://patch.msgid.link/20261108172651.220121-1-zoone.rupert@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
+ drivers/hwmon/aht10.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -236,9 +236,9 @@ int __init xbc_node_compose_key_after(st
- 		node = xbc_node_get_parent(node);
+--- a/drivers/hwmon/aht10.c
++++ b/drivers/hwmon/aht10.c
+@@ -182,7 +182,7 @@ static int aht10_read_values(struct aht1
+ static ssize_t aht10_interval_write(struct aht10_data *data,
+ 				    long val)
+ {
+-	data->min_poll_interval = ms_to_ktime(clamp_val(val, 2000, LONG_MAX));
++	data->min_poll_interval = ms_to_ktime(clamp_val(val, 2000, INT_MAX));
+ 	return 0;
+ }
  
- 	while (node && node != root) {
--		keys[depth++] = xbc_node_index(node);
- 		if (depth == XBC_DEPTH_MAX)
- 			return -ERANGE;
-+		keys[depth++] = xbc_node_index(node);
- 		node = xbc_node_get_parent(node);
- 	}
- 	if (!node && root)
 
 
