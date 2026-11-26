@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795704175;
-	b=rkR6JXmmPTHP+hFXY23fAT5Dd8suc90ssYiIOLiox2zKcbpezmDlu9KQWa7xl404CwwW
-	 +d0F8CFRxN+h1XhY21e3oW8KqSsht+WIMdG9ayh/MqnP4vqYqrZsxdI8gmfy4xJCjR0Ez
-	 Mbw1NRk2qaPeqsDWcI+2HKjcaU5rSx6cGOVXdhs04EnoKAvpaiOiagvjKJc40+bzzmv+g
-	 UQJhKVmRQexA98RPKBRMAbQmcVnEIimglhIoKU5iRbuddVDg3A5ASqAGh6yuiDddV6Y8F
-	 XyXESx6GxBlVn38Tdam2D/2kirTpMzq81igJkdh5bM8Kq22EMX8tzOCKdujFvMGSqFA==
+	t=1795704178;
+	b=BkVn28dzQHW67Tl3osqBTNRkXw44bbGzOYKijivf5nLao6I9XN/7+itEmX8Ym/Ha7t+P
+	 fPyBL8LbJ6XKg/Zv7mhMGkq+O/v7Tf+GrdJt60t+/rpd9O6pR9xX8Bl2FhJVOm81Lbwir
+	 gMGxXKDsZ12z2G+QhLPbwqminI7Mu0U1w9v6+8YoDe3Dd+mkt8vrQW1S4uxbAqj8yrGAv
+	 TDhRLyApR+xkGLEUMizcoMG1WAmm4z2kzhB9+KDE7LfMx6ypr6YQv1acEqSFH84FfaXgq
+	 UNTpu1oC8JnaBijHtOnaLxhSXc01rXw/I5cTNwLehR+brCA+3q8Os5khmZxzdsXRsiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795704175;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795704178;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+BPYYzDbjoTFLOQXEiqfov4tGn3w19e6BwUwM8XtBgw=;
-	b=t+W4OwfmbQ+ErEKIXqj0+YZmYl7N39iTa0LoDg8DMBnfFL5V9kV1BDeHDl5rJkAIOYDG
-	 TPh9nAsJxIDcUEh7Msau5qFYTkYn4r0Ri/Y4veN3Rsgw/GgJQRkahVWWpSYxMOyNqZRHG
-	 hGFDB2pC4TPTFuiDGDObYNykXHUmKddCyW6VVWs+w/vtFjQFsQmWuKKFO1hBfsnvliii5
-	 pVsmWPzPMlSz6kIRIUE/TzTvVq8kA5gqLZ6uX8fahZbgTZxNiXjrrbKGXlDOCahsywwJW
-	 jaS3vVJitjndOWt1XYOLXd/WI46P15RazmPKcl+/wc3h8b3vcihNK4mITMwwfsnpO/Q==
+	bh=smmSS3a5jQyUfvMvFZsUrdfUGHB4gJJda9opn4avG7A=;
+	b=j7b3zmUN9DUkbZo9yLX/8Sspeos5xoIt4Qlli4tW/DyuAov/TH+CIE+i2HxKgloO2Wn9
+	 IFfhZ+uryGkKdYh3ujEauPIxDrX9tn8wO1tpD4Mrhh8yskgrQAaoo+UykNag1lPPt1eg2
+	 mpsjzupbEbuXU1YvFgLDhzJ5TG/wuIBGE/NwOQ0wt5pnnTsfXGq+qdhNUMuHxJp6q16UC
+	 HQNzOaBvsdZqkc8VDwui/bwd+LywiAdWUCYw57J6faQDWLIB7fqDxRel2bhXfbaTxc3gR
+	 neZH2x+VbpUgZWvRnlXR89PdTQrNitzPCwkixd3vJofK06qOnpZmJIserAs6KW/ZpHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muxqIqYf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvoEKnu7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CDE606A32A;
-	Thu, 26 Nov 2026 14:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450A5606A321;
+	Thu, 26 Nov 2026 14:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muxqIqYf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB851F00A03;
-	Thu, 26 Nov 2026 14:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jvoEKnu7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6D61F000D2;
+	Thu, 26 Nov 2026 14:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795704175;
-	bh=+BPYYzDbjoTFLOQXEiqfov4tGn3w19e6BwUwM8XtBgw=;
+	s=korg; t=1795704178;
+	bh=smmSS3a5jQyUfvMvFZsUrdfUGHB4gJJda9opn4avG7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=muxqIqYf3g6f/JEGZ3XjJHgobxg6rA+X2Lf6TLuujTjT1SUmfPBkt02sDzq+knEbv
-	 M6UK9Hws/hpJrW/tXCHvIW8GNk1jia1Cua8u1GzUfzgazD8LP/XzX0jcoCu10ng37D
-	 iMNKavKpCAYzt/c6hBsqzkwE0+fsrRk633HzHqPU=
+	b=jvoEKnu7nUQygI3yjY9AnFgYcrMaZeaIMzzQSu20XYMzLUj24B5lObldl2u3CVsti
+	 u6yaYUnkYtgEKaFK71lm+FrtEG0AZuuR0ENTHN+dA719s/C24KyKcScKSS5RJKffiz
+	 Fy0mFSawjhcUqIPqDzWRO3c+Jg5543h4h41xkSdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 031/265] btrfs: scrub: fix lost wakeup and hang when cancelling a scrub that is finishing
-Date: Thu, 26 Nov 2026 15:36:01 +0100
-Message-ID: <20261126143607.268406949@linuxfoundation.org>
+Subject: [PATCH 5.10 032/265] scsi: target: Validate REGISTER AND MOVE TransportID length
+Date: Thu, 26 Nov 2026 15:36:02 +0100
+Message-ID: <20261126143607.347381840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126143605.076581697@linuxfoundation.org>
 References: <20261126143605.076581697@linuxfoundation.org>
@@ -69,55 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit bda65e5115fe66ee0d8cf4ade11807f9fca4f0e1 ]
+[ Upstream commit 5d5913710c81eed6fa275b6a24773059d9dbfdfa ]
 
-When scrub finishes, it does a wakeup on the fs_info->scrub_pause_wait
-wait queue and then sets dev->scrub_sctx to NULL. On the other hand the
-scrub cancel code (btrfs_scrub_cancel_dev()) waits on that wait queue
-for dev->scrub_sctx to be NULL. So this means if btrfs_scrub_cancel_dev()
-is called right when scrub is finishing and sees the wakeup before the
-NULL is assigned to dev->scrub_sctx by btrfs_scrub_dev(), it hangs.
+REGISTER AND MOVE has a 24-byte parameter-list header followed by a
+TransportID.  A 24-byte parameter list with a zero TransportID length
+passes the existing tid_len + 24 check, then the handler reads buf[24] for
+the TransportID protocol identifier, one byte past the received parameter
+list.
 
-Fix this by doing the wakeup in btrfs_scrub_dev() after setting
-dev->scrub_sctx to NULL.
+A TransportID is at least 24 bytes.  Reject shorter TransportIDs and
+compare the declared length with the bytes following the header before
+reading buf[24].
 
-Fixes: a2de733c78fa ("btrfs: scrub")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+A malformed PR OUT sent through vhost-scsi triggered this read on a KASAN
+kernel.  The command is now rejected with INVALID PARAMETER LIST before
+buf[24] is accessed.
+
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Link: https://patch.msgid.link/20261021094334.198599-1-physicalmtea@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/target/target_core_pr.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 6dce695b8aedd..6383102413d4f 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -3971,7 +3971,6 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+diff --git a/drivers/target/target_core_pr.c b/drivers/target/target_core_pr.c
+index cf8d536fa3e71..ce492125aec39 100644
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -3216,10 +3216,11 @@ core_scsi3_emulate_pro_register_and_move(struct se_cmd *cmd, u64 res_key,
+ 	transport_kunmap_data_sg(cmd);
+ 	buf = NULL;
  
- 	wait_event(sctx->list_wait, atomic_read(&sctx->bios_in_flight) == 0);
- 	atomic_dec(&fs_info->scrubs_running);
--	wake_up(&fs_info->scrub_pause_wait);
- 
- 	wait_event(sctx->list_wait, atomic_read(&sctx->workers_pending) == 0);
- 
-@@ -3986,6 +3985,13 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
- 	dev->scrub_ctx = NULL;
- 	mutex_unlock(&fs_info->scrub_lock);
- 
-+	/*
-+	 * We have set dev->scrub_ctx to NULL, now do the wakeup as a concurrent
-+	 * scrub cancel (btrfs_scrub_cancel_dev()) waits for dev->scrub_ctx to
-+	 * be set to NULL.
-+	 */
-+	wake_up(&fs_info->scrub_pause_wait);
-+
- 	scrub_workers_put(fs_info);
- 	scrub_put_ctx(sctx);
- 
+-	if ((tid_len + 24) != cmd->data_length) {
+-		pr_err("SPC-3 PR: Illegal tid_len: %u + 24 byte header"
+-			" does not equal CDB data_length: %u\n", tid_len,
+-			cmd->data_length);
++	/* TransportID is at least 24 bytes. buf[24] is its first byte. */
++	if (tid_len < 24 ||
++	    tid_len != cmd->data_length - 24) {
++		pr_err("SPC-3 PR: Illegal tid_len: %u for data_length: %u\n",
++		       tid_len, cmd->data_length);
+ 		ret = TCM_INVALID_PARAMETER_LIST;
+ 		goto out_put_pr_reg;
+ 	}
 -- 
 2.53.0
 
