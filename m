@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795705317;
-	b=HwL5TxwNw4vFvtAX7xSnSpXz3VG+lPFW7prUvb1iixAXhbTG7OvORlxjdQ8tQgv+N1RG
-	 ynRdxNA2KmjbjJ6I7gbSNugebfdL0kYiPoy71bqqb3S7cjbDfl4aAI7KX2h2UH2PqYesc
-	 D8u7+92zUGWrrX8Tv08g4IimKnaKAMXUomQ1DsRiQ2dSHWdXjK+lGgrI6IS4BpEHIKyrp
-	 dngEI7yTru73FaZTJrIDpdfnlJKOdaUtL/SVzC+HRHvh1FA7i1UFriUicbTuV8+3xPs9r
-	 ZN4VKv9VZOkmhpmj7JtvXr3thsv+AX08VMh3IBfde/Ts2ABXCDxRWYd6/So/aoxEDuA==
+	t=1795705319;
+	b=5C7zGGs/b5PhyihMo/nfOPqG6GbOc6ogSjvhgiwWqZNpe4gmSkbMrBDkoaotFu51mQVA
+	 qlZX2RmKt4QbH9/Ugxlpbd8WbgnZQ7e4XY71oK6uOZ64VSIcTT/jCX/m/zzKxw+D87Tgs
+	 NzzSa/WKBB1sM0iI/gcKboIe5xtUtJ+Stssq5wCHbCJ15kwUaP8SUpJMZ+fGNfWupSO52
+	 5iSnXbqVff2mBPHL7SJD6tzud+SEFvefu6EN9TP5L+OEWI0oiAX21o3HZ9EEPAQHynjpv
+	 /Sd6uAqkh3e2EH2aARFXWhq2i67k/LL9bcc/b0m6XUJPoq84/m05nPQLCihIC9XIk6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795705317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795705319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NJ24W3SRtZuntqW+U3L3D76kyhH6potoCtyFWT6yzCo=;
-	b=wjB7mn3V+uNK4BqeYaviKaEd2LUACSt430CD+nK/76oCMqRVlA5bm8Xs/F/91dPtThbj
-	 rt47uDNg6RyGTy88L2YQEXtN2dAEFTntT4fdOXjLMUOuZNK4472cXABVz4ov+LWVxvJu8
-	 BuwB2maCfow8PePn53DLVxnsAkSprc621y7fOt4GZnIK2hSCZspJCGlGczKyVlqw7FL24
-	 N5K10fJvQGaexR/obVl5gFYtPPnDrXkl9ffd4Y09qG9Hz5wwzhJxCHsDjKX9ubbpoOOyi
-	 tqSpDJ/Wdkpy48gSuIWMmXFdTpIXdflBvwsQP4CdGOE2njWiRIj6jZDbFsro080X0jw==
+	bh=FBDCwiUkewKc0L6F1PjiPkB5GCYfqVCDZpv7bvbYVcc=;
+	b=Qw9y+tP+/ajHUfhEobyhDk4K3psPrfu9HMSWAuYMZ7VX111Nq4CbFKLWJTNxEpr4nxn5
+	 cCKi9eb/w6NIxU37TO4mV8iknYWs3lmOOBVtnr77nqyw/4iT4Q83Jwqp9qBa6NCRHmseG
+	 X4YALhTY6hr8dhKDIdhk2nYq8QgrrxLmlSXsJaokdSQ/PxbiRAxkJndsb9MAXlX37H4H3
+	 VOxPZ/f+0KpRbAGYq3KeRQkRACmi+ltiusx4auAvmplETq1fr1TqQew0424hKv8P5pMfw
+	 sMSMfvdeWepPtpkNgg2TPA0C+idE5v5Sd4yCBWG1IKNOZVgCDkUVhxJc4h5UoTURFGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGzE9sYZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLHL+zFQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD7F606A32A;
-	Thu, 26 Nov 2026 15:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D963D606A32C;
+	Thu, 26 Nov 2026 15:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGzE9sYZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234641F000C0;
-	Thu, 26 Nov 2026 15:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLHL+zFQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264541F000C6;
+	Thu, 26 Nov 2026 15:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795705316;
-	bh=NJ24W3SRtZuntqW+U3L3D76kyhH6potoCtyFWT6yzCo=;
+	s=korg; t=1795705319;
+	bh=FBDCwiUkewKc0L6F1PjiPkB5GCYfqVCDZpv7bvbYVcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IGzE9sYZmIHGzeATz9Pfq8hbGN78mfJkrSJMeJ2OwSqAUrt1TpVy32Oie7n99YK5N
-	 m1lQyMRYlf7zm0gz8HpUYh9nmSevjVKb9X/xnYt2I7QgcJzSAtnEWdPz2SxWTC54wB
-	 ASaqvTUd0SHt/zx3f2QYyNSpH2DFQdr4ej09aY5w=
+	b=cLHL+zFQ1mDF8NkmwIMjqf0rH9Norpq+KuwYaUZng1y+eU3K8HrtsL9Pi0DmKd1K2
+	 B5CB8qoKIu3aw3mPGuKrknY0aoHQs4PuBdKzaL70XVdA4NDcmHFMEmik/QbPV3nWwg
+	 6wOlHGPCYzrHHtFgS6eN7yJ5Q3zndkarJXRR/db8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 156/319] net: ena: Keep the RX buffer mapped if skb allocation fails
-Date: Thu, 26 Nov 2026 15:38:44 +0100
-Message-ID: <20261126144010.267303873@linuxfoundation.org>
+Subject: [PATCH 5.15 157/319] net: ena: avoid RX copybreak for multi-descriptor packets
+Date: Thu, 26 Nov 2026 15:38:45 +0100
+Message-ID: <20261126144010.289873287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261126144006.732901931@linuxfoundation.org>
 References: <20261126144006.732901931@linuxfoundation.org>
@@ -68,76 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 3e8e22a1007a6337ba2400b3ea87077947005c20 ]
+[ Upstream commit f3c790c34d228d46c4a05fe5d001d1bbea444e2b ]
 
-We are seeing the following issue in production on arm64 EC2 hosts
-(m8g.metal-24xl, 64K pages, SMMUv3 in strict mode, 6.18 based kernel).
-Right after a global OOM, the SMMU reports F_TRANSLATION write faults
-from the ENA device, followed by a burst of:
+ena_rx_skb() selects the copybreak path based on the first RX
+descriptor's length without checking the number of descriptors. When
+a packet spans multiple descriptors, this copies only the first
+buffer into the skb and fails to recycle the remaining request IDs,
+while RX cleanup advances by the full descriptor count.
 
-  WARNING: CPU: 48 PID: 1656834 at drivers/iommu/dma-iommu.c:1242 iommu_dma_unmap_phys+0xf4/0x108
-  Call trace:
-   iommu_dma_unmap_phys+0xf4/0x108 (P)
-   dma_unmap_phys+0x194/0x2a8
-   dma_unmap_page_attrs+0x1c/0x38
-   ena_io_poll+0x7bc/0x1790 [ena]
-   __napi_poll+0x54/0x220
-   net_rx_action+0x250/0x520
+Restrict copybreak to single-descriptor packets and apply the same
+restriction to the rx_copybreak_pkt statistic. Multi-descriptor
+packets then use the existing fragment-processing path.
 
-ena_rx_skb() unmaps the RX buffer, or takes an extra page reference to
-reuse it, before napi_build_skb() allocates the skb. If the allocation
-fails, it returns NULL with rx_info->page still set. ena_clean_rx_irq()
-then puts the req_id back on the free list, and ena_alloc_rx_buffer()
-treats the buffer as still mapped and posts its old DMA address to the
-device again.
+Discovered by comparing the in-tree ENA driver with Amazon's
+standalone ENA driver.
 
-With the IOMMU in strict mode, the device then writes to an unmapped
-IOVA, and the next completion of that buffer unmaps it a second time.
-If the IOVA was handed to a new mapping in between, the device can
-write into that buffer instead. On the reuse path, the extra page
-reference is never dropped.
+Compiled with W=1 under x86_64 defconfig.
 
-Allocate the skb before touching rx_info, so that a failed allocation
-leaves the buffer mapped and unchanged for the refill.
-
-Fixes: 9e5269a915a8 ("net: ena: use build_skb() in RX path")
-Fixes: f7d625adeb7b ("net: ena: Add dynamic recycling mechanism for rx buffers")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20261109-ena-rx-skb-alloc-fail-v1-1-aee2927cb51f@debian.org
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://patch.msgid.link/20261109141343.920187-2-thnkslprpt@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 5831f7bd81c23..999aa8abc3e9a 100644
+index 999aa8abc3e9a..be6c6e8c35b77 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
 +++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1525,6 +1525,10 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
+@@ -1502,7 +1502,7 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
+ 	page_offset = rx_info->page_offset;
+ 	buf_addr = page_address(rx_info->page) + page_offset;
  
- 	buf_len = SKB_DATA_ALIGN(len + buf_offset + tailroom);
+-	if (len <= rx_ring->rx_copybreak) {
++	if (len <= rx_ring->rx_copybreak && likely(descs == 1)) {
+ 		skb = ena_alloc_skb(rx_ring, NULL, len);
+ 		if (unlikely(!skb))
+ 			return NULL;
+@@ -1808,7 +1808,8 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
  
-+	skb = ena_alloc_skb(rx_ring, buf_addr, buf_len);
-+	if (unlikely(!skb))
-+		return NULL;
-+
- 	/* If XDP isn't loaded try to reuse part of the RX buffer */
- 	reuse_rx_buf_page = !is_xdp_loaded &&
- 			    ena_try_rx_buf_page_reuse(rx_info, buf_len, len, pkt_offset);
-@@ -1532,10 +1536,6 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
- 	if (!reuse_rx_buf_page)
- 		ena_unmap_rx_buff_attrs(rx_ring, rx_info, DMA_ATTR_SKIP_CPU_SYNC);
+ 		skb_record_rx_queue(skb, rx_ring->qid);
  
--	skb = ena_alloc_skb(rx_ring, buf_addr, buf_len);
--	if (unlikely(!skb))
--		return NULL;
--
- 	/* Populate skb's linear part */
- 	skb_reserve(skb, buf_offset);
- 	skb_put(skb, len);
+-		if (rx_ring->ena_bufs[0].len <= rx_ring->rx_copybreak)
++		if (rx_ring->ena_bufs[0].len <= rx_ring->rx_copybreak &&
++		    ena_rx_ctx.descs == 1)
+ 			rx_copybreak_pkt++;
+ 
+ 		total_len += skb->len;
 -- 
 2.53.0
 
