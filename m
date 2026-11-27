@@ -1,72 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=99.33.87.210
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795736307;
-	b=4fYww1oruQP+eTCCNxZSfuI8bTYQrS9KIpM9uWOFcHGp6ICLtcZzLiUkbs/6mDYOVJLx
-	 FBXPtLMTPmJz28vsysMDSnh4889ZmXZvzGdivvMVs21+qzXzTZuw3s0mfvZk/gzrVmS+j
-	 p+8txtg060E37bwaSmM2niW8LbPO+g8dDty9IHaxo9hmLEsEJujVstknELhiiAHPgD5Kt
-	 xIa8TR2B+br1DXP3e7YPfq8h6bLak2boGstHoOYRiLO1sI5gV7J+Te8R/R3N6l9WBH7Sm
-	 6vWRgD56hb+wQfKXNX2zC7XzTUdQwktiIWTYXseWhkIKd9pg9U2TyZa+82l8KKwXfAA==
+	t=1795737996;
+	b=voYPfX/0SOEOHlT6uzQ4xwSdA7FcRj8OD0SmzQoWBKr7HTQ/0/5YzWcGIjZuuATW7/J5
+	 /XtFr2wpSWVKHWoRn9HBCDxb97X8A99/YjCFgIbqVp+FahcxqfVzyFOVZJWTKZQTADOKU
+	 fjpRcQYxnZ+Q6BUO4wy14odWH17yMiqq3VMCYUjhuGQnroyS+k6BBzFaQhlyaDiqi2HBc
+	 DilFxugVBsA8xqhon5vgnwm8RP7Vm9hadzWYEnIIekoczmQx130Jrt7sRS4D2TP9kTVUg
+	 DBa9Amn4OGSU/3QxHcjD3AkWDE2KKavas0W2t86U+YnS0QYooZ+tjOXfs8xP5+AuSzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795736307;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=DKCzH87149x8vhPQlayMwamBagGLaAh0aCTM4gSp8FE=;
-	b=NLe+Aw2dDsV2CiytTOlAmYcN2J4asQ/BiqgYd68MgGVvLXu0Rva1666kigP5iVREkSlE
-	 rcvQsP9Lfb0dRGthvemEkgQslHo9MiWP3kN/4oDh3q19al59eOhyltvrIU7IhIO08yLhP
-	 8U9TCEZbkqADtFZd5FktOt5rzoOzfMdiKLD2LOYP4+9XeDysdIO5AJoOPg5DcNulMhq7H
-	 sEnLEfYDx0wDyO3mSwhRaLPVNi/Rq4R2xJC0ZU023W/xSj/NVel5JGTqljKgv6prjHhb2
-	 cOv3APFBxlBYSNqinjmpb7wsljc/YHTZnrI6LG/wvrDsQvhGj/KSNLyGTnoF/FJnNiw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795737996;
+	h=DMARC-Filter:Received:Date:From:X-X-Sender:To:cc:Subject:In-Reply-To:
+	 Message-ID:References:MIME-Version:Content-Type;
+	bh=g/UJ7v0tCb57TrFBa4mDGQ10gY4hp1sR90rabdB2JT4=;
+	b=kgFPVVBwqM9oKuezOgvQqYrEXIixnnD8P79zMZ3if6egRuXTwkz4bgzTODadj1lERjxd
+	 lQRsrtAWqn9nEWfvzcP1wXsVrheZzMheqyzyAOcKEh28uATmw5p8uUatw6jG3lxzFAHQx
+	 vyddCsiPtZpTTCuZ3Ldx41CVLnWSlDG4l4EiIuEmWb6iu8SWOE+Wysykq96Vvsen0uGW4
+	 sgtDC2UAP3eqevgikjvUfKeCAKdr0fOkenBwrVY3OVgtoOsqfdeOxk2X5GdJ8bDJACsF4
+	 x/NWJeX2CFhHH89xwqRKdChEvi4l9jYtnEosmOQa5ee3qtGYWVfWdUl6YnugeJm/xcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=i9xRMe0P;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=aaazen.com;
+	spf=pass smtp.mailfrom=aaazen.com;
+	arc=none smtp.remote-ip=99.33.87.210
+Received: from mail.aaazen.com (99-33-87-210.lightspeed.sntcca.sbcglobal.net [99.33.87.210])
+	(using TLSv1.3 with cipher TLS_CHACHA20_POLY1305_SHA256 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F00C606A31C;
-	Thu, 26 Nov 2026 23:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=i9xRMe0P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E181F00897;
-	Thu, 26 Nov 2026 23:38:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795736306;
-	bh=DKCzH87149x8vhPQlayMwamBagGLaAh0aCTM4gSp8FE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9xRMe0PrEi9w2rDOwN0jYAmbsGz7K8m6UMVyBfh7RK1Ipll/yq/aDBqyCNjcA+An
-	 X4u7fv/az/7mU9vJp7lpsKbF6pTkQiYkaz8atFUXXiLMV2sPg1Li8WL/DpdP1h0sv9
-	 MdrII6baOsutWPgOuZ2Or9Uc3SlokfWFpGOX3wHfXzq4MNxsECajcjlqcBTcf6n01K
-	 Ju7A2/tP0XnxCig3caYmctvhhq+YzsNdZkYbD8Sfw4DhHOioSXUhoY19CjA1WJWPWu
-	 uh6mGh1dBRlt0f/83+jclVb2k9PUUWfpH4Tsh70IEEHjcRDf4I7R0vTcMj9s2sihy8
-	 NflOCn7V8G6eg==
-From: SJ Park <sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C7D606A31E
+	for <patches@lists.linux.dev>; Fri, 27 Nov 2026 00:06:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77C7D606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aaazen.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aaazen.com
+Received: from localhost (localhost [127.0.0.1])
+	by thursday.test (OpenSMTPD) with ESMTP id 2572856b;
+	Thu, 26 Nov 2026 16:06:29 -0800 (PST)
+Date: Thu, 26 Nov 2026 16:06:29 -0800 (PST)
+From: Richard Narron <richard@aaazen.com>
+X-X-Sender: richard@thursday.test
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/990] 6.18.66-rc2 review
-Date: Thu, 26 Nov 2026 15:38:18 -0800
-Message-ID: <20261126233819.102839-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261126105725.767748294@linuxfoundation.org>
-References: 
+cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+    linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+    akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+    patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+    jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+    rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+    achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/815] 6.12.120-rc2 review
+In-Reply-To: <20261126105709.009001842@linuxfoundation.org>
+Message-ID: <207e54f7-cecf-1322-73d8-595c2b676148@aaazen.com>
+References: <20261126105709.009001842@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -76,23 +56,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
 
-On Thu, 26 Nov 2026 11:58:43 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Thu, 26 Nov 2026, Greg Kroah-Hartman wrote:
 
-> This is the start of the stable review cycle for the 6.18.66 release.
-> There are 990 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.120 release.
+> There are 815 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Sat, 28 Nov 2026 10:55:59 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.120-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
 
-This rc kernel passes DAMON functionality test [1] on my test machine.
+Tested on   AMD  amd64 12-core and     4-core systems
+and    on Intel x86-64  4-core and x86 1-core systems
 
-Tested-by: SJ Park <sj@kernel.org>
+Tested-by: Richard Narron <richard@aaazen.com>
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-
-
-Thanks,
-SJ
-
-[...]
