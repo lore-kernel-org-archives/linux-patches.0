@@ -1,89 +1,87 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.47
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795781615;
-	b=rxTVWqp9ReIY7GU3KhLqXIlp6ukyqWRnhCYT4N/91v2EQRjkQMgVQF4sdWb9clHKhoN8
-	 dLa9tXfylNZXA2eRvXYRa/CZh2b9rrfWGRLfE9ZLgm71OhYF3irM82GHku6L6iZN7Ci2C
-	 7B4voya8rH/BJpnULQ34lowDgnB3ZCV48huaDaf1P5P5qElWJercIZc97Rxif9widQFLy
-	 ONd+MjwhF+RQQu1LDcwqmqbxbKyN7Rpe7IrRnn2nKbW0NGQjkaZXt3tuiasl3DgFIzgZq
-	 jP8Qwj9u2gnUPWsnxozn+UvW5WM4z4XWX+BWh4tITE50u5kzuHlljsi9fUfrxZDM/Fg==
+	t=1795784080;
+	b=Cm6YNAi7NyVm2Ac4QDcOxluujYlTanKcT+J+IQfCZ14s7cwTkBawL6y1ciMHfhwYvmlQ
+	 kYIqYfHNorPk2vOCOBHbEZVelYGRecSOr1DwLJ6iccMdti7ozMSWxxUhm6H7f+pH8KO5O
+	 Cn2tnJ3R5QWnHBF9UZ2zrbHuH+lf6aV5EaLeLencUM48WNHOnWnyzeyXcqBQM9CTtc2Ln
+	 HtpoxTYWLH+SAgOUmkVXm8JU2IOTquJAekcH8dnji6Ji5vx8ZftGF3Zs2f4VBYJuE1wA4
+	 YieMptXzOrJ/MCn6VcSnyv5RbZ0NdH1rUcXsx5I6Awg+mjUT+O3hs8w/meiv70t9IKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795781615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795784080;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=mjC6FgNIVsXbCg4Aumv/+ieJ0D89Y+p0kgQ3j3ncaCE=;
-	b=y2CArsCW2BoQPIOr5xUnFFrosig81b4I9MRGRIx7IOt2LnJL0Bh9JsTUBMff1LMwYnFo
-	 b+LM2wosTLoJpqN7HgJFhaE/0yTKuwsekpfwDbZ/filNTW23tqXvYAmDLtXAK887SmBMQ
-	 Puz7u9PLIhtOlzD77/S8BPnxqAz3ygq2rRwQ9p/XhUSGrTElzbNWtlIPF41p8jLPfgenN
-	 rj2Np4li4p1K+hsbzr3hwfbGCf+pxFtsnlHIUhWPuHnLKBTUSkrsfFhN2z5F9EzZlMCce
-	 vlExR8SVkYyKMlrUy2dENP/csfWZF12CIrP++h823ZPAHODOE2MQLjHbiEWV8QVpGKA==
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:From:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=TQkVH1jjDAMiibOHHeNRFPOznvXK/0Z03BJFc8UEQVY=;
+	b=O4F4mZ5+XgrKNekzvwQYvi+fpMG2iscf6F63VNhuy8pWoBLc0oDsm1y9MssLiJ/sVIXB
+	 wWt8udYrhRwI2+Szhcmub1N/tsoU6VifoCtzEb9aMPa0cH/8HX0dNpR+rwqhkeNsaQbwk
+	 oF+ewrOxmWgAX9zJeKGdGW6mcBj2xtxSE/50cJm1z7QR4VY+wENn8KW2XVY9nLX415VMM
+	 whMrU7TrjBs4fAertdZ9HtrEDLZ8YbCqn8/wEI/+ITAccnkS5aPEP9sZ02YGMwd0zTaZu
+	 L68GB+vow58GPHI7OWIduBnG63rgiOTuXqbNYIyNSQyrRDBEZIqlUlxrbbYiXdi6sgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z2Gw8CiB;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EEoOlfRA;
 	arc=none smtp.remote-ip=209.85.221.47
 Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC02A606A321
-	for <patches@lists.linux.dev>; Fri, 27 Nov 2026 12:13:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC02A606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B99F606A323
+	for <patches@lists.linux.dev>; Fri, 27 Nov 2026 12:54:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B99F606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z2Gw8CiB
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-498f5fa5103so4775184f8f.2
-        for <patches@lists.linux.dev>; Fri, 27 Nov 2026 04:13:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EEoOlfRA
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-4a68190a2a7so6844187f8f.1
+        for <patches@lists.linux.dev>; Fri, 27 Nov 2026 04:54:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795781613; x=1796386413; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mjC6FgNIVsXbCg4Aumv/+ieJ0D89Y+p0kgQ3j3ncaCE=;
-        b=z2Gw8CiBbwA77KWrUi7Uw5wac4lxbfp/UCZynYw63WONW4W2s5D/6aXMyizpC7OKVN
-         R+DKIft4qt+EDwMsKd7e6c61Gr2QByZefP+YtjpbNhJEiI1m2eFhB578l/lTXNYjHk9O
-         db7Kr9r3HITDzu9P4Zu+lVgskvammkQGTLGMwsKsLmCnAYPSeUfvhfpVN/lf66kLpI4m
-         QztLVGa71LjPf9dACIPf6DhC3xSOczY/aMApiJb0asnZw5jSBAPy7GVozsIpBfqxdOxL
-         UY3XFPDPA8xbtoF5Locianbs/eb2Thn/l1h3WZAV8qI2JiaQXCAKsyviZ/3/dBXWR3mW
-         6HTQ==
+        d=gmail.com; s=20260707; t=1795784078; x=1796388878; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=TQkVH1jjDAMiibOHHeNRFPOznvXK/0Z03BJFc8UEQVY=;
+        b=EEoOlfRAYPLcCyMW9v2OxwIu4UzVgug5jSNRsWIAlrUlNdTjc2Gn2ix9HNc6yV/xXJ
+         4S+R2ARzSf/jpz62zyHC+Y3lstIuylRw7r/mFfpSFTAOIxXJVHA3/WgQXlFUw0rsLA4F
+         8S/q3dJydnIshv+826ch2LKVtZUyLfVfbHVKIrAvjTJv8LzGXh1bPy76mamzx9Cvf9oS
+         b1ocNoC93w1fZf0JUaPCLaL9hGIfLhHNRZH04uYu51dNMW4BSmq2swO3oPO9QqCwJKX9
+         3T+m0w9MpWBuusC2sOFPuhXbjIoj4fS2OtIAMdlsfSCkOL1Qrq4VLZ4DuyfFmqlAxqWK
+         J4Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795781613; x=1796386413;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1795784078; x=1796388878;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mjC6FgNIVsXbCg4Aumv/+ieJ0D89Y+p0kgQ3j3ncaCE=;
-        b=OLY2OnvX5S9QZDXLO2KSYYqbPCSQ0HXC8o2GXE+j5I/Wwc91uyVXbnZSyhUAOfytAk
-         IOuR+Wd5IAO+ia5+wKalGe4u1nV27gBCWo36v7ZpH/4j/2+SW4+nShUWn6hK7+MparVZ
-         sDA6t87IwVDrN7IKQCrVE/EHIXKBuXxGgoaw8BopjPJF8b+dR3xshe5/9gOk8ChbXHwm
-         4Yqz3UuRoXHB/ErgH55Cr9qCx34Z2yXmyaj0BOy9Oe4pcjrInxWTMDxPFE7KDdWmB39L
-         /TcrI3v0EZJ/+46dH1PJ3a6LIC//c4gsVUzSOtzGT6sxjM08YsHWOximarmCjO6taS75
-         UXNw==
-X-Forwarded-Encrypted: i=1; AL+hErE4+irLcq68abL0UnQ/GODgZVZ5WsmR4XBYuAYfxCDbk/vu6ph9o4L2sDCUOtCY8dIoEthx08Vz@lists.linux.dev
-X-Gm-Message-State: APuU4Z+87l7oSYrGrdmc/HiLS7P+q9ZvZFt1rdo7FymdBbCbj3I54QKI
-	xyZTPD8eBvdh4G+uazv7ua08L36XYdat1F5h0rVm+EYujK12GGZstki5
-X-Gm-Gg: AZFdTZdEoQE1GWcLGwur0oUjghUGgLdidawDYyl4wmUQ/VuzOHWuytOg/fWFhkqTMHP
-	aMQBce2QMkxCsppCTHwIFdbnlj0XLv0Nz5v+E16YMQ9QoV/a/ZRitF/yF+zDtUANFKYFneq9sCT
-	0CyEo2EL/CKjJtmNIHp3Xp0rQ/qHTtVGEP+WYOnbK0ZNT7bHZOSLod12UI4IcnEjK+B96aBXvYx
-	YFgsgpg7nacCGMKdfbNGb5FsYBG/BEcYWMtoZZU3Dw9X5QoI3r8SU59y72hUKkK5CVW134ZUgVN
-	nTU//RDBmhsX/dVmfZj5R36zjqAZ1YxnkamS38VuLr9Gh6wGi2BRfsvipZEkXqaN0oyY1TeZp6F
-	XedtKn5v+DcqjLJ1lgO3BcZnhtx5MMU7edTiF6GbKTdBmZx6D7BB2LUuvJJnmV5j/kmddOQpo9d
-	uiiVrOiOu5ZiPm66F39q2ZJeOkrWR0rHeJBJj1IPXrs1Uuzr5tTT/YGXjPUIgOM7EPT2eAX89TB
-	AL+C2Wb//Ys9Iy9Yv0+tHUudweH2tkceMTxFgt7xQzHuwZaIUvBtAp5PWVA4k/Anzd/xWROvYd0
-	CHCI43Z/vpNXqWE+eYouGEDqtME0IaejirXnW5XauFgP9X0tifpSg5l3qQeXhIBi9FAZXLGanel
-	5nX8VFaNVF4JDrTvrARP/fwDJVNKL
-X-Received: by 2002:a5d:5c89:0:b0:4b8:6c3e:95e9 with SMTP id ffacd0b85a97d-4b86c3e97a1mr21394747f8f.28.1795781612726;
-        Fri, 27 Nov 2026 04:13:32 -0800 (PST)
+        bh=TQkVH1jjDAMiibOHHeNRFPOznvXK/0Z03BJFc8UEQVY=;
+        b=B//GyFfrdMjRc/sgCFGwX2rbiwkcUaSF2OhIVyTdnUIP/I8Cb80A/Lf1lomCTsedmS
+         0tW1od3ymj3/GlUOtKwAJn3PfGRSqmfs0eestDpEMu2pgiVJFGZvQi1j3jtT0/yFvJQE
+         Et4VXxVfoKcy8W0r4keJBTm7GHXKPmc/rxYPL1LMQA4VUMvhHCx88plExyBQc2Snepp1
+         N83HJSSoTz3m4GyCCm+7m5jBw7qLDVNp78hvw/Xfyw3lAGgdJKVTkb5GBPKKKVrtmExi
+         e2pkIOfew9zZGj0MY1u0Tlbd/DzBavi9OLhJZm0PJ8Xxgxv1xRAhNOMGY9C0cIAlxd5A
+         MX+w==
+X-Forwarded-Encrypted: i=1; AL+hErF12tlNCrXcLVFx/kMb+0dLRBXUc1Bu9ZIOXHcaOX0cHho+WHLIhmszG9mPLzd/66um7HZt2XDb@lists.linux.dev
+X-Gm-Message-State: APuU4Z/lvG7vve3Wa9diSTkHNlWhl20gLhLrWX3EQCtxVKxfSNGhfyw6
+	X4aq1d9fdOaEafOk9QopgAZBXTZSXVdmk4/bHVePjz1xFZGqCWZH3TN4
+X-Gm-Gg: AZFdTZeghrHOobm3D7GL/9eU5jUCXxY5j7zqUeil/Gry0lmjHqkxVEfRbvq+IhHiMWT
+	8dmPcoGuNsUMfCmOR0bfdwCugrC60rzbZJCr+DuIk16PaBz2ugdC7BIxhjyFbOswL0Lm15Cjj9X
+	FoUrtrNuBbtCatXTZ4RaFULN2ykmEMYwTX7CWGwICrAQN/lYX8fJ1t7EPy86sPDsrzapgIz9Omq
+	GXR9g8FX4A09AaqTq/nc42FmTuvCgE9KGdBfgrOIvm+D88W2UpJ/NSIVVxgFp6v/F91BdEE+row
+	QQiZ+uchnM87DZt/q/Ej25jF9rNlYYKIL08TyJ9FKYU6rt+eHHk7vIXrcjTXV/rt/aXNNl6XXnV
+	v3JFDJXFQztsx7cl6DO5+8w03srJwLQ/xbhcPakXLcPYaVGidqzpCN8X14O6HVo2Xg9HhAGyriC
+	bS9/HzMqKmABHF7ggnAeDKQZYwt+ZnaNnscZ5husYpp7T2vi2DGFPgSUE+OPrpl0ggjwF6HKCjb
+	V0+NYnwdDYAYeT3sxCXwzi74fKYVy2dvYYPUEgEM1nzS1/miJcmbTi2YCu4vgNIMpSM8FnzbfOs
+	gho40t9bKJO8XwcIMyI9HznrPQLH2Z0/5SXAmyRgQrEPCAAs/Dj7UJcOT5KO5eradLpO4WXDV2z
+	nZHzlUQ0=
+X-Received: by 2002:a05:600c:5246:b0:4a7:9006:b176 with SMTP id 5b1f17b1804b1-4bb887fe892mr527018685e9.7.1795784078292;
+        Fri, 27 Nov 2026 04:54:38 -0800 (PST)
 Received: from [192.168.68.89] (host-87-4-46-207.retail.telecomitalia.it. [87.4.46.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6a680355sm38572390f8f.27.2026.11.27.04.13.31
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab69bf630esm47880489f8f.16.2026.11.27.04.54.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Nov 2026 04:13:32 -0800 (PST)
-Message-ID: <9e86f015-0f0e-4897-80b2-9662b96a98f8@gmail.com>
-Date: Fri, 27 Nov 2026 13:13:31 +0100
+        Fri, 27 Nov 2026 04:54:37 -0800 (PST)
+Message-ID: <2b6444b1-c81f-4ea6-8981-9bd4bdcbab2c@gmail.com>
+Date: Fri, 27 Nov 2026 13:54:36 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -95,6 +93,7 @@ Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.18 000/990] 6.18.66-rc1 review
+From: Emanuele Ghidoli <ghidoliemanuele@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Francesco Dolcini <francesco@dolcini.it>
 Cc: sungbyeongchan <tjdqudcks0424@naver.com>,
@@ -110,79 +109,52 @@ Cc: sungbyeongchan <tjdqudcks0424@naver.com>,
 References: <20261125143822.072087159@linuxfoundation.org>
  <20261126173920.GA180459@francesco-nb> <20261126174236.GA183126@francesco-nb>
  <2026112702-donator-rebuff-16b2@gregkh>
+ <9e86f015-0f0e-4897-80b2-9662b96a98f8@gmail.com>
 Content-Language: en-US
-From: Emanuele Ghidoli <ghidoliemanuele@gmail.com>
-In-Reply-To: <2026112702-donator-rebuff-16b2@gregkh>
+In-Reply-To: <9e86f015-0f0e-4897-80b2-9662b96a98f8@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 11/27/26 10:02, Greg Kroah-Hartman wrote:
-> On Thu, Nov 26, 2026 at 06:42:36PM +0100, Francesco Dolcini wrote:
->> On Thu, Nov 26, 2026 at 06:39:33PM +0100, Francesco Dolcini wrote:
->>> +Nishanth, Vignesh, Michael and sungbyeongchan
->>>
->>> Hello Greg,
->>>
->>> On Wed, Nov 25, 2026 at 03:22:47PM +0100, Greg Kroah-Hartman wrote:
->>>> This is the start of the stable review cycle for the 6.18.66 release.
->>>> There are 990 patches in this series, all will be posted as a response
->>>> to this one.  If anyone has any issues with these being applied, please
->>>> let me know.
->>>
->>> Failure on various TI K3 boards (AM62, AM62P and AM69), during our CI/CD tests
->>>
->>> [  477.440292] rtc-ds1307 0-0032: write error -110
->>> [  478.374406] wm8904 1-001a: ASoC error (-110): at snd_soc_component_update_bits() on wm8904.1-001a for register: [0x00000043]
->>> [  478.464258] rtc-ds1307 0-0032: read error -110
->>> [  479.520264] rtc-ds1307 0-0032: write error -110
->>> [  480.342404] wm8904 1-001a: ASoC error (-110): at snd_soc_component_update_bits() on wm8904.1-001a for register: [0x0000005a]
->>> [  480.576282] rtc-ds1307 0-0032: read error -110
->>> [  481.600274] rtc-ds1307 0-0032: write error -110
->>> [  482.310409] wm8904 1-001a: ASoC error (-110): at snd_soc_component_update_bits() on wm8904.1-001a for register: [0x0000000e]
->>> [  482.624288] rtc-ds1307 0-0032: read error -110
->>> [  483.680291] rtc-ds1307 0-0032: write error -110
->>> [  484.278402] wm8904 1-001a: ASoC error (-110): at soc_component_read_no_lock() on wm8904.1-001a for register: [0x0000004a]
->>> [  484.320383] INFO: task kworker/1:5:66 blocked for more than 362 seconds.
->>> [  484.330368]       Not tainted 6.18.66-rc2-8.1-devel #1
->>> [  484.338741] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
->>> [  484.350050] INFO: task weston-simple-e:783 blocked for more than 241 seconds.
->>> [  484.360452]       Not tainted 6.18.66-rc2-8.1-devel #1
->>>
->>> According to claude the issue is
->>>
->>> commit e498eb93f961 ("virtio_ring: use shadow flags when detaching split descriptors")
->>>
->>> and those commits should be dropped
->>>
->>>   e498eb93f961 ("virtio_ring: use shadow flags when detaching split descriptors") [22944d517ff8]
->>>   9dc6b944f16c ("virtio_ring: factor out split indirect detaching logic") [44b6e54e4a0a]
->>>   4b7bf8d55032 ("virtio_ring: code cleanup in detach_buf_split") [032159f85f3f]
->>>
->>> I am not able to do any test now or tomorrow, unfortunately. And the
->>> above analysis is just claude. Might be correct, might be wrong.
->>
->> 2 more cents on this, it seems that the issue is the communication with
->> the device manager. 
+On 11/27/26 13:13, Emanuele Ghidoli wrote:
+> Hello Greg,
 > 
-> What do you mean by this?  What "device manager" and why does virtio
-> have anything to do with that?
+> Reverting e498eb93f961 ("virtio_ring: use shadow flags when detaching
+> split descriptors") on top of 6.18.66-rc2 fixes the issue. The tree at
+> e498eb93f961 itself works fine, so it seems to break only in combination
+> with a later patch in the queue. Still investigating.
 > 
-> confused,
+> The "Device Manager" is TI firmware on an R5F core that serves Linux's
+> TI-SCI power/clock requests. Linux talks to it via remoteproc/rpmsg,
+> which runs on virtio_ring. With rc2 the rpmsg channels to it are never
+> created, and I2C transfers start timing out.
 > 
-> greg k-h
+> Kind regards,
+> Emanuele
+
 Hello Greg,
 
-Reverting e498eb93f961 ("virtio_ring: use shadow flags when detaching
-split descriptors") on top of 6.18.66-rc2 fixes the issue. The tree at
-e498eb93f961 itself works fine, so it seems to break only in combination
-with a later patch in the queue. Still investigating.
+Correction to my previous mail: the "tree at e498eb93f961" I tested was
+mainline (v7.4-rc1+27), not the stable queue, sorry for the noise.
 
-The "Device Manager" is TI firmware on an R5F core that serves Linux's
-TI-SCI power/clock requests. Linux talks to it via remoteproc/rpmsg,
-which runs on virtio_ring. With rc2 the rpmsg channels to it are never
-created, and I2C transfers start timing out.
+On the stable queue:
+- 44b6e54e4a0a (patch 203): OK
+- 22944d517ff8 (patch 204, "virtio_ring: use shadow flags when detaching
+  split descriptors", upstream e498eb93f961): broken
+- 6.18.66-rc2 with 22944d517ff8 reverted: OK
+- 6.18.66-rc2 with this change: OK
+
+-       if (!indirect && vring_need_unmap_buffer(vq, &extra[prev]))
++       if (!indirect)
+                vq->split.desc_extra[prev & (vq->split.vring.num - 1)].flags &=
+                        ~VRING_DESC_F_NEXT;
+
+According to an AI-assisted analysis (Claude), not verified in depth by
+me, the patch relies on 03f05c4eeb7b ("virtio_ring: determine descriptor
+flags at one time", v7.0-rc1), which is not in 6.18.
+
+Please drop 22944d517ff8 from 6.18.
 
 Kind regards,
 Emanuele
