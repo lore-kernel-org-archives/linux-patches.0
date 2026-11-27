@@ -1,72 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.37
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.154.239.200
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795773054;
-	b=d7R7BSDmEBWkluQP8T6MnNVPcWjsnLxnKGP4UemJPK+BjErAfvZFA6b4HphkV/pO1vGI
-	 f7wnKrBzrhRYIdYzcbUFgUAdT+cVodUhpUz5jMY/IQ4m556x2FZL61p1j4rQEFpGt42bt
-	 FmZZ8RbE/jbVXRtL/LFB9o5iaFGtLFJTuEl1YFoFeIKkmeCplXUSdB1YzNhKEaz9iz99a
-	 FNSz1ofDqusncmK759lp4ijmdl+CZdbg99DG4ELqYBxJG4ieffcadJ+IRN3yl3Im9TGdp
-	 sttiLcvUUiG0FIlKn3l57nNA4MAmGhddQZRLLnmEVsxi1Bqq+FXkqkSYedYgDOgD7wQ==
+	t=1795779016;
+	b=Ey3kIE31xglH/zdA2hr//gBVwsL0TyG/7r6cJlZkbN3Jr7/cG4BipmUwv9qX7qEc1v8s
+	 fblusC7pF8FfmNH1gk37pYxHF2aVoCJapl/FTqst3e3TR2c1PLBEdJs/MpRyqG5TQWphi
+	 2fFCnfxrBKGsNNZfjgS0UJOzL5IX9GVbdEHyOPvRQEjWDy4xFc75FKD88sjinvomzjIPB
+	 i7qcUMMxF/kjMv7gDrTpwEu0kLq0/kLNmLokYRl2FBLnEpUUDspgUqopJu2bZa2xr4W/M
+	 1LBgpzT+HHUzHESDHniQILPeMK9YXFpnbdmceH5nd05SH9IZvw2WnehLWfX6+iI/EMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795773054;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=RSXrQLNW2s0/hlrSN4h5G8iLSM/6lAnsqJ3mo4i2tVg=;
-	b=e6ck128fCfIX8/Nh0+RB9dT4iKZv/a+fRDTP69TPmpJ7+0Uhgt35Mb91emHzhMYU+HLS
-	 tOBbYQ4RaAFbpBymsRwvshc4ntNlCQO7+aU+yBJfEfcRS9aXP1U6ty6EVFg6epnTHt0a3
-	 5iEbSVfPPqZedAbgJsTX5ReZK4BQK97BCo4wD3K73a86Yp3a1tFsaa27Vk4xRsRoNvWhX
-	 qjnPv2BUkYomgAhfSstNcdpi3LGRPuOvubuUJJSG6sasDygq6+62KXC6dvI2Fj749/NWf
-	 Dw0jBl8Jn/DF9x8xibAjnGuu65wJCPZPwjz9CMjofXS0lVYH5HT0TDxSdPPMamEgKTQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795779016;
+	h=DMARC-Filter:Received:Received:X-Yandex-Fwd:DKIM-Signature:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=gereHGF8JJoi5rZwMI0qXVJBdf0r6OrNt29PH2qqFg4=;
+	b=O8lzIwx0UiyFK5Y2yTVd7vzflxaZAwThdvNoeH670jDufRMxKYKDLnm/hZL1QuywTWWX
+	 yug0nuD5pw6QxURRjJT/o22U2HvFjx/vTNqcqapuc9g2+4iOa7u1yI7G8fwqKV7IXbnqt
+	 z1ObYMeBg3y+dh1oh2teI9ABObkOmldqg3aS//fCljU45siRLII/jD2VCLvE4KdoVlmSO
+	 VGlkYZZt40kif3ioUbvEKgSTA2ff++MQO8NndxZxjleEvebkgs1JIrd8yeQxbK7tBdgR7
+	 +ki31ROS8DoRXq1HFCqXEQF5VS7m0tIpV7sUKAX7zAxqBHCW1jdXJ5dKxnE20d3iCww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=w6rz.net;
-	spf=pass smtp.mailfrom=w6rz.net;
-	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=MUbuZDUt;
-	arc=none smtp.remote-ip=35.89.44.37
-Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=yandex-team.ru;
+	spf=pass smtp.mailfrom=yandex-team.ru;
+	dkim=pass header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b="0ijb7/A/";
+	arc=none smtp.remote-ip=178.154.239.200
+Received: from forwardcorp1d.mail.yandex.net (forwardcorp1d.mail.yandex.net [178.154.239.200])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29823606A337
-	for <patches@lists.linux.dev>; Fri, 27 Nov 2026 09:50:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29823606A337
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CACE606A324
+	for <patches@lists.linux.dev>; Fri, 27 Nov 2026 11:30:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6CACE606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex-team.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex-team.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=MUbuZDUt
-Received: from eig-obgw-6005b.ext.cloudfilter.net ([10.0.30.162])
-	by cmsmtp with ESMTPS
-	id WlE2xG0DnVK9UWsbVxWhbe; Fri, 27 Nov 2026 09:50:53 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id WsbUxFWyd0288WsbVxNa4Q; Fri, 27 Nov 2026 09:50:53 +0000
-X-Authority-Analysis: v=2.4 cv=a5Iw9VSF c=1 sm=1 tr=0 ts=6b09527d
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=5gI1kqHO1WKH8RX1p00A:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=RSXrQLNW2s0/hlrSN4h5G8iLSM/6lAnsqJ3mo4i2tVg=; b=MUbuZDUtOElybvGsxmuZe26h6o
-	XRj7TvY1zVGcoApIi+z82rOjq1NFfbBrn1OBZptLlN+Pdnjspkt5WDrbiYQaveNGJDxsjO3LVjrKH
-	9SbKQ0jbzwykbXn1EkJLtWoAIeWNnavMKrsRUA308l0E79UnXUQ0MacTrmq+uw2nRocGZrmKNZF+1
-	X9COdI1kqsAekFnaGxmiPqLlCbs2jYPt+BiwFMVXzzjj9toulW7zfYsE1EAbzqbGcD5EF5afXDK3H
-	7p5KEdTcVR58m5FWWOgda6K5lgogDDtiWVMHY0DvGgwe4ze2rAfdK5WDE87QwStiR+azTOnxtC6Kx
-	3QRQ9aJw==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:36792 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.100.1)
-	(envelope-from <re@w6rz.net>)
-	id 1xWsbU-00000000IlN-14B5;
-	Fri, 27 Nov 2026 02:50:52 -0700
-Message-ID: <dd3e38bd-78c8-4d03-b998-6c3bbdfc003d@w6rz.net>
-Date: Fri, 27 Nov 2026 01:50:50 -0800
+	dkim=pass (1024-bit key) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=0ijb7/A/
+Received: from mail-nwsmtp-smtp-corp-main-68 (mail-nwsmtp-smtp-corp-main-68.yp-c.yandex.net)
+	by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 599D980739;
+	Fri, 27 Nov 2026 14:30:05 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:31::1:1e]
+	by mail-nwsmtp-smtp-corp-main-68 with ESMTPSA id 3UhaXO9WRSw0-8IfutJsT;
+	Fri, 27 Nov 2026 14:30:04 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+	s=default; t=1795779004;
+	bh=gereHGF8JJoi5rZwMI0qXVJBdf0r6OrNt29PH2qqFg4=;
+	h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+	b=0ijb7/A/qzL8ed5dTeWBa1c7LWSb/qewsouh6/Hriauyj0Y/9ubg8Mi4080ORytrZ
+	 g1pIUKsOjTEUbjliib00vk72tSnQKmVYtYqw0doVluX10QXfGw4i/1y5nVxsExBbZ1
+	 hQ6vMo25/LserW6gOpfgRyh/JeLgk0yLK9dwTSyM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68; dkim=pass header.i=@yandex-team.ru
+Message-ID: <1e035d4c-3eb0-402c-afaf-ff0affb9a5e6@yandex-team.ru>
+Date: Fri, 27 Nov 2026 14:30:03 +0300
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -77,62 +61,254 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/318] 5.15.227-rc2 review
+Subject: Re: [PATCH 6.6 2333/3318] bpftool: Add support to display
+ uprobe_multi links
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261127052515.841545444@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Jiri Olsa <jolsa@kernel.org>,
+ Andrii Nakryiko <andrii@kernel.org>, Quentin Monnet <quentin@isovalent.com>,
+ Song Liu <song@kernel.org>, Sasha Levin <sashal@kernel.org>
+References: <20261118150313.527275416@linuxfoundation.org>
+ <20261118150431.639921252@linuxfoundation.org>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20261127052515.841545444@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1xWsbU-00000000IlN-14B5
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:36792
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 78
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfP2KMFJDmGh5Lu5Wuomfx9t/81mzmVdEBCGuy89CKLWtJjxaNbg7R+7FiJWNtkE5KcSp07o9r6BgzSSvGuPzfFbhE6a7r31mIZ10e6g7pXszAX75ynbF
- ITZYp5+arIyE5esB24TBkQ7p07Hs/W+H1ZYTjMDIiKm3guGBU4Hud8sRAoGeNGn9gqJdJ/Trm4EY0w==
+From: Maksim Davydov <davydov-max@yandex-team.ru>
+In-Reply-To: <20261118150431.639921252@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 11/26/26 21:25, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.227 release.
-> There are 318 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 29 Nov 2026 05:24:50 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.227-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi!
+It seems that necessary e56fdbfb06e2 ("bpf: Add link_info support for
+uprobe multi link") was omitted from v6.6.163 because a7795698f8b6
+("bpftool: Add support to display uprobe_multi links") depends on it. I
+encountered a build error while compiling bpftool.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+The build error:
+link.c:307:11: error: ‘struct bpf_link_info’ has no member named
+‘uprobe_multi’; did you mean ‘kprobe_multi’?
 
-Tested-by: Ron Economos <re@w6rz.net>
+On 11/18/26 17:49, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Jiri Olsa <jolsa@kernel.org>
+> 
+> [ Upstream commit a7795698f8b6c48283fa4334eb313bc1350b2864 ]
+> 
+> Adding support to display details for uprobe_multi links,
+> both plain:
+> 
+>   # bpftool link -p
+>   ...
+>   24: uprobe_multi  prog 126
+>           uprobe.multi  path /home/jolsa/bpf/test_progs  func_cnt 3  pid 4143
+>           offset             ref_ctr_offset     cookies
+>           0xd1f88            0xf5d5a8           0xdead
+>           0xd1f8f            0xf5d5aa           0xbeef
+>           0xd1f96            0xf5d5ac           0xcafe
+> 
+> and json:
+> 
+>   # bpftool link -p
+>   [{
+>   ...
+>       },{
+>           "id": 24,
+>           "type": "uprobe_multi",
+>           "prog_id": 126,
+>           "retprobe": false,
+>           "path": "/home/jolsa/bpf/test_progs",
+>           "func_cnt": 3,
+>           "pid": 4143,
+>           "funcs": [{
+>                   "offset": 860040,
+>                   "ref_ctr_offset": 16111016,
+>                   "cookie": 57005
+>               },{
+>                   "offset": 860047,
+>                   "ref_ctr_offset": 16111018,
+>                   "cookie": 48879
+>               },{
+>                   "offset": 860054,
+>                   "ref_ctr_offset": 16111020,
+>                   "cookie": 51966
+>               }
+>           ]
+>       }
+>   ]
+> 
+> Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+> Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+> Reviewed-by: Quentin Monnet <quentin@isovalent.com>
+> Acked-by: Song Liu <song@kernel.org>
+> Link: https://lore.kernel.org/bpf/20231125193130.834322-7-jolsa@kernel.org
+> Stable-dep-of: dbf8cef936c7 ("bpftool: Fix CPU IDs in per-CPU map output")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  tools/bpf/bpftool/link.c | 105 ++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 103 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
+> index 2e5c231e08ac7..00ecc67b54712 100644
+> --- a/tools/bpf/bpftool/link.c
+> +++ b/tools/bpf/bpftool/link.c
+> @@ -293,6 +293,37 @@ show_kprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
+>  	jsonw_end_array(json_wtr);
+>  }
+>  
+> +static __u64 *u64_to_arr(__u64 val)
+> +{
+> +	return (__u64 *) u64_to_ptr(val);
+> +}
+> +
+> +static void
+> +show_uprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
+> +{
+> +	__u32 i;
+> +
+> +	jsonw_bool_field(json_wtr, "retprobe",
+> +			 info->uprobe_multi.flags & BPF_F_UPROBE_MULTI_RETURN);
+> +	jsonw_string_field(json_wtr, "path", (char *) u64_to_ptr(info->uprobe_multi.path));
+> +	jsonw_uint_field(json_wtr, "func_cnt", info->uprobe_multi.count);
+> +	jsonw_int_field(json_wtr, "pid", (int) info->uprobe_multi.pid);
+> +	jsonw_name(json_wtr, "funcs");
+> +	jsonw_start_array(json_wtr);
+> +
+> +	for (i = 0; i < info->uprobe_multi.count; i++) {
+> +		jsonw_start_object(json_wtr);
+> +		jsonw_uint_field(json_wtr, "offset",
+> +				 u64_to_arr(info->uprobe_multi.offsets)[i]);
+> +		jsonw_uint_field(json_wtr, "ref_ctr_offset",
+> +				 u64_to_arr(info->uprobe_multi.ref_ctr_offsets)[i]);
+> +		jsonw_uint_field(json_wtr, "cookie",
+> +				 u64_to_arr(info->uprobe_multi.cookies)[i]);
+> +		jsonw_end_object(json_wtr);
+> +	}
+> +	jsonw_end_array(json_wtr);
+> +}
+> +
+>  static void
+>  show_perf_event_kprobe_json(struct bpf_link_info *info, json_writer_t *wtr)
+>  {
+> @@ -459,6 +490,9 @@ static int show_link_close_json(int fd, struct bpf_link_info *info)
+>  	case BPF_LINK_TYPE_KPROBE_MULTI:
+>  		show_kprobe_multi_json(info, json_wtr);
+>  		break;
+> +	case BPF_LINK_TYPE_UPROBE_MULTI:
+> +		show_uprobe_multi_json(info, json_wtr);
+> +		break;
+>  	case BPF_LINK_TYPE_PERF_EVENT:
+>  		switch (info->perf_event.type) {
+>  		case BPF_PERF_EVENT_EVENT:
+> @@ -666,6 +700,33 @@ static void show_kprobe_multi_plain(struct bpf_link_info *info)
+>  	}
+>  }
+>  
+> +static void show_uprobe_multi_plain(struct bpf_link_info *info)
+> +{
+> +	__u32 i;
+> +
+> +	if (!info->uprobe_multi.count)
+> +		return;
+> +
+> +	if (info->uprobe_multi.flags & BPF_F_UPROBE_MULTI_RETURN)
+> +		printf("\n\turetprobe.multi  ");
+> +	else
+> +		printf("\n\tuprobe.multi  ");
+> +
+> +	printf("path %s  ", (char *) u64_to_ptr(info->uprobe_multi.path));
+> +	printf("func_cnt %u  ", info->uprobe_multi.count);
+> +
+> +	if (info->uprobe_multi.pid)
+> +		printf("pid %d  ", info->uprobe_multi.pid);
+> +
+> +	printf("\n\t%-16s   %-16s   %-16s", "offset", "ref_ctr_offset", "cookies");
+> +	for (i = 0; i < info->uprobe_multi.count; i++) {
+> +		printf("\n\t0x%-16llx 0x%-16llx 0x%-16llx",
+> +			u64_to_arr(info->uprobe_multi.offsets)[i],
+> +			u64_to_arr(info->uprobe_multi.ref_ctr_offsets)[i],
+> +			u64_to_arr(info->uprobe_multi.cookies)[i]);
+> +	}
+> +}
+> +
+>  static void show_perf_event_kprobe_plain(struct bpf_link_info *info)
+>  {
+>  	const char *buf;
+> @@ -792,6 +853,9 @@ static int show_link_close_plain(int fd, struct bpf_link_info *info)
+>  	case BPF_LINK_TYPE_KPROBE_MULTI:
+>  		show_kprobe_multi_plain(info);
+>  		break;
+> +	case BPF_LINK_TYPE_UPROBE_MULTI:
+> +		show_uprobe_multi_plain(info);
+> +		break;
+>  	case BPF_LINK_TYPE_PERF_EVENT:
+>  		switch (info->perf_event.type) {
+>  		case BPF_PERF_EVENT_EVENT:
+> @@ -831,8 +895,10 @@ static int show_link_close_plain(int fd, struct bpf_link_info *info)
+>  
+>  static int do_show_link(int fd)
+>  {
+> +	__u64 *ref_ctr_offsets = NULL, *offsets = NULL, *cookies = NULL;
+>  	struct bpf_link_info info;
+>  	__u32 len = sizeof(info);
+> +	char path_buf[PATH_MAX];
+>  	__u64 *addrs = NULL;
+>  	char buf[PATH_MAX];
+>  	int count;
+> @@ -874,6 +940,39 @@ static int do_show_link(int fd)
+>  			goto again;
+>  		}
+>  	}
+> +	if (info.type == BPF_LINK_TYPE_UPROBE_MULTI &&
+> +	    !info.uprobe_multi.offsets) {
+> +		count = info.uprobe_multi.count;
+> +		if (count) {
+> +			offsets = calloc(count, sizeof(__u64));
+> +			if (!offsets) {
+> +				p_err("mem alloc failed");
+> +				close(fd);
+> +				return -ENOMEM;
+> +			}
+> +			info.uprobe_multi.offsets = ptr_to_u64(offsets);
+> +			ref_ctr_offsets = calloc(count, sizeof(__u64));
+> +			if (!ref_ctr_offsets) {
+> +				p_err("mem alloc failed");
+> +				free(offsets);
+> +				close(fd);
+> +				return -ENOMEM;
+> +			}
+> +			info.uprobe_multi.ref_ctr_offsets = ptr_to_u64(ref_ctr_offsets);
+> +			cookies = calloc(count, sizeof(__u64));
+> +			if (!cookies) {
+> +				p_err("mem alloc failed");
+> +				free(cookies);
+> +				free(offsets);
+> +				close(fd);
+> +				return -ENOMEM;
+> +			}
+> +			info.uprobe_multi.cookies = ptr_to_u64(cookies);
+> +			info.uprobe_multi.path = ptr_to_u64(path_buf);
+> +			info.uprobe_multi.path_size = sizeof(path_buf);
+> +			goto again;
+> +		}
+> +	}
+>  	if (info.type == BPF_LINK_TYPE_PERF_EVENT) {
+>  		switch (info.perf_event.type) {
+>  		case BPF_PERF_EVENT_TRACEPOINT:
+> @@ -909,8 +1008,10 @@ static int do_show_link(int fd)
+>  	else
+>  		show_link_close_plain(fd, &info);
+>  
+> -	if (addrs)
+> -		free(addrs);
+> +	free(ref_ctr_offsets);
+> +	free(cookies);
+> +	free(offsets);
+> +	free(addrs);
+>  	close(fd);
+>  	return 0;
+>  }
+
+-- 
+Best regards,
+Maksim Davydov
 
